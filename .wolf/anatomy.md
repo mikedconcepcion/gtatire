@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-04T22:56:08.027Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-04T23:04:03.233Z
 > Files: 48 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -67,8 +67,8 @@
 
 ## webapp/src/components/search/
 
-- `SmartSearchResults.tsx` — StockBadge — renders form (~1937 tok)
-- `VehicleSearch.tsx` — POPULAR_VEHICLES — renders form (~1907 tok)
+- `SmartSearchResults.tsx` — StockBadge — renders form (~1938 tok)
+- `VehicleSearch.tsx` — POPULAR_VEHICLES — renders form (~1908 tok)
 
 ## webapp/src/data/
 

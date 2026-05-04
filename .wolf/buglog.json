@@ -224,6 +224,22 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-04T22:56:08.057Z"
+    },
+    {
+      "id": "bug-015",
+      "timestamp": "2026-05-04T23:04:00.363Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/search/VehicleSearch.tsx",
+      "root_cause": "Had 'data/vehicles.json'",
+      "fix": "Changed to '/data/vehicles.json'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T23:04:00.363Z"
     }
   ]
 }

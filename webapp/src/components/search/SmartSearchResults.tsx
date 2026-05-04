@@ -40,7 +40,7 @@ export default function SmartSearchResults() {
 
   // Load products
   useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}data/products.json`)
+    fetch(`${import.meta.env.BASE_URL}/data/products.json`)
       .then(r => r.json())
       .then(data => { setProducts(data); setLoading(false); })
       .catch(() => setLoading(false));
@@ -133,7 +133,7 @@ export default function SmartSearchResults() {
           <p className="text-dark-500 text-sm mb-4">{results.length} result{results.length !== 1 ? 's' : ''} for "{query}"</p>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {results.slice(0, 50).map(p => (
-              <a href={`${import.meta.env.BASE_URL}wheels/${p.id}`} key={p.id} className="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all">
+              <a href={`${import.meta.env.BASE_URL}/wheels/${p.id}`} key={p.id} className="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all">
                 <div className="aspect-square bg-dark-800 flex items-center justify-center p-4 relative">
                   {p.image ? (
                     <img src={p.image} alt={p.description} className="w-full h-full object-contain" loading="lazy" />

@@ -61,6 +61,11 @@
       "count": 1,
       "tokens": 133,
       "first_read": "2026-05-04T22:54:12.659Z"
+    },
+    "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx": {
+      "count": 1,
+      "tokens": 1937,
+      "first_read": "2026-05-04T23:03:11.958Z"
     }
   },
   "files_written": [
@@ -513,6 +518,42 @@
       "action": "edit",
       "tokens": 16,
       "at": "2026-05-04T22:56:08.052Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
+      "action": "edit",
+      "tokens": 14,
+      "at": "2026-05-04T23:03:57.869Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
+      "action": "edit",
+      "tokens": 10,
+      "at": "2026-05-04T23:03:58.896Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
+      "action": "edit",
+      "tokens": 14,
+      "at": "2026-05-04T23:04:00.355Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
+      "action": "edit",
+      "tokens": 11,
+      "at": "2026-05-04T23:04:01.389Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
+      "action": "edit",
+      "tokens": 11,
+      "at": "2026-05-04T23:04:02.422Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
+      "action": "edit",
+      "tokens": 10,
+      "at": "2026-05-04T23:04:03.257Z"
     }
   ],
   "edit_counts": {
@@ -522,7 +563,7 @@
     "webapp/src/layouts/Layout.astro": 1,
     "webapp/src/components/Header.astro": 1,
     "webapp/src/components/Footer.astro": 1,
-    "webapp/src/components/search/VehicleSearch.tsx": 7,
+    "webapp/src/components/search/VehicleSearch.tsx": 10,
     "webapp/src/pages/index.astro": 1,
     "webapp/src/data/products.ts": 2,
     "webapp/src/components/ProductCard.astro": 4,
@@ -538,7 +579,7 @@
     "scrapers/scrape-alltire-fast.js": 1,
     "scrapers/build-database.js": 1,
     "webapp/src/pages/vehicle/[year]/[make]/[model].astro": 2,
-    "webapp/src/components/VehicleResults.tsx": 4,
+    "webapp/src/components/VehicleResults.tsx": 5,
     "webapp/src/pages/wheels/[id].astro": 13,
     "webapp/src/components/auth/AuthProvider.tsx": 1,
     "webapp/src/components/auth/LoginForm.tsx": 1,
@@ -548,11 +589,11 @@
     ".gitignore": 1,
     "webapp/astro.config.mjs": 1,
     ".github/workflows/deploy.yml": 1,
-    "webapp/src/components/search/SmartSearchResults.tsx": 4
+    "webapp/src/components/search/SmartSearchResults.tsx": 6
   },
-  "anatomy_hits": 7,
+  "anatomy_hits": 8,
   "anatomy_misses": 5,
   "repeated_reads_warned": 4,
   "cerebrum_warnings": 0,
-  "stop_count": 54
+  "stop_count": 55
 }
