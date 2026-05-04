@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-04T22:41:04.168Z
-> Files: 47 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-04T22:56:08.027Z
+> Files: 48 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -56,7 +56,7 @@
 - `Header.astro` — Astro: Header (~736 tok)
 - `ProductCard.astro` — Astro: ProductCard (~800 tok)
 - `ProductDetail.tsx` — ProductDetailInner (~1784 tok)
-- `VehicleResults.tsx` — StockBadge (~2499 tok)
+- `VehicleResults.tsx` — StockBadge (~2506 tok)
 
 ## webapp/src/components/auth/
 
@@ -67,7 +67,8 @@
 
 ## webapp/src/components/search/
 
-- `VehicleSearch.tsx` — POPULAR_VEHICLES — renders form (~1877 tok)
+- `SmartSearchResults.tsx` — StockBadge — renders form (~1937 tok)
+- `VehicleSearch.tsx` — POPULAR_VEHICLES — renders form (~1907 tok)
 
 ## webapp/src/data/
 
@@ -82,7 +83,7 @@
 - `contact.astro` — Astro: contact (~1004 tok)
 - `index.astro` — Astro: index (~2157 tok)
 - `login.astro` — Astro: login (~74 tok)
-- `search.astro` — Astro: search (~133 tok)
+- `search.astro` — Astro: search (~156 tok)
 - `tires.astro` — Placeholder — tire data will come from the tire scraper (~500 tok)
 - `wheels.astro` — Load products at build time (~936 tok)
 

@@ -140,7 +140,7 @@ export default function VehicleResults({ products, availableDiameters }: Props) 
       {filtered.length > 0 ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-6">
           {filtered.map(p => (
-            <a href={`/wheels/${p.id}`} key={p.id} className="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all hover:shadow-lg hover:shadow-primary-900/10">
+            <a href={`${import.meta.env.BASE_URL}wheels/${p.id}`} key={p.id} className="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all hover:shadow-lg hover:shadow-primary-900/10">
               {/* Image */}
               <div className="aspect-square bg-dark-800 flex items-center justify-center p-6 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-dark-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />

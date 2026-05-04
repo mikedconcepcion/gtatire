@@ -161,3 +161,16 @@
 | 06:40 | Created .gitignore | — | ~103 |
 | 06:40 | Edited webapp/astro.config.mjs | 7→9 lines | ~46 |
 | 06:41 | Created .github/workflows/deploy.yml | — | ~246 |
+| 06:41 | Session end: 65 writes across 32 files (scrape-alltire-wheels.js, scrape-alltire-tires.js, global.css, Layout.astro, Header.astro) | 11 reads | ~55174 tok |
+| 06:42 | Session end: 65 writes across 32 files (scrape-alltire-wheels.js, scrape-alltire-tires.js, global.css, Layout.astro, Header.astro) | 11 reads | ~55174 tok |
+| 06:44 | Session end: 65 writes across 32 files (scrape-alltire-wheels.js, scrape-alltire-tires.js, global.css, Layout.astro, Header.astro) | 11 reads | ~55174 tok |
+| 06:55 | Created webapp/src/components/search/SmartSearchResults.tsx | — | ~1927 |
+| 06:55 | Created webapp/src/pages/search.astro | — | ~156 |
+| 06:55 | Edited webapp/src/components/search/VehicleSearch.tsx | "/data/vehicles.json" → "data/vehicles.json" | ~17 |
+| 06:55 | Edited webapp/src/components/search/VehicleSearch.tsx | "/vehicle/${year}/${make}/" → "vehicle/${year}/${make}/$" | ~26 |
+| 06:55 | Edited webapp/src/components/search/VehicleSearch.tsx | "/search?q=${encodeURIComp" → "search?q=${encodeURICompo" | ~31 |
+| 06:55 | Edited webapp/src/components/search/VehicleSearch.tsx | "/vehicle/${v.year}/${v.ma" → "vehicle/${v.year}/${v.mak" | ~28 |
+| 06:55 | Edited webapp/src/components/search/SmartSearchResults.tsx | inline fix | ~13 |
+| 06:55 | Edited webapp/src/components/search/SmartSearchResults.tsx | inline fix | ~12 |
+| 06:55 | Edited webapp/src/components/search/SmartSearchResults.tsx | inline fix | ~16 |
+| 06:56 | Edited webapp/src/components/VehicleResults.tsx | "/wheels/${p.id}" → "${import.meta.env.BASE_UR" | ~16 |

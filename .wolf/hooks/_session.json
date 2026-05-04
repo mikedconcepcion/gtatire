@@ -56,6 +56,11 @@
       "count": 1,
       "tokens": 0,
       "first_read": "2026-05-04T22:40:44.549Z"
+    },
+    "E:/James/gtatire/webapp/src/pages/search.astro": {
+      "count": 1,
+      "tokens": 133,
+      "first_read": "2026-05-04T22:54:12.659Z"
     }
   },
   "files_written": [
@@ -448,6 +453,66 @@
       "action": "create",
       "tokens": 246,
       "at": "2026-05-04T22:41:04.190Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
+      "action": "create",
+      "tokens": 1927,
+      "at": "2026-05-04T22:55:00.634Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/pages/search.astro",
+      "action": "create",
+      "tokens": 167,
+      "at": "2026-05-04T22:55:07.383Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
+      "action": "edit",
+      "tokens": 17,
+      "at": "2026-05-04T22:55:14.470Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
+      "action": "edit",
+      "tokens": 26,
+      "at": "2026-05-04T22:55:15.989Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
+      "action": "edit",
+      "tokens": 31,
+      "at": "2026-05-04T22:55:17.362Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
+      "action": "edit",
+      "tokens": 28,
+      "at": "2026-05-04T22:55:18.532Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
+      "action": "edit",
+      "tokens": 13,
+      "at": "2026-05-04T22:55:25.713Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
+      "action": "edit",
+      "tokens": 12,
+      "at": "2026-05-04T22:55:26.850Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
+      "action": "edit",
+      "tokens": 16,
+      "at": "2026-05-04T22:55:37.409Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
+      "action": "edit",
+      "tokens": 16,
+      "at": "2026-05-04T22:56:08.052Z"
     }
   ],
   "edit_counts": {
@@ -457,13 +522,13 @@
     "webapp/src/layouts/Layout.astro": 1,
     "webapp/src/components/Header.astro": 1,
     "webapp/src/components/Footer.astro": 1,
-    "webapp/src/components/search/VehicleSearch.tsx": 3,
+    "webapp/src/components/search/VehicleSearch.tsx": 7,
     "webapp/src/pages/index.astro": 1,
     "webapp/src/data/products.ts": 2,
     "webapp/src/components/ProductCard.astro": 4,
     "webapp/src/pages/tires.astro": 2,
     "webapp/src/pages/wheels.astro": 2,
-    "webapp/src/pages/search.astro": 1,
+    "webapp/src/pages/search.astro": 2,
     "webapp/src/pages/contact.astro": 1,
     "webapp/src/pages/login.astro": 3,
     "scrapers/test-wheel-extract.js": 2,
@@ -473,7 +538,7 @@
     "scrapers/scrape-alltire-fast.js": 1,
     "scrapers/build-database.js": 1,
     "webapp/src/pages/vehicle/[year]/[make]/[model].astro": 2,
-    "webapp/src/components/VehicleResults.tsx": 3,
+    "webapp/src/components/VehicleResults.tsx": 4,
     "webapp/src/pages/wheels/[id].astro": 13,
     "webapp/src/components/auth/AuthProvider.tsx": 1,
     "webapp/src/components/auth/LoginForm.tsx": 1,
@@ -482,11 +547,12 @@
     "webapp/src/components/auth/LoginPage.tsx": 1,
     ".gitignore": 1,
     "webapp/astro.config.mjs": 1,
-    ".github/workflows/deploy.yml": 1
+    ".github/workflows/deploy.yml": 1,
+    "webapp/src/components/search/SmartSearchResults.tsx": 4
   },
-  "anatomy_hits": 6,
+  "anatomy_hits": 7,
   "anatomy_misses": 5,
   "repeated_reads_warned": 4,
   "cerebrum_warnings": 0,
-  "stop_count": 51
+  "stop_count": 54
 }
