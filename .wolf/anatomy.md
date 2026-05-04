@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-04T23:04:03.233Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-04T23:17:04.965Z
 > Files: 48 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -52,16 +52,16 @@
 
 ## webapp/src/components/
 
-- `Footer.astro` — Astro: Footer (~569 tok)
-- `Header.astro` — Astro: Header (~736 tok)
-- `ProductCard.astro` — Astro: ProductCard (~800 tok)
-- `ProductDetail.tsx` — ProductDetailInner (~1784 tok)
+- `Footer.astro` — Astro: Footer (~580 tok)
+- `Header.astro` — Astro: Header (~760 tok)
+- `ProductCard.astro` — Astro: ProductCard (~802 tok)
+- `ProductDetail.tsx` — ProductDetailInner (~1786 tok)
 - `VehicleResults.tsx` — StockBadge (~2506 tok)
 
 ## webapp/src/components/auth/
 
 - `AuthProvider.tsx` — AuthContext (~320 tok)
-- `LoginForm.tsx` — LoginForm — renders form (~824 tok)
+- `LoginForm.tsx` — LoginForm — renders form (~827 tok)
 - `LoginPage.tsx` — LoginPage (~58 tok)
 - `PriceDisplay.tsx` — PriceDisplay (~430 tok)
 
@@ -81,19 +81,19 @@
 ## webapp/src/pages/
 
 - `contact.astro` — Astro: contact (~1004 tok)
-- `index.astro` — Astro: index (~2157 tok)
+- `index.astro` — Astro: index (~2163 tok)
 - `login.astro` — Astro: login (~74 tok)
 - `search.astro` — Astro: search (~156 tok)
-- `tires.astro` — Placeholder — tire data will come from the tire scraper (~500 tok)
+- `tires.astro` — Placeholder — tire data will come from the tire scraper (~502 tok)
 - `wheels.astro` — Load products at build time (~936 tok)
 
 ## webapp/src/pages/vehicle/[year]/[make]/
 
-- `[model].astro` — Astro: [model] (~1470 tok)
+- `[model].astro` — Astro: [model] (~1476 tok)
 
 ## webapp/src/pages/wheels/
 
-- `[id].astro` — Astro: [id] (~1063 tok)
+- `[id].astro` — Astro: [id] (~1070 tok)
 
 ## webapp/src/styles/
 

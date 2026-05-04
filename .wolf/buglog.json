@@ -240,6 +240,134 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-04T23:04:00.363Z"
+    },
+    {
+      "id": "bug-016",
+      "timestamp": "2026-05-04T23:16:32.495Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/Header.astro",
+      "root_cause": "Had \" class=\"",
+      "fix": "Changed to \"/gtatire/\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T23:16:32.495Z"
+    },
+    {
+      "id": "bug-017",
+      "timestamp": "2026-05-04T23:16:39.510Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/Footer.astro",
+      "root_cause": "Had \"/tires\"",
+      "fix": "Changed to \"/gtatire/tires\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-04T23:16:40.266Z"
+    },
+    {
+      "id": "bug-018",
+      "timestamp": "2026-05-04T23:16:43.064Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/ProductCard.astro",
+      "root_cause": "Had `/${category}s/${id}`",
+      "fix": "Changed to `/gtatire/${category}s/${id}`",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T23:16:43.064Z"
+    },
+    {
+      "id": "bug-019",
+      "timestamp": "2026-05-04T23:16:46.094Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/pages/index.astro",
+      "root_cause": "Had \"/tires\"",
+      "fix": "Changed to \"/gtatire/tires\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-05-04T23:16:47.536Z"
+    },
+    {
+      "id": "bug-020",
+      "timestamp": "2026-05-04T23:16:50.053Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/pages/tires.astro",
+      "root_cause": "Had \"/wheels\"",
+      "fix": "Changed to \"/gtatire/wheels\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T23:16:50.053Z"
+    },
+    {
+      "id": "bug-021",
+      "timestamp": "2026-05-04T23:16:57.102Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/pages/vehicle/[year]/[make]/[model].astro",
+      "root_cause": "Had \" class=\"",
+      "fix": "Changed to \"/gtatire/\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T23:16:57.102Z"
+    },
+    {
+      "id": "bug-022",
+      "timestamp": "2026-05-04T23:17:02.045Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/auth/LoginForm.tsx",
+      "root_cause": "Had \"/contact\"",
+      "fix": "Changed to \"/gtatire/contact\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T23:17:02.045Z"
+    },
+    {
+      "id": "bug-023",
+      "timestamp": "2026-05-04T23:17:05.000Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/ProductDetail.tsx",
+      "root_cause": "Had \"/contact\"",
+      "fix": "Changed to \"/gtatire/contact\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T23:17:05.000Z"
     }
   ]
 }

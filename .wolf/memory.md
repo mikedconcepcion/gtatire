@@ -181,3 +181,28 @@
 | 07:04 | Edited webapp/src/components/search/VehicleSearch.tsx | inline fix | ~11 |
 | 07:04 | Edited webapp/src/components/search/VehicleSearch.tsx | inline fix | ~11 |
 | 07:04 | Edited webapp/src/components/VehicleResults.tsx | inline fix | ~10 |
+| 07:06 | Session end: 81 writes across 33 files (scrape-alltire-wheels.js, scrape-alltire-tires.js, global.css, Layout.astro, Header.astro) | 13 reads | ~59567 tok |
+| 07:15 | Session end: 81 writes across 33 files (scrape-alltire-wheels.js, scrape-alltire-tires.js, global.css, Layout.astro, Header.astro) | 13 reads | ~59567 tok |
+| 07:16 | Edited webapp/src/components/Header.astro | "/" → "/gtatire/" | ~16 |
+| 07:16 | Edited webapp/src/components/Header.astro | 4→4 lines | ~130 |
+| 07:16 | Edited webapp/src/components/Header.astro | 6→6 lines | ~93 |
+| 07:16 | Edited webapp/src/components/Header.astro | 4→4 lines | ~108 |
+| 07:16 | Edited webapp/src/components/Footer.astro | 3→3 lines | ~96 |
+| 07:16 | Edited webapp/src/components/Footer.astro | 2→2 lines | ~69 |
+| 07:16 | Edited webapp/src/components/ProductCard.astro | "/${category}s/${id}" → "/gtatire/${category}s/${i" | ~55 |
+| 07:16 | Edited webapp/src/pages/index.astro | "/tires" → "/gtatire/tires" | ~45 |
+| 07:16 | Edited webapp/src/pages/index.astro | "/wheels" → "/gtatire/wheels" | ~45 |
+| 07:16 | Edited webapp/src/pages/index.astro | "/login" → "/gtatire/login" | ~63 |
+| 07:16 | Edited webapp/src/pages/tires.astro | 3→3 lines | ~55 |
+| 07:16 | Edited webapp/src/pages/wheels/[id].astro | 7→7 lines | ~88 |
+| 07:16 | Edited webapp/src/pages/wheels/[id].astro | 4→4 lines | ~86 |
+| 07:16 | Edited webapp/src/pages/vehicle/[year]/[make]/[model].astro | "/" → "/gtatire/" | ~36 |
+| 07:16 | Edited webapp/src/pages/vehicle/[year]/[make]/[model].astro | 8→8 lines | ~130 |
+| 07:17 | Edited webapp/src/components/auth/LoginForm.tsx | 3→3 lines | ~52 |
+| 07:17 | Edited webapp/src/components/ProductDetail.tsx | 3→3 lines | ~79 |
+
+## Session: 2026-05-04 07:17 (Link Prefix Fixing)
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 07:17 | Fixed /gtatire base path in Header.astro | Header, Footer, ProductCard, index, tires, wheels/[id], vehicle/[model], LoginForm, ProductDetail | All hardcoded routes prefixed with /gtatire | ~2250 |

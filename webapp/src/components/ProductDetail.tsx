@@ -91,7 +91,7 @@ function ProductDetailInner({ product, vehicles, specs }: Props) {
           >
             {isDistributor ? 'Place Order' : 'Contact for Pricing'}
           </a>
-          <a href="/contact" className="bg-[var(--color-dark-800)] hover:bg-[var(--color-dark-700)] text-[var(--color-dark-300)] hover:text-white py-2 px-5 rounded-lg text-sm transition-colors border border-[var(--color-dark-600)]">
+          <a href="/gtatire/contact" className="bg-[var(--color-dark-800)] hover:bg-[var(--color-dark-700)] text-[var(--color-dark-300)] hover:text-white py-2 px-5 rounded-lg text-sm transition-colors border border-[var(--color-dark-600)]">
             Call Us
           </a>
         </div>
