@@ -368,6 +368,54 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-04T23:17:05.000Z"
+    },
+    {
+      "id": "bug-024",
+      "timestamp": "2026-05-04T23:45:27.163Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/Header.astro",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 5→5 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T23:45:27.163Z"
+    },
+    {
+      "id": "bug-025",
+      "timestamp": "2026-05-04T23:45:27.951Z",
+      "error_message": "Wrong reference: div should be nav",
+      "file": "webapp/src/components/Header.astro",
+      "root_cause": "Used \"div\" instead of \"nav\"",
+      "fix": "Changed div → nav",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T23:45:27.951Z"
+    },
+    {
+      "id": "bug-026",
+      "timestamp": "2026-05-04T23:45:53.914Z",
+      "error_message": "Null/undefined access in ",
+      "file": "webapp/src/pages/contact.astro",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T23:45:53.914Z"
     }
   ]
 }

@@ -33,29 +33,44 @@ import Layout from '../layouts/Layout.astro';
     <!-- Contact form -->
     <div class="bg-dark-900 border border-dark-700/50 rounded-xl p-6 sm:p-8">
       <h2 class="text-xl font-bold text-white mb-6">Send a Message</h2>
-      <form class="space-y-4">
+      <form id="contact-form" class="space-y-4">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label class="block text-dark-300 text-sm mb-1.5">Name</label>
-            <input type="text" class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="Your name" />
+            <label for="contact-name" class="block text-dark-300 text-sm mb-1.5">Name</label>
+            <input id="contact-name" type="text" required class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="Your name" />
           </div>
           <div>
-            <label class="block text-dark-300 text-sm mb-1.5">Email</label>
-            <input type="email" class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="you@company.com" />
+            <label for="contact-email" class="block text-dark-300 text-sm mb-1.5">Email</label>
+            <input id="contact-email" type="email" required class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="you@company.com" />
           </div>
         </div>
         <div>
-          <label class="block text-dark-300 text-sm mb-1.5">Company</label>
-          <input type="text" class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="Your company name" />
+          <label for="contact-company" class="block text-dark-300 text-sm mb-1.5">Company</label>
+          <input id="contact-company" type="text" class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="Your company name" />
         </div>
         <div>
-          <label class="block text-dark-300 text-sm mb-1.5">Message</label>
-          <textarea rows="4" class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none" placeholder="How can we help you?"></textarea>
+          <label for="contact-message" class="block text-dark-300 text-sm mb-1.5">Message</label>
+          <textarea id="contact-message" rows="4" required class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none" placeholder="How can we help you?"></textarea>
         </div>
         <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2.5 px-6 rounded-lg transition-colors text-sm">
           Send Message
         </button>
+        <div id="contact-success" class="hidden text-green-400 text-sm mt-2">Your email client will open with the message pre-filled.</div>
       </form>
+
+      <script>
+        document.getElementById('contact-form')?.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const name = (document.getElementById('contact-name') as HTMLInputElement).value;
+          const email = (document.getElementById('contact-email') as HTMLInputElement).value;
+          const company = (document.getElementById('contact-company') as HTMLInputElement).value;
+          const message = (document.getElementById('contact-message') as HTMLTextAreaElement).value;
+          const subject = company ? `Inquiry from ${name} (${company})` : `Inquiry from ${name}`;
+          const body = `${message}\n\n---\nFrom: ${name}\nEmail: ${email}${company ? `\nCompany: ${company}` : ''}`;
+          window.location.href = `mailto:james@gtatiredistributor.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          document.getElementById('contact-success')?.classList.remove('hidden');
+        });
+      </script>
     </div>
   </section>
 </Layout>

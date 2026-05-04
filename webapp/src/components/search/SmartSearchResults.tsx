@@ -31,6 +31,7 @@ export default function SmartSearchResults() {
   const [query, setQuery] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   // Get query from URL
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function SmartSearchResults() {
     fetch(`${import.meta.env.BASE_URL}/data/products.json`)
       .then(r => r.json())
       .then(data => { setProducts(data); setLoading(false); })
-      .catch(() => setLoading(false));
+      .catch(() => { setLoading(false); setError(true); });
   }, []);
 
   // Fuse search
@@ -123,6 +124,10 @@ export default function SmartSearchResults() {
       {/* Results */}
       {loading ? (
         <div className="text-center py-12 text-dark-500 text-sm">Loading products...</div>
+      ) : error ? (
+        <div className="text-center py-12">
+          <p className="text-red-400 text-sm">Failed to load product data. Please try refreshing the page.</p>
+        </div>
       ) : query && results.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-dark-400 text-sm">No results for "{query}"</p>
@@ -136,7 +141,7 @@ export default function SmartSearchResults() {
               <a href={`${import.meta.env.BASE_URL}/wheels/${p.id}`} key={p.id} className="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all">
                 <div className="aspect-square bg-dark-800 flex items-center justify-center p-4 relative">
                   {p.image ? (
-                    <img src={p.image} alt={p.description} className="w-full h-full object-contain" loading="lazy" />
+                    <img src={p.image} alt={p.description} className="w-full h-full object-contain" loading="lazy" decoding="async" />
                   ) : (
                     <svg className="w-16 h-16 text-dark-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <circle cx="12" cy="12" r="10" strokeWidth="1.5" />

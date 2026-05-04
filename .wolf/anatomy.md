@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-04T23:17:04.965Z
-> Files: 48 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-04T23:46:38.576Z
+> Files: 50 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -50,13 +50,17 @@
 
 - `astro.config.mjs` — https://astro.build/config (~91 tok)
 
+## webapp/public/
+
+- `robots.txt` (~22 tok)
+
 ## webapp/src/components/
 
 - `Footer.astro` — Astro: Footer (~580 tok)
-- `Header.astro` — Astro: Header (~760 tok)
-- `ProductCard.astro` — Astro: ProductCard (~802 tok)
+- `Header.astro` — Astro: Header (~818 tok)
+- `ProductCard.astro` — Astro: ProductCard (~807 tok)
 - `ProductDetail.tsx` — ProductDetailInner (~1786 tok)
-- `VehicleResults.tsx` — StockBadge (~2506 tok)
+- `VehicleResults.tsx` — StockBadge (~2511 tok)
 
 ## webapp/src/components/auth/
 
@@ -67,7 +71,7 @@
 
 ## webapp/src/components/search/
 
-- `SmartSearchResults.tsx` — StockBadge — renders form (~1938 tok)
+- `SmartSearchResults.tsx` — StockBadge — renders form (~2016 tok)
 - `VehicleSearch.tsx` — POPULAR_VEHICLES — renders form (~1908 tok)
 
 ## webapp/src/data/
@@ -76,11 +80,12 @@
 
 ## webapp/src/layouts/
 
-- `Layout.astro` — Astro: Layout (~278 tok)
+- `Layout.astro` — Astro: Layout (~655 tok)
 
 ## webapp/src/pages/
 
-- `contact.astro` — Astro: contact (~1004 tok)
+- `404.astro` — Astro: 404 (~237 tok)
+- `contact.astro` — Astro: contact (~1359 tok)
 - `index.astro` — Astro: index (~2163 tok)
 - `login.astro` — Astro: login (~74 tok)
 - `search.astro` — Astro: search (~156 tok)
