@@ -1,0 +1,26 @@
+node_modules/
+dist/
+.astro/
+
+# Scraper secrets & artifacts
+scrapers/config.js
+scrapers/screenshots/
+
+# Raw scraped data (large files, not needed in repo)
+data/alltire-wheels.json
+data/alltire-wheels-scraped.json
+data/alltire-tires.json
+data/alltire-tires-scraped.json
+data/alltire-fitment.json
+data/images/
+
+# Env
+.env
+.env.*
+
+# Wolf
+.wolf/designqc-captures/
+
+# OS
+Thumbs.db
+.DS_Store

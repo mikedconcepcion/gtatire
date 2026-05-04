@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "bugs": [
+    {
+      "id": "bug-001",
+      "timestamp": "2026-05-04T08:07:02.832Z",
+      "error_message": "Incorrect value in code",
+      "file": "scrapers/scrape-alltire-wheels.js",
+      "root_cause": "Had '../data'",
+      "fix": "Changed to 'path'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T08:07:02.832Z"
+    },
+    {
+      "id": "bug-002",
+      "timestamp": "2026-05-04T08:07:03.681Z",
+      "error_message": "Incorrect value in code",
+      "file": "scrapers/scrape-alltire-tires.js",
+      "root_cause": "Had '../data'",
+      "fix": "Changed to 'path'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T08:07:03.681Z"
+    },
+    {
+      "id": "bug-003",
+      "timestamp": "2026-05-04T08:25:36.105Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/scrape-alltire-wheels.js",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 3→4 lines (2 removed) | Also: const years = yearOpts.filter(y => y.match(/^\\d{4}; console.log(`Years: ${years.length} (${years[0]} t",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-04T08:25:41.376Z"
+    },
+    {
+      "id": "bug-004",
+      "timestamp": "2026-05-04T08:25:37.760Z",
+      "error_message": "Wrong condition in logic",
+      "file": "scrapers/scrape-alltire-wheels.js",
+      "root_cause": "Condition was: if (fs.existsSync(path)",
+      "fix": "Changed to: if (fs.existsSync(fpath)",
+      "tags": [
+        "auto-detected",
+        "logic-fix",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T08:25:37.760Z"
+    },
+    {
+      "id": "bug-005",
+      "timestamp": "2026-05-04T08:25:49.503Z",
+      "error_message": "Wrong condition in logic",
+      "file": "scrapers/scrape-alltire-tires.js",
+      "root_cause": "Condition was: if (fs.existsSync(path)",
+      "fix": "Changed to: if (fs.existsSync(fpath)",
+      "tags": [
+        "auto-detected",
+        "logic-fix",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T08:25:49.503Z"
+    },
+    {
+      "id": "bug-006",
+      "timestamp": "2026-05-04T08:25:51.347Z",
+      "error_message": "Incorrect value in code",
+      "file": "scrapers/scrape-alltire-tires.js",
+      "root_cause": "Had `Fitment years: ${years.length}`",
+      "fix": "Changed to `Fitment years: ${years.length} (${MIN_YEAR}+, fil",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T08:25:51.347Z"
+    },
+    {
+      "id": "bug-007",
+      "timestamp": "2026-05-04T09:33:04.128Z",
+      "error_message": "Missing guard clause",
+      "file": "scrapers/scrape-alltire-wheels.js",
+      "root_cause": "No early return/throw for edge case: tds.length === 15",
+      "fix": "Added guard clause: if (tds.length === 15)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T09:33:04.128Z"
+    },
+    {
+      "id": "bug-008",
+      "timestamp": "2026-05-04T10:20:25.648Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/ProductCard.astro",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 5→11 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T10:20:25.648Z"
+    },
+    {
+      "id": "bug-009",
+      "timestamp": "2026-05-04T21:57:18.502Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/VehicleResults.tsx",
+      "root_cause": "Had \"group bg-dark-900 border border-dark-700/50 round",
+      "fix": "Changed to `/wheels/${p.id}`",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T21:57:18.502Z"
+    },
+    {
+      "id": "bug-010",
+      "timestamp": "2026-05-04T21:57:19.083Z",
+      "error_message": "Wrong reference: div should be a",
+      "file": "webapp/src/components/VehicleResults.tsx",
+      "root_cause": "Used \"div\" instead of \"a\"",
+      "fix": "Changed div → a",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T21:57:19.083Z"
+    },
+    {
+      "id": "bug-011",
+      "timestamp": "2026-05-04T22:05:18.358Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/pages/wheels/[id].astro",
+      "root_cause": "Had \"max-w-5xl mx-auto px-4 sm:px-6 py-6\"",
+      "fix": "Changed to \"max-w-3xl mx-auto px-4 sm:px-6 py-6\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 4,
+      "last_seen": "2026-05-04T22:05:32.980Z"
+    }
+  ]
+}

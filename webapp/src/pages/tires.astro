@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProductCard from '../components/ProductCard.astro';
+
+// Placeholder — tire data will come from the tire scraper
+const products: any[] = [];
+---
+
+<Layout title="Tires — GTA Tire Distributor">
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-white">Tires</h1>
+      <p class="text-dark-400 text-sm mt-1">Browse our full catalog of tires from top brands</p>
+    </div>
+
+    {products.length > 0 ? (
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        {products.map(p => (
+          <ProductCard
+            id={p.id}
+            image={p.image}
+            brand={p.brand}
+            model={p.model}
+            description={p.description}
+            size={p.size}
+            msrp={p.msrp}
+            stock={p.stock}
+            type={p.type}
+            category="tire"
+          />
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-20 border border-dashed border-dark-700 rounded-2xl">
+        <svg class="w-16 h-16 text-dark-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" stroke-width="1.5" />
+          <circle cx="12" cy="12" r="3" stroke-width="1.5" />
+        </svg>
+        <h3 class="text-white font-semibold text-lg mb-2">Tire Catalog Coming Soon</h3>
+        <p class="text-dark-500 text-sm max-w-md mx-auto">
+          We're currently building the tire catalog from our supplier data.
+          Check back soon or search for wheels in the meantime.
+        </p>
+        <a href="/wheels" class="inline-block mt-4 bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors">
+          Browse Wheels
+        </a>
+      </div>
+    )}
+  </section>
+</Layout>
