@@ -293,3 +293,5 @@
 | 11:46 | Session end: 162 writes across 44 files (scrape-alltire-wheels.js, scrape-alltire-tires.js, global.css, Layout.astro, Header.astro) | 44 reads | ~88377 tok |
 | 11:48 | Edited webapp/src/components/search/VehicleSearch.tsx | "/search?q=${encodeURIComp" → "/search/?q=${encodeURICom" | ~23 |
 | 11:49 | Edited scrapers/build-database.js | 2→2 lines | ~60 |
+| 11:51 | Session end: 164 writes across 44 files (scrape-alltire-wheels.js, scrape-alltire-tires.js, global.css, Layout.astro, Header.astro) | 44 reads | ~88460 tok |
+| 11:53 | Edited webapp/src/components/search/SmartSearchResults.tsx | CSS: filter, Multi-word | ~691 |

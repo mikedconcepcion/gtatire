@@ -67,33 +67,52 @@ export default function SmartSearchResults() {
   const results = useMemo(() => {
     if (!query.trim() || products.length === 0) return [];
 
-    // Parse special patterns from query
-    let filtered = products;
-    const q = query.toLowerCase();
+    const q = query.toLowerCase().trim();
 
-    // Check for diameter pattern like "17" or "18 inch" or "18""
+    // 1. Exact/partial match on product number, description, name, finish, bolt pattern
+    const directMatches = products.filter(p =>
+      p.productNo.toLowerCase().includes(q) ||
+      p.description.toLowerCase().includes(q) ||
+      p.name.toLowerCase().includes(q) ||
+      p.finish.toLowerCase().includes(q) ||
+      p.boltPattern.toLowerCase().includes(q)
+    );
+    if (directMatches.length > 0) {
+      return directMatches.sort((a, b) => a.priceNum - b.priceNum);
+    }
+
+    // 2. Structured filter: diameter, bolt pattern, type keywords
     const diamMatch = q.match(/(\d{2})\s*(?:inch|"|'')?/);
-    // Check for bolt pattern like "5x114" or "5x114.3"
     const boltMatch = q.match(/(\d)x(\d{3,4}\.?\d*)/);
-    // Check for type
     const isSteel = q.includes('steel');
     const isAlloy = q.includes('alloy');
+    const isBlack = q.includes('black');
+    const isSilver = q.includes('silver');
 
-    // If specific patterns found, do structured filter first
-    if (diamMatch || boltMatch || isSteel || isAlloy) {
-      filtered = products.filter(p => {
+    if (diamMatch || boltMatch || isSteel || isAlloy || isBlack || isSilver) {
+      const filtered = products.filter(p => {
         if (diamMatch && p.rimDiameter !== parseInt(diamMatch[1])) return false;
         if (boltMatch && !p.boltPattern.includes(`${boltMatch[1]}x${boltMatch[2]}`)) return false;
         if (isSteel && p.wheelType !== 'Steel Wheel') return false;
         if (isAlloy && p.wheelType !== 'Alloy Wheel') return false;
+        if (isBlack && !p.description.toLowerCase().includes('black') && !p.finish.toLowerCase().includes('black')) return false;
+        if (isSilver && !p.description.toLowerCase().includes('silver') && !p.finish.toLowerCase().includes('silver')) return false;
         return true;
       });
-
-      // Sort by price
-      return filtered.sort((a, b) => a.priceNum - b.priceNum);
+      if (filtered.length > 0) return filtered.sort((a, b) => a.priceNum - b.priceNum);
     }
 
-    // Otherwise use fuzzy search
+    // 3. Multi-word: split query and match products containing ALL words
+    const words = q.split(/\s+/).filter(w => w.length >= 2);
+    if (words.length > 1) {
+      const multiMatch = products.filter(p => {
+        const haystack = `${p.productNo} ${p.description} ${p.name} ${p.finish} ${p.wheelType} ${p.boltPattern}`.toLowerCase();
+        return words.every(w => haystack.includes(w));
+      });
+      if (multiMatch.length > 0) return multiMatch.sort((a, b) => a.priceNum - b.priceNum);
+    }
+
+    // 4. Fuzzy search as last resort
     return fuse.search(query).map(r => r.item);
   }, [query, products, fuse]);
 
