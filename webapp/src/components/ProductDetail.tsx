@@ -1,5 +1,6 @@
 import { AuthProvider, useAuth } from './auth/AuthProvider';
 import PriceDisplay from './auth/PriceDisplay';
+import WheelVisualizerModal from './WheelVisualizerModal';
 
 interface Product {
   id: string;
@@ -84,7 +85,7 @@ function ProductDetailInner({ product, vehicles, specs }: Props) {
         </div>
 
         {/* CTA */}
-        <div className="flex gap-2 mb-4 justify-center md:justify-start">
+        <div className="flex gap-2 mb-3 justify-center md:justify-start">
           <a
             href={`mailto:james@gtatiredistributor.ca?subject=Inquiry: ${product.productNo}&body=Hi, I'm interested in ${product.description} (${product.productNo}).`}
             className="bg-[var(--color-primary-600)] hover:bg-[var(--color-primary-700)] text-white font-medium py-2 px-5 rounded-lg text-sm transition-colors"
@@ -95,6 +96,17 @@ function ProductDetailInner({ product, vehicles, specs }: Props) {
             Call Us
           </a>
         </div>
+
+        {/* See on Your Car */}
+        {vehicles.length > 0 && product.image && (
+          <div className="mb-4">
+            <WheelVisualizerModal
+              wheelImage={product.image}
+              wheelName={product.name || product.description}
+              vehicles={vehicles}
+            />
+          </div>
+        )}
 
         {/* Specs */}
         <div className="bg-[var(--color-dark-900)] border border-[var(--color-dark-700)]/50 rounded-lg overflow-hidden">
