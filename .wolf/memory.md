@@ -262,3 +262,27 @@
 | 09:46 | Edited webapp/src/components/ProductDetail.tsx | expanded (+11 lines) | ~336 |
 | 09:47 | Session end: 140 writes across 44 files (scrape-alltire-wheels.js, scrape-alltire-tires.js, global.css, Layout.astro, Header.astro) | 43 reads | ~84361 tok |
 | 09:50 | Edited webapp/src/components/WheelVisualizerModal.tsx | CSS: group-hover | ~265 |
+| 09:51 | Session end: 141 writes across 44 files (scrape-alltire-wheels.js, scrape-alltire-tires.js, global.css, Layout.astro, Header.astro) | 43 reads | ~84626 tok |
+| 09:52 | Session end: 141 writes across 44 files (scrape-alltire-wheels.js, scrape-alltire-tires.js, global.css, Layout.astro, Header.astro) | 43 reads | ~84626 tok |
+| 11:22 | Session end: 141 writes across 44 files (scrape-alltire-wheels.js, scrape-alltire-tires.js, global.css, Layout.astro, Header.astro) | 43 reads | ~84626 tok |
+| 11:24 | Edited scrapers/build-database.js | expanded (+6 lines) | ~248 |
+| 11:24 | Edited scrapers/build-database.js | ceil() → round() | ~93 |
+| 11:24 | Session end: 143 writes across 44 files (scrape-alltire-wheels.js, scrape-alltire-tires.js, global.css, Layout.astro, Header.astro) | 44 reads | ~87071 tok |
+| 11:27 | Edited scrapers/build-database.js | 4→7 lines | ~137 |
+| 11:27 | Edited scrapers/build-database.js | 4→4 lines | ~60 |
+| 11:27 | Edited scrapers/build-database.js | inline fix | ~3 |
+| 11:27 | Edited webapp/src/components/VehicleResults.tsx | inline fix | ~3 |
+| 11:27 | Edited webapp/src/components/VehicleResults.tsx | inline fix | ~3 |
+| 11:27 | Edited webapp/src/components/search/SmartSearchResults.tsx | inline fix | ~3 |
+| 11:27 | Edited webapp/src/components/search/SmartSearchResults.tsx | inline fix | ~3 |
+| 11:28 | Edited webapp/src/components/ProductCard.astro | 2→3 lines | ~15 |
+| 11:28 | Edited webapp/src/components/ProductCard.astro | inline fix | ~29 |
+| 11:28 | Edited webapp/src/components/ProductCard.astro | 6→9 lines | ~96 |
+| 11:28 | Edited webapp/src/pages/wheels.astro | 1→2 lines | ~14 |
+| 11:28 | Edited webapp/src/pages/wheels/[id].astro | 1→2 lines | ~15 |
+| 11:28 | Edited webapp/src/components/ProductDetail.tsx | inline fix | ~5 |
+| 11:28 | Edited webapp/src/components/ProductDetail.tsx | inline fix | ~29 |
+| 11:28 | Edited scrapers/build-database.js | 7→9 lines | ~175 |
+| 11:28 | Edited scrapers/build-database.js | 4→6 lines | ~88 |
+| 11:29 | Created webapp/src/components/auth/PriceDisplay.tsx | — | ~500 |
+| 11:29 | Edited webapp/src/components/ProductDetail.tsx | inline fix | ~38 |

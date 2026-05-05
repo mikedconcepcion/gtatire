@@ -10,7 +10,7 @@ interface Product {
   description: string;
   image: string;
   msrp: string;
-  msrpNum: number;
+  priceNum: number;
   dealerPrice: string;
   stock: string;
   hubCentric: boolean;
@@ -81,7 +81,7 @@ function ProductDetailInner({ product, vehicles, specs }: Props) {
 
         {/* Price — auth aware */}
         <div className="mb-3 flex justify-center md:justify-start">
-          <PriceDisplay msrp={product.msrp} dealerPrice={product.dealerPrice} stock={product.stock} />
+          <PriceDisplay price={product.price} compareAt={product.compareAt} distPrice={product.distPrice} stock={product.stock} />
         </div>
 
         {/* CTA */}

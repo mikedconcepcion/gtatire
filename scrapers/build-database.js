@@ -99,6 +99,16 @@ function buildDatabase() {
 
     const specs = parseWheelDescription(raw.description);
 
+    // Pricing strategy:
+    // Alltire MSRP = public retail price
+    // Our public price = MSRP - 10% (what customers see)
+    // Our distributor price = MSRP - 25% (what logged-in sub-distributors pay)
+    // Our cost = ~40-50% off MSRP (DC dealer cost — never exposed)
+    const alltireMsrp = parseFloat((raw.msrp || '').replace(/[$,]/g, '')) || 0;
+    const ourPrice = alltireMsrp > 0 ? Math.round(alltireMsrp * 0.90 * 100) / 100 : 0;
+    const distPrice = alltireMsrp > 0 ? Math.round(alltireMsrp * 0.75 * 100) / 100 : 0;
+    const alltireMsrpDisplay = alltireMsrp; // shown as "Compare at" strikethrough
+
     const product = {
       id: `alltire-${key}`,
       productNo: key,
@@ -108,9 +118,12 @@ function buildDatabase() {
       name: specs.name || raw.wheelType || '',
       description: raw.description || '',
       image: raw.image || '',
-      msrp: raw.msrp || '',
-      msrpNum: parseFloat((raw.msrp || '').replace(/[$,]/g, '')) || 0,
-      dealerPrice: raw.dealerPrice || '',
+      price: ourPrice > 0 ? `$${ourPrice.toFixed(2)}` : '',
+      priceNum: ourPrice,
+      distPrice: distPrice > 0 ? `$${distPrice.toFixed(2)}` : '',
+      distPriceNum: distPrice,
+      compareAt: alltireMsrpDisplay > 0 ? `$${alltireMsrpDisplay.toFixed(2)}` : '',
+      compareAtNum: alltireMsrpDisplay,
       stock: raw.stock || '',
       hubCentric: raw.hubCentric || false,
       // Parsed specs
@@ -132,7 +145,7 @@ function buildDatabase() {
   const products = Array.from(productMap.values());
 
   // Sort by MSRP
-  products.sort((a, b) => a.msrpNum - b.msrpNum);
+  products.sort((a, b) => a.priceNum - b.priceNum);
 
   // ─── 3. Build fitment index ───
   const fitment = {};
@@ -195,8 +208,8 @@ function buildDatabase() {
     byDiameter: diameters,
     topFinishes: Object.entries(finishes).sort((a, b) => b[1] - a[1]).slice(0, 20),
     priceRange: {
-      min: products.filter(p => p.msrpNum > 0).reduce((min, p) => Math.min(min, p.msrpNum), Infinity),
-      max: products.reduce((max, p) => Math.max(max, p.msrpNum), 0),
+      min: products.filter(p => p.priceNum > 0).reduce((min, p) => Math.min(min, p.priceNum), Infinity),
+      max: products.reduce((max, p) => Math.max(max, p.priceNum), 0),
     },
     lastUpdated: new Date().toISOString(),
   };

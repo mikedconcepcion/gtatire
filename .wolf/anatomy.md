@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-05T01:50:07.147Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-05T03:29:08.594Z
 > Files: 56 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -32,7 +32,7 @@
 
 ## scrapers/
 
-- `build-database.js` — Build a normalized database from raw scraped data. (~2104 tok)
+- `build-database.js` — Build a normalized database from raw scraped data. (~2328 tok)
 - `config.js` — Supplier credentials and URLs (~123 tok)
 - `download-images.js` — fs: ensureDir, downloadImage, delay, downloadAllImages (~1196 tok)
 - `mobile-screenshots.js` — Declares browser (~301 tok)
@@ -62,9 +62,9 @@
 
 - `Footer.astro` — Astro: Footer (~580 tok)
 - `Header.astro` — Astro: Header (~818 tok)
-- `ProductCard.astro` — Astro: ProductCard (~763 tok)
-- `ProductDetail.tsx` — ProductDetailInner (~1959 tok)
-- `VehicleResults.tsx` — StockBadge (~2452 tok)
+- `ProductCard.astro` — Astro: ProductCard (~805 tok)
+- `ProductDetail.tsx` — ProductDetailInner (~1967 tok)
+- `VehicleResults.tsx` — StockBadge (~2453 tok)
 - `WheelVisualizer.tsx` — COLORS (~1787 tok)
 - `WheelVisualizerModal.tsx` — COLORS (~3106 tok)
 
@@ -73,11 +73,11 @@
 - `AuthProvider.tsx` — AuthContext (~320 tok)
 - `LoginForm.tsx` — LoginForm — renders form (~827 tok)
 - `LoginPage.tsx` — LoginPage (~58 tok)
-- `PriceDisplay.tsx` — PriceDisplay (~439 tok)
+- `PriceDisplay.tsx` — PriceDisplay (~500 tok)
 
 ## webapp/src/components/search/
 
-- `SmartSearchResults.tsx` — StockBadge — renders form (~2024 tok)
+- `SmartSearchResults.tsx` — StockBadge — renders form (~2025 tok)
 - `VehicleSearch.tsx` — POPULAR_VEHICLES — renders form (~1908 tok)
 
 ## webapp/src/data/
@@ -96,7 +96,7 @@
 - `login.astro` — Astro: login (~74 tok)
 - `search.astro` — Astro: search (~156 tok)
 - `tires.astro` — Placeholder — tire data will come from the tire scraper (~502 tok)
-- `wheels.astro` — Load products at build time (~919 tok)
+- `wheels.astro` — Load products at build time (~929 tok)
 
 ## webapp/src/pages/vehicle/[year]/[make]/
 
@@ -104,7 +104,7 @@
 
 ## webapp/src/pages/wheels/
 
-- `[id].astro` — Astro: [id] (~1070 tok)
+- `[id].astro` — Astro: [id] (~1081 tok)
 
 ## webapp/src/styles/
 

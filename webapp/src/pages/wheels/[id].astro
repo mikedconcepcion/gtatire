@@ -82,7 +82,8 @@ export async function getStaticPaths() {
                 model={p.name || p.description.split(' ')[0]}
                 description={p.description}
                 size={p.boltPattern ? `${p.rimDiameter}" · ${p.boltPattern}` : `${p.rimDiameter}"`}
-                msrp={p.msrp}
+                price={p.price}
+                compareAt={p.compareAt}
                 stock={p.stock}
                 type={p.wheelType}
                 category="wheel"

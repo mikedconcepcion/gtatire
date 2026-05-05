@@ -9,7 +9,7 @@ interface Product {
   description: string;
   image: string;
   msrp: string;
-  msrpNum: number;
+  priceNum: number;
   stock: string;
   hubCentric: boolean;
   rimDiameter: number | null;
@@ -87,7 +87,7 @@ export default function SmartSearchResults() {
       });
 
       // Sort by price
-      return filtered.sort((a, b) => a.msrpNum - b.msrpNum);
+      return filtered.sort((a, b) => a.priceNum - b.priceNum);
     }
 
     // Otherwise use fuzzy search
@@ -158,7 +158,7 @@ export default function SmartSearchResults() {
                   <h3 className="text-white font-semibold text-xs line-clamp-1">{p.name || p.description.split(' ')[0]}</h3>
                   <p className="text-dark-400 text-[11px] line-clamp-1 mb-2">{p.description}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-white font-bold text-sm">{p.msrp}</span>
+                    <span className="text-white font-bold text-sm">{p.price}</span>
                     <StockBadge stock={p.stock} />
                   </div>
                 </div>

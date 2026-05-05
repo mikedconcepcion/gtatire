@@ -8,7 +8,7 @@ interface Product {
   description: string;
   image: string;
   msrp: string;
-  msrpNum: number;
+  priceNum: number;
   stock: string;
   hubCentric: boolean;
   rimDiameter: number | null;
@@ -62,8 +62,8 @@ export default function VehicleResults({ products, availableDiameters }: Props) 
     if (activeType === 'alloy') result = result.filter(p => p.wheelType === 'Alloy Wheel');
     if (activeDiameter !== 'all') result = result.filter(p => String(p.rimDiameter) === activeDiameter);
 
-    if (sort === 'price-asc') result.sort((a, b) => a.msrpNum - b.msrpNum);
-    if (sort === 'price-desc') result.sort((a, b) => b.msrpNum - a.msrpNum);
+    if (sort === 'price-asc') result.sort((a, b) => a.priceNum - b.priceNum);
+    if (sort === 'price-desc') result.sort((a, b) => b.priceNum - a.priceNum);
     if (sort === 'stock') result.sort((a, b) => {
       const sa = a.stock === '20+' ? 99 : parseInt(a.stock) || 0;
       const sb = b.stock === '20+' ? 99 : parseInt(b.stock) || 0;
@@ -170,7 +170,7 @@ export default function VehicleResults({ products, availableDiameters }: Props) 
                   {p.rimDiameter}" · {p.boltPattern}
                 </p>
                 <div className="flex items-end justify-between">
-                  <div className="text-white font-bold text-sm sm:text-lg">{p.msrp}</div>
+                  <div className="text-white font-bold text-sm sm:text-lg">{p.price}</div>
                   <StockBadge stock={p.stock} />
                 </div>
               </div>
