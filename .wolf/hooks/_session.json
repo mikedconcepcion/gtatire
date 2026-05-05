@@ -63,8 +63,8 @@
       "first_read": "2026-05-04T22:54:12.659Z"
     },
     "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx": {
-      "count": 5,
-      "tokens": 2024,
+      "count": 6,
+      "tokens": 2025,
       "first_read": "2026-05-04T23:03:11.958Z"
     },
     "E:/James/gtatire/webapp/src/components/Header.astro": {
@@ -1189,6 +1189,12 @@
       "action": "edit",
       "tokens": 38,
       "at": "2026-05-05T03:29:08.613Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
+      "action": "edit",
+      "tokens": 131,
+      "at": "2026-05-05T03:43:37.599Z"
     }
   ],
   "edit_counts": {
@@ -1224,7 +1230,7 @@
     ".gitignore": 1,
     "webapp/astro.config.mjs": 1,
     ".github/workflows/deploy.yml": 1,
-    "webapp/src/components/search/SmartSearchResults.tsx": 13,
+    "webapp/src/components/search/SmartSearchResults.tsx": 14,
     "webapp/src/pages/404.astro": 1,
     "webapp/public/robots.txt": 1,
     "C:/Users/miked/.claude/projects/E--James-gtatire/memory/project_overview.md": 1,
@@ -1239,7 +1245,7 @@
   },
   "anatomy_hits": 21,
   "anatomy_misses": 23,
-  "repeated_reads_warned": 44,
+  "repeated_reads_warned": 45,
   "cerebrum_warnings": 0,
-  "stop_count": 71
+  "stop_count": 73
 }

@@ -624,6 +624,22 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-05T03:28:26.147Z"
+    },
+    {
+      "id": "bug-040",
+      "timestamp": "2026-05-05T03:43:37.603Z",
+      "error_message": "CSS fix: name, threshold",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "name: 'productNo', weight: 1 → 'price', weight: 1; threshold: 0.4, → 0.5,",
+      "fix": "Changed name: 'productNo', weight: 1 → 'price', weight: 1; threshold: 0.4, → 0.5,",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-05T03:43:37.603Z"
     }
   ]
 }

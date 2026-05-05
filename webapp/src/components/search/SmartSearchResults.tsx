@@ -50,15 +50,18 @@ export default function SmartSearchResults() {
   // Fuse search
   const fuse = useMemo(() => new Fuse(products, {
     keys: [
+      { name: 'productNo', weight: 5 },
       { name: 'description', weight: 3 },
-      { name: 'name', weight: 2 },
-      { name: 'wheelType', weight: 1 },
+      { name: 'name', weight: 3 },
       { name: 'boltPattern', weight: 2 },
-      { name: 'finish', weight: 1 },
-      { name: 'productNo', weight: 1 },
+      { name: 'finish', weight: 2 },
+      { name: 'wheelType', weight: 1 },
+      { name: 'price', weight: 1 },
     ],
-    threshold: 0.4,
+    threshold: 0.5,
     includeScore: true,
+    ignoreLocation: true,
+    minMatchCharLength: 2,
   }), [products]);
 
   const results = useMemo(() => {
