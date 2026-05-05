@@ -49,7 +49,7 @@ export default function VehicleSearch() {
   function handleSmartSearch(e: React.FormEvent) {
     e.preventDefault();
     if (smartQuery.trim()) {
-      window.location.href = import.meta.env.BASE_URL + `/search?q=${encodeURIComponent(smartQuery.trim())}`;
+      window.location.href = import.meta.env.BASE_URL + `/search/?q=${encodeURIComponent(smartQuery.trim())}`;
     }
   }
 

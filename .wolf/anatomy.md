@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-05T03:43:37.582Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-05T03:49:49.005Z
 > Files: 56 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -32,7 +32,7 @@
 
 ## scrapers/
 
-- `build-database.js` — Build a normalized database from raw scraped data. (~2328 tok)
+- `build-database.js` — Build a normalized database from raw scraped data. (~2337 tok)
 - `config.js` — Supplier credentials and URLs (~123 tok)
 - `download-images.js` — fs: ensureDir, downloadImage, delay, downloadAllImages (~1196 tok)
 - `mobile-screenshots.js` — Declares browser (~301 tok)

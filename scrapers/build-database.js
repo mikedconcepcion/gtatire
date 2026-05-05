@@ -105,8 +105,8 @@ function buildDatabase() {
     // Our distributor price = MSRP - 25% (what logged-in sub-distributors pay)
     // Our cost = ~40-50% off MSRP (DC dealer cost — never exposed)
     const alltireMsrp = parseFloat((raw.msrp || '').replace(/[$,]/g, '')) || 0;
-    const ourPrice = alltireMsrp > 0 ? Math.round(alltireMsrp * 0.90 * 100) / 100 : 0;
-    const distPrice = alltireMsrp > 0 ? Math.round(alltireMsrp * 0.75 * 100) / 100 : 0;
+    const ourPrice = alltireMsrp > 0 ? Math.round(alltireMsrp * 0.75 * 100) / 100 : 0;   // 25% off MSRP
+    const distPrice = alltireMsrp > 0 ? Math.round(alltireMsrp * 0.60 * 100) / 100 : 0; // 40% off MSRP
     const alltireMsrpDisplay = alltireMsrp; // shown as "Compare at" strikethrough
 
     const product = {
