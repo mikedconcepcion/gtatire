@@ -448,6 +448,70 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-05T01:07:44.139Z"
+    },
+    {
+      "id": "bug-029",
+      "timestamp": "2026-05-05T01:13:35.370Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/VehicleResults.tsx",
+      "root_cause": "9 lines replaced/restructured",
+      "fix": "Rewrote 19→13 lines (9 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-05T01:13:35.370Z"
+    },
+    {
+      "id": "bug-030",
+      "timestamp": "2026-05-05T01:13:49.343Z",
+      "error_message": "CSS fix: sm",
+      "file": "webapp/src/components/VehicleResults.tsx",
+      "root_cause": "sm: -mx-6 px-4 sm:px-6 py-3\"> → text-sm font-medium shrink-0\">Filter:</span>",
+      "fix": "Changed sm: -mx-6 px-4 sm:px-6 py-3\"> → text-sm font-medium shrink-0\">Filter:</span>",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-05T01:13:49.343Z"
+    },
+    {
+      "id": "bug-031",
+      "timestamp": "2026-05-05T01:13:55.970Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/VehicleResults.tsx",
+      "root_cause": "Had \"ml-auto flex gap-1.5\"",
+      "fix": "Changed to \"ml-auto flex gap-1.5 shrink-0\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-05T01:13:55.970Z"
+    },
+    {
+      "id": "bug-032",
+      "timestamp": "2026-05-05T01:14:34.921Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/ProductDetail.tsx",
+      "root_cause": "Had \"grid grid-cols-1 md:grid-cols-5 gap-5 mb-8\"",
+      "fix": "Changed to \"grid grid-cols-1 md:grid-cols-5 gap-4 sm:gap-5 mb",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-05T01:14:34.921Z"
     }
   ]
 }

@@ -45,9 +45,9 @@ function ProductDetailInner({ product, vehicles, specs }: Props) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-5 gap-5 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-5 gap-4 sm:gap-5 mb-8">
       {/* Image */}
-      <div className="md:col-span-2 bg-white border border-[var(--color-dark-700)]/50 rounded-xl p-4 flex items-center justify-center aspect-square max-h-[280px]">
+      <div className="md:col-span-2 bg-white border border-[var(--color-dark-700)]/50 rounded-xl p-4 flex items-center justify-center max-h-[220px] sm:max-h-[280px] sm:aspect-square">
         {product.image ? (
           <img src={product.image} alt={product.description} className="max-w-full max-h-full object-contain mix-blend-multiply" />
         ) : (
@@ -98,9 +98,9 @@ function ProductDetailInner({ product, vehicles, specs }: Props) {
 
         {/* Specs */}
         <div className="bg-[var(--color-dark-900)] border border-[var(--color-dark-700)]/50 rounded-lg overflow-hidden">
-          <div className="grid grid-cols-2 text-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-2 text-xs sm:text-sm">
             {specs.map((s, i) => (
-              <div key={s.label} className={`flex justify-between px-4 py-2 ${i % 2 === 0 ? 'border-r border-[var(--color-dark-700)]/30' : ''} ${i < specs.length - 2 ? 'border-b border-[var(--color-dark-700)]/30' : ''}`}>
+              <div key={s.label} className={`flex justify-between px-3 sm:px-4 py-2 border-b border-[var(--color-dark-700)]/30 ${i % 2 === 0 ? 'sm:border-r' : ''} last:border-b-0`}>
                 <span className="text-[var(--color-dark-500)]">{s.label}</span>
                 <span className="text-white font-medium">{s.value}</span>
               </div>

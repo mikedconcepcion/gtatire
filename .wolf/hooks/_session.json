@@ -8,7 +8,7 @@
       "first_read": "2026-05-04T08:25:29.708Z"
     },
     "E:/James/gtatire/webapp/src/styles/global.css": {
-      "count": 2,
+      "count": 3,
       "tokens": 322,
       "first_read": "2026-05-04T08:44:03.201Z"
     },
@@ -28,8 +28,8 @@
       "first_read": "2026-05-04T09:31:50.930Z"
     },
     "E:/James/gtatire/webapp/src/components/ProductCard.astro": {
-      "count": 6,
-      "tokens": 802,
+      "count": 7,
+      "tokens": 815,
       "first_read": "2026-05-04T10:20:14.508Z"
     },
     "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx": {
@@ -63,8 +63,8 @@
       "first_read": "2026-05-04T22:54:12.659Z"
     },
     "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx": {
-      "count": 4,
-      "tokens": 2016,
+      "count": 5,
+      "tokens": 2024,
       "first_read": "2026-05-04T23:03:11.958Z"
     },
     "E:/James/gtatire/webapp/src/components/Header.astro": {
@@ -88,8 +88,8 @@
       "first_read": "2026-05-04T23:16:29.022Z"
     },
     "E:/James/gtatire/webapp/src/components/ProductDetail.tsx": {
-      "count": 2,
-      "tokens": 1786,
+      "count": 3,
+      "tokens": 1787,
       "first_read": "2026-05-04T23:16:29.173Z"
     },
     "E:/James/gtatire/webapp/src/layouts/Layout.astro": {
@@ -98,7 +98,7 @@
       "first_read": "2026-05-04T23:40:51.885Z"
     },
     "E:/James/gtatire/webapp/src/pages/wheels.astro": {
-      "count": 1,
+      "count": 2,
       "tokens": 936,
       "first_read": "2026-05-04T23:40:52.516Z"
     },
@@ -128,9 +128,29 @@
       "first_read": "2026-05-04T23:54:12.431Z"
     },
     "E:/James/gtatire/webapp/src/components/VehicleResults.tsx": {
-      "count": 1,
-      "tokens": 2511,
+      "count": 3,
+      "tokens": 2433,
       "first_read": "2026-05-05T01:06:59.328Z"
+    },
+    "E:/James/gtatire/scrapers/screenshots/mobile/home.jpg": {
+      "count": 1,
+      "tokens": 0,
+      "first_read": "2026-05-05T01:12:29.732Z"
+    },
+    "E:/James/gtatire/scrapers/screenshots/mobile/wheels.jpg": {
+      "count": 2,
+      "tokens": 0,
+      "first_read": "2026-05-05T01:12:29.784Z"
+    },
+    "E:/James/gtatire/scrapers/screenshots/mobile/vehicle.jpg": {
+      "count": 2,
+      "tokens": 0,
+      "first_read": "2026-05-05T01:12:30.101Z"
+    },
+    "E:/James/gtatire/scrapers/screenshots/mobile/product.jpg": {
+      "count": 2,
+      "tokens": 0,
+      "first_read": "2026-05-05T01:12:30.355Z"
     }
   },
   "files_written": [
@@ -859,21 +879,75 @@
       "action": "edit",
       "tokens": 92,
       "at": "2026-05-05T01:07:44.136Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/mobile-screenshots.js",
+      "action": "create",
+      "tokens": 301,
+      "at": "2026-05-05T01:11:48.287Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/pages/wheels.astro",
+      "action": "edit",
+      "tokens": 384,
+      "at": "2026-05-05T01:13:02.933Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/ProductCard.astro",
+      "action": "edit",
+      "tokens": 143,
+      "at": "2026-05-05T01:13:17.926Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
+      "action": "edit",
+      "tokens": 198,
+      "at": "2026-05-05T01:13:35.366Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
+      "action": "edit",
+      "tokens": 113,
+      "at": "2026-05-05T01:13:49.339Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
+      "action": "edit",
+      "tokens": 25,
+      "at": "2026-05-05T01:13:55.967Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/styles/global.css",
+      "action": "edit",
+      "tokens": 75,
+      "at": "2026-05-05T01:14:08.851Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/ProductDetail.tsx",
+      "action": "edit",
+      "tokens": 189,
+      "at": "2026-05-05T01:14:23.438Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/ProductDetail.tsx",
+      "action": "edit",
+      "tokens": 80,
+      "at": "2026-05-05T01:14:34.916Z"
     }
   ],
   "edit_counts": {
     "scrapers/scrape-alltire-wheels.js": 6,
     "scrapers/scrape-alltire-tires.js": 3,
-    "webapp/src/styles/global.css": 1,
+    "webapp/src/styles/global.css": 2,
     "webapp/src/layouts/Layout.astro": 2,
     "webapp/src/components/Header.astro": 8,
     "webapp/src/components/Footer.astro": 3,
     "webapp/src/components/search/VehicleSearch.tsx": 10,
     "webapp/src/pages/index.astro": 4,
     "webapp/src/data/products.ts": 2,
-    "webapp/src/components/ProductCard.astro": 7,
+    "webapp/src/components/ProductCard.astro": 8,
     "webapp/src/pages/tires.astro": 3,
-    "webapp/src/pages/wheels.astro": 2,
+    "webapp/src/pages/wheels.astro": 3,
     "webapp/src/pages/search.astro": 2,
     "webapp/src/pages/contact.astro": 2,
     "webapp/src/pages/login.astro": 3,
@@ -884,12 +958,12 @@
     "scrapers/scrape-alltire-fast.js": 1,
     "scrapers/build-database.js": 1,
     "webapp/src/pages/vehicle/[year]/[make]/[model].astro": 4,
-    "webapp/src/components/VehicleResults.tsx": 7,
+    "webapp/src/components/VehicleResults.tsx": 10,
     "webapp/src/pages/wheels/[id].astro": 15,
     "webapp/src/components/auth/AuthProvider.tsx": 1,
     "webapp/src/components/auth/LoginForm.tsx": 2,
     "webapp/src/components/auth/PriceDisplay.tsx": 1,
-    "webapp/src/components/ProductDetail.tsx": 3,
+    "webapp/src/components/ProductDetail.tsx": 5,
     "webapp/src/components/auth/LoginPage.tsx": 1,
     ".gitignore": 1,
     "webapp/astro.config.mjs": 1,
@@ -902,11 +976,12 @@
     "C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_basepath.md": 1,
     "C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_competitive_data.md": 1,
     "C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_design.md": 1,
-    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/MEMORY.md": 1
+    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/MEMORY.md": 1,
+    "scrapers/mobile-screenshots.js": 1
   },
   "anatomy_hits": 19,
-  "anatomy_misses": 7,
-  "repeated_reads_warned": 27,
+  "anatomy_misses": 11,
+  "repeated_reads_warned": 37,
   "cerebrum_warnings": 0,
-  "stop_count": 61
+  "stop_count": 62
 }

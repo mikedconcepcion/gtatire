@@ -57,20 +57,14 @@ const stockLabel = inStock ? 'In Stock' : contactUs ? 'Contact Us' : lowStock ? 
   </div>
 
   <!-- Info -->
-  <div class="p-4">
-    <div class="text-primary-400 text-xs font-semibold uppercase tracking-wider mb-1">{brand}</div>
-    <h3 class="text-white font-semibold text-sm mb-1 line-clamp-1 group-hover:text-primary-300 transition-colors">{model}</h3>
-    <p class="text-dark-400 text-xs line-clamp-1 mb-3">{description}</p>
+  <div class="p-3 sm:p-4">
+    <h3 class="text-white font-semibold text-xs sm:text-sm mb-0.5 line-clamp-1 group-hover:text-primary-300 transition-colors">{model}</h3>
+    <p class="text-dark-400 text-[11px] line-clamp-1 mb-2">{size}</p>
 
-    <div class="flex items-center justify-between">
-      <div>
-        <div class="text-white font-bold text-lg">{msrp}</div>
-        <div class="text-dark-500 text-xs">{size}</div>
-      </div>
-      <div class="text-right">
-        <div class={`text-xs font-medium ${stockColor}`}>
-          {stockLabel}
-        </div>
+    <div class="flex items-end justify-between">
+      <div class="text-white font-bold text-sm sm:text-lg">{msrp}</div>
+      <div class={`text-[10px] sm:text-xs font-medium ${stockColor}`}>
+        {stockLabel}
       </div>
     </div>
   </div>

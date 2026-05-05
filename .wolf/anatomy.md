@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-05T01:07:44.119Z
-> Files: 53 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-05T01:14:34.901Z
+> Files: 54 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -35,6 +35,7 @@
 - `build-database.js` — Build a normalized database from raw scraped data. (~2104 tok)
 - `config.js` — Supplier credentials and URLs (~123 tok)
 - `download-images.js` — fs: ensureDir, downloadImage, delay, downloadAllImages (~1196 tok)
+- `mobile-screenshots.js` — Declares browser (~301 tok)
 - `recon-alltire.js` — Declares config (~1122 tok)
 - `recon-rwc.js` — Declares config (~1033 tok)
 - `recon-superspeed.js` — Declares config (~921 tok)
@@ -61,9 +62,9 @@
 
 - `Footer.astro` — Astro: Footer (~580 tok)
 - `Header.astro` — Astro: Header (~818 tok)
-- `ProductCard.astro` — Astro: ProductCard (~815 tok)
-- `ProductDetail.tsx` — ProductDetailInner (~1787 tok)
-- `VehicleResults.tsx` — StockBadge (~2520 tok)
+- `ProductCard.astro` — Astro: ProductCard (~763 tok)
+- `ProductDetail.tsx` — ProductDetailInner (~1791 tok)
+- `VehicleResults.tsx` — StockBadge (~2452 tok)
 
 ## webapp/src/components/auth/
 
@@ -93,7 +94,7 @@
 - `login.astro` — Astro: login (~74 tok)
 - `search.astro` — Astro: search (~156 tok)
 - `tires.astro` — Placeholder — tire data will come from the tire scraper (~502 tok)
-- `wheels.astro` — Load products at build time (~936 tok)
+- `wheels.astro` — Load products at build time (~919 tok)
 
 ## webapp/src/pages/vehicle/[year]/[make]/
 
@@ -105,4 +106,4 @@
 
 ## webapp/src/styles/
 
-- `global.css` — Styles: 2 rules, 24 vars (~322 tok)
+- `global.css` — Styles: 4 rules, 24 vars (~371 tok)

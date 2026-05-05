@@ -81,11 +81,11 @@ export default function VehicleResults({ products, availableDiameters }: Props) 
     <div>
       {/* Filter bar */}
       <div className="bg-dark-950 border-b border-dark-700/30 sticky top-16 z-40 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3">
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="text-dark-500 text-sm font-medium">Filter:</span>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <span className="text-dark-500 text-xs sm:text-sm font-medium shrink-0">Filter:</span>
 
-          {/* Diameter pills */}
-          <div className="flex flex-wrap gap-1.5">
+          {/* Diameter pills — scroll on mobile */}
+          <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
             <button
               onClick={() => setActiveDiameter('all')}
               className={`${pillBase} ${activeDiameter === 'all' ? pillActive : pillInactive}`}
@@ -104,7 +104,7 @@ export default function VehicleResults({ products, availableDiameters }: Props) 
           </div>
 
           {/* Type pills */}
-          <div className="ml-auto flex gap-1.5">
+          <div className="ml-auto flex gap-1.5 shrink-0">
             <button
               onClick={() => setActiveType(activeType === 'steel' ? 'all' : 'steel')}
               className={`${pillBase} ${activeType === 'steel' ? pillActive : pillInactive}`}
@@ -162,22 +162,16 @@ export default function VehicleResults({ products, availableDiameters }: Props) 
               </div>
 
               {/* Info */}
-              <div className="p-4">
-                <div className="text-primary-400 text-xs font-semibold uppercase tracking-wider mb-1">{p.wheelType}</div>
-                <h3 className="text-white font-semibold text-sm mb-1 line-clamp-1 group-hover:text-primary-300 transition-colors">
+              <div className="p-3 sm:p-4">
+                <h3 className="text-white font-semibold text-xs sm:text-sm mb-0.5 line-clamp-1 group-hover:text-primary-300 transition-colors">
                   {p.name || p.description.split(' ')[0]}
                 </h3>
-                <p className="text-dark-400 text-xs line-clamp-1 mb-3">{p.description}</p>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-white font-bold text-lg">{p.msrp}</div>
-                    <div className="text-dark-500 text-xs">
-                      {p.rimDiameter}" · {p.boltPattern}
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <StockBadge stock={p.stock} />
-                  </div>
+                <p className="text-dark-400 text-[11px] line-clamp-1 mb-2">
+                  {p.rimDiameter}" · {p.boltPattern}
+                </p>
+                <div className="flex items-end justify-between">
+                  <div className="text-white font-bold text-sm sm:text-lg">{p.msrp}</div>
+                  <StockBadge stock={p.stock} />
                 </div>
               </div>
             </a>
