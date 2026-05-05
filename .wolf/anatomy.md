@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-05T03:53:14.707Z
-> Files: 56 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-05T05:26:01.801Z
+> Files: 57 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -32,7 +32,7 @@
 
 ## scrapers/
 
-- `build-database.js` — Build a normalized database from raw scraped data. (~2337 tok)
+- `build-database.js` — Build a normalized database from raw scraped data. (~2389 tok)
 - `config.js` — Supplier credentials and URLs (~123 tok)
 - `download-images.js` — fs: ensureDir, downloadImage, delay, downloadAllImages (~1196 tok)
 - `mobile-screenshots.js` — Declares browser (~301 tok)
@@ -40,7 +40,7 @@
 - `recon-rwc.js` — Declares config (~1033 tok)
 - `recon-superspeed.js` — Declares config (~921 tok)
 - `recon-superspeed2.js` — Declares config (~1155 tok)
-- `scrape-alltire-fast.js` — fs: delay, save, loadIfExists, parseWheelHtml (~2094 tok)
+- `scrape-alltire-fast.js` — fs: delay, save, loadIfExists, parseWheelHtml (~2149 tok)
 - `scrape-alltire-tires.js` — fs: delay, save, loadIfExists + 4 more (~3777 tok)
 - `scrape-alltire-wheels.js` — fs: delay, save, loadIfExists, scrapeWheelTree, scrapeWheelProducts (~2902 tok)
 - `scrape-alltire.js` — fs: delay, login, scrapeWheelTree, scrapeWheelProducts, scrapeTires (~2524 tok)
@@ -48,6 +48,7 @@
 - `test-alltire.js` — fs: delay (~2230 tok)
 - `test-api-direct.js` — config: delay (~746 tok)
 - `test-column-map.js` — config: delay (~790 tok)
+- `test-dc-price.js` — Declares config (~431 tok)
 - `test-wheel-extract.js` — config: delay (~1027 tok)
 
 ## webapp/

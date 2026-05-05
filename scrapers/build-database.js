@@ -100,14 +100,19 @@ function buildDatabase() {
     const specs = parseWheelDescription(raw.description);
 
     // Pricing strategy:
-    // Alltire MSRP = public retail price
-    // Our public price = MSRP - 10% (what customers see)
-    // Our distributor price = MSRP - 25% (what logged-in sub-distributors pay)
-    // Our cost = ~40-50% off MSRP (DC dealer cost — never exposed)
+    // Public price = Alltire MSRP - 25%
+    // Wholesale (distributor) = Alltire dealer cost (DC) + 20%
+    // Our cost = Alltire DC (never shown to anyone)
     const alltireMsrp = parseFloat((raw.msrp || '').replace(/[$,]/g, '')) || 0;
-    const ourPrice = alltireMsrp > 0 ? Math.round(alltireMsrp * 0.75 * 100) / 100 : 0;   // 25% off MSRP
-    const distPrice = alltireMsrp > 0 ? Math.round(alltireMsrp * 0.60 * 100) / 100 : 0; // 40% off MSRP
-    const alltireMsrpDisplay = alltireMsrp; // shown as "Compare at" strikethrough
+    const alltireDC = parseFloat((raw.dealerPrice || '').replace(/[$,]/g, '')) || 0;
+    const ourPrice = alltireMsrp > 0 ? Math.round(alltireMsrp * 0.75 * 100) / 100 : 0;
+    // Wholesale: DC+20%, but never higher than public price (use 40% off MSRP as cap)
+    const dcBased = alltireDC > 0 ? Math.round(alltireDC * 1.20 * 100) / 100 : 0;
+    const msrpBased = alltireMsrp > 0 ? Math.round(alltireMsrp * 0.60 * 100) / 100 : 0;
+    const distPrice = dcBased > 0 && dcBased < ourPrice
+      ? dcBased
+      : msrpBased;
+    const alltireMsrpDisplay = alltireMsrp;
 
     const product = {
       id: `alltire-${key}`,

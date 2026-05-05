@@ -48,10 +48,15 @@ function parseWheelHtml(html, year, make, model, diameter) {
       }
       return '';
     };
-    // Extract hidden price from id attribute
-    const getPrice = (html) => {
-      const priceMatch = html.match(/id='(\$[^']+)'/);
-      return priceMatch ? priceMatch[1] : getText(html);
+    // Extract dealer cost from the row HTML — hidden in id='$XX.XX' attribute
+    const getDealerCost = (rh) => {
+      const m = rh.match(/id='\$([^']+)'/);
+      return m ? '$' + m[1] : '';
+    };
+    // Extract MSRP from align='right'>$XXX.XX<
+    const getMsrp = (rh) => {
+      const m = rh.match(/align='right'>\$([^<]+)</);
+      return m ? '$' + m[1] : getText(cells[8]);
     };
 
     const product = {
@@ -62,8 +67,8 @@ function parseWheelHtml(html, year, make, model, diameter) {
       image: getImg(cells[4]),
       wheelType: getText(cells[5]),
       description: getText(cells[6]),
-      dealerPrice: getPrice(cells[7]),
-      msrp: getText(cells[8]),
+      dealerPrice: getDealerCost(rowHtml),
+      msrp: getMsrp(rowHtml),
       stock: getText(cells[9]),
       // Metadata
       supplier: 'alltire',
