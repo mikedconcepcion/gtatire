@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-05T01:46:36.614Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-05T01:50:07.147Z
 > Files: 56 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -66,7 +66,7 @@
 - `ProductDetail.tsx` — ProductDetailInner (~1959 tok)
 - `VehicleResults.tsx` — StockBadge (~2452 tok)
 - `WheelVisualizer.tsx` — COLORS (~1787 tok)
-- `WheelVisualizerModal.tsx` — COLORS (~3043 tok)
+- `WheelVisualizerModal.tsx` — COLORS (~3106 tok)
 
 ## webapp/src/components/auth/
 

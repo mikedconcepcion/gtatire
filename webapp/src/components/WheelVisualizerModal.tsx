@@ -109,14 +109,16 @@ export default function WheelVisualizerModal({ wheelImage, wheelName, vehicles }
       {/* Trigger button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="w-full bg-[var(--color-dark-800)] hover:bg-[var(--color-dark-700)] text-[var(--color-dark-300)] hover:text-white py-2.5 rounded-lg text-sm font-medium transition-colors border border-[var(--color-dark-600)] flex items-center justify-center gap-2"
+        className="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 text-white py-3 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-primary-900/30 hover:shadow-primary-800/40 flex items-center justify-center gap-2.5 group"
       >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <rect x="3" y="6" width="18" height="12" rx="2" strokeWidth="1.5" />
-          <circle cx="7.5" cy="15" r="1.5" strokeWidth="1.5" />
-          <circle cx="16.5" cy="15" r="1.5" strokeWidth="1.5" />
+        <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <rect x="2" y="7" width="20" height="11" rx="2" strokeWidth="1.5" />
+          <circle cx="7" cy="15.5" r="2" strokeWidth="1.5" />
+          <circle cx="17" cy="15.5" r="2" strokeWidth="1.5" />
+          <path d="M5 7L7 4h10l2 3" strokeWidth="1.5" strokeLinecap="round" />
         </svg>
         See on Your Car
+        <span className="text-[10px] font-normal opacity-70 ml-1">NEW</span>
       </button>
 
       {/* Modal */}

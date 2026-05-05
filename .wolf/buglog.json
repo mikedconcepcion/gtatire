@@ -528,6 +528,22 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-05T01:19:16.127Z"
+    },
+    {
+      "id": "bug-034",
+      "timestamp": "2026-05-05T01:50:07.169Z",
+      "error_message": "CSS fix: hover",
+      "file": "webapp/src/components/WheelVisualizerModal.tsx",
+      "root_cause": "hover: bg-[var(--color-dark-700)] text-[var(--color-dark-300)] hover:text-white py-2.5 rounded-lg text-sm font-medium transition-colors border border-[var(--color-dark-600)] flex items-center justify-center gap-2\" → from-primary-500 hover:to-primary-600 text-white py-3 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-primary-900/30 hover:shadow-primary-800/40 flex items-center justify-center gap-2.5 group\"",
+      "fix": "Changed hover: bg-[var(--color-dark-700)] text-[var(--color-dark-300)] hover:text-white py-2.5 rounded-lg text-sm font-medium transition-colors border border-[var(--color-dark-600)] flex items-center justify-center gap-2\" → from-primary-500 hover:to-primary-600 text-white py-3 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-primary-900/30 hover:shadow-primary-800/40 flex items-center justify-center gap-2.5 group\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-05T01:50:07.169Z"
     }
   ]
 }
