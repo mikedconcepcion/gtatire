@@ -88,8 +88,8 @@
       "first_read": "2026-05-04T23:16:29.022Z"
     },
     "E:/James/gtatire/webapp/src/components/ProductDetail.tsx": {
-      "count": 3,
-      "tokens": 1787,
+      "count": 4,
+      "tokens": 1791,
       "first_read": "2026-05-04T23:16:29.173Z"
     },
     "E:/James/gtatire/webapp/src/layouts/Layout.astro": {
@@ -151,6 +151,11 @@
       "count": 2,
       "tokens": 0,
       "first_read": "2026-05-05T01:12:30.355Z"
+    },
+    "E:/James/gtatire/webapp/src/components/auth/PriceDisplay.tsx": {
+      "count": 1,
+      "tokens": 430,
+      "first_read": "2026-05-05T01:19:20.566Z"
     }
   },
   "files_written": [
@@ -933,6 +938,18 @@
       "action": "edit",
       "tokens": 80,
       "at": "2026-05-05T01:14:34.916Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/ProductDetail.tsx",
+      "action": "edit",
+      "tokens": 889,
+      "at": "2026-05-05T01:19:16.123Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/auth/PriceDisplay.tsx",
+      "action": "edit",
+      "tokens": 166,
+      "at": "2026-05-05T01:19:34.380Z"
     }
   ],
   "edit_counts": {
@@ -962,8 +979,8 @@
     "webapp/src/pages/wheels/[id].astro": 15,
     "webapp/src/components/auth/AuthProvider.tsx": 1,
     "webapp/src/components/auth/LoginForm.tsx": 2,
-    "webapp/src/components/auth/PriceDisplay.tsx": 1,
-    "webapp/src/components/ProductDetail.tsx": 5,
+    "webapp/src/components/auth/PriceDisplay.tsx": 2,
+    "webapp/src/components/ProductDetail.tsx": 6,
     "webapp/src/components/auth/LoginPage.tsx": 1,
     ".gitignore": 1,
     "webapp/astro.config.mjs": 1,
@@ -979,9 +996,9 @@
     "C:/Users/miked/.claude/projects/E--James-gtatire/memory/MEMORY.md": 1,
     "scrapers/mobile-screenshots.js": 1
   },
-  "anatomy_hits": 19,
+  "anatomy_hits": 20,
   "anatomy_misses": 11,
-  "repeated_reads_warned": 37,
+  "repeated_reads_warned": 38,
   "cerebrum_warnings": 0,
-  "stop_count": 62
+  "stop_count": 63
 }

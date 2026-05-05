@@ -17,7 +17,7 @@ export default function PriceDisplay({ msrp, dealerPrice, stock }: Props) {
   return (
     <div>
       {isDistributor ? (
-        <div className="flex items-end gap-3">
+        <div className="flex items-end gap-3 justify-center md:justify-start">
           <div>
             <div className="text-dark-500 text-[10px] uppercase tracking-wider">Dealer</div>
             <div className="text-green-400 font-bold text-xl">

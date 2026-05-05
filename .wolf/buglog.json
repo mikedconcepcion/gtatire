@@ -512,6 +512,22 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-05T01:14:34.921Z"
+    },
+    {
+      "id": "bug-033",
+      "timestamp": "2026-05-05T01:19:16.127Z",
+      "error_message": "CSS fix: md",
+      "file": "webapp/src/components/ProductDetail.tsx",
+      "root_cause": "md: col-span-3\"> → justify-start\">",
+      "fix": "Changed md: col-span-3\"> → justify-start\">",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-05T01:19:16.127Z"
     }
   ]
 }

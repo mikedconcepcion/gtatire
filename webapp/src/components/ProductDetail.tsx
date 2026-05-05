@@ -46,8 +46,8 @@ function ProductDetailInner({ product, vehicles, specs }: Props) {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-4 sm:gap-5 mb-8">
-      {/* Image */}
-      <div className="md:col-span-2 bg-white border border-[var(--color-dark-700)]/50 rounded-xl p-4 flex items-center justify-center max-h-[220px] sm:max-h-[280px] sm:aspect-square">
+      {/* Image — centered, bigger on mobile */}
+      <div className="md:col-span-2 bg-white border border-[var(--color-dark-700)]/50 rounded-xl p-6 sm:p-4 flex items-center justify-center aspect-square mx-auto w-full max-w-[300px] md:max-w-none">
         {product.image ? (
           <img src={product.image} alt={product.description} className="max-w-full max-h-full object-contain mix-blend-multiply" />
         ) : (
@@ -59,9 +59,9 @@ function ProductDetailInner({ product, vehicles, specs }: Props) {
         )}
       </div>
 
-      {/* Info */}
-      <div className="md:col-span-3">
-        <div className="flex items-center gap-2 mb-2">
+      {/* Info — centered on mobile */}
+      <div className="md:col-span-3 text-center md:text-left">
+        <div className="flex items-center justify-center md:justify-start gap-2 mb-2 flex-wrap">
           <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${
             product.wheelType === 'Alloy Wheel'
               ? 'bg-[var(--color-primary-500)]/10 text-[var(--color-primary-400)] border-[var(--color-primary-500)]/20'
@@ -71,7 +71,7 @@ function ProductDetailInner({ product, vehicles, specs }: Props) {
             <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20">Hub Centric</span>
           )}
           {isDistributor && (
-            <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">Distributor View</span>
+            <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">Distributor</span>
           )}
         </div>
 
@@ -79,12 +79,12 @@ function ProductDetailInner({ product, vehicles, specs }: Props) {
         <p className="text-[var(--color-dark-400)] text-xs mb-3">{product.description}</p>
 
         {/* Price — auth aware */}
-        <div className="mb-3">
+        <div className="mb-3 flex justify-center md:justify-start">
           <PriceDisplay msrp={product.msrp} dealerPrice={product.dealerPrice} stock={product.stock} />
         </div>
 
         {/* CTA */}
-        <div className="flex gap-2 mb-4">
+        <div className="flex gap-2 mb-4 justify-center md:justify-start">
           <a
             href={`mailto:james@gtatiredistributor.ca?subject=Inquiry: ${product.productNo}&body=Hi, I'm interested in ${product.description} (${product.productNo}).`}
             className="bg-[var(--color-primary-600)] hover:bg-[var(--color-primary-700)] text-white font-medium py-2 px-5 rounded-lg text-sm transition-colors"

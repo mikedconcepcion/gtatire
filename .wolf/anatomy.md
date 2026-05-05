@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-05T01:14:34.901Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-05T01:19:34.359Z
 > Files: 54 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -63,7 +63,7 @@
 - `Footer.astro` — Astro: Footer (~580 tok)
 - `Header.astro` — Astro: Header (~818 tok)
 - `ProductCard.astro` — Astro: ProductCard (~763 tok)
-- `ProductDetail.tsx` — ProductDetailInner (~1791 tok)
+- `ProductDetail.tsx` — ProductDetailInner (~1847 tok)
 - `VehicleResults.tsx` — StockBadge (~2452 tok)
 
 ## webapp/src/components/auth/
@@ -71,7 +71,7 @@
 - `AuthProvider.tsx` — AuthContext (~320 tok)
 - `LoginForm.tsx` — LoginForm — renders form (~827 tok)
 - `LoginPage.tsx` — LoginPage (~58 tok)
-- `PriceDisplay.tsx` — PriceDisplay (~430 tok)
+- `PriceDisplay.tsx` — PriceDisplay (~439 tok)
 
 ## webapp/src/components/search/
 
