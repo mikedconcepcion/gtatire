@@ -142,10 +142,10 @@ export default function VehicleResults({ products, availableDiameters }: Props) 
           {filtered.map(p => (
             <a href={`${import.meta.env.BASE_URL}/wheels/${p.id}`} key={p.id} className="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all hover:shadow-lg hover:shadow-primary-900/10">
               {/* Image */}
-              <div className="aspect-square bg-dark-800 flex items-center justify-center p-6 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="aspect-square bg-white rounded-t-xl flex items-center justify-center p-4 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 {p.image ? (
-                  <img src={p.image} alt={p.description} className="w-full h-full object-contain" loading="lazy" decoding="async" />
+                  <img src={p.image} alt={p.description} className="w-full h-full object-contain mix-blend-multiply" loading="lazy" decoding="async" />
                 ) : (
                   <svg className="w-24 h-24 text-dark-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="10" strokeWidth="1.5" />

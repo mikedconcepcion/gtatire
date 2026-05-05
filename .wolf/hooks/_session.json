@@ -63,8 +63,8 @@
       "first_read": "2026-05-04T22:54:12.659Z"
     },
     "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx": {
-      "count": 3,
-      "tokens": 1938,
+      "count": 4,
+      "tokens": 2016,
       "first_read": "2026-05-04T23:03:11.958Z"
     },
     "E:/James/gtatire/webapp/src/components/Header.astro": {
@@ -121,6 +121,16 @@
       "count": 1,
       "tokens": 0,
       "first_read": "2026-05-04T23:41:54.931Z"
+    },
+    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/MEMORY.md": {
+      "count": 1,
+      "tokens": 89,
+      "first_read": "2026-05-04T23:54:12.431Z"
+    },
+    "E:/James/gtatire/webapp/src/components/VehicleResults.tsx": {
+      "count": 1,
+      "tokens": 2511,
+      "first_read": "2026-05-05T01:06:59.328Z"
     }
   },
   "files_written": [
@@ -789,6 +799,66 @@
       "action": "edit",
       "tokens": 44,
       "at": "2026-05-04T23:46:38.598Z"
+    },
+    {
+      "file": "C:/Users/miked/.claude/projects/E--James-gtatire/memory/project_overview.md",
+      "action": "create",
+      "tokens": 691,
+      "at": "2026-05-04T23:54:37.739Z"
+    },
+    {
+      "file": "C:/Users/miked/.claude/projects/E--James-gtatire/memory/reference_credentials.md",
+      "action": "create",
+      "tokens": 274,
+      "at": "2026-05-04T23:54:44.388Z"
+    },
+    {
+      "file": "C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_basepath.md",
+      "action": "create",
+      "tokens": 236,
+      "at": "2026-05-04T23:54:50.891Z"
+    },
+    {
+      "file": "C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_competitive_data.md",
+      "action": "create",
+      "tokens": 201,
+      "at": "2026-05-04T23:54:55.050Z"
+    },
+    {
+      "file": "C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_design.md",
+      "action": "create",
+      "tokens": 187,
+      "at": "2026-05-04T23:55:00.483Z"
+    },
+    {
+      "file": "C:/Users/miked/.claude/projects/E--James-gtatire/memory/MEMORY.md",
+      "action": "create",
+      "tokens": 188,
+      "at": "2026-05-04T23:55:08.678Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/ProductCard.astro",
+      "action": "edit",
+      "tokens": 124,
+      "at": "2026-05-05T01:06:54.320Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
+      "action": "edit",
+      "tokens": 133,
+      "at": "2026-05-05T01:07:07.862Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
+      "action": "edit",
+      "tokens": 86,
+      "at": "2026-05-05T01:07:27.348Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/ProductDetail.tsx",
+      "action": "edit",
+      "tokens": 92,
+      "at": "2026-05-05T01:07:44.136Z"
     }
   ],
   "edit_counts": {
@@ -801,7 +871,7 @@
     "webapp/src/components/search/VehicleSearch.tsx": 10,
     "webapp/src/pages/index.astro": 4,
     "webapp/src/data/products.ts": 2,
-    "webapp/src/components/ProductCard.astro": 6,
+    "webapp/src/components/ProductCard.astro": 7,
     "webapp/src/pages/tires.astro": 3,
     "webapp/src/pages/wheels.astro": 2,
     "webapp/src/pages/search.astro": 2,
@@ -814,23 +884,29 @@
     "scrapers/scrape-alltire-fast.js": 1,
     "scrapers/build-database.js": 1,
     "webapp/src/pages/vehicle/[year]/[make]/[model].astro": 4,
-    "webapp/src/components/VehicleResults.tsx": 6,
+    "webapp/src/components/VehicleResults.tsx": 7,
     "webapp/src/pages/wheels/[id].astro": 15,
     "webapp/src/components/auth/AuthProvider.tsx": 1,
     "webapp/src/components/auth/LoginForm.tsx": 2,
     "webapp/src/components/auth/PriceDisplay.tsx": 1,
-    "webapp/src/components/ProductDetail.tsx": 2,
+    "webapp/src/components/ProductDetail.tsx": 3,
     "webapp/src/components/auth/LoginPage.tsx": 1,
     ".gitignore": 1,
     "webapp/astro.config.mjs": 1,
     ".github/workflows/deploy.yml": 1,
-    "webapp/src/components/search/SmartSearchResults.tsx": 10,
+    "webapp/src/components/search/SmartSearchResults.tsx": 11,
     "webapp/src/pages/404.astro": 1,
-    "webapp/public/robots.txt": 1
+    "webapp/public/robots.txt": 1,
+    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/project_overview.md": 1,
+    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/reference_credentials.md": 1,
+    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_basepath.md": 1,
+    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_competitive_data.md": 1,
+    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_design.md": 1,
+    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/MEMORY.md": 1
   },
-  "anatomy_hits": 17,
+  "anatomy_hits": 19,
   "anatomy_misses": 7,
-  "repeated_reads_warned": 26,
+  "repeated_reads_warned": 27,
   "cerebrum_warnings": 0,
-  "stop_count": 59
+  "stop_count": 61
 }

@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-04T23:46:38.576Z
-> Files: 50 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-05T01:07:44.119Z
+> Files: 53 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -22,9 +22,12 @@
 
 ## C:/Users/miked/.claude/projects/E--James-gtatire/memory/
 
-- `MEMORY.md` — Memory Index (~89 tok)
-- `project_overview.md` (~411 tok)
-- `reference_credentials.md` (~182 tok)
+- `feedback_basepath.md` (~220 tok)
+- `feedback_competitive_data.md` (~189 tok)
+- `feedback_design.md` (~177 tok)
+- `MEMORY.md` — Memory Index (~165 tok)
+- `project_overview.md` (~618 tok)
+- `reference_credentials.md` (~253 tok)
 - `user_james.md` (~201 tok)
 
 ## scrapers/
@@ -58,9 +61,9 @@
 
 - `Footer.astro` — Astro: Footer (~580 tok)
 - `Header.astro` — Astro: Header (~818 tok)
-- `ProductCard.astro` — Astro: ProductCard (~807 tok)
-- `ProductDetail.tsx` — ProductDetailInner (~1786 tok)
-- `VehicleResults.tsx` — StockBadge (~2511 tok)
+- `ProductCard.astro` — Astro: ProductCard (~815 tok)
+- `ProductDetail.tsx` — ProductDetailInner (~1787 tok)
+- `VehicleResults.tsx` — StockBadge (~2520 tok)
 
 ## webapp/src/components/auth/
 
@@ -71,7 +74,7 @@
 
 ## webapp/src/components/search/
 
-- `SmartSearchResults.tsx` — StockBadge — renders form (~2016 tok)
+- `SmartSearchResults.tsx` — StockBadge — renders form (~2024 tok)
 - `VehicleSearch.tsx` — POPULAR_VEHICLES — renders form (~1908 tok)
 
 ## webapp/src/data/

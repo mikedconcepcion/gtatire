@@ -47,9 +47,9 @@ function ProductDetailInner({ product, vehicles, specs }: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-5 mb-8">
       {/* Image */}
-      <div className="md:col-span-2 bg-[var(--color-dark-900)] border border-[var(--color-dark-700)]/50 rounded-xl p-3 flex items-center justify-center aspect-square max-h-[280px]">
+      <div className="md:col-span-2 bg-white border border-[var(--color-dark-700)]/50 rounded-xl p-4 flex items-center justify-center aspect-square max-h-[280px]">
         {product.image ? (
-          <img src={product.image} alt={product.description} className="max-w-full max-h-full object-contain" />
+          <img src={product.image} alt={product.description} className="max-w-full max-h-full object-contain mix-blend-multiply" />
         ) : (
           <svg className="w-32 h-32 text-[var(--color-dark-600)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="10" strokeWidth="1.5" />

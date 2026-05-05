@@ -2,7 +2,7 @@
 
 > OpenWolf's learning memory. Updated automatically as the AI learns from interactions.
 > Do not edit manually unless correcting an error.
-> Last updated: 2026-05-04
+> Last updated: 2026-05-05
 
 ## User Preferences
 
@@ -21,12 +21,21 @@
 - **Superspeed password (1308) is wrong** — waiting for correct credentials from James (site owner)
 - **Alltire search fields:** Quick Size (compact format e.g. 2257516), Product No., Description, Maker, Model, Full Size (e.g. LT225/75R16)
 - **Alltire wheel search:** Year → Make → Model → Diameter → Steel/Alloy/All + Hub Centric filter
+- **Alltire API endpoint:** `searchWheel.asp?year=X&make=X&model=X&diameter=X&wtype=&by=weborder&cid=6340&checkhub=false` — returns HTML table directly, much faster than DOM scraping
+- **Wheel product table columns (15 cells):** [0]=rowNum [1]=hubCentric [2]=empty [3]=productNo [4]=image [5]=type [6]=description [7]=price [8]=msrp [9]=stock [10-13]=qty [14]=Add
+- **Image URLs:** `https://alltire.ca/Wheel/Steel/{productNo}.jpg` or `Alloy/{name}.jpg`
+- **GitHub Pages base path:** Site at `/gtatire/` — all links need prefix, `import.meta.env.BASE_URL` resolves to `/gtatire` (no trailing slash!) in client JS
+- **Astro static generation:** 2,478 pages (2,089 vehicle + 383 product + 6 other) in ~70s build time
+- **Fuse.js for smart search:** client-side fuzzy matching, also parses diameter ("18") and bolt pattern ("5x114.3") from queries
 
 ## Do-Not-Repeat
 
 - [2026-05-04] Alltire wheel search requires Year → Make → Model → **Diameter** selection before products load. Without diameter, the product table stays empty. Always iterate through each diameter for every model.
 - [2026-05-04] The Alltire wheel products load as regular HTML `<tr>` rows (not Tabulator widgets). Product rows have 12+ `<td>` cells where cell[0] is a row number (digit).
 - [2026-05-04] Don't use relative paths like `../data` in Node scripts run from different CWDs. Use `path.join(__dirname, '..', 'data')` instead.
+- [2026-05-04] `import.meta.env.BASE_URL` in Astro client bundles does NOT include trailing slash. Always add `/` between BASE_URL and the path: `` `${import.meta.env.BASE_URL}/data/file.json` `` not `` `${import.meta.env.BASE_URL}data/file.json` ``
+- [2026-05-04] All hardcoded `href="/"` in .astro files must be `href="/gtatire/"` for GitHub Pages subpath deployment. Same for `/wheels`, `/search`, etc.
+- [2026-05-05] Product detail pages were "way too large" on desktop. Use max-w-3xl, not 5xl or 7xl. Cap image height at 280px.
 
 ## Decision Log
 
@@ -34,3 +43,6 @@
 - [2026-05-04] **Scrape 2020-present only** — user decided older vehicles aren't needed, cuts scraping time by 75%.
 - [2026-05-04] **Supabase for auth/DB** — free tier sufficient, handles distributor login, wholesale pricing tiers.
 - [2026-05-04] **Dual search: classic Year/Make/Model + smart text search** — users expect the classic dropdown flow but also want intelligent search as a differentiator.
+- [2026-05-04] **Direct API scraping over DOM scraping** — calling searchWheel.asp directly via fetch (with session cookies from Playwright login) is 10x faster than clicking through the UI. Headless browser just provides the session.
+- [2026-05-04] **Simple password gate for demo** — hardcoded password in client JS (gtatire2025) is fine for demo. Will replace with Supabase auth before production.
+- [2026-05-05] **Fitment data is distributor-only** — product pages show vehicle fitment list only when logged in. Public customers see specs/price/stock only.

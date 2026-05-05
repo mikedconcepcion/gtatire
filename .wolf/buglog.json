@@ -416,6 +416,38 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-04T23:45:53.914Z"
+    },
+    {
+      "id": "bug-027",
+      "timestamp": "2026-05-05T01:07:27.352Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "Had \"aspect-square bg-dark-800 flex items-center justi",
+      "fix": "Changed to \"aspect-square bg-white rounded-t-xl flex items-ce",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-05T01:07:27.352Z"
+    },
+    {
+      "id": "bug-028",
+      "timestamp": "2026-05-05T01:07:44.139Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/ProductDetail.tsx",
+      "root_cause": "Had \"md:col-span-2 bg-[var(--color-dark-900)] border b",
+      "fix": "Changed to \"md:col-span-2 bg-white border border-[var(--color",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-05T01:07:44.139Z"
     }
   ]
 }

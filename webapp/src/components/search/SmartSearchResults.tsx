@@ -139,9 +139,9 @@ export default function SmartSearchResults() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {results.slice(0, 50).map(p => (
               <a href={`${import.meta.env.BASE_URL}/wheels/${p.id}`} key={p.id} className="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all">
-                <div className="aspect-square bg-dark-800 flex items-center justify-center p-4 relative">
+                <div className="aspect-square bg-white rounded-t-xl flex items-center justify-center p-4 relative">
                   {p.image ? (
-                    <img src={p.image} alt={p.description} className="w-full h-full object-contain" loading="lazy" decoding="async" />
+                    <img src={p.image} alt={p.description} className="w-full h-full object-contain mix-blend-multiply" loading="lazy" decoding="async" />
                   ) : (
                     <svg className="w-16 h-16 text-dark-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <circle cx="12" cy="12" r="10" strokeWidth="1.5" />
