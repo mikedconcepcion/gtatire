@@ -102,7 +102,7 @@ function buildDatabase() {
         wheelType: raw.wheelType || '',
         name: specs.name || raw.wheelType || '',
         description: raw.description || '',
-        image: raw.image || '',
+        image: raw.image ? `/gtatire/data/images/alltire/${raw.image.split('/').pop()}` : '',
         price: ourPrice > 0 ? `$${ourPrice.toFixed(2)}` : '',
         priceNum: ourPrice,
         distPrice: distPrice > 0 ? `$${distPrice.toFixed(2)}` : '',
@@ -142,7 +142,7 @@ function buildDatabase() {
       // Image: use first face image (compressed to .jpg)
       const faceImgs = (w.FACE_IMG || '').split(',').filter(Boolean);
       const imageUrl = faceImgs.length > 0
-        ? `/data/images/superspeed/${faceImgs[0].replace('.png', '.jpg')}`
+        ? `/gtatire/data/images/superspeed/${faceImgs[0].replace('.png', '.jpg')}`
         : '';
 
       // Build description string
@@ -168,7 +168,7 @@ function buildDatabase() {
         name: w.MODEL || '',
         description: desc,
         image: imageUrl,
-        images: faceImgs.map(f => `/data/images/superspeed/${f.replace('.png', '.jpg')}`),
+        images: faceImgs.map(f => `/gtatire/data/images/superspeed/${f.replace('.png', '.jpg')}`),
         price: ourPrice > 0 ? `$${ourPrice.toFixed(2)}` : '',
         priceNum: ourPrice,
         distPrice: distPrice > 0 ? `$${distPrice.toFixed(2)}` : '',
@@ -212,7 +212,7 @@ function buildDatabase() {
       const bpMatch = (w.boltPattern || '').match(/(\d)x([\d.]+)/);
 
       const imageFile = w.image ? w.image.split('/').pop() : '';
-      const imageUrl = imageFile ? `/data/images/rwc/${imageFile}` : '';
+      const imageUrl = imageFile ? `/gtatire/data/images/rwc/${imageFile}` : '';
 
       productMap.set(key, {
         id: `rwc-${key}`,
