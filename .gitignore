@@ -16,6 +16,8 @@ data/superspeed-wheels-raw.json
 data/rwc-wheels-raw.json
 data/rwc-fitment-tree.json
 data/images/
+data/gta-products.json
+data/gta-sku-map.json
 
 # Env
 .env

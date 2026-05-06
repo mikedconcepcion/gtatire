@@ -1,1311 +1,297 @@
 {
-  "session_id": "session-2026-05-04-1624",
-  "started": "2026-05-04T08:24:58.179Z",
+  "session_id": "session-2026-05-05-0555",
+  "started": "2026-05-05T21:55:50.203Z",
   "files_read": {
-    "E:/James/gtatire/scrapers/scrape-alltire-wheels.js": {
-      "count": 2,
-      "tokens": 2977,
-      "first_read": "2026-05-04T08:25:29.708Z"
-    },
-    "E:/James/gtatire/webapp/src/styles/global.css": {
-      "count": 3,
-      "tokens": 322,
-      "first_read": "2026-05-04T08:44:03.201Z"
-    },
-    "E:/James/gtatire/webapp/src/pages/index.astro": {
-      "count": 3,
-      "tokens": 2163,
-      "first_read": "2026-05-04T08:45:40.594Z"
-    },
-    "C:/Users/miked/.claude/projects/E--James-gtatire/ffc55391-9e49-426b-967f-b20b7462ff4a/tool-results/b7jx7qyv8.txt": {
-      "count": 3,
-      "tokens": 0,
-      "first_read": "2026-05-04T08:52:41.905Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/alltire-wheel-results.png": {
+    "E:/James/gtatire/scrapers/recon-rwc.js": {
       "count": 1,
-      "tokens": 0,
-      "first_read": "2026-05-04T09:31:50.930Z"
+      "tokens": 1033,
+      "first_read": "2026-05-06T02:04:39.377Z"
     },
-    "E:/James/gtatire/webapp/src/components/ProductCard.astro": {
-      "count": 8,
-      "tokens": 763,
-      "first_read": "2026-05-04T10:20:14.508Z"
-    },
-    "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx": {
-      "count": 2,
-      "tokens": 1908,
-      "first_read": "2026-05-04T10:20:31.175Z"
-    },
-    "E:/James/gtatire/webapp/src/pages/vehicle/[year]/[make]/[model].astro": {
-      "count": 2,
-      "tokens": 1470,
-      "first_read": "2026-05-04T21:51:57.611Z"
-    },
-    "E:/James/gtatire/webapp/src/pages/wheels/[id].astro": {
-      "count": 4,
-      "tokens": 1070,
-      "first_read": "2026-05-04T22:05:12.067Z"
-    },
-    "E:/James/gtatire/.gitignore": {
+    "E:/James/gtatire/scrapers/recon-superspeed2.js": {
       "count": 1,
-      "tokens": 16,
-      "first_read": "2026-05-04T22:40:29.456Z"
+      "tokens": 1155,
+      "first_read": "2026-05-06T02:04:39.841Z"
     },
-    "E:/James/gtatire/webapp/astro.config.mjs": {
+    "E:/James/gtatire/scrapers/config.js": {
+      "count": 1,
+      "tokens": 123,
+      "first_read": "2026-05-06T02:04:39.922Z"
+    },
+    "E:/James/gtatire/scrapers/scrape-rwc.js": {
       "count": 2,
-      "tokens": 91,
-      "first_read": "2026-05-04T22:40:44.549Z"
+      "tokens": 2693,
+      "first_read": "2026-05-06T02:28:35.636Z"
     },
-    "E:/James/gtatire/webapp/src/pages/search.astro": {
-      "count": 2,
-      "tokens": 156,
-      "first_read": "2026-05-04T22:54:12.659Z"
-    },
-    "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx": {
-      "count": 7,
-      "tokens": 2051,
-      "first_read": "2026-05-04T23:03:11.958Z"
-    },
-    "E:/James/gtatire/webapp/src/components/Header.astro": {
+    "E:/James/gtatire/scrapers/build-database.js": {
       "count": 4,
-      "tokens": 760,
-      "first_read": "2026-05-04T23:16:24.371Z"
+      "tokens": 3775,
+      "first_read": "2026-05-06T02:32:06.969Z"
     },
-    "E:/James/gtatire/webapp/src/components/Footer.astro": {
+    "E:/James/gtatire/webapp/src/data/products.ts": {
+      "count": 1,
+      "tokens": 594,
+      "first_read": "2026-05-06T02:36:09.287Z"
+    },
+    "E:/James/gtatire/webapp/src/components/ProductDetail.tsx": {
       "count": 2,
-      "tokens": 580,
-      "first_read": "2026-05-04T23:16:24.611Z"
+      "tokens": 1994,
+      "first_read": "2026-05-06T02:36:39.035Z"
     },
     "E:/James/gtatire/webapp/src/pages/tires.astro": {
       "count": 1,
-      "tokens": 500,
-      "first_read": "2026-05-04T23:16:25.274Z"
+      "tokens": 502,
+      "first_read": "2026-05-06T02:36:56.998Z"
     },
-    "E:/James/gtatire/webapp/src/components/auth/LoginForm.tsx": {
+    "E:/James/gtatire/webapp/src/components/ProductCard.astro": {
       "count": 1,
-      "tokens": 824,
-      "first_read": "2026-05-04T23:16:29.022Z"
-    },
-    "E:/James/gtatire/webapp/src/components/ProductDetail.tsx": {
-      "count": 6,
-      "tokens": 1864,
-      "first_read": "2026-05-04T23:16:29.173Z"
-    },
-    "E:/James/gtatire/webapp/src/layouts/Layout.astro": {
-      "count": 2,
-      "tokens": 278,
-      "first_read": "2026-05-04T23:40:51.885Z"
+      "tokens": 805,
+      "first_read": "2026-05-06T02:37:11.001Z"
     },
     "E:/James/gtatire/webapp/src/pages/wheels.astro": {
+      "count": 1,
+      "tokens": 929,
+      "first_read": "2026-05-06T02:37:16.851Z"
+    },
+    "E:/James/gtatire/webapp/src/pages/wheels/[id].astro": {
+      "count": 1,
+      "tokens": 1081,
+      "first_read": "2026-05-06T02:37:51.666Z"
+    },
+    "E:/James/gtatire/.gitignore": {
       "count": 2,
-      "tokens": 936,
-      "first_read": "2026-05-04T23:40:52.516Z"
+      "tokens": 126,
+      "first_read": "2026-05-06T02:58:08.515Z"
     },
-    "E:/James/gtatire/webapp/src/components/auth/AuthProvider.tsx": {
+    "E:/James/gtatire/webapp/src/pages/index.astro": {
       "count": 1,
-      "tokens": 320,
-      "first_read": "2026-05-04T23:40:55.076Z"
-    },
-    "E:/James/gtatire/webapp/public/data/products.json": {
-      "count": 2,
-      "tokens": 0,
-      "first_read": "2026-05-04T23:40:57.761Z"
-    },
-    "E:/James/gtatire/webapp/src/pages/contact.astro": {
-      "count": 2,
-      "tokens": 1004,
-      "first_read": "2026-05-04T23:41:20.870Z"
-    },
-    "E:/James/gtatire/webapp/package.json": {
-      "count": 1,
-      "tokens": 0,
-      "first_read": "2026-05-04T23:41:54.931Z"
-    },
-    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/MEMORY.md": {
-      "count": 1,
-      "tokens": 89,
-      "first_read": "2026-05-04T23:54:12.431Z"
-    },
-    "E:/James/gtatire/webapp/src/components/VehicleResults.tsx": {
-      "count": 3,
-      "tokens": 2433,
-      "first_read": "2026-05-05T01:06:59.328Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/mobile/home.jpg": {
-      "count": 1,
-      "tokens": 0,
-      "first_read": "2026-05-05T01:12:29.732Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/mobile/wheels.jpg": {
-      "count": 2,
-      "tokens": 0,
-      "first_read": "2026-05-05T01:12:29.784Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/mobile/vehicle.jpg": {
-      "count": 2,
-      "tokens": 0,
-      "first_read": "2026-05-05T01:12:30.101Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/mobile/product.jpg": {
-      "count": 2,
-      "tokens": 0,
-      "first_read": "2026-05-05T01:12:30.355Z"
-    },
-    "E:/James/gtatire/webapp/src/components/auth/PriceDisplay.tsx": {
-      "count": 1,
-      "tokens": 430,
-      "first_read": "2026-05-05T01:19:20.566Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/test-civic.png": {
-      "count": 1,
-      "tokens": 0,
-      "first_read": "2026-05-05T01:40:55.179Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/test-civic-side.png": {
-      "count": 1,
-      "tokens": 0,
-      "first_read": "2026-05-05T01:41:19.177Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/test-rav4.png": {
-      "count": 1,
-      "tokens": 0,
-      "first_read": "2026-05-05T01:41:19.651Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/test-f150.png": {
-      "count": 1,
-      "tokens": 0,
-      "first_read": "2026-05-05T01:41:19.863Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/civic-angle-01.png": {
-      "count": 1,
-      "tokens": 0,
-      "first_read": "2026-05-05T01:41:52.365Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/civic-angle-09.png": {
-      "count": 1,
-      "tokens": 0,
-      "first_read": "2026-05-05T01:41:52.712Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/civic-angle-13.png": {
-      "count": 1,
-      "tokens": 0,
-      "first_read": "2026-05-05T01:41:52.812Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/civic-angle-05.png": {
-      "count": 1,
-      "tokens": 0,
-      "first_read": "2026-05-05T01:41:58.387Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/civic-angle-17.png": {
-      "count": 1,
-      "tokens": 0,
-      "first_read": "2026-05-05T01:41:58.424Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/civic-red.png": {
-      "count": 1,
-      "tokens": 0,
-      "first_read": "2026-05-05T01:42:30.898Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/civic-blue.png": {
-      "count": 1,
-      "tokens": 0,
-      "first_read": "2026-05-05T01:42:31.016Z"
-    },
-    "E:/James/gtatire/scrapers/screenshots/civic-black.png": {
-      "count": 1,
-      "tokens": 0,
-      "first_read": "2026-05-05T01:42:31.222Z"
-    },
-    "E:/James/gtatire/scrapers/build-database.js": {
-      "count": 3,
-      "tokens": 2337,
-      "first_read": "2026-05-05T03:24:22.198Z"
-    },
-    "E:/James/gtatire/scrapers/scrape-alltire-fast.js": {
-      "count": 2,
-      "tokens": 2094,
-      "first_read": "2026-05-05T04:00:58.399Z"
+      "tokens": 2163,
+      "first_read": "2026-05-06T03:21:21.698Z"
     }
   },
   "files_written": [
     {
-      "file": "E:/James/gtatire/scrapers/scrape-alltire-wheels.js",
+      "file": "E:/James/gtatire/scrapers/config.js",
       "action": "edit",
-      "tokens": 46,
-      "at": "2026-05-04T08:25:36.101Z"
+      "tokens": 6,
+      "at": "2026-05-06T02:06:36.230Z"
     },
     {
-      "file": "E:/James/gtatire/scrapers/scrape-alltire-wheels.js",
+      "file": "E:/James/gtatire/scrapers/scrape-superspeed.js",
+      "action": "create",
+      "tokens": 1435,
+      "at": "2026-05-06T02:12:05.305Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/scrape-rwc.js",
+      "action": "create",
+      "tokens": 2693,
+      "at": "2026-05-06T02:26:00.545Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/scrape-rwc.js",
       "action": "edit",
-      "tokens": 50,
-      "at": "2026-05-04T08:25:37.756Z"
+      "tokens": 367,
+      "at": "2026-05-06T02:28:55.093Z"
     },
     {
-      "file": "E:/James/gtatire/scrapers/scrape-alltire-wheels.js",
+      "file": "E:/James/gtatire/scrapers/scrape-rwc.js",
       "action": "edit",
-      "tokens": 118,
-      "at": "2026-05-04T08:25:41.365Z"
+      "tokens": 55,
+      "at": "2026-05-06T02:29:01.118Z"
     },
     {
-      "file": "E:/James/gtatire/scrapers/scrape-alltire-tires.js",
+      "file": "E:/James/gtatire/scrapers/scrape-rwc.js",
       "action": "edit",
-      "tokens": 38,
-      "at": "2026-05-04T08:25:47.928Z"
+      "tokens": 439,
+      "at": "2026-05-06T02:30:43.040Z"
     },
     {
-      "file": "E:/James/gtatire/scrapers/scrape-alltire-tires.js",
+      "file": "E:/James/gtatire/scrapers/scrape-rwc.js",
       "action": "edit",
-      "tokens": 50,
-      "at": "2026-05-04T08:25:49.499Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/scrape-alltire-tires.js",
-      "action": "edit",
-      "tokens": 64,
-      "at": "2026-05-04T08:25:51.342Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/styles/global.css",
-      "action": "create",
-      "tokens": 322,
-      "at": "2026-05-04T08:44:15.377Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/layouts/Layout.astro",
-      "action": "create",
-      "tokens": 297,
-      "at": "2026-05-04T08:44:19.196Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
-      "action": "create",
-      "tokens": 789,
-      "at": "2026-05-04T08:44:28.549Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/Footer.astro",
-      "action": "create",
-      "tokens": 610,
-      "at": "2026-05-04T08:44:35.070Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
-      "action": "create",
-      "tokens": 1956,
-      "at": "2026-05-04T08:45:06.097Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/index.astro",
-      "action": "create",
-      "tokens": 2311,
-      "at": "2026-05-04T08:46:10.106Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/data/products.ts",
-      "action": "create",
-      "tokens": 1116,
-      "at": "2026-05-04T08:49:14.155Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductCard.astro",
-      "action": "create",
-      "tokens": 752,
-      "at": "2026-05-04T08:49:31.447Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/tires.astro",
-      "action": "create",
-      "tokens": 870,
-      "at": "2026-05-04T08:49:43.726Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels.astro",
-      "action": "create",
-      "tokens": 817,
-      "at": "2026-05-04T08:49:52.098Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/search.astro",
-      "action": "create",
-      "tokens": 142,
-      "at": "2026-05-04T08:49:54.126Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/contact.astro",
-      "action": "create",
-      "tokens": 1076,
-      "at": "2026-05-04T08:50:09.189Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/login.astro",
-      "action": "create",
-      "tokens": 678,
-      "at": "2026-05-04T08:50:14.548Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
-      "action": "edit",
-      "tokens": 10,
-      "at": "2026-05-04T08:50:36.574Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/test-wheel-extract.js",
-      "action": "create",
-      "tokens": 956,
-      "at": "2026-05-04T08:51:03.266Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/test-wheel-extract.js",
-      "action": "create",
-      "tokens": 1027,
-      "at": "2026-05-04T08:52:06.344Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/scrape-alltire-wheels.js",
-      "action": "edit",
-      "tokens": 1509,
-      "at": "2026-05-04T08:53:40.648Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/test-column-map.js",
-      "action": "create",
-      "tokens": 790,
-      "at": "2026-05-04T09:32:22.743Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/scrape-alltire-wheels.js",
-      "action": "edit",
-      "tokens": 525,
-      "at": "2026-05-04T09:33:04.124Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/scrape-alltire-wheels.js",
-      "action": "edit",
-      "tokens": 16,
-      "at": "2026-05-04T09:33:15.970Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/test-all-wheels.js",
-      "action": "create",
-      "tokens": 1477,
-      "at": "2026-05-04T09:34:31.724Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/test-api-direct.js",
-      "action": "create",
-      "tokens": 746,
-      "at": "2026-05-04T09:35:51.722Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/scrape-alltire-fast.js",
-      "action": "create",
-      "tokens": 2094,
-      "at": "2026-05-04T09:36:51.566Z"
+      "tokens": 456,
+      "at": "2026-05-06T02:31:00.376Z"
     },
     {
       "file": "E:/James/gtatire/scrapers/build-database.js",
-      "action": "create",
-      "tokens": 2104,
-      "at": "2026-05-04T10:19:32.549Z"
+      "action": "edit",
+      "tokens": 2130,
+      "at": "2026-05-06T02:33:05.273Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/scrape-rwc.js",
+      "action": "edit",
+      "tokens": 132,
+      "at": "2026-05-06T02:33:21.331Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-database.js",
+      "action": "edit",
+      "tokens": 146,
+      "at": "2026-05-06T02:33:30.034Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-database.js",
+      "action": "edit",
+      "tokens": 38,
+      "at": "2026-05-06T02:33:35.113Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-database.js",
+      "action": "edit",
+      "tokens": 38,
+      "at": "2026-05-06T02:33:40.482Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-database.js",
+      "action": "edit",
+      "tokens": 63,
+      "at": "2026-05-06T02:35:00.369Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-database.js",
+      "action": "edit",
+      "tokens": 20,
+      "at": "2026-05-06T02:35:05.515Z"
     },
     {
       "file": "E:/James/gtatire/webapp/src/data/products.ts",
-      "action": "create",
-      "tokens": 594,
-      "at": "2026-05-04T10:19:50.469Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels.astro",
-      "action": "create",
-      "tokens": 1003,
-      "at": "2026-05-04T10:20:09.273Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductCard.astro",
       "action": "edit",
-      "tokens": 138,
-      "at": "2026-05-04T10:20:22.538Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductCard.astro",
-      "action": "edit",
-      "tokens": 113,
-      "at": "2026-05-04T10:20:25.642Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductCard.astro",
-      "action": "edit",
-      "tokens": 28,
-      "at": "2026-05-04T10:20:27.069Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
-      "action": "create",
-      "tokens": 1877,
-      "at": "2026-05-04T10:20:59.294Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/tires.astro",
-      "action": "create",
-      "tokens": 536,
-      "at": "2026-05-04T10:21:27.850Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/vehicle/[year]/[make]/[model].astro",
-      "action": "create",
-      "tokens": 2647,
-      "at": "2026-05-04T21:39:59.233Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
-      "action": "create",
-      "tokens": 2493,
-      "at": "2026-05-04T21:52:48.085Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/vehicle/[year]/[make]/[model].astro",
-      "action": "create",
-      "tokens": 1575,
-      "at": "2026-05-04T21:53:21.095Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "create",
-      "tokens": 2841,
-      "at": "2026-05-04T21:57:10.572Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
-      "action": "edit",
-      "tokens": 72,
-      "at": "2026-05-04T21:57:18.493Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
-      "action": "edit",
-      "tokens": 15,
-      "at": "2026-05-04T21:57:19.079Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "create",
-      "tokens": 2460,
-      "at": "2026-05-04T22:00:33.855Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 26,
-      "at": "2026-05-04T22:03:22.679Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 0,
-      "at": "2026-05-04T22:03:29.452Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 0,
-      "at": "2026-05-04T22:03:35.188Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 0,
-      "at": "2026-05-04T22:03:36.517Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 0,
-      "at": "2026-05-04T22:03:37.657Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 16,
-      "at": "2026-05-04T22:05:18.345Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 68,
-      "at": "2026-05-04T22:05:20.350Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 99,
-      "at": "2026-05-04T22:05:24.227Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 18,
-      "at": "2026-05-04T22:05:25.119Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 18,
-      "at": "2026-05-04T22:05:32.974Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/auth/AuthProvider.tsx",
-      "action": "create",
-      "tokens": 320,
-      "at": "2026-05-04T22:28:37.885Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/auth/LoginForm.tsx",
-      "action": "create",
-      "tokens": 824,
-      "at": "2026-05-04T22:28:53.636Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/auth/PriceDisplay.tsx",
-      "action": "create",
-      "tokens": 430,
-      "at": "2026-05-04T22:29:06.915Z"
+      "tokens": 183,
+      "at": "2026-05-06T02:36:18.656Z"
     },
     {
       "file": "E:/James/gtatire/webapp/src/components/ProductDetail.tsx",
-      "action": "create",
-      "tokens": 1784,
-      "at": "2026-05-04T22:29:37.930Z"
+      "action": "edit",
+      "tokens": 136,
+      "at": "2026-05-06T02:36:47.122Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/pages/tires.astro",
+      "action": "edit",
+      "tokens": 8,
+      "at": "2026-05-06T02:37:02.299Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/pages/wheels.astro",
+      "action": "edit",
+      "tokens": 134,
+      "at": "2026-05-06T02:37:25.310Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/pages/wheels.astro",
+      "action": "edit",
+      "tokens": 86,
+      "at": "2026-05-06T02:37:31.830Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/pages/wheels.astro",
+      "action": "edit",
+      "tokens": 12,
+      "at": "2026-05-06T02:37:37.312Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/ProductCard.astro",
+      "action": "edit",
+      "tokens": 186,
+      "at": "2026-05-06T02:37:47.566Z"
     },
     {
       "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "create",
-      "tokens": 1139,
-      "at": "2026-05-04T22:29:58.919Z"
+      "action": "edit",
+      "tokens": 262,
+      "at": "2026-05-06T02:38:04.812Z"
     },
     {
-      "file": "E:/James/gtatire/webapp/src/pages/login.astro",
-      "action": "create",
-      "tokens": 113,
-      "at": "2026-05-04T22:30:05.027Z"
+      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
+      "action": "edit",
+      "tokens": 13,
+      "at": "2026-05-06T02:38:12.004Z"
     },
     {
-      "file": "E:/James/gtatire/webapp/src/components/auth/LoginPage.tsx",
-      "action": "create",
-      "tokens": 58,
-      "at": "2026-05-04T22:30:10.918Z"
+      "file": "E:/James/gtatire/scrapers/build-database.js",
+      "action": "edit",
+      "tokens": 74,
+      "at": "2026-05-06T02:55:16.471Z"
     },
     {
-      "file": "E:/James/gtatire/webapp/src/pages/login.astro",
-      "action": "create",
-      "tokens": 79,
-      "at": "2026-05-04T22:30:15.884Z"
+      "file": "E:/James/gtatire/scrapers/build-database.js",
+      "action": "edit",
+      "tokens": 26,
+      "at": "2026-05-06T02:55:22.232Z"
     },
     {
       "file": "E:/James/gtatire/.gitignore",
-      "action": "create",
-      "tokens": 110,
-      "at": "2026-05-04T22:40:37.996Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/astro.config.mjs",
       "action": "edit",
-      "tokens": 49,
-      "at": "2026-05-04T22:40:50.517Z"
+      "tokens": 35,
+      "at": "2026-05-06T02:58:14.002Z"
     },
     {
-      "file": "E:/James/gtatire/.github/workflows/deploy.yml",
-      "action": "create",
-      "tokens": 246,
-      "at": "2026-05-04T22:41:04.190Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
-      "action": "create",
-      "tokens": 1927,
-      "at": "2026-05-04T22:55:00.634Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/search.astro",
-      "action": "create",
-      "tokens": 167,
-      "at": "2026-05-04T22:55:07.383Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
+      "file": "E:/James/gtatire/scrapers/build-database.js",
       "action": "edit",
-      "tokens": 17,
-      "at": "2026-05-04T22:55:14.470Z"
+      "tokens": 27,
+      "at": "2026-05-06T03:05:30.378Z"
     },
     {
-      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
+      "file": "E:/James/gtatire/scrapers/build-database.js",
       "action": "edit",
-      "tokens": 26,
-      "at": "2026-05-04T22:55:15.989Z"
+      "tokens": 40,
+      "at": "2026-05-06T03:05:36.766Z"
     },
     {
-      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
-      "action": "edit",
-      "tokens": 31,
-      "at": "2026-05-04T22:55:17.362Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
+      "file": "E:/James/gtatire/scrapers/build-database.js",
       "action": "edit",
       "tokens": 28,
-      "at": "2026-05-04T22:55:18.532Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
-      "action": "edit",
-      "tokens": 13,
-      "at": "2026-05-04T22:55:25.713Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
-      "action": "edit",
-      "tokens": 12,
-      "at": "2026-05-04T22:55:26.850Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
-      "action": "edit",
-      "tokens": 16,
-      "at": "2026-05-04T22:55:37.409Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
-      "action": "edit",
-      "tokens": 16,
-      "at": "2026-05-04T22:56:08.052Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
-      "action": "edit",
-      "tokens": 14,
-      "at": "2026-05-04T23:03:57.869Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
-      "action": "edit",
-      "tokens": 10,
-      "at": "2026-05-04T23:03:58.896Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
-      "action": "edit",
-      "tokens": 14,
-      "at": "2026-05-04T23:04:00.355Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
-      "action": "edit",
-      "tokens": 11,
-      "at": "2026-05-04T23:04:01.389Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
-      "action": "edit",
-      "tokens": 11,
-      "at": "2026-05-04T23:04:02.422Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
-      "action": "edit",
-      "tokens": 10,
-      "at": "2026-05-04T23:04:03.257Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
-      "action": "edit",
-      "tokens": 17,
-      "at": "2026-05-04T23:16:32.485Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
-      "action": "edit",
-      "tokens": 140,
-      "at": "2026-05-04T23:16:34.206Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
-      "action": "edit",
-      "tokens": 100,
-      "at": "2026-05-04T23:16:35.375Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
-      "action": "edit",
-      "tokens": 116,
-      "at": "2026-05-04T23:16:36.595Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/Footer.astro",
-      "action": "edit",
-      "tokens": 103,
-      "at": "2026-05-04T23:16:39.499Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/Footer.astro",
-      "action": "edit",
-      "tokens": 74,
-      "at": "2026-05-04T23:16:40.251Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductCard.astro",
-      "action": "edit",
-      "tokens": 59,
-      "at": "2026-05-04T23:16:43.059Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/index.astro",
-      "action": "edit",
-      "tokens": 48,
-      "at": "2026-05-04T23:16:46.089Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/index.astro",
-      "action": "edit",
-      "tokens": 48,
-      "at": "2026-05-04T23:16:46.631Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/index.astro",
-      "action": "edit",
-      "tokens": 68,
-      "at": "2026-05-04T23:16:47.530Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/tires.astro",
-      "action": "edit",
-      "tokens": 59,
-      "at": "2026-05-04T23:16:50.049Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 95,
-      "at": "2026-05-04T23:16:53.333Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 92,
-      "at": "2026-05-04T23:16:54.522Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/vehicle/[year]/[make]/[model].astro",
-      "action": "edit",
-      "tokens": 38,
-      "at": "2026-05-04T23:16:57.092Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/vehicle/[year]/[make]/[model].astro",
-      "action": "edit",
-      "tokens": 139,
-      "at": "2026-05-04T23:16:58.857Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/auth/LoginForm.tsx",
-      "action": "edit",
-      "tokens": 52,
-      "at": "2026-05-04T23:17:02.035Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductDetail.tsx",
-      "action": "edit",
-      "tokens": 79,
-      "at": "2026-05-04T23:17:04.991Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/404.astro",
-      "action": "create",
-      "tokens": 254,
-      "at": "2026-05-04T23:44:38.430Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/public/robots.txt",
-      "action": "create",
-      "tokens": 25,
-      "at": "2026-05-04T23:44:38.961Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/layouts/Layout.astro",
-      "action": "create",
-      "tokens": 702,
-      "at": "2026-05-04T23:45:15.875Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
-      "action": "edit",
-      "tokens": 123,
-      "at": "2026-05-04T23:45:27.152Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
-      "action": "edit",
-      "tokens": 31,
-      "at": "2026-05-04T23:45:27.944Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
-      "action": "edit",
-      "tokens": 92,
-      "at": "2026-05-04T23:45:30.336Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/contact.astro",
-      "action": "edit",
-      "tokens": 866,
-      "at": "2026-05-04T23:45:53.911Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
-      "action": "edit",
-      "tokens": 44,
-      "at": "2026-05-04T23:46:07.539Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
-      "action": "edit",
-      "tokens": 17,
-      "at": "2026-05-04T23:46:08.450Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
-      "action": "edit",
-      "tokens": 98,
-      "at": "2026-05-04T23:46:21.183Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
-      "action": "edit",
-      "tokens": 10,
-      "at": "2026-05-04T23:46:28.369Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
-      "action": "edit",
-      "tokens": 10,
-      "at": "2026-05-04T23:46:29.305Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductCard.astro",
-      "action": "edit",
-      "tokens": 44,
-      "at": "2026-05-04T23:46:38.598Z"
-    },
-    {
-      "file": "C:/Users/miked/.claude/projects/E--James-gtatire/memory/project_overview.md",
-      "action": "create",
-      "tokens": 691,
-      "at": "2026-05-04T23:54:37.739Z"
-    },
-    {
-      "file": "C:/Users/miked/.claude/projects/E--James-gtatire/memory/reference_credentials.md",
-      "action": "create",
-      "tokens": 274,
-      "at": "2026-05-04T23:54:44.388Z"
-    },
-    {
-      "file": "C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_basepath.md",
-      "action": "create",
-      "tokens": 236,
-      "at": "2026-05-04T23:54:50.891Z"
-    },
-    {
-      "file": "C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_competitive_data.md",
-      "action": "create",
-      "tokens": 201,
-      "at": "2026-05-04T23:54:55.050Z"
-    },
-    {
-      "file": "C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_design.md",
-      "action": "create",
-      "tokens": 187,
-      "at": "2026-05-04T23:55:00.483Z"
-    },
-    {
-      "file": "C:/Users/miked/.claude/projects/E--James-gtatire/memory/MEMORY.md",
-      "action": "create",
-      "tokens": 188,
-      "at": "2026-05-04T23:55:08.678Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductCard.astro",
-      "action": "edit",
-      "tokens": 124,
-      "at": "2026-05-05T01:06:54.320Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
-      "action": "edit",
-      "tokens": 133,
-      "at": "2026-05-05T01:07:07.862Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
-      "action": "edit",
-      "tokens": 86,
-      "at": "2026-05-05T01:07:27.348Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductDetail.tsx",
-      "action": "edit",
-      "tokens": 92,
-      "at": "2026-05-05T01:07:44.136Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/mobile-screenshots.js",
-      "action": "create",
-      "tokens": 301,
-      "at": "2026-05-05T01:11:48.287Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels.astro",
-      "action": "edit",
-      "tokens": 384,
-      "at": "2026-05-05T01:13:02.933Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductCard.astro",
-      "action": "edit",
-      "tokens": 143,
-      "at": "2026-05-05T01:13:17.926Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
-      "action": "edit",
-      "tokens": 198,
-      "at": "2026-05-05T01:13:35.366Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
-      "action": "edit",
-      "tokens": 113,
-      "at": "2026-05-05T01:13:49.339Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
-      "action": "edit",
-      "tokens": 25,
-      "at": "2026-05-05T01:13:55.967Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/styles/global.css",
-      "action": "edit",
-      "tokens": 75,
-      "at": "2026-05-05T01:14:08.851Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductDetail.tsx",
-      "action": "edit",
-      "tokens": 189,
-      "at": "2026-05-05T01:14:23.438Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductDetail.tsx",
-      "action": "edit",
-      "tokens": 80,
-      "at": "2026-05-05T01:14:34.916Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductDetail.tsx",
-      "action": "edit",
-      "tokens": 889,
-      "at": "2026-05-05T01:19:16.123Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/auth/PriceDisplay.tsx",
-      "action": "edit",
-      "tokens": 166,
-      "at": "2026-05-05T01:19:34.380Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/WheelVisualizer.tsx",
-      "action": "create",
-      "tokens": 1787,
-      "at": "2026-05-05T01:43:54.620Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 83,
-      "at": "2026-05-05T01:44:13.259Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 141,
-      "at": "2026-05-05T01:44:16.363Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/WheelVisualizerModal.tsx",
-      "action": "create",
-      "tokens": 3043,
-      "at": "2026-05-05T01:45:58.689Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 0,
-      "at": "2026-05-05T01:46:05.630Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 7,
-      "at": "2026-05-05T01:46:08.724Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductDetail.tsx",
-      "action": "edit",
-      "tokens": 48,
-      "at": "2026-05-05T01:46:20.405Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductDetail.tsx",
-      "action": "edit",
-      "tokens": 336,
-      "at": "2026-05-05T01:46:36.631Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/WheelVisualizerModal.tsx",
-      "action": "edit",
-      "tokens": 265,
-      "at": "2026-05-05T01:50:07.166Z"
+      "at": "2026-05-06T03:05:42.064Z"
     },
     {
       "file": "E:/James/gtatire/scrapers/build-database.js",
-      "action": "edit",
-      "tokens": 248,
-      "at": "2026-05-05T03:24:37.665Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/build-database.js",
-      "action": "edit",
-      "tokens": 93,
-      "at": "2026-05-05T03:24:47.558Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/build-database.js",
-      "action": "edit",
-      "tokens": 137,
-      "at": "2026-05-05T03:27:05.633Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/build-database.js",
-      "action": "edit",
-      "tokens": 60,
-      "at": "2026-05-05T03:27:07.823Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/build-database.js",
-      "action": "edit",
-      "tokens": 3,
-      "at": "2026-05-05T03:27:21.035Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
-      "action": "edit",
-      "tokens": 3,
-      "at": "2026-05-05T03:27:46.156Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/VehicleResults.tsx",
-      "action": "edit",
-      "tokens": 3,
-      "at": "2026-05-05T03:27:47.061Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
-      "action": "edit",
-      "tokens": 3,
-      "at": "2026-05-05T03:27:48.018Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
-      "action": "edit",
-      "tokens": 3,
-      "at": "2026-05-05T03:27:48.865Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductCard.astro",
-      "action": "edit",
-      "tokens": 16,
-      "at": "2026-05-05T03:28:02.160Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductCard.astro",
-      "action": "edit",
-      "tokens": 31,
-      "at": "2026-05-05T03:28:03.482Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductCard.astro",
-      "action": "edit",
-      "tokens": 102,
-      "at": "2026-05-05T03:28:05.885Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels.astro",
-      "action": "edit",
-      "tokens": 14,
-      "at": "2026-05-05T03:28:17.288Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/pages/wheels/[id].astro",
-      "action": "edit",
-      "tokens": 16,
-      "at": "2026-05-05T03:28:18.381Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductDetail.tsx",
-      "action": "edit",
-      "tokens": 5,
-      "at": "2026-05-05T03:28:26.144Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductDetail.tsx",
-      "action": "edit",
-      "tokens": 29,
-      "at": "2026-05-05T03:28:28.742Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/build-database.js",
-      "action": "edit",
-      "tokens": 175,
-      "at": "2026-05-05T03:28:43.192Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/build-database.js",
-      "action": "edit",
-      "tokens": 88,
-      "at": "2026-05-05T03:28:45.935Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/auth/PriceDisplay.tsx",
-      "action": "create",
-      "tokens": 500,
-      "at": "2026-05-05T03:29:02.104Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/ProductDetail.tsx",
-      "action": "edit",
-      "tokens": 38,
-      "at": "2026-05-05T03:29:08.613Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
-      "action": "edit",
-      "tokens": 131,
-      "at": "2026-05-05T03:43:37.599Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
       "action": "edit",
       "tokens": 23,
-      "at": "2026-05-05T03:48:35.988Z"
+      "at": "2026-05-06T03:05:51.335Z"
     },
     {
-      "file": "E:/James/gtatire/scrapers/build-database.js",
-      "action": "edit",
-      "tokens": 60,
-      "at": "2026-05-05T03:49:49.023Z"
-    },
-    {
-      "file": "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx",
-      "action": "edit",
-      "tokens": 691,
-      "at": "2026-05-05T03:53:14.724Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/scrape-alltire-fast.js",
-      "action": "edit",
-      "tokens": 179,
-      "at": "2026-05-05T04:02:08.877Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/test-dc-price.js",
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
       "action": "create",
-      "tokens": 431,
-      "at": "2026-05-05T04:02:48.706Z"
+      "tokens": 4211,
+      "at": "2026-05-06T03:19:46.151Z"
     },
     {
-      "file": "E:/James/gtatire/scrapers/scrape-alltire-fast.js",
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
       "action": "edit",
-      "tokens": 111,
-      "at": "2026-05-05T04:03:14.720Z"
+      "tokens": 109,
+      "at": "2026-05-06T03:20:25.674Z"
     },
     {
-      "file": "E:/James/gtatire/scrapers/scrape-alltire-fast.js",
+      "file": "E:/James/gtatire/.gitignore",
       "action": "edit",
-      "tokens": 21,
-      "at": "2026-05-05T04:03:15.872Z"
+      "tokens": 17,
+      "at": "2026-05-06T03:21:16.908Z"
     },
     {
-      "file": "E:/James/gtatire/scrapers/build-database.js",
+      "file": "E:/James/gtatire/webapp/src/pages/index.astro",
       "action": "edit",
-      "tokens": 183,
-      "at": "2026-05-05T04:03:52.117Z"
-    },
-    {
-      "file": "E:/James/gtatire/scrapers/build-database.js",
-      "action": "edit",
-      "tokens": 100,
-      "at": "2026-05-05T05:26:01.819Z"
+      "tokens": 31,
+      "at": "2026-05-06T03:21:28.630Z"
     }
   ],
   "edit_counts": {
-    "scrapers/scrape-alltire-wheels.js": 6,
-    "scrapers/scrape-alltire-tires.js": 3,
-    "webapp/src/styles/global.css": 2,
-    "webapp/src/layouts/Layout.astro": 2,
-    "webapp/src/components/Header.astro": 8,
-    "webapp/src/components/Footer.astro": 3,
-    "webapp/src/components/search/VehicleSearch.tsx": 11,
-    "webapp/src/pages/index.astro": 4,
-    "webapp/src/data/products.ts": 2,
-    "webapp/src/components/ProductCard.astro": 11,
-    "webapp/src/pages/tires.astro": 3,
-    "webapp/src/pages/wheels.astro": 4,
-    "webapp/src/pages/search.astro": 2,
-    "webapp/src/pages/contact.astro": 2,
-    "webapp/src/pages/login.astro": 3,
-    "scrapers/test-wheel-extract.js": 2,
-    "scrapers/test-column-map.js": 1,
-    "scrapers/test-all-wheels.js": 1,
-    "scrapers/test-api-direct.js": 1,
-    "scrapers/scrape-alltire-fast.js": 4,
-    "scrapers/build-database.js": 11,
-    "webapp/src/pages/vehicle/[year]/[make]/[model].astro": 4,
-    "webapp/src/components/VehicleResults.tsx": 12,
-    "webapp/src/pages/wheels/[id].astro": 20,
-    "webapp/src/components/auth/AuthProvider.tsx": 1,
-    "webapp/src/components/auth/LoginForm.tsx": 2,
-    "webapp/src/components/auth/PriceDisplay.tsx": 3,
-    "webapp/src/components/ProductDetail.tsx": 11,
-    "webapp/src/components/auth/LoginPage.tsx": 1,
-    ".gitignore": 1,
-    "webapp/astro.config.mjs": 1,
-    ".github/workflows/deploy.yml": 1,
-    "webapp/src/components/search/SmartSearchResults.tsx": 15,
-    "webapp/src/pages/404.astro": 1,
-    "webapp/public/robots.txt": 1,
-    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/project_overview.md": 1,
-    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/reference_credentials.md": 1,
-    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_basepath.md": 1,
-    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_competitive_data.md": 1,
-    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_design.md": 1,
-    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/MEMORY.md": 1,
-    "scrapers/mobile-screenshots.js": 1,
-    "webapp/src/components/WheelVisualizer.tsx": 1,
-    "webapp/src/components/WheelVisualizerModal.tsx": 2,
-    "scrapers/test-dc-price.js": 1
+    "scrapers/config.js": 1,
+    "scrapers/scrape-superspeed.js": 1,
+    "scrapers/scrape-rwc.js": 6,
+    "scrapers/build-database.js": 12,
+    "webapp/src/data/products.ts": 1,
+    "webapp/src/components/ProductDetail.tsx": 1,
+    "webapp/src/pages/tires.astro": 1,
+    "webapp/src/pages/wheels.astro": 3,
+    "webapp/src/components/ProductCard.astro": 1,
+    "webapp/src/pages/wheels/[id].astro": 2,
+    ".gitignore": 2,
+    "scrapers/build-internal-db.js": 2,
+    "webapp/src/pages/index.astro": 1
   },
-  "anatomy_hits": 22,
-  "anatomy_misses": 23,
-  "repeated_reads_warned": 48,
+  "anatomy_hits": 13,
+  "anatomy_misses": 0,
+  "repeated_reads_warned": 6,
   "cerebrum_warnings": 0,
-  "stop_count": 97
+  "stop_count": 16
 }

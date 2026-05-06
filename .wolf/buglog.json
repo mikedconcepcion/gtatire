@@ -704,6 +704,182 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-05T05:26:01.823Z"
+    },
+    {
+      "id": "bug-045",
+      "timestamp": "2026-05-06T02:06:36.235Z",
+      "error_message": "Incorrect value in code",
+      "file": "scrapers/config.js",
+      "root_cause": "Had '1308'",
+      "fix": "Changed to '1125'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T02:06:36.235Z"
+    },
+    {
+      "id": "bug-046",
+      "timestamp": "2026-05-06T02:29:01.123Z",
+      "error_message": "Incorrect value in code",
+      "file": "scrapers/scrape-rwc.js",
+      "root_cause": "Had '.model-product'",
+      "fix": "Changed to \"pull-right\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T02:29:01.123Z"
+    },
+    {
+      "id": "bug-047",
+      "timestamp": "2026-05-06T02:30:43.045Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "scrapers/scrape-rwc.js",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block | Also: // Save products before fitment (in case fitment takes long/; fs.writeFileSync( | Also: // Login (retry up to 3 times); for (let attempt = 1; attempt <= 3; attempt++) {",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-05-06T02:33:21.334Z"
+    },
+    {
+      "id": "bug-048",
+      "timestamp": "2026-05-06T02:33:05.279Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/build-database.js",
+      "root_cause": "27 lines replaced/restructured",
+      "fix": "Rewrote 78→191 lines (27 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T02:33:05.279Z"
+    },
+    {
+      "id": "bug-049",
+      "timestamp": "2026-05-06T02:35:05.520Z",
+      "error_message": "Incorrect value in code",
+      "file": "scrapers/build-database.js",
+      "root_cause": "Had `Fitments: ${rawWheels.length} vehicle/product com",
+      "fix": "Changed to `Fitments: ${totalFitments} vehicle/product combos",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T02:35:05.520Z"
+    },
+    {
+      "id": "bug-050",
+      "timestamp": "2026-05-06T02:36:18.661Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/data/products.ts",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 21→30 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T02:36:18.661Z"
+    },
+    {
+      "id": "bug-051",
+      "timestamp": "2026-05-06T02:37:37.316Z",
+      "error_message": "Wrong reference: wheelType should be brand",
+      "file": "webapp/src/pages/wheels.astro",
+      "root_cause": "Used \"wheelType\" instead of \"brand\"",
+      "fix": "Changed wheelType → brand",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T02:37:37.316Z"
+    },
+    {
+      "id": "bug-052",
+      "timestamp": "2026-05-06T02:37:47.570Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/ProductCard.astro",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 12→15 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T02:37:47.570Z"
+    },
+    {
+      "id": "bug-053",
+      "timestamp": "2026-05-06T02:38:12.008Z",
+      "error_message": "Wrong reference: wheelType should be brand",
+      "file": "webapp/src/pages/wheels/[id].astro",
+      "root_cause": "Used \"wheelType\" instead of \"brand\"",
+      "fix": "Changed wheelType → brand",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T02:38:12.008Z"
+    },
+    {
+      "id": "bug-054",
+      "timestamp": "2026-05-06T02:55:22.238Z",
+      "error_message": "Incorrect value in code",
+      "file": "scrapers/build-database.js",
+      "root_cause": "Had `/data/images/superspeed/${f}`",
+      "fix": "Changed to `/data/images/superspeed/${f.replace('",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T02:55:22.238Z"
+    },
+    {
+      "id": "bug-055",
+      "timestamp": "2026-05-06T03:05:36.771Z",
+      "error_message": "Incorrect value in code",
+      "file": "scrapers/build-database.js",
+      "root_cause": "Had `/data/images/superspeed/${faceImgs[0].replace('",
+      "fix": "Changed to `/gtatire/data/images/superspeed/${faceImgs[0].rep",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-05-06T03:05:51.340Z"
     }
   ]
 }

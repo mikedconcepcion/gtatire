@@ -360,3 +360,17 @@
 | 10:55 | Edited scrapers/build-database.js | 5→5 lines | ~74 |
 | 10:55 | Edited scrapers/build-database.js | "/data/images/superspeed/$" → "/data/images/superspeed/$" | ~26 |
 | 10:58 | Edited .gitignore | 2→5 lines | ~33 |
+| 11:01 | Session end: 26 writes across 11 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 12 reads | ~23916 tok |
+| 11:05 | Edited scrapers/build-database.js | inline fix | ~27 |
+| 11:05 | Edited scrapers/build-database.js | 3→3 lines | ~40 |
+| 11:05 | Edited scrapers/build-database.js | "/data/images/superspeed/$" → "/gtatire/data/images/supe" | ~28 |
+| 11:05 | Edited scrapers/build-database.js | "/data/images/rwc/${imageF" → "/gtatire/data/images/rwc/" | ~23 |
+| 11:09 | Session end: 30 writes across 11 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 12 reads | ~24051 tok |
+| 11:12 | Session end: 30 writes across 11 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 12 reads | ~24078 tok |
+| 11:13 | Session end: 30 writes across 11 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 12 reads | ~24078 tok |
+| 11:13 | Session end: 30 writes across 11 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 12 reads | ~24078 tok |
+| 11:15 | Session end: 30 writes across 11 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 12 reads | ~24078 tok |
+| 11:19 | Created scrapers/build-internal-db.js | — | ~4211 |
+| 11:20 | Edited scrapers/build-internal-db.js | 7→10 lines | ~109 |
+| 11:21 | Edited .gitignore | 1→3 lines | ~16 |
+| 11:21 | Edited webapp/src/pages/index.astro | inline fix | ~29 |
