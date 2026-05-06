@@ -1,18 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import VehicleSearch from '../components/search/VehicleSearch';
 import SmartSearchResults from '../components/search/SmartSearchResults';
 ---
 
 <Layout title="Search — GTA Tire Distributor">
   <section class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
     <SmartSearchResults client:load />
-
-    <div class="mt-12 pt-8 border-t border-dark-700/30">
-      <div class="text-center mb-6">
-        <h3 class="text-white font-semibold">Or search by vehicle</h3>
-      </div>
-      <VehicleSearch client:load />
-    </div>
   </section>
 </Layout>

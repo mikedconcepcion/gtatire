@@ -7,7 +7,8 @@ import path from 'node:path';
 const dataPath = path.join(process.cwd(), 'public', 'data', 'products.json');
 let products: any[] = [];
 if (fs.existsSync(dataPath)) {
-  products = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+  const all = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+  products = all.filter((p: any) => p.category === 'wheel');
 }
 
 const brands = [...new Set(products.map(p => p.brand))].filter(Boolean).sort();

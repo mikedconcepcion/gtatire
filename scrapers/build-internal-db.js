@@ -122,7 +122,15 @@ function buildDatabase() {
 
       // Copy image
       const origImgName = raw.image ? raw.image.split('/').pop() : '';
-      const srcImg = origImgName ? pathMod.join(__dirname, '..', 'webapp', 'public', 'data', 'images', 'alltire', origImgName) : '';
+      // Try source data folder, then existing wheels folder
+      let srcImg = '';
+      if (origImgName) {
+        const paths = [
+          pathMod.join(DATA_DIR, 'images', 'alltire', origImgName),
+          pathMod.join(IMG_PUB_DIR, origImgName),
+        ];
+        srcImg = paths.find(p => fs.existsSync(p)) || '';
+      }
       const newImgName = copyImage(srcImg, gtaId);
 
       skuMap.push({
@@ -179,17 +187,21 @@ function buildDatabase() {
       const faceImgs = (w.FACE_IMG || '').split(',').filter(Boolean);
 
       // Copy first image
-      const srcImg = faceImgs[0]
-        ? pathMod.join(__dirname, '..', 'webapp', 'public', 'data', 'images', 'superspeed', faceImgs[0].replace('.png', '.jpg'))
+      const ssImgName = faceImgs[0]?.replace('.png', '.jpg') || '';
+      const srcImg = ssImgName
+        ? [pathMod.join(DATA_DIR, 'images', 'superspeed', ssImgName),
+           pathMod.join(DATA_DIR, 'images', 'superspeed', faceImgs[0] || '')].find(p => fs.existsSync(p)) || ''
         : '';
       const newImgName = copyImage(srcImg, gtaId);
 
       // Copy additional images
       const extraImages = [];
       for (let i = 1; i < faceImgs.length; i++) {
-        const extraSrc = pathMod.join(__dirname, '..', 'webapp', 'public', 'data', 'images', 'superspeed', faceImgs[i].replace('.png', '.jpg'));
-        const extraName = copyImage(extraSrc, gtaId, i);
-        if (extraName) extraImages.push(`/gtatire/data/images/wheels/${extraName}`);
+        const extraFileName = faceImgs[i].replace('.png', '.jpg');
+        const extraSrc = [pathMod.join(DATA_DIR, 'images', 'superspeed', extraFileName),
+                          pathMod.join(DATA_DIR, 'images', 'superspeed', faceImgs[i])].find(p => fs.existsSync(p)) || '';
+        const extraImgName = copyImage(extraSrc, gtaId, i);
+        if (extraImgName) extraImages.push(`/gtatire/data/images/wheels/${extraImgName}`);
       }
 
       let stockText = '';
@@ -253,7 +265,9 @@ function buildDatabase() {
 
       // Copy image
       const imgFile = w.image ? w.image.split('/').pop() : '';
-      const srcImg = imgFile ? pathMod.join(__dirname, '..', 'webapp', 'public', 'data', 'images', 'rwc', imgFile) : '';
+      const srcImg = imgFile
+        ? [pathMod.join(DATA_DIR, 'images', 'rwc', imgFile)].find(p => fs.existsSync(p)) || ''
+        : '';
       const newImgName = copyImage(srcImg, gtaId);
 
       const sizeMatch = (w.size || '').match(/(\d+)x([\d.]+)/);
@@ -334,7 +348,8 @@ function buildDatabase() {
       // Copy tire image
       const origImgName = t.image ? t.image.split('/').pop() : '';
       const tireSrcImg = origImgName
-        ? pathMod.join(__dirname, '..', 'webapp', 'public', 'data', 'images', 'tires', origImgName)
+        ? [pathMod.join(__dirname, '..', 'webapp', 'public', 'data', 'images', 'tires', origImgName),
+           pathMod.join(DATA_DIR, 'images', 'tires', origImgName)].find(p => fs.existsSync(p)) || ''
         : '';
       const TIRE_PUB_DIR = pathMod.join(OUT_DIR, 'images', 'tires');
       if (!fs.existsSync(TIRE_PUB_DIR)) fs.mkdirSync(TIRE_PUB_DIR, { recursive: true });
