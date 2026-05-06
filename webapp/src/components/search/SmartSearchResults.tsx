@@ -46,21 +46,34 @@ function extractVehicleNames(tree: VehicleTree) {
   const makes = new Set<string>();
   const models = new Set<string>();
   const makeModels: Record<string, Set<string>> = {};
+  const modelToMakes: Record<string, Set<string>> = {}; // reverse: model → makes
+  const years = new Set<string>();
 
   for (const year of Object.keys(tree)) {
+    years.add(year);
     for (const make of Object.keys(tree[year])) {
       makes.add(make.toUpperCase());
       if (!makeModels[make.toUpperCase()]) makeModels[make.toUpperCase()] = new Set();
       const modelObj = tree[year][make];
       const modelList = Array.isArray(modelObj) ? modelObj : Object.keys(modelObj);
       for (const model of modelList) {
-        models.add(model.toUpperCase());
-        makeModels[make.toUpperCase()].add(model.toUpperCase());
+        const mUp = model.toUpperCase();
+        models.add(mUp);
+        makeModels[make.toUpperCase()].add(mUp);
+        // Reverse lookup: model → makes
+        if (!modelToMakes[mUp]) modelToMakes[mUp] = new Set();
+        modelToMakes[mUp].add(make.toUpperCase());
+        // Also index first word of model (e.g., "RAV4" from "RAV4 HYBRID")
+        const firstWord = mUp.split(/[\s(]/)[0];
+        if (firstWord.length >= 2 && firstWord !== mUp) {
+          if (!modelToMakes[firstWord]) modelToMakes[firstWord] = new Set();
+          modelToMakes[firstWord].add(make.toUpperCase());
+        }
       }
     }
   }
 
-  return { makes, models, makeModels };
+  return { makes, models, makeModels, modelToMakes, years };
 }
 
 // Find products that fit a specific make (any year, any model)
@@ -85,12 +98,13 @@ function getProductsForMake(
   return products.filter(p => matchingIds.has(p.id));
 }
 
-// Find products that fit a specific make+model combo
+// Find products that fit a specific make+model combo, optionally filtered by year
 function getProductsForMakeModel(
   products: Product[],
   fitment: FitmentMap,
   make: string,
-  model: string
+  model: string,
+  year?: string
 ): Product[] {
   const matchingIds = new Set<string>();
   const makeUpper = make.toUpperCase();
@@ -99,7 +113,10 @@ function getProductsForMakeModel(
   for (const [productId, vehicles] of Object.entries(fitment)) {
     for (const vKey of vehicles) {
       const parts = vKey.split('|');
-      if (parts[1]?.toUpperCase() === makeUpper && parts[2]?.toUpperCase().includes(modelUpper)) {
+      const yMatch = !year || parts[0] === year;
+      const mkMatch = parts[1]?.toUpperCase() === makeUpper;
+      const mdMatch = parts[2]?.toUpperCase().includes(modelUpper);
+      if (yMatch && mkMatch && mdMatch) {
         matchingIds.add(productId);
         break;
       }
@@ -107,6 +124,32 @@ function getProductsForMakeModel(
   }
 
   return products.filter(p => matchingIds.has(p.id));
+}
+
+// Find products by model name only (across all makes)
+function getProductsForModel(
+  products: Product[],
+  fitment: FitmentMap,
+  model: string,
+  year?: string
+): { results: Product[]; detectedMake: string } {
+  const matchingIds = new Set<string>();
+  const modelUpper = model.toUpperCase();
+  let foundMake = '';
+
+  for (const [productId, vehicles] of Object.entries(fitment)) {
+    for (const vKey of vehicles) {
+      const parts = vKey.split('|');
+      const yMatch = !year || parts[0] === year;
+      if (yMatch && parts[2]?.toUpperCase().includes(modelUpper)) {
+        matchingIds.add(productId);
+        if (!foundMake) foundMake = parts[1];
+        break;
+      }
+    }
+  }
+
+  return { results: products.filter(p => matchingIds.has(p.id)), detectedMake: foundMake };
 }
 
 export default function SmartSearchResults() {
@@ -167,84 +210,141 @@ export default function SmartSearchResults() {
     const words = q.split(/\s+/).filter(w => w.length >= 2);
     const wordsUpper = words.map(w => w.toUpperCase());
 
-    // ── 1. Vehicle search: detect make/model names ──
-    // Check if query is or contains a vehicle make
+    // ── 1. Vehicle search: detect year, make, model from query ──
+    let detectedYear = '';
     let detectedMake = '';
     let detectedModel = '';
+    const usedWords = new Set<string>();
 
-    // Try full query as make
-    if (vehicleNames.makes.has(qUpper)) {
-      detectedMake = qUpper;
+    // Detect year (4-digit number between 1999-2030)
+    for (const w of wordsUpper) {
+      const yearNum = parseInt(w);
+      if (w.length === 4 && yearNum >= 1999 && yearNum <= 2030 && vehicleNames.years.has(w)) {
+        detectedYear = w;
+        usedWords.add(w);
+        break;
+      }
     }
 
-    // Try words as make + model
-    if (!detectedMake && words.length >= 1) {
-      for (const w of wordsUpper) {
-        if (vehicleNames.makes.has(w)) {
-          detectedMake = w;
-          // Remaining words might be a model
-          const otherWords = wordsUpper.filter(x => x !== w);
-          if (otherWords.length > 0) {
-            const candidate = otherWords.join(' ');
-            // Check if any model for this make contains the candidate
-            const makeModels = vehicleNames.makeModels[w];
-            if (makeModels) {
-              for (const m of makeModels) {
-                if (m.includes(candidate) || candidate.includes(m)) {
-                  detectedModel = m;
-                  break;
-                }
+    // Detect make
+    const nonYearWords = wordsUpper.filter(w => !usedWords.has(w));
+    for (const w of nonYearWords) {
+      if (vehicleNames.makes.has(w)) {
+        detectedMake = w;
+        usedWords.add(w);
+        break;
+      }
+    }
+
+    // Detect model — try remaining words against known models
+    const remainingForModel = wordsUpper.filter(w => !usedWords.has(w));
+    if (remainingForModel.length > 0) {
+      // Try multi-word model first (e.g., "RAV4 HYBRID"), then single words
+      const modelCandidate = remainingForModel.join(' ');
+      const modelsToSearch = detectedMake
+        ? vehicleNames.makeModels[detectedMake]
+        : null;
+
+      if (modelsToSearch) {
+        // Search within detected make's models
+        for (const m of modelsToSearch) {
+          if (m === modelCandidate || m.includes(modelCandidate) || modelCandidate.includes(m.split(/[\s(]/)[0])) {
+            detectedModel = m;
+            remainingForModel.forEach(w => usedWords.add(w));
+            break;
+          }
+        }
+        // Try single words
+        if (!detectedModel) {
+          for (const w of remainingForModel) {
+            for (const m of modelsToSearch) {
+              if (m === w || m.startsWith(w) || m.includes(w)) {
+                detectedModel = m;
+                usedWords.add(w);
+                break;
               }
             }
-            // Also try each word as a model
-            if (!detectedModel) {
-              for (const ow of otherWords) {
-                if (makeModels) {
-                  for (const m of makeModels) {
-                    if (m.includes(ow) || ow.includes(m.split(' ')[0])) {
-                      detectedModel = m;
-                      break;
-                    }
-                  }
-                }
-                if (detectedModel) break;
-              }
+            if (detectedModel) break;
+          }
+        }
+      }
+
+      // No make detected yet — try model-only lookup (e.g., "Tucson", "Civic")
+      if (!detectedMake && !detectedModel) {
+        for (const w of remainingForModel) {
+          if (vehicleNames.modelToMakes[w]) {
+            detectedModel = w;
+            // Pick the first (most common) make for this model
+            const possibleMakes = vehicleNames.modelToMakes[w];
+            detectedMake = [...possibleMakes][0];
+            usedWords.add(w);
+            break;
+          }
+          // Try partial model match
+          for (const [modelName, makesSet] of Object.entries(vehicleNames.modelToMakes)) {
+            if (modelName.startsWith(w) && w.length >= 3) {
+              detectedModel = modelName;
+              detectedMake = [...makesSet][0];
+              usedWords.add(w);
+              break;
             }
           }
-          break;
+          if (detectedModel) break;
         }
       }
     }
 
-    if (detectedMake) {
+    // If we detected any vehicle component, search fitment
+    if (detectedMake || detectedModel) {
       let vehicleResults: Product[];
       let label: string;
 
-      if (detectedModel) {
-        vehicleResults = getProductsForMakeModel(products, fitment, detectedMake, detectedModel);
-        label = `${detectedMake} ${detectedModel}`;
+      if (detectedMake && detectedModel) {
+        vehicleResults = getProductsForMakeModel(products, fitment, detectedMake, detectedModel, detectedYear || undefined);
+        label = [detectedYear, detectedMake, detectedModel].filter(Boolean).join(' ');
+      } else if (detectedMake) {
+        // Make only (optionally with year)
+        if (detectedYear) {
+          // Year + make: filter fitment by both
+          const matchingIds = new Set<string>();
+          for (const [productId, vehicles] of Object.entries(fitment)) {
+            for (const vKey of vehicles) {
+              const parts = vKey.split('|');
+              if (parts[0] === detectedYear && parts[1]?.toUpperCase() === detectedMake) {
+                matchingIds.add(productId);
+                break;
+              }
+            }
+          }
+          vehicleResults = products.filter(p => matchingIds.has(p.id));
+        } else {
+          vehicleResults = getProductsForMake(products, fitment, detectedMake);
+        }
+        label = [detectedYear, detectedMake].filter(Boolean).join(' ');
       } else {
-        vehicleResults = getProductsForMake(products, fitment, detectedMake);
-        label = detectedMake;
+        // Model only
+        const { results: modelResults, detectedMake: mk } = getProductsForModel(products, fitment, detectedModel, detectedYear || undefined);
+        vehicleResults = modelResults;
+        detectedMake = mk;
+        label = [detectedYear, detectedMake, detectedModel].filter(Boolean).join(' ');
       }
 
       if (vehicleResults.length > 0) {
-        // Apply any additional filters from query (diameter, color, type)
+        // Apply additional spec filters from unused words
         let filtered = vehicleResults;
-        const remainingWords = wordsUpper.filter(w => w !== detectedMake && w !== detectedModel);
+        const specWords = wordsUpper.filter(w => !usedWords.has(w));
 
-        for (const w of remainingWords) {
+        for (const w of specWords) {
           const wLower = w.toLowerCase();
           const diamMatch = w.match(/^(\d{2})$/);
           if (diamMatch) {
-            filtered = filtered.filter(p => p.rimDiameter === parseInt(diamMatch[1]));
+            const d = parseInt(diamMatch[1]);
+            if (d >= 13 && d <= 24) filtered = filtered.filter(p => p.rimDiameter === d);
           } else if (wLower === 'steel') {
             filtered = filtered.filter(p => p.wheelType === 'Steel Wheel');
           } else if (wLower === 'alloy') {
             filtered = filtered.filter(p => p.wheelType !== 'Steel Wheel');
-          } else if (wLower === 'black') {
-            filtered = filtered.filter(p => p.finish?.toLowerCase().includes('black'));
-          } else if (wLower === 'silver' || wLower === 'chrome') {
+          } else if (['black','silver','chrome','bronze','gunmetal','anthracite','gold','white','red','satin'].includes(wLower)) {
             filtered = filtered.filter(p => p.finish?.toLowerCase().includes(wLower));
           }
         }
@@ -343,14 +443,16 @@ export default function SmartSearchResults() {
 
   // Search suggestions
   const suggestions = [
-    'Hyundai Tucson',
-    'Toyota Corolla',
-    '18 inch black',
+    '2025 Hyundai Tucson',
+    'Civic',
+    'Toyota RAV4',
+    'Ford F-150',
+    '18 black alloy',
     '5x114.3',
     'Superspeed',
     'RWC',
     'steel 16',
-    'bronze alloy',
+    'bronze',
   ];
 
   return (
