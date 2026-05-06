@@ -1,74 +1,113 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import VehicleSearch from '../components/search/VehicleSearch';
+import HeroSearch from '../components/search/HeroSearch';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const statsPath = path.join(process.cwd(), 'public', 'data', 'stats.json');
+let stats: any = {};
+if (fs.existsSync(statsPath)) stats = JSON.parse(fs.readFileSync(statsPath, 'utf-8'));
+
+const brands = ['Superspeed', 'RWC', 'Macpek', 'OE+', 'Rocktrix', 'Blackhorn'];
 ---
 
 <Layout title="GTA Tire Distributor — Wholesale Tires & Wheels">
-  <!-- Hero Section -->
+  <!-- Hero -->
   <section class="relative overflow-hidden">
-    <!-- Background gradient -->
     <div class="absolute inset-0 bg-gradient-to-b from-primary-950/50 via-dark-950 to-dark-950"></div>
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary-600/10 rounded-full blur-3xl"></div>
 
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-20 sm:pt-24 sm:pb-28">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-16 sm:pt-24 sm:pb-20">
       <div class="text-center mb-10">
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-4 tracking-tight">
           Find the Perfect
-          <span class="text-primary-400"> Tires & Wheels</span>
+          <span class="text-primary-400"> Wheels</span>
         </h1>
         <p class="text-dark-300 text-lg sm:text-xl max-w-xl mx-auto">
-          Browse thousands of tires and wheels from top brands.
-          Wholesale pricing for registered distributors.
+          {stats.totalProducts?.toLocaleString() || '2,000+' } wheels from {Object.keys(stats.byBrand || {}).length || 9} brands.
+          Search by vehicle, size, or bolt pattern.
         </p>
       </div>
 
-      <!-- Search Component -->
-      <VehicleSearch client:load />
+      <HeroSearch client:load />
+    </div>
+  </section>
+
+  <!-- Quick browse by brand -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <h2 class="text-center text-dark-500 text-sm font-medium uppercase tracking-wider mb-6">Shop by Brand</h2>
+    <div class="flex flex-wrap justify-center gap-3">
+      {brands.map(brand => (
+        <a
+          href={`/gtatire/search/?q=${encodeURIComponent(brand)}`}
+          class="text-dark-300 hover:text-white bg-dark-800/50 hover:bg-dark-800 border border-dark-700/50 hover:border-primary-600/30 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
+        >
+          {brand}
+        </a>
+      ))}
+      <a
+        href="/gtatire/wheels"
+        class="text-primary-400 hover:text-primary-300 bg-primary-600/10 hover:bg-primary-600/20 border border-primary-600/20 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
+      >
+        Browse All →
+      </a>
+    </div>
+  </section>
+
+  <!-- Quick browse by size -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <h2 class="text-center text-dark-500 text-sm font-medium uppercase tracking-wider mb-6">Shop by Size</h2>
+    <div class="flex flex-wrap justify-center gap-2">
+      {[15, 16, 17, 18, 19, 20, 21, 22].map(d => (
+        <a
+          href={`/gtatire/search/?q=${d}+inch`}
+          class="text-dark-300 hover:text-white bg-dark-800/50 hover:bg-dark-800 border border-dark-700/50 hover:border-primary-600/30 w-14 h-14 rounded-xl text-sm font-bold flex items-center justify-center transition-all"
+        >
+          {d}"
+        </a>
+      ))}
     </div>
   </section>
 
   <!-- Categories -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Tires card -->
-      <a href="/gtatire/tires" class="group relative bg-dark-900 border border-dark-700/50 rounded-2xl p-8 hover:border-primary-600/50 transition-all overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-primary-600/5 rounded-full -translate-y-8 translate-x-8 group-hover:bg-primary-600/10 transition-all"></div>
-        <div class="relative">
-          <div class="w-14 h-14 bg-dark-800 rounded-xl flex items-center justify-center mb-5">
-            <svg class="w-7 h-7 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10" stroke-width="2" />
-              <circle cx="12" cy="12" r="3" stroke-width="2" />
-            </svg>
-          </div>
-          <h3 class="text-white font-bold text-xl mb-2">Tires</h3>
-          <p class="text-dark-400 text-sm">All Season, Winter, All Weather. All major brands available.</p>
-          <div class="mt-4 text-primary-400 text-sm font-medium group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-            Browse Tires
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-          </div>
-        </div>
-      </a>
-
-      <!-- Wheels card -->
       <a href="/gtatire/wheels" class="group relative bg-dark-900 border border-dark-700/50 rounded-2xl p-8 hover:border-primary-600/50 transition-all overflow-hidden">
         <div class="absolute top-0 right-0 w-32 h-32 bg-primary-600/5 rounded-full -translate-y-8 translate-x-8 group-hover:bg-primary-600/10 transition-all"></div>
         <div class="relative">
           <div class="w-14 h-14 bg-dark-800 rounded-xl flex items-center justify-center mb-5">
             <svg class="w-7 h-7 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10" stroke-width="2" />
-              <path d="M12 2 L12 6 M12 18 L12 22 M2 12 L6 12 M18 12 L22 12 M4.93 4.93 L7.76 7.76 M16.24 16.24 L19.07 19.07 M4.93 19.07 L7.76 16.24 M16.24 7.76 L19.07 4.93" stroke-width="1.5" />
+              <path d="M12 2 L12 6 M12 18 L12 22 M2 12 L6 12 M18 12 L22 12" stroke-width="1.5" />
             </svg>
           </div>
-          <h3 class="text-white font-bold text-xl mb-2">Wheels</h3>
-          <p class="text-dark-400 text-sm">Steel and alloy wheels. Hub centric rings and accessories included.</p>
+          <h3 class="text-white font-bold text-xl mb-2">All Wheels</h3>
+          <p class="text-dark-400 text-sm">{stats.totalProducts?.toLocaleString() || '2,150'} steel and alloy wheels. Filter by brand, size, bolt pattern.</p>
           <div class="mt-4 text-primary-400 text-sm font-medium group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-            Browse Wheels
+            Browse All
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
           </div>
         </div>
       </a>
 
-      <!-- Distributor card -->
+      <a href="/gtatire/search/?q=steel" class="group relative bg-dark-900 border border-dark-700/50 rounded-2xl p-8 hover:border-primary-600/50 transition-all overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-primary-600/5 rounded-full -translate-y-8 translate-x-8 group-hover:bg-primary-600/10 transition-all"></div>
+        <div class="relative">
+          <div class="w-14 h-14 bg-dark-800 rounded-xl flex items-center justify-center mb-5">
+            <svg class="w-7 h-7 text-dark-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" stroke-width="2" />
+              <circle cx="12" cy="12" r="3" stroke-width="2" />
+            </svg>
+          </div>
+          <h3 class="text-white font-bold text-xl mb-2">Steel Wheels</h3>
+          <p class="text-dark-400 text-sm">Affordable OE replacement wheels. Winter-ready, durable.</p>
+          <div class="mt-4 text-primary-400 text-sm font-medium group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+            Browse Steel
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+          </div>
+        </div>
+      </a>
+
       <a href="/gtatire/login" class="group relative bg-gradient-to-br from-primary-900/50 to-dark-900 border border-primary-700/30 rounded-2xl p-8 hover:border-primary-600/50 transition-all overflow-hidden sm:col-span-2 lg:col-span-1">
         <div class="absolute top-0 right-0 w-32 h-32 bg-primary-600/5 rounded-full -translate-y-8 translate-x-8 group-hover:bg-primary-600/10 transition-all"></div>
         <div class="relative">
@@ -78,25 +117,13 @@ import VehicleSearch from '../components/search/VehicleSearch';
             </svg>
           </div>
           <h3 class="text-white font-bold text-xl mb-2">Distributor Portal</h3>
-          <p class="text-dark-400 text-sm">Sign in for wholesale pricing, order tracking, and account management.</p>
+          <p class="text-dark-400 text-sm">Sign in for wholesale pricing and order management.</p>
           <div class="mt-4 text-primary-400 text-sm font-medium group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
             Sign In
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
           </div>
         </div>
       </a>
-    </div>
-  </section>
-
-  <!-- Brands -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-    <div class="text-center mb-8">
-      <p class="text-dark-500 text-sm font-medium uppercase tracking-wider">Brands We Carry</p>
-    </div>
-    <div class="flex flex-wrap justify-center gap-8 text-dark-500">
-      {['Michelin', 'Kumho', 'Laufenn', 'Nexen', 'Superspeed', 'RWC', 'Macpek', 'OE+', 'Rocktrix'].map(brand => (
-        <span class="text-lg font-semibold hover:text-dark-300 transition-colors">{brand}</span>
-      ))}
     </div>
   </section>
 

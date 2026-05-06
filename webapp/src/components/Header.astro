@@ -2,9 +2,9 @@
 ---
 <header class="bg-dark-900/80 backdrop-blur-md border-b border-dark-700/50 sticky top-0 z-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
-    <div class="flex items-center justify-between h-16">
+    <div class="flex items-center justify-between h-16 gap-4">
       <!-- Logo -->
-      <a href="/gtatire/" class="flex items-center gap-3">
+      <a href="/gtatire/" class="flex items-center gap-3 shrink-0">
         <div class="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
           <span class="text-white font-bold text-lg">GT</span>
         </div>
@@ -14,26 +14,39 @@
         </div>
       </a>
 
-      <!-- Nav -->
-      <nav class="hidden md:flex items-center gap-8">
-        <a href="/gtatire/tires" class="text-dark-300 hover:text-white transition-colors text-sm font-medium">Tires</a>
-        <a href="/gtatire/wheels" class="text-dark-300 hover:text-white transition-colors text-sm font-medium">Wheels</a>
-        <a href="/gtatire/search" class="text-dark-300 hover:text-white transition-colors text-sm font-medium">Search</a>
-        <a href="/gtatire/contact" class="text-dark-300 hover:text-white transition-colors text-sm font-medium">Contact</a>
-      </nav>
+      <!-- Search bar (desktop) -->
+      <form id="header-search-form" action="/gtatire/search/" class="hidden md:flex flex-1 max-w-md">
+        <div class="relative w-full">
+          <input
+            type="text"
+            name="q"
+            placeholder="Search vehicle, brand, size..."
+            class="w-full bg-dark-800 border border-dark-700 text-white rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-dark-500"
+          />
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-dark-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </form>
 
-      <!-- Right side -->
-      <div class="flex items-center gap-3">
-        <a href="/gtatire/login" class="text-dark-300 hover:text-white transition-colors text-sm font-medium hidden sm:block">
+      <!-- Nav -->
+      <nav class="hidden md:flex items-center gap-6 shrink-0">
+        <a href="/gtatire/wheels" class="text-dark-300 hover:text-white transition-colors text-sm font-medium">Wheels</a>
+        <a href="/gtatire/contact" class="text-dark-300 hover:text-white transition-colors text-sm font-medium">Contact</a>
+        <a href="/gtatire/login" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
           Sign In
         </a>
-        <a href="/gtatire/login" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-          Distributor Portal
-        </a>
+      </nav>
 
-        <!-- Mobile menu button -->
-        <button id="mobile-menu-btn" class="md:hidden text-dark-300 hover:text-white p-2" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <!-- Mobile: search + menu -->
+      <div class="flex items-center gap-2 md:hidden">
+        <button id="mobile-search-btn" class="text-dark-300 hover:text-white p-2" aria-label="Search">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+        <button id="mobile-menu-btn" class="text-dark-300 hover:text-white p-2" aria-label="Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
@@ -41,22 +54,40 @@
     </div>
   </div>
 
+  <!-- Mobile search bar -->
+  <div id="mobile-search" class="hidden md:hidden border-t border-dark-700/50 px-4 py-3">
+    <form action="/gtatire/search/" class="relative">
+      <input
+        type="text"
+        name="q"
+        placeholder="Search vehicle, brand, size..."
+        class="w-full bg-dark-800 border border-dark-700 text-white rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 placeholder:text-dark-500"
+      />
+      <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-dark-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </form>
+  </div>
+
   <!-- Mobile menu -->
-  <nav id="mobile-menu" class="hidden md:hidden border-t border-dark-700/50" aria-label="Mobile navigation">
+  <nav id="mobile-menu" class="hidden md:hidden border-t border-dark-700/50">
     <div class="px-4 py-3 space-y-2">
-      <a href="/gtatire/tires" class="block text-dark-300 hover:text-white py-2 text-sm">Tires</a>
       <a href="/gtatire/wheels" class="block text-dark-300 hover:text-white py-2 text-sm">Wheels</a>
-      <a href="/gtatire/search" class="block text-dark-300 hover:text-white py-2 text-sm">Search</a>
       <a href="/gtatire/contact" class="block text-dark-300 hover:text-white py-2 text-sm">Contact</a>
+      <a href="/gtatire/login" class="block text-primary-400 hover:text-primary-300 py-2 text-sm font-medium">Sign In</a>
     </div>
   </nav>
 </header>
 
 <script>
-  const btn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
-  btn?.addEventListener('click', () => {
-    const isOpen = !menu?.classList.toggle('hidden');
-    btn?.setAttribute('aria-expanded', String(isOpen));
+  document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+    document.getElementById('mobile-menu')?.classList.toggle('hidden');
+  });
+  document.getElementById('mobile-search-btn')?.addEventListener('click', () => {
+    const el = document.getElementById('mobile-search');
+    el?.classList.toggle('hidden');
+    if (!el?.classList.contains('hidden')) {
+      el?.querySelector('input')?.focus();
+    }
   });
 </script>
