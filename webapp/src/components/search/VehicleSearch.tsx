@@ -138,7 +138,7 @@ export default function VehicleSearch() {
               type="text"
               value={smartQuery}
               onChange={(e) => setSmartQuery(e.target.value)}
-              placeholder='Try "225/45R17 all season" or "18 inch black wheels for Civic"'
+              placeholder='Try "Hyundai Tucson", "18 black alloy", "5x114.3"'
               className="w-full bg-dark-800 border border-dark-600 text-white rounded-lg pl-12 pr-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-dark-500"
             />
             <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
