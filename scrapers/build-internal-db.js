@@ -441,6 +441,58 @@ function buildDatabase() {
     lastUpdated: new Date().toISOString(),
   };
 
+  // ─── Build cross-reference: tire ↔ wheel by rim diameter ───
+  console.log('\nBuilding cross-reference...');
+  const crossRef = {};
+
+  // Index wheels by rim diameter + bolt pattern
+  const wheelsByRim = {};
+  const tiresByRim = {};
+
+  for (const p of products) {
+    if (!p.rimDiameter) continue;
+    const rim = p.rimDiameter;
+    if (p.category === 'wheel') {
+      if (!wheelsByRim[rim]) wheelsByRim[rim] = [];
+      wheelsByRim[rim].push({ id: p.id, name: p.name, brand: p.brand, boltPattern: p.boltPattern, priceNum: p.priceNum, image: p.image });
+    } else if (p.category === 'tire') {
+      if (!tiresByRim[rim]) tiresByRim[rim] = [];
+      tiresByRim[rim].push({ id: p.id, name: p.name, brand: p.brand, tireSize: p.tireSize, type: p.wheelType, priceNum: p.priceNum, image: p.image });
+    }
+  }
+
+  // For each rim diameter, pick top tires and wheels for quick display
+  for (const rim of Object.keys(wheelsByRim)) {
+    if (!crossRef[rim]) crossRef[rim] = {};
+    // Top 6 tires sorted by price (in stock preferred)
+    const tires = (tiresByRim[rim] || []).sort((a, b) => a.priceNum - b.priceNum).slice(0, 20);
+    const wheels = (wheelsByRim[rim] || []).sort((a, b) => a.priceNum - b.priceNum).slice(0, 20);
+    crossRef[rim] = { tires, wheels };
+  }
+
+  // Also build tire fitment from scraped data if available
+  const tireFitment = loadJSON('alltire-tire-fitment.json');
+  const vehicleTireSizes = {};
+  if (tireFitment) {
+    for (const [key, data] of Object.entries(tireFitment)) {
+      if (data.tireSizes && data.tireSizes.length > 0) {
+        vehicleTireSizes[key] = {
+          sizes: data.tireSizes,
+          oeWheel: data.oeWheelSize,
+        };
+      }
+    }
+    console.log(`  Tire fitment: ${Object.keys(vehicleTireSizes).length} vehicles with OE tire sizes`);
+  }
+
+  console.log(`  Cross-ref rim sizes: ${Object.keys(crossRef).length}`);
+  for (const rim of Object.keys(crossRef).sort((a, b) => a - b)) {
+    const t = crossRef[rim].tires?.length || 0;
+    const w = crossRef[rim].wheels?.length || 0;
+    if (t > 0 || w > 0) process.stdout.write(`  ${rim}": ${w}W/${t}T  `);
+  }
+  console.log('');
+
   // ─── Save internal DB (not public) ───
   console.log('\nSaving internal database...');
   saveJSON(pathMod.join(DATA_DIR, 'gta-products.json'), products, true);
@@ -459,6 +511,10 @@ function buildDatabase() {
   saveJSON(pathMod.join(OUT_DIR, 'fitment.json'), fitment);
   saveJSON(pathMod.join(OUT_DIR, 'vehicles.json'), vehicles);
   saveJSON(pathMod.join(OUT_DIR, 'stats.json'), stats);
+  saveJSON(pathMod.join(OUT_DIR, 'cross-ref.json'), crossRef);
+  if (Object.keys(vehicleTireSizes).length > 0) {
+    saveJSON(pathMod.join(OUT_DIR, 'tire-fitment.json'), vehicleTireSizes);
+  }
 
   // ─── Summary ───
   console.log('\n=== Summary ===');

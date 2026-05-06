@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import ProductDetail from '../../components/ProductDetail';
+import CompatibleProducts from '../../components/CompatibleProducts';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -52,6 +53,16 @@ export async function getStaticPaths() {
         vehicles={[]}
         specs={specs}
       />
+
+      <!-- Compatible wheels for this tire -->
+      {product.rimDiameter && (
+        <CompatibleProducts
+          client:load
+          productCategory="tire"
+          rimDiameter={product.rimDiameter}
+          priceNum={product.priceNum}
+        />
+      )}
 
       {similar.length > 0 && (
         <div>
