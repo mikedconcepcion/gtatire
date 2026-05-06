@@ -1,50 +1,150 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ProductCard from '../components/ProductCard.astro';
+import fs from 'node:fs';
+import path from 'node:path';
 
-// Placeholder — tire data will come from the tire scraper
-const products: any[] = [];
+const dataPath = path.join(process.cwd(), 'public', 'data', 'products.json');
+let allProducts: any[] = [];
+if (fs.existsSync(dataPath)) {
+  allProducts = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+}
+
+const products = allProducts.filter(p => p.category === 'tire');
+const brands = [...new Set(products.map(p => p.brand))].filter(Boolean).sort();
+const types = [...new Set(products.map(p => p.wheelType))].filter(Boolean).sort();
+const rimSizes = [...new Set(products.map(p => p.rimDiameter))].filter(Boolean).sort((a, b) => a - b);
+const widths = [...new Set(products.map(p => p.tireWidth))].filter(Boolean).sort((a, b) => a - b);
 ---
 
 <Layout title="Tires — GTA Tire Distributor">
   <section class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-    <div class="mb-8">
-      <h1 class="text-3xl font-bold text-white">Tires</h1>
-      <p class="text-dark-400 text-sm mt-1">Browse our full catalog of tires from top brands</p>
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
+      <div>
+        <h1 class="text-3xl font-bold text-white">Tires</h1>
+        <p id="result-count" class="text-dark-400 text-sm mt-1">{products.length} products</p>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <select id="f-brand" class="bg-dark-800 border border-dark-600 text-dark-300 text-xs rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+          <option value="">All Brands</option>
+          {brands.map(b => <option value={b}>{b}</option>)}
+        </select>
+        <select id="f-type" class="bg-dark-800 border border-dark-600 text-dark-300 text-xs rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+          <option value="">All Types</option>
+          {types.map(t => <option value={t}>{t}</option>)}
+        </select>
+        <select id="f-width" class="bg-dark-800 border border-dark-600 text-dark-300 text-xs rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+          <option value="">All Widths</option>
+          {widths.map(w => <option value={w}>{w}mm</option>)}
+        </select>
+        <select id="f-rim" class="bg-dark-800 border border-dark-600 text-dark-300 text-xs rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+          <option value="">All Rim Sizes</option>
+          {rimSizes.map(r => <option value={r}>{r}"</option>)}
+        </select>
+        <select id="f-sort" class="bg-dark-800 border border-dark-600 text-dark-300 text-xs rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+          <option value="price-asc">Price: Low</option>
+          <option value="price-desc">Price: High</option>
+        </select>
+      </div>
     </div>
 
-    {products.length > 0 ? (
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        {products.map(p => (
+    <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      {products.map(p => (
+        <div
+          class="product-card"
+          data-brand={p.brand}
+          data-type={p.wheelType}
+          data-width={p.tireWidth}
+          data-rim={p.rimDiameter}
+          data-price={p.priceNum}
+        >
           <ProductCard
             id={p.id}
             image={p.image}
             brand={p.brand}
-            model={p.model}
+            model={p.name}
             description={p.description}
-            size={p.size}
+            size={p.tireSize || ''}
             price={p.price}
+            compareAt={p.compareAt}
             stock={p.stock}
-            type={p.type}
+            type={p.wheelType}
             category="tire"
           />
-        ))}
-      </div>
-    ) : (
-      <div class="text-center py-20 border border-dashed border-dark-700 rounded-2xl">
-        <svg class="w-16 h-16 text-dark-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="10" stroke-width="1.5" />
-          <circle cx="12" cy="12" r="3" stroke-width="1.5" />
-        </svg>
-        <h3 class="text-white font-semibold text-lg mb-2">Tire Catalog Coming Soon</h3>
-        <p class="text-dark-500 text-sm max-w-md mx-auto">
-          We're currently building the tire catalog from our supplier data.
-          Check back soon or search for wheels in the meantime.
-        </p>
-        <a href="/gtatire/wheels" class="inline-block mt-4 bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors">
-          Browse Wheels
-        </a>
-      </div>
-    )}
+        </div>
+      ))}
+    </div>
+
+    <div id="no-results" class="hidden text-center py-12">
+      <p class="text-dark-400 text-sm">No tires match your filters.</p>
+      <button id="clear-filters" class="text-primary-400 text-sm mt-2 hover:underline">Clear filters</button>
+    </div>
+
+    <div id="show-more-wrap" class="text-center mt-8">
+      <button id="show-more" class="bg-dark-800 hover:bg-dark-700 text-dark-300 hover:text-white px-6 py-3 rounded-lg text-sm font-medium transition-colors border border-dark-600">
+        Show More
+      </button>
+    </div>
   </section>
 </Layout>
+
+<script>
+  const PAGE_SIZE = 40;
+  let visibleCount = PAGE_SIZE;
+
+  const cards = Array.from(document.querySelectorAll('.product-card')) as HTMLElement[];
+  const countEl = document.getElementById('result-count')!;
+  const noResults = document.getElementById('no-results')!;
+  const showMoreWrap = document.getElementById('show-more-wrap')!;
+  const showMoreBtn = document.getElementById('show-more')!;
+  const clearBtn = document.getElementById('clear-filters');
+
+  const fBrand = document.getElementById('f-brand') as HTMLSelectElement;
+  const fType = document.getElementById('f-type') as HTMLSelectElement;
+  const fWidth = document.getElementById('f-width') as HTMLSelectElement;
+  const fRim = document.getElementById('f-rim') as HTMLSelectElement;
+  const fSort = document.getElementById('f-sort') as HTMLSelectElement;
+
+  function applyFilters() {
+    const brand = fBrand.value;
+    const type = fType.value;
+    const width = fWidth.value;
+    const rim = fRim.value;
+    const sort = fSort.value;
+
+    let filtered = cards.filter(card => {
+      if (brand && card.dataset.brand !== brand) return false;
+      if (type && card.dataset.type !== type) return false;
+      if (width && card.dataset.width !== width) return false;
+      if (rim && card.dataset.rim !== rim) return false;
+      return true;
+    });
+
+    filtered.sort((a, b) => {
+      const pa = parseFloat(a.dataset.price || '0');
+      const pb = parseFloat(b.dataset.price || '0');
+      return sort === 'price-desc' ? pb - pa : pa - pb;
+    });
+
+    cards.forEach(c => { c.style.display = 'none'; c.style.order = ''; });
+    filtered.forEach((c, i) => {
+      c.style.order = String(i);
+      c.style.display = i < visibleCount ? '' : 'none';
+    });
+
+    countEl.textContent = `${filtered.length} products`;
+    noResults.classList.toggle('hidden', filtered.length > 0);
+    showMoreWrap.classList.toggle('hidden', filtered.length <= visibleCount);
+    showMoreBtn.textContent = `Show More (${Math.max(0, filtered.length - visibleCount)} remaining)`;
+  }
+
+  showMoreBtn.addEventListener('click', () => { visibleCount += PAGE_SIZE; applyFilters(); });
+  clearBtn?.addEventListener('click', () => {
+    fBrand.value = ''; fType.value = ''; fWidth.value = ''; fRim.value = '';
+    visibleCount = PAGE_SIZE; applyFilters();
+  });
+  [fBrand, fType, fWidth, fRim, fSort].forEach(el => {
+    el.addEventListener('change', () => { visibleCount = PAGE_SIZE; applyFilters(); });
+  });
+  applyFilters();
+</script>

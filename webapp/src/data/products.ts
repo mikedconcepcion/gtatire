@@ -29,6 +29,9 @@ export interface Product {
   tpmsCompatible?: string;
   runflatCertified?: string;
   loadRating?: string;
+  tireSize?: string;
+  tireWidth?: number | null;
+  tireAspect?: number | null;
 }
 
 export interface VehicleTree {

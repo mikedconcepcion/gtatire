@@ -20,6 +20,10 @@ interface Product {
   offset: number | null;
   finish: string;
   seat?: string;
+  category: string;
+  tireSize?: string;
+  tireWidth?: number | null;
+  tireAspect?: number | null;
 }
 
 interface FitmentMap {
@@ -357,22 +361,74 @@ export default function SmartSearchResults() {
       }
     }
 
-    // ── 2. Brand search ──
+    // ── 2. Tire size search (225/45R17, 225/45/17, 2254517) ──
+    const tireSizeMatch = q.match(/(\d{3})\s*[\/\\]?\s*(\d{2,3})\s*[\/\\]?R?\s*(\d{2})/i);
+    if (tireSizeMatch) {
+      const [, tw, ta, tr] = tireSizeMatch;
+      const tireResults = products.filter(p =>
+        p.category === 'tire' &&
+        p.tireWidth === parseInt(tw) &&
+        p.tireAspect === parseInt(ta) &&
+        p.rimDiameter === parseInt(tr)
+      );
+      if (tireResults.length > 0) {
+        // Check for type filter in remaining words
+        let filtered = tireResults;
+        const isWinter = qLower.includes('winter');
+        const isAllSeason = qLower.includes('all season');
+        const isAllWeather = qLower.includes('all weather');
+        if (isWinter) filtered = filtered.filter(p => p.wheelType === 'Winter');
+        if (isAllSeason) filtered = filtered.filter(p => p.wheelType === 'All Season');
+        if (isAllWeather) filtered = filtered.filter(p => p.wheelType === 'All Weather');
+
+        return {
+          results: filtered.length > 0 ? filtered : tireResults,
+          searchType: 'tire-size',
+          searchLabel: `${tw}/${ta}R${tr} tires`,
+        };
+      }
+    }
+
+    // ── 2b. Tire type search (winter tires, all season) ──
+    const isWinterSearch = qLower.includes('winter');
+    const isAllSeasonSearch = qLower.match(/all.?season/);
+    const isAllWeatherSearch = qLower.match(/all.?weather/);
+    if (isWinterSearch || isAllSeasonSearch || isAllWeatherSearch) {
+      const typeFilter = isWinterSearch ? 'Winter' : isAllSeasonSearch ? 'All Season' : 'All Weather';
+      let tireTypeResults = products.filter(p => p.category === 'tire' && p.wheelType === typeFilter);
+
+      // Check for brand in remaining words
+      const brandWords = words.filter(w => !['winter','all','season','weather','tires','tire'].includes(w.toLowerCase()));
+      if (brandWords.length > 0) {
+        const brandFiltered = tireTypeResults.filter(p =>
+          brandWords.some(bw => p.brand.toLowerCase().includes(bw.toLowerCase()))
+        );
+        if (brandFiltered.length > 0) tireTypeResults = brandFiltered;
+      }
+
+      if (tireTypeResults.length > 0) {
+        return { results: tireTypeResults, searchType: 'tire-type', searchLabel: `${typeFilter} tires` };
+      }
+    }
+
+    // ── 3. Brand search ──
     const brandMatch = products.filter(p =>
       p.brand.toLowerCase() === qLower ||
       (words.length === 1 && p.brand.toLowerCase().includes(qLower))
     );
     if (brandMatch.length > 0) {
-      return { results: brandMatch, searchType: 'brand', searchLabel: `${brandMatch[0].brand} wheels` };
+      const cat = brandMatch[0].category === 'tire' ? 'tires' : 'wheels';
+      return { results: brandMatch, searchType: 'brand', searchLabel: `${brandMatch[0].brand} ${cat}` };
     }
 
-    // ── 3. Direct match on SKU, description, name, finish, bolt pattern ──
+    // ── 4. Direct match on SKU, description, name, finish, bolt pattern, tire size ──
     const directMatches = products.filter(p =>
       p.sku.toLowerCase().includes(qLower) ||
       p.description.toLowerCase().includes(qLower) ||
       p.name.toLowerCase().includes(qLower) ||
-      p.finish.toLowerCase().includes(qLower) ||
-      p.boltPattern.toLowerCase().includes(qLower)
+      (p.finish && p.finish.toLowerCase().includes(qLower)) ||
+      (p.boltPattern && p.boltPattern.toLowerCase().includes(qLower)) ||
+      (p.tireSize && p.tireSize.toLowerCase().includes(qLower))
     );
     if (directMatches.length > 0) {
       return { results: directMatches, searchType: 'direct', searchLabel: '' };
@@ -443,16 +499,16 @@ export default function SmartSearchResults() {
 
   // Search suggestions
   const suggestions = [
+    '225/45R17',
+    'Michelin',
+    'winter tires',
     '2025 Hyundai Tucson',
     'Civic',
     'Toyota RAV4',
-    'Ford F-150',
     '18 black alloy',
-    '5x114.3',
     'Superspeed',
     'RWC',
-    'steel 16',
-    'bronze',
+    '5x114.3',
   ];
 
   return (
@@ -529,7 +585,7 @@ export default function SmartSearchResults() {
           {/* Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {sortedResults.slice(0, 60).map(p => (
-              <a href={`${import.meta.env.BASE_URL}/wheels/${p.id}`} key={p.id} className="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all">
+              <a href={`${import.meta.env.BASE_URL}/${p.category === 'tire' ? 'tires' : 'wheels'}/${p.id}`} key={p.id} className="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all">
                 <div className="aspect-square bg-white rounded-t-xl flex items-center justify-center p-4 relative">
                   {p.image ? (
                     <img src={p.image} alt={p.description} className="w-full h-full object-contain mix-blend-multiply" loading="lazy" decoding="async" />
@@ -548,7 +604,7 @@ export default function SmartSearchResults() {
                 <div className="p-3">
                   <h3 className="text-white font-semibold text-xs line-clamp-1">{p.name || p.description.split(' ')[0]}</h3>
                   <p className="text-dark-400 text-[11px] line-clamp-1 mb-1">
-                    {p.rimDiameter && p.rimWidth ? `${p.rimDiameter}x${p.rimWidth}` : ''} {p.boltPattern} {p.finish}
+                    {p.tireSize || (p.rimDiameter && p.rimWidth ? `${p.rimDiameter}x${p.rimWidth} ${p.boltPattern}` : p.boltPattern)} {p.finish}
                   </p>
                   <div className="flex items-center justify-between">
                     <div>

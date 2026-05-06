@@ -69,10 +69,14 @@ function calcPricing(msrp, dealerCost) {
 
 // Copy image to public dir with GTA SKU name, return new filename
 function copyImage(srcPath, gtaSku, index = 0) {
+  return copyImageTo(srcPath, gtaSku, IMG_PUB_DIR, index);
+}
+
+function copyImageTo(srcPath, gtaSku, destDir, index = 0) {
   if (!srcPath || !fs.existsSync(srcPath)) return null;
   const ext = pathMod.extname(srcPath) || '.jpg';
   const newName = index === 0 ? `${gtaSku}${ext}` : `${gtaSku}-${index}${ext}`;
-  const destPath = pathMod.join(IMG_PUB_DIR, newName);
+  const destPath = pathMod.join(destDir, newName);
   if (!fs.existsSync(destPath)) {
     fs.copyFileSync(srcPath, destPath);
   }
@@ -299,6 +303,79 @@ function buildDatabase() {
       });
     }
     console.log(`  → ${count} unique products`);
+  }
+
+  // ─── ALLTIRE TIRES ───
+  const tiresRaw = loadJSON('alltire-tires.json');
+  if (tiresRaw && Array.isArray(tiresRaw)) {
+    console.log(`Alltire Tires: ${tiresRaw.length} raw entries`);
+    const seen = new Map();
+    let tireCount = 0;
+
+    for (const t of tiresRaw) {
+      if (!t.productNo) continue;
+      if (seen.has(t.productNo)) continue;
+      seen.set(t.productNo, true);
+
+      const gtaId = nextSku('T');
+      tireCount++;
+
+      const msrp = parseFloat((t.msrp || '').replace(/[$,]/g, '')) || 0;
+      // Dealer price is hidden ("DC" or "..."), estimate as ~60% of MSRP
+      const estDC = msrp > 0 ? Math.round(msrp * 0.60 * 100) / 100 : 0;
+      const pricing = calcPricing(msrp, estDC);
+
+      // Parse tire size: P225/45R17 → width=225, aspect=45, rim=17
+      const sizeMatch = (t.size || '').match(/[PL]?T?(\d{3})\/?(\d{2,3})R(\d{2})/);
+      const tireWidth = sizeMatch ? parseInt(sizeMatch[1]) : null;
+      const tireAspect = sizeMatch ? parseInt(sizeMatch[2]) : null;
+      const tireRim = sizeMatch ? parseInt(sizeMatch[3]) : null;
+
+      // Copy tire image
+      const origImgName = t.image ? t.image.split('/').pop() : '';
+      const tireSrcImg = origImgName
+        ? pathMod.join(__dirname, '..', 'webapp', 'public', 'data', 'images', 'tires', origImgName)
+        : '';
+      const TIRE_PUB_DIR = pathMod.join(OUT_DIR, 'images', 'tires');
+      if (!fs.existsSync(TIRE_PUB_DIR)) fs.mkdirSync(TIRE_PUB_DIR, { recursive: true });
+      const tireImgName = copyImageTo(tireSrcImg, gtaId, TIRE_PUB_DIR);
+
+      skuMap.push({
+        gtaId,
+        gtaSku: gtaId,
+        supplier: 'alltire',
+        supplierSku: t.productNo,
+        supplierProductNo: t.productNo,
+      });
+
+      products.push({
+        id: gtaId,
+        sku: gtaId,
+        category: 'tire',
+        brand: t.maker || '',
+        wheelType: t.type || 'All Season',
+        name: t.model || '',
+        description: t.description || '',
+        image: tireImgName ? `/gtatire/data/images/tires/${tireImgName}` : '',
+        price: pricing.publicPrice > 0 ? `$${pricing.publicPrice.toFixed(2)}` : '',
+        priceNum: pricing.publicPrice,
+        distPrice: pricing.distPrice > 0 ? `$${pricing.distPrice.toFixed(2)}` : '',
+        distPriceNum: pricing.distPrice,
+        compareAt: pricing.msrp > 0 ? `$${pricing.msrp.toFixed(2)}` : '',
+        compareAtNum: pricing.msrp,
+        stock: t.stock || '',
+        tireSize: t.size || '',
+        tireWidth,
+        tireAspect,
+        rimDiameter: tireRim,
+        rimWidth: null,
+        boltPattern: '',
+        offset: null,
+        hubBore: null,
+        finish: '',
+      });
+    }
+    console.log(`  → ${tireCount} unique tires`);
   }
 
   console.log(`\nTotal products: ${products.length}`);
