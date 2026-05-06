@@ -5,13 +5,18 @@ export interface Product {
   productNo: string;
   supplier: string;
   category: 'wheel' | 'tire';
+  brand: string;
   wheelType: string;
   name: string;
   description: string;
   image: string;
-  msrp: string;
-  msrpNum: number;
-  dealerPrice: string;
+  images?: string[];
+  price: string;
+  priceNum: number;
+  distPrice: string;
+  distPriceNum: number;
+  compareAt: string;
+  compareAtNum: number;
   stock: string;
   hubCentric: boolean;
   rimDiameter: number | null;
@@ -20,6 +25,10 @@ export interface Product {
   offset: number | null;
   hubBore: number | null;
   finish: string;
+  seat?: string;
+  tpmsCompatible?: string;
+  runflatCertified?: string;
+  loadRating?: string;
 }
 
 export interface VehicleTree {

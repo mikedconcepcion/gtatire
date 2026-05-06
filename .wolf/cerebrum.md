@@ -15,17 +15,22 @@
 ## Key Learnings
 
 - **Project:** gtatire
-- **Supplier portals are Canadian-region restricted** — Alltire works (maybe our IP is fine), but RWC (gpibtob.com) times out and may need a Canadian VPN/proxy to access
+- **Supplier portals are Canadian-region restricted** — All three portals (Alltire, RWC, Superspeed) work with ExpressVPN connected to Canada
 - **Alltire portal is classic ASP** — tab-based UI, Year/Make/Model dropdowns for wheels and fitment, text search for tires. Data loads dynamically via JS, no REST API
 - **Superspeed B2B is an Angular SPA** — hash routing (#/login), needs SPA-aware scraping with wait times
-- **Superspeed password (1308) is wrong** — waiting for correct credentials from James (site owner)
+- **Superspeed PIN is 1125** (not 1308). Login: james@jsdctiresandwheels.com / 1125. Lands on `#/app/product/productWheels`
+- **Superspeed has 803 wheels** — paginated (81 pages, 10/page). Table columns: Image, Brand, SKU, Model, Diameter, Width, ET, PCD, CB, Seat, Finish, Inventory, ETA, MSRP. Also has accessories (lug nuts, bolts, hub rings, spacers, TPMS, center caps)
+- **RWC (gpibtob.com) is OpenCart-based** — Year/Make/Model wheel search at `/product/searchwheel`, brands at `/product/manufacturer`, quick search input. Logged in as james@gtatiredistributor.ca / gpi123456
 - **Alltire search fields:** Quick Size (compact format e.g. 2257516), Product No., Description, Maker, Model, Full Size (e.g. LT225/75R16)
 - **Alltire wheel search:** Year → Make → Model → Diameter → Steel/Alloy/All + Hub Centric filter
 - **Alltire API endpoint:** `searchWheel.asp?year=X&make=X&model=X&diameter=X&wtype=&by=weborder&cid=6340&checkhub=false` — returns HTML table directly, much faster than DOM scraping
 - **Wheel product table columns (15 cells):** [0]=rowNum [1]=hubCentric [2]=empty [3]=productNo [4]=image [5]=type [6]=description [7]=price [8]=msrp [9]=stock [10-13]=qty [14]=Add
 - **Image URLs:** `https://alltire.ca/Wheel/Steel/{productNo}.jpg` or `Alloy/{name}.jpg`
 - **GitHub Pages base path:** Site at `/gtatire/` — all links need prefix, `import.meta.env.BASE_URL` resolves to `/gtatire` (no trailing slash!) in client JS
-- **Astro static generation:** 2,478 pages (2,089 vehicle + 383 product + 6 other) in ~70s build time
+- **Astro static generation:** 4,246 pages (2,089 vehicle + 2,150 product + 7 other) in ~142s build time
+- **Superspeed API is clean REST** — POST to `webapi/api/Product/getWheelsListByAengtId` with `pageSize:1000` returns all 803 wheels in one request. Image API: `webapi/api//Product/GetImage?imgName=FILENAME`. Login returns dealer ID (`Aid`) needed for API calls
+- **RWC (gpibtob.com) is OpenCart** — search `?route=product/search&search=RWC&limit=99999` returns all 964 products. Dealer cost is hidden in `.price-product` div (display:none), toggled by JS click. SKU in `.cart-button .pull-right` span
+- **Multi-supplier database:** build-database.js merges Alltire (383), Superspeed (803), RWC (964) = 2,150 unique wheels. Same pricing strategy across all: public=75% MSRP, wholesale=DC+20%
 - **Fuse.js for smart search:** client-side fuzzy matching, also parses diameter ("18") and bolt pattern ("5x114.3") from queries
 
 ## Do-Not-Repeat

@@ -322,3 +322,41 @@
 | 13:22 | Session end: 170 writes across 45 files (scrape-alltire-wheels.js, scrape-alltire-tires.js, global.css, Layout.astro, Header.astro) | 45 reads | ~92429 tok |
 | 13:24 | Session end: 170 writes across 45 files (scrape-alltire-wheels.js, scrape-alltire-tires.js, global.css, Layout.astro, Header.astro) | 45 reads | ~92429 tok |
 | 13:26 | Edited scrapers/build-database.js | 3→6 lines | ~100 |
+| 13:27 | Session end: 171 writes across 45 files (scrape-alltire-wheels.js, scrape-alltire-tires.js, global.css, Layout.astro, Header.astro) | 45 reads | ~92529 tok |
+| 13:27 | Session end: 171 writes across 45 files (scrape-alltire-wheels.js, scrape-alltire-tires.js, global.css, Layout.astro, Header.astro) | 45 reads | ~92529 tok |
+
+## Session: 2026-05-05 05:55
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 10:06 | Edited scrapers/config.js | "1308" → "1125" | ~6 |
+| 10:08 | Session end: 1 writes across 1 files (config.js) | 3 reads | ~2317 tok |
+| 10:12 | Created scrapers/scrape-superspeed.js | — | ~1435 |
+| 10:20 | Session end: 2 writes across 2 files (config.js, scrape-superspeed.js) | 3 reads | ~3752 tok |
+| 10:26 | Created scrapers/scrape-rwc.js | — | ~2693 |
+| 10:28 | Edited scrapers/scrape-rwc.js | added 1 condition(s) | ~367 |
+| 10:29 | Edited scrapers/scrape-rwc.js | 3→3 lines | ~55 |
+| 10:30 | Edited scrapers/scrape-rwc.js | added error handling | ~439 |
+| 10:31 | Edited scrapers/scrape-rwc.js | added error handling | ~456 |
+| 10:31 | Session end: 7 writes across 3 files (config.js, scrape-superspeed.js, scrape-rwc.js) | 4 reads | ~10455 tok |
+| 10:33 | Edited scrapers/build-database.js | added 11 condition(s) | ~2130 |
+| 10:33 | Edited scrapers/scrape-rwc.js | added error handling | ~132 |
+| 10:33 | Edited scrapers/build-database.js | added 1 condition(s) | ~146 |
+| 10:33 | Edited scrapers/build-database.js | 3→4 lines | ~38 |
+| 10:33 | Edited scrapers/build-database.js | 1→3 lines | ~38 |
+| 10:35 | Edited scrapers/build-database.js | modified if() | ~63 |
+| 10:35 | Edited scrapers/build-database.js | "Fitments: ${rawWheels.len" → "Fitments: ${totalFitments" | ~20 |
+| 10:36 | Edited webapp/src/data/products.ts | expanded (+9 lines) | ~183 |
+| 10:36 | Edited webapp/src/components/ProductDetail.tsx | 19→24 lines | ~136 |
+| 10:37 | Edited webapp/src/pages/tires.astro | inline fix | ~8 |
+| 10:37 | Edited webapp/src/pages/wheels.astro | 5→6 lines | ~126 |
+| 10:37 | Edited webapp/src/pages/wheels.astro | 4→4 lines | ~80 |
+| 10:37 | Edited webapp/src/pages/wheels.astro | inline fix | ~11 |
+| 10:37 | Edited webapp/src/components/ProductCard.astro | 12→15 lines | ~174 |
+| 10:38 | Edited webapp/src/pages/wheels/[id].astro | modified filter() | ~245 |
+| 10:38 | Edited webapp/src/pages/wheels/[id].astro | inline fix | ~12 |
+| 10:41 | Session end: 23 writes across 10 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 11 reads | ~23678 tok |
+| 10:48 | Session end: 23 writes across 10 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 11 reads | ~23678 tok |
+| 10:55 | Edited scrapers/build-database.js | 5→5 lines | ~74 |
+| 10:55 | Edited scrapers/build-database.js | "/data/images/superspeed/$" → "/data/images/superspeed/$" | ~26 |
+| 10:58 | Edited .gitignore | 2→5 lines | ~33 |

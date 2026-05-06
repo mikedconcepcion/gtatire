@@ -5,13 +5,17 @@ import WheelVisualizerModal from './WheelVisualizerModal';
 interface Product {
   id: string;
   productNo: string;
+  supplier: string;
+  brand: string;
   wheelType: string;
   name: string;
   description: string;
   image: string;
-  msrp: string;
+  images?: string[];
+  price: string;
   priceNum: number;
-  dealerPrice: string;
+  distPrice: string;
+  compareAt: string;
   stock: string;
   hubCentric: boolean;
   rimDiameter: number | null;
@@ -20,6 +24,7 @@ interface Product {
   offset: number | null;
   hubBore: number | null;
   finish: string;
+  seat?: string;
 }
 
 interface Vehicle {

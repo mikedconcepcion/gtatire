@@ -13,6 +13,7 @@ if (fs.existsSync(dataPath)) {
 
 // Get unique filter values
 const types = [...new Set(products.map(p => p.wheelType))].filter(Boolean).sort();
+const brands = [...new Set(products.map(p => p.brand))].filter(Boolean).sort();
 const diameters = [...new Set(products.map(p => p.rimDiameter))].filter(Boolean).sort((a, b) => a - b);
 const finishes = [...new Set(products.map(p => p.finish))].filter(Boolean).sort();
 const boltPatterns = [...new Set(products.map(p => p.boltPattern))].filter(Boolean).sort();
@@ -26,9 +27,9 @@ const boltPatterns = [...new Set(products.map(p => p.boltPattern))].filter(Boole
         <p class="text-dark-400 text-sm mt-1">{products.length} products available</p>
       </div>
       <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
-        <select id="filter-type" class="bg-dark-800 border border-dark-600 text-dark-300 text-xs rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
-          <option value="">All Types</option>
-          {types.map(t => <option value={t}>{t}</option>)}
+        <select id="filter-brand" class="bg-dark-800 border border-dark-600 text-dark-300 text-xs rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+          <option value="">All Brands</option>
+          {brands.map(b => <option value={b}>{b}</option>)}
         </select>
         <select id="filter-diameter" class="bg-dark-800 border border-dark-600 text-dark-300 text-xs rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
           <option value="">All Sizes</option>
@@ -51,7 +52,7 @@ const boltPatterns = [...new Set(products.map(p => p.boltPattern))].filter(Boole
         <ProductCard
           id={p.id}
           image={p.image}
-          brand={p.wheelType}
+          brand={p.brand || p.supplier}
           model={p.name || p.description.split(' ')[0]}
           description={p.description}
           size={p.boltPattern ? `${p.rimDiameter}" · ${p.boltPattern}` : `${p.rimDiameter}"`}

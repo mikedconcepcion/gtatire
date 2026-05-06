@@ -31,14 +31,19 @@ const similar = product
   : [];
 
 const specs = product ? [
-  { label: 'Product No.', value: product.productNo },
+  { label: 'SKU', value: product.productNo },
+  { label: 'Brand', value: product.brand || null },
   { label: 'Type', value: product.wheelType },
   { label: 'Size', value: product.rimDiameter && product.rimWidth ? `${product.rimDiameter}x${product.rimWidth}` : null },
   { label: 'Bolt Pattern', value: product.boltPattern || null },
   { label: 'Offset', value: product.offset !== null ? `ET${product.offset}` : null },
   { label: 'Hub Bore', value: product.hubBore ? `${product.hubBore}mm` : null },
   { label: 'Finish', value: product.finish || null },
+  { label: 'Seat', value: product.seat || null },
   { label: 'Hub Centric', value: product.hubCentric ? 'Yes' : 'No' },
+  { label: 'TPMS', value: product.tpmsCompatible || null },
+  { label: 'Runflat', value: product.runflatCertified || null },
+  { label: 'Load Rating', value: product.loadRating || null },
 ].filter(s => s.value) : [];
 
 export async function getStaticPaths() {
@@ -78,7 +83,7 @@ export async function getStaticPaths() {
               <ProductCard
                 id={p.id}
                 image={p.image}
-                brand={p.wheelType}
+                brand={p.brand || p.supplier}
                 model={p.name || p.description.split(' ')[0]}
                 description={p.description}
                 size={p.boltPattern ? `${p.rimDiameter}" · ${p.boltPattern}` : `${p.rimDiameter}"`}

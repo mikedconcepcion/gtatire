@@ -70,80 +70,193 @@ function parseWheelDescription(desc) {
 function buildDatabase() {
   console.log('=== Building Database ===\n');
 
-  // Load raw wheel data
+  const productMap = new Map(); // id → product
+  const fitmentMap = new Map(); // id → Set of "year|make|model"
+
+  // ─── 1a. Load Alltire wheels ───
   const rawWheels = loadJSON('alltire-wheels.json');
-  if (!rawWheels) {
-    console.log('No wheel data found. Run the scraper first.');
-    return;
-  }
-  console.log(`Raw wheel entries: ${rawWheels.length}`);
+  if (rawWheels) {
+    console.log(`Alltire raw entries: ${rawWheels.length}`);
+    for (const raw of rawWheels) {
+      if (!raw.productNo) continue;
+      const key = raw.productNo;
+      const vehicleKey = `${raw.vehicleYear}|${raw.vehicleMake}|${raw.vehicleModel}`;
+      if (!fitmentMap.has(key)) fitmentMap.set(key, new Set());
+      fitmentMap.get(key).add(vehicleKey);
+      if (productMap.has(key)) continue;
 
-  // Load vehicle tree
-  const vehicleTree = loadJSON('alltire-wheel-tree.json');
+      const specs = parseWheelDescription(raw.description);
+      const alltireMsrp = parseFloat((raw.msrp || '').replace(/[$,]/g, '')) || 0;
+      const alltireDC = parseFloat((raw.dealerPrice || '').replace(/[$,]/g, '')) || 0;
+      const ourPrice = alltireMsrp > 0 ? Math.round(alltireMsrp * 0.75 * 100) / 100 : 0;
+      const dcBased = alltireDC > 0 ? Math.round(alltireDC * 1.20 * 100) / 100 : 0;
+      const msrpBased = alltireMsrp > 0 ? Math.round(alltireMsrp * 0.60 * 100) / 100 : 0;
+      const distPrice = dcBased > 0 && dcBased < ourPrice ? dcBased : msrpBased;
 
-  // ─── 1. Deduplicate products ───
-  const productMap = new Map(); // productNo → product
-  const fitmentMap = new Map(); // productNo → Set of "year|make|model"
-
-  for (const raw of rawWheels) {
-    if (!raw.productNo) continue;
-
-    const key = raw.productNo;
-    const vehicleKey = `${raw.vehicleYear}|${raw.vehicleMake}|${raw.vehicleModel}`;
-
-    if (!fitmentMap.has(key)) fitmentMap.set(key, new Set());
-    fitmentMap.get(key).add(vehicleKey);
-
-    // Only process product once (first occurrence)
-    if (productMap.has(key)) continue;
-
-    const specs = parseWheelDescription(raw.description);
-
-    // Pricing strategy:
-    // Public price = Alltire MSRP - 25%
-    // Wholesale (distributor) = Alltire dealer cost (DC) + 20%
-    // Our cost = Alltire DC (never shown to anyone)
-    const alltireMsrp = parseFloat((raw.msrp || '').replace(/[$,]/g, '')) || 0;
-    const alltireDC = parseFloat((raw.dealerPrice || '').replace(/[$,]/g, '')) || 0;
-    const ourPrice = alltireMsrp > 0 ? Math.round(alltireMsrp * 0.75 * 100) / 100 : 0;
-    // Wholesale: DC+20%, but never higher than public price (use 40% off MSRP as cap)
-    const dcBased = alltireDC > 0 ? Math.round(alltireDC * 1.20 * 100) / 100 : 0;
-    const msrpBased = alltireMsrp > 0 ? Math.round(alltireMsrp * 0.60 * 100) / 100 : 0;
-    const distPrice = dcBased > 0 && dcBased < ourPrice
-      ? dcBased
-      : msrpBased;
-    const alltireMsrpDisplay = alltireMsrp;
-
-    const product = {
-      id: `alltire-${key}`,
-      productNo: key,
-      supplier: 'alltire',
-      category: 'wheel',
-      wheelType: raw.wheelType || '',
-      name: specs.name || raw.wheelType || '',
-      description: raw.description || '',
-      image: raw.image || '',
-      price: ourPrice > 0 ? `$${ourPrice.toFixed(2)}` : '',
-      priceNum: ourPrice,
-      distPrice: distPrice > 0 ? `$${distPrice.toFixed(2)}` : '',
-      distPriceNum: distPrice,
-      compareAt: alltireMsrpDisplay > 0 ? `$${alltireMsrpDisplay.toFixed(2)}` : '',
-      compareAtNum: alltireMsrpDisplay,
-      stock: raw.stock || '',
-      hubCentric: raw.hubCentric || false,
-      // Parsed specs
-      rimDiameter: specs.rimDiameter || null,
-      rimWidth: specs.rimWidth || null,
-      boltPattern: specs.boltPattern || '',
-      offset: specs.offset || null,
-      hubBore: specs.hubBore || null,
-      finish: specs.finish || '',
-    };
-
-    productMap.set(key, product);
+      productMap.set(key, {
+        id: `alltire-${key}`,
+        productNo: key,
+        supplier: 'alltire',
+        category: 'wheel',
+        brand: 'Alltire',
+        wheelType: raw.wheelType || '',
+        name: specs.name || raw.wheelType || '',
+        description: raw.description || '',
+        image: raw.image || '',
+        price: ourPrice > 0 ? `$${ourPrice.toFixed(2)}` : '',
+        priceNum: ourPrice,
+        distPrice: distPrice > 0 ? `$${distPrice.toFixed(2)}` : '',
+        distPriceNum: distPrice,
+        compareAt: alltireMsrp > 0 ? `$${alltireMsrp.toFixed(2)}` : '',
+        compareAtNum: alltireMsrp,
+        stock: raw.stock || '',
+        hubCentric: raw.hubCentric || false,
+        rimDiameter: specs.rimDiameter || null,
+        rimWidth: specs.rimWidth || null,
+        boltPattern: specs.boltPattern || '',
+        offset: specs.offset || null,
+        hubBore: specs.hubBore || null,
+        finish: specs.finish || '',
+      });
+    }
+    console.log(`  Alltire unique products: ${productMap.size}`);
   }
 
-  console.log(`Unique products: ${productMap.size}`);
+  // ─── 1b. Load Superspeed wheels ───
+  const ssRaw = loadJSON('superspeed-wheels-raw.json');
+  if (ssRaw && ssRaw.List) {
+    console.log(`Superspeed raw entries: ${ssRaw.List.length}`);
+    let ssCount = 0;
+    for (const w of ssRaw.List) {
+      if (!w.SKU) continue;
+      const key = w.SKU;
+      if (productMap.has(key)) continue;
+
+      const msrp = w.MSRP || 0;
+      const dc = w.COST || 0;
+      const ourPrice = msrp > 0 ? Math.round(msrp * 0.75 * 100) / 100 : 0;
+      const dcBased = dc > 0 ? Math.round(dc * 1.20 * 100) / 100 : 0;
+      const msrpBased = msrp > 0 ? Math.round(msrp * 0.60 * 100) / 100 : 0;
+      const distPrice = dcBased > 0 && dcBased < ourPrice ? dcBased : msrpBased;
+
+      // Image: use first face image (compressed to .jpg)
+      const faceImgs = (w.FACE_IMG || '').split(',').filter(Boolean);
+      const imageUrl = faceImgs.length > 0
+        ? `/data/images/superspeed/${faceImgs[0].replace('.png', '.jpg')}`
+        : '';
+
+      // Build description string
+      const desc = `${w.MODEL} ${w.DIAMETER}x${w.WIDTH} ${w.PCD} ET${w.ET} CB${w.CB} ${w.FINISH}`;
+
+      // Parse diameter as number
+      const diameter = parseInt(w.DIAMETER) || null;
+
+      // Stock text
+      let stockText = '';
+      if (w.INVENTORY > 20) stockText = '20+ In Stock';
+      else if (w.INVENTORY > 0) stockText = `${w.INVENTORY} In Stock`;
+      else if (w.ETA) stockText = w.ETA;
+      else stockText = 'Out of Stock';
+
+      productMap.set(key, {
+        id: `ss-${key}`,
+        productNo: key,
+        supplier: 'superspeed',
+        category: 'wheel',
+        brand: w.BRAND || 'Superspeed',
+        wheelType: 'Alloy',
+        name: w.MODEL || '',
+        description: desc,
+        image: imageUrl,
+        images: faceImgs.map(f => `/data/images/superspeed/${f.replace('.png', '.jpg')}`),
+        price: ourPrice > 0 ? `$${ourPrice.toFixed(2)}` : '',
+        priceNum: ourPrice,
+        distPrice: distPrice > 0 ? `$${distPrice.toFixed(2)}` : '',
+        distPriceNum: distPrice,
+        compareAt: msrp > 0 ? `$${msrp.toFixed(2)}` : '',
+        compareAtNum: msrp,
+        stock: stockText,
+        hubCentric: false,
+        rimDiameter: diameter,
+        rimWidth: w.WIDTH || null,
+        boltPattern: w.PCD || '',
+        offset: w.ET || null,
+        hubBore: w.CB || null,
+        finish: w.FINISH || '',
+        seat: w.SEAT || '',
+      });
+      ssCount++;
+    }
+    console.log(`  Superspeed unique products: ${ssCount}`);
+  }
+
+  // ─── 1c. Load RWC wheels (if available) ───
+  const rwcRaw = loadJSON('rwc-wheels-raw.json');
+  if (rwcRaw && Array.isArray(rwcRaw)) {
+    console.log(`RWC raw entries: ${rwcRaw.length}`);
+    let rwcCount = 0;
+    for (const w of rwcRaw) {
+      if (!w.sku) continue;
+      const key = w.sku;
+      if (productMap.has(key)) continue;
+
+      const dc = w.cost || 0;
+      // RWC: cost is dealer cost, estimate MSRP as DC * 1.6
+      const estMsrp = dc > 0 ? Math.round(dc * 1.6 * 100) / 100 : 0;
+      const ourPrice = estMsrp > 0 ? Math.round(estMsrp * 0.75 * 100) / 100 : 0;
+      const dcBased = dc > 0 ? Math.round(dc * 1.20 * 100) / 100 : 0;
+      const distPrice = dcBased > 0 && dcBased < ourPrice ? dcBased : 0;
+
+      // Parse size from name or specs
+      const sizeMatch = (w.size || '').match(/(\d+)x([\d.]+)/);
+      const bpMatch = (w.boltPattern || '').match(/(\d)x([\d.]+)/);
+
+      const imageFile = w.image ? w.image.split('/').pop() : '';
+      const imageUrl = imageFile ? `/data/images/rwc/${imageFile}` : '';
+
+      productMap.set(key, {
+        id: `rwc-${key}`,
+        productNo: key,
+        supplier: 'rwc',
+        category: 'wheel',
+        brand: 'RWC',
+        wheelType: 'Alloy',
+        name: w.modelCode1 || w.name || '',
+        description: w.name || '',
+        image: imageUrl,
+        price: ourPrice > 0 ? `$${ourPrice.toFixed(2)}` : '',
+        priceNum: ourPrice,
+        distPrice: distPrice > 0 ? `$${distPrice.toFixed(2)}` : '',
+        distPriceNum: distPrice,
+        compareAt: estMsrp > 0 ? `$${estMsrp.toFixed(2)}` : '',
+        compareAtNum: estMsrp,
+        stock: w.stock || '',
+        hubCentric: (w.customFit || '').includes('HUB CENTRIC'),
+        rimDiameter: sizeMatch ? parseInt(sizeMatch[1]) : null,
+        rimWidth: sizeMatch ? parseFloat(sizeMatch[2]) : null,
+        boltPattern: w.boltPattern || '',
+        offset: w.offset ? parseInt((w.offset || '').replace(/\D/g, '')) : null,
+        hubBore: w.centerBore ? parseFloat((w.centerBore || '').replace(/[^0-9.]/g, '')) : null,
+        finish: w.finish || '',
+        tpmsCompatible: w.tpmsCompatible || '',
+        runflatCertified: w.runflatCertified || '',
+        loadRating: w.loadRating || '',
+      });
+      rwcCount++;
+
+      // Add RWC fitment if available
+      if (w.fitment && w.fitment.length > 0) {
+        if (!fitmentMap.has(key)) fitmentMap.set(key, new Set());
+        for (const f of w.fitment) {
+          fitmentMap.get(key).add(`${f.year}|${f.make}|${f.model}`);
+        }
+      }
+    }
+    console.log(`  RWC unique products: ${rwcCount}`);
+  }
+
+  const totalProducts = productMap.size;
+  console.log(`\nTotal unique products: ${totalProducts}`);
   console.log(`Fitment entries: ${fitmentMap.size}`);
 
   // ─── 2. Build products array ───
@@ -159,11 +272,11 @@ function buildDatabase() {
   }
 
   // ─── 4. Build vehicle tree (for dropdowns) ───
-  // Use the scraped tree if available, otherwise build from fitment data
+  const vehicleTree = loadJSON('alltire-wheel-tree.json');
   let vehicles = vehicleTree;
   if (!vehicles) {
     vehicles = {};
-    for (const raw of rawWheels) {
+    for (const raw of (rawWheels || [])) {
       const { vehicleYear: y, vehicleMake: mk, vehicleModel: md } = raw;
       if (!y || !mk || !md) continue;
       if (!vehicles[y]) vehicles[y] = {};
@@ -180,6 +293,7 @@ function buildDatabase() {
 
   // ─── 5. Build stats ───
   const brands = {};
+  const suppliers = {};
   const types = {};
   const finishes = {};
   const diameters = {};
@@ -188,6 +302,8 @@ function buildDatabase() {
     types[p.wheelType] = (types[p.wheelType] || 0) + 1;
     if (p.finish) finishes[p.finish] = (finishes[p.finish] || 0) + 1;
     if (p.rimDiameter) diameters[p.rimDiameter] = (diameters[p.rimDiameter] || 0) + 1;
+    if (p.brand) brands[p.brand] = (brands[p.brand] || 0) + 1;
+    suppliers[p.supplier] = (suppliers[p.supplier] || 0) + 1;
   });
 
   const yearCount = Object.keys(vehicles).length;
@@ -203,14 +319,17 @@ function buildDatabase() {
     }
   }
 
+  const totalFitments = rawWheels ? rawWheels.length : 0;
   const stats = {
     totalProducts: products.length,
-    totalFitments: rawWheels.length,
+    totalFitments,
     years: yearCount,
     makes: makeCount,
     models: modelCount,
     byType: types,
     byDiameter: diameters,
+    byBrand: brands,
+    bySupplier: suppliers,
     topFinishes: Object.entries(finishes).sort((a, b) => b[1] - a[1]).slice(0, 20),
     priceRange: {
       min: products.filter(p => p.priceNum > 0).reduce((min, p) => Math.min(min, p.priceNum), Infinity),
@@ -229,7 +348,7 @@ function buildDatabase() {
   // ─── 7. Print summary ───
   console.log('\n=== Database Summary ===');
   console.log(`Products: ${products.length} unique wheels`);
-  console.log(`Fitments: ${rawWheels.length} vehicle/product combos`);
+  console.log(`Fitments: ${totalFitments} vehicle/product combos`);
   console.log(`Vehicles: ${yearCount} years, ${makeCount} makes, ${modelCount} models`);
   console.log(`Types: ${JSON.stringify(types)}`);
   console.log(`Diameters: ${JSON.stringify(diameters)}`);

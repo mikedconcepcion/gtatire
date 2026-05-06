@@ -12,6 +12,9 @@ data/alltire-wheels-scraped.json
 data/alltire-tires.json
 data/alltire-tires-scraped.json
 data/alltire-fitment.json
+data/superspeed-wheels-raw.json
+data/rwc-wheels-raw.json
+data/rwc-fitment-tree.json
 data/images/
 
 # Env
