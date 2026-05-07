@@ -536,6 +536,18 @@ export default function SmartSearchResults() {
   const results = searchResult.results || [];
   const searchType = searchResult.searchType || 'none';
   const searchLabel = searchResult.searchLabel || '';
+
+  // Auto-set season filter for tire-type searches
+  useEffect(() => {
+    if (searchType === 'tire-type') {
+      if (searchLabel.includes('Winter')) setSeasonFilter('Winter');
+      else if (searchLabel.includes('All Season')) setSeasonFilter('All Season');
+      else if (searchLabel.includes('All Weather')) setSeasonFilter('All Weather');
+    } else {
+      setSeasonFilter('');
+    }
+    setShowCategory('all');
+  }, [searchType, searchLabel]);
   const detectedMake = (searchResult as any).vMake || '';
   const detectedModel = (searchResult as any).vModel || '';
   const detectedYear = (searchResult as any).vYear || '';
@@ -642,7 +654,18 @@ export default function SmartSearchResults() {
       ) : query && results.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-dark-400 text-sm">No results for "{query}"</p>
-          <p className="text-dark-600 text-xs mt-1">Try a vehicle name, brand, size, or bolt pattern</p>
+          <p className="text-dark-600 text-xs mt-2">Try a vehicle name, brand, size, or bolt pattern</p>
+          <div className="flex flex-wrap justify-center gap-2 mt-6">
+            {suggestions.map(s => (
+              <button
+                key={s}
+                onClick={() => { window.history.replaceState({}, '', `?q=${encodeURIComponent(s)}`); setQuery(s); }}
+                className="text-xs text-dark-400 hover:text-primary-400 bg-dark-800/50 hover:bg-dark-800 px-3 py-1.5 rounded-full transition-all border border-dark-700/50"
+              >
+                {s}
+              </button>
+            ))}
+          </div>
         </div>
       ) : query && searchType === 'vehicle' && hasBothCategories ? (
         <VehiclePackageBuilder
