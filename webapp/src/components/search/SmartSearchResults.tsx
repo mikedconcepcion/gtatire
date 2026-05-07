@@ -650,6 +650,44 @@ export default function SmartSearchResults() {
             </div>
           </div>
 
+          {/* Package combo banner — vehicle search with both tires and wheels */}
+          {searchType === 'vehicle' && hasBothCategories && (() => {
+            const cheapWheel = results.filter(p => p.category === 'wheel' && p.priceNum > 0).sort((a, b) => a.priceNum - b.priceNum)[0];
+            const cheapTire = results.filter(p => p.category === 'tire' && p.priceNum > 0).sort((a, b) => a.priceNum - b.priceNum)[0];
+            if (!cheapWheel || !cheapTire) return null;
+            const pkgPrice = (cheapWheel.priceNum + cheapTire.priceNum) * 4;
+            return (
+              <div className="bg-gradient-to-r from-primary-900/30 to-dark-900 border border-primary-700/30 rounded-xl p-4 sm:p-5 mb-6">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  {/* Tire + Wheel preview */}
+                  <div className="flex items-center gap-3 shrink-0">
+                    <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center p-1.5">
+                      {cheapTire.image && <img src={cheapTire.image} alt="" className="w-full h-full object-contain mix-blend-multiply" />}
+                    </div>
+                    <span className="text-dark-500 text-lg">+</span>
+                    <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center p-1.5">
+                      {cheapWheel.image && <img src={cheapWheel.image} alt="" className="w-full h-full object-contain mix-blend-multiply" />}
+                    </div>
+                  </div>
+                  {/* Info */}
+                  <div className="flex-1">
+                    <p className="text-primary-300 text-sm font-semibold">Complete Package</p>
+                    <p className="text-dark-300 text-xs mt-0.5">
+                      4 tires + 4 wheels starting from <span className="text-white font-bold text-base">${pkgPrice.toFixed(2)}</span>
+                    </p>
+                    <p className="text-dark-500 text-[10px] mt-1">
+                      {cheapTire.brand} {cheapTire.name} ({cheapTire.tireSize}) × 4 = ${(cheapTire.priceNum * 4).toFixed(2)} + {cheapWheel.brand} {cheapWheel.name} × 4 = ${(cheapWheel.priceNum * 4).toFixed(2)}
+                    </p>
+                  </div>
+                  {/* CTA */}
+                  <div className="shrink-0">
+                    <span className="text-primary-400 text-xs font-medium">Browse below to customize ↓</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
           {/* Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {sortedResults.slice(0, 60).map(p => (
