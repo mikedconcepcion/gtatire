@@ -35,13 +35,35 @@ const MAKE_MAP: Record<string, string> = {
   'MERCEDES': 'Mercedes-Benz', 'LAND ROVER': 'Land Rover', 'ALFA ROMEO': 'Alfa Romeo',
 };
 
-function getVehicleImgUrl(make: string, model: string, year: string) {
-  const fmtMake = MAKE_MAP[make] || (make ? make.charAt(0) + make.slice(1).toLowerCase() : '');
-  const fmtModel = model ? model.split(' ').map(w =>
+const VEHICLE_COLORS = [
+  { id: 'default', label: 'Silver', swatch: '#C0C0C0' },
+  { id: 'pspc0014', label: 'Black', swatch: '#1a1a1a' },
+  { id: 'pspc0087', label: 'Red', swatch: '#cc2a36' },
+  { id: 'pspc0071', label: 'Blue', swatch: '#2a5cc7' },
+  { id: 'pspc0066', label: 'White', swatch: '#f0f0f0' },
+  { id: 'pspc0074', label: 'Grey', swatch: '#6b6b6b' },
+];
+
+function fmtMake(make: string) {
+  return MAKE_MAP[make] || (make ? make.charAt(0) + make.slice(1).toLowerCase() : '');
+}
+
+function fmtModel(model: string) {
+  return model ? model.split(' ').map(w =>
     w.length <= 3 ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
   ).join(' ') : '';
-  if (!fmtMake || !fmtModel) return '';
-  return `https://cdn.imagin.studio/getImage?customer=img&make=${encodeURIComponent(fmtMake)}&modelFamily=${encodeURIComponent(fmtModel)}&modelYear=${year || '2025'}&angle=01&width=600&fileType=png`;
+}
+
+function getVehicleImgUrl(make: string, model: string, year: string, angle = '01', paintId = 'default') {
+  const mk = fmtMake(make);
+  const md = fmtModel(model);
+  if (!mk || !md) return '';
+  const params = new URLSearchParams({
+    customer: 'img', make: mk, modelFamily: md,
+    modelYear: year || '2025', angle, width: '800', fileType: 'png',
+  });
+  if (paintId && paintId !== 'default') params.set('paintId', paintId);
+  return `https://cdn.imagin.studio/getImage?${params.toString()}`;
 }
 
 function StockBadge({ stock }: { stock: string }) {
@@ -109,8 +131,10 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
   const [wheelType, setWheelType] = useState<'' | 'alloy' | 'steel'>('');
   const [selectedTireId, setSelectedTireId] = useState<string>('');
   const [selectedWheelId, setSelectedWheelId] = useState<string>('');
+  const [vehicleColor, setVehicleColor] = useState('default');
+  const [vehicleAngle, setVehicleAngle] = useState('01');
 
-  const vehicleImgUrl = getVehicleImgUrl(vehicleMake, vehicleModel, vehicleYear);
+  const vehicleImgUrl = getVehicleImgUrl(vehicleMake, vehicleModel, vehicleYear, vehicleAngle, vehicleColor);
   const base = typeof import.meta !== 'undefined' ? (import.meta as any).env?.BASE_URL || '/gtatire' : '/gtatire';
 
   // Filter tires by season
@@ -143,53 +167,87 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
 
   return (
     <div className="space-y-0">
-      {/* ── Vehicle header + Package summary (sticky) ── */}
-      <div className="bg-gradient-to-r from-primary-900/30 via-dark-900 to-primary-900/20 border border-primary-700/30 rounded-xl overflow-hidden mb-4">
-        <div className="flex flex-col sm:flex-row">
-          {/* Vehicle image */}
+      {/* ── Vehicle header + Package summary ── */}
+      <div className="bg-gradient-to-r from-primary-900/20 via-dark-900 to-primary-900/10 border border-primary-700/20 rounded-xl overflow-hidden mb-5">
+        <div className="flex flex-col md:flex-row">
+          {/* Vehicle image with controls */}
           {vehicleImgUrl && (
-            <div className="sm:w-56 h-32 sm:h-auto bg-gradient-to-br from-dark-800 to-dark-900 flex items-center justify-center p-2 shrink-0">
-              <img src={vehicleImgUrl} alt={vehicleLabel} className="max-w-full max-h-full object-contain" loading="lazy" />
+            <div className="md:w-[420px] bg-gradient-to-br from-dark-800/50 to-dark-900 shrink-0 relative">
+              <div className="aspect-[16/9] md:aspect-auto md:h-full flex items-center justify-center p-3">
+                <img src={vehicleImgUrl} alt={vehicleLabel} className="max-w-full max-h-full object-contain" loading="lazy" />
+              </div>
+              {/* Color swatches */}
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 bg-dark-900/80 backdrop-blur rounded-full px-2.5 py-1.5">
+                {VEHICLE_COLORS.map(c => (
+                  <button
+                    key={c.id}
+                    onClick={() => setVehicleColor(c.id)}
+                    title={c.label}
+                    className={`w-5 h-5 rounded-full border-2 transition-all ${
+                      vehicleColor === c.id ? 'border-primary-400 scale-110' : 'border-dark-600 hover:border-dark-400'
+                    }`}
+                    style={{ backgroundColor: c.swatch }}
+                  />
+                ))}
+              </div>
+              {/* Angle toggle */}
+              <div className="absolute top-2 right-2 flex gap-1 bg-dark-900/80 backdrop-blur rounded-lg p-0.5">
+                {[
+                  { id: '01', label: '3/4' },
+                  { id: '05', label: 'Side' },
+                  { id: '09', label: 'Rear' },
+                ].map(a => (
+                  <button
+                    key={a.id}
+                    onClick={() => setVehicleAngle(a.id)}
+                    className={`px-2 py-0.5 rounded text-[9px] font-medium transition-all ${
+                      vehicleAngle === a.id ? 'bg-primary-600 text-white' : 'text-dark-400 hover:text-white'
+                    }`}
+                  >
+                    {a.label}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
           {/* Package summary */}
-          <div className="flex-1 p-4">
+          <div className="flex-1 p-4 md:p-5">
             <p className="text-primary-300 text-sm font-semibold">{vehicleLabel}</p>
             <div className="flex items-center gap-2 mt-1 mb-3">
               <svg className="w-3.5 h-3.5 text-green-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              <span className="text-green-400 text-xs font-medium">All wheels shown are hub centric fit for your vehicle</span>
+              <span className="text-green-400 text-xs font-medium">All wheels are hub centric fit</span>
             </div>
 
             {/* Selected items + price */}
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
               {selectedTire && (
                 <div className="flex items-center gap-2 bg-dark-800/60 rounded-lg px-2.5 py-1.5">
-                  <div className="w-8 h-8 bg-white rounded flex items-center justify-center p-0.5">
+                  <div className="w-9 h-9 bg-white rounded flex items-center justify-center p-0.5 shrink-0">
                     {selectedTire.image && <img src={selectedTire.image} alt="" className="w-full h-full object-contain mix-blend-multiply" />}
                   </div>
                   <div>
-                    <p className="text-white text-[10px] font-medium">{selectedTire.brand} {selectedTire.name}</p>
+                    <p className="text-white text-[10px] font-medium line-clamp-1">{selectedTire.brand} {selectedTire.name}</p>
                     <p className="text-dark-400 text-[9px]">{selectedTire.tireSize} × 4 = ${(selectedTire.priceNum * 4).toFixed(2)}</p>
                   </div>
                 </div>
               )}
-              <span className="text-dark-500 text-sm">+</span>
+              <span className="text-dark-500 text-lg">+</span>
               {selectedWheel && (
                 <div className="flex items-center gap-2 bg-dark-800/60 rounded-lg px-2.5 py-1.5">
-                  <div className="w-8 h-8 bg-white rounded flex items-center justify-center p-0.5">
+                  <div className="w-9 h-9 bg-white rounded flex items-center justify-center p-0.5 shrink-0">
                     {selectedWheel.image && <img src={selectedWheel.image} alt="" className="w-full h-full object-contain mix-blend-multiply" />}
                   </div>
                   <div>
-                    <p className="text-white text-[10px] font-medium">{selectedWheel.brand} {selectedWheel.name}</p>
+                    <p className="text-white text-[10px] font-medium line-clamp-1">{selectedWheel.brand} {selectedWheel.name}</p>
                     <p className="text-dark-400 text-[9px]">{selectedWheel.rimDiameter}x{selectedWheel.rimWidth} × 4 = ${(selectedWheel.priceNum * 4).toFixed(2)}</p>
                   </div>
                 </div>
               )}
-              <span className="text-dark-500 text-sm">=</span>
-              <div className="bg-primary-600/20 border border-primary-500/30 rounded-lg px-3 py-1.5">
-                <p className="text-white font-bold text-lg">${pkgPrice.toFixed(2)}</p>
+              <span className="text-dark-500 text-lg">=</span>
+              <div className="bg-primary-600/20 border border-primary-500/30 rounded-lg px-4 py-2">
+                <p className="text-white font-bold text-xl">${pkgPrice.toFixed(2)}</p>
                 <p className="text-primary-300 text-[9px]">4 tires + 4 wheels</p>
               </div>
             </div>
