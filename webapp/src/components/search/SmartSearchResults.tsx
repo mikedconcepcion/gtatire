@@ -49,7 +49,7 @@ function StockBadge({ stock }: { stock: string }) {
   const low = parseInt(stock) >= 1 && parseInt(stock) < 10;
   const out = stock.includes('Out of Stock');
   const color = inStock ? 'text-green-400' : low ? 'text-amber-400' : out ? 'text-red-400' : 'text-dark-400';
-  const label = inStock ? 'In Stock' : low ? `${stock} left` : out ? 'Out of Stock' : stock || 'Available';
+  const label = inStock ? 'In Stock' : low ? `${parseInt(stock)} left` : out ? 'Out of Stock' : stock === 'Contact us' ? 'Available' : stock || 'Available';
   return <span className={`text-xs font-medium ${color}`}>{label}</span>;
 }
 
@@ -431,10 +431,15 @@ export default function SmartSearchResults() {
         if (isAllSeason) filtered = filtered.filter(p => p.wheelType === 'All Season');
         if (isAllWeather) filtered = filtered.filter(p => p.wheelType === 'All Weather');
 
+        // Also find wheels that match this rim diameter
+        const rimDiam = parseInt(tr);
+        const matchingWheels = products.filter(p => p.category === 'wheel' && p.rimDiameter === rimDiam);
+        const combined = [...(filtered.length > 0 ? filtered : tireResults), ...matchingWheels];
+
         return {
-          results: filtered.length > 0 ? filtered : tireResults,
+          results: combined,
           searchType: 'tire-size',
-          searchLabel: `${tw}/${ta}R${tr} tires`,
+          searchLabel: `${tw}/${ta}R${tr}`,
         };
       }
     }
@@ -673,6 +678,19 @@ export default function SmartSearchResults() {
                     Tires ({tireCount})
                   </button>
                 </div>
+              )}
+              {/* Season filter for tire-heavy results */}
+              {tireCount > 10 && (
+                <select
+                  value={seasonFilter}
+                  onChange={e => setSeasonFilter(e.target.value as any)}
+                  className="bg-dark-800 border border-dark-600 text-dark-300 text-xs rounded-lg px-2 py-1.5 focus:outline-none"
+                >
+                  <option value="">All Seasons</option>
+                  {seasonCounts['All Season'] > 0 && <option value="All Season">All Season ({seasonCounts['All Season']})</option>}
+                  {seasonCounts['Winter'] > 0 && <option value="Winter">Winter ({seasonCounts['Winter']})</option>}
+                  {seasonCounts['All Weather'] > 0 && <option value="All Weather">All Weather ({seasonCounts['All Weather']})</option>}
+                </select>
               )}
               <select
                 value={sortBy}

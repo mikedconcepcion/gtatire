@@ -70,7 +70,7 @@ function StockBadge({ stock }: { stock: string }) {
   const inStock = stock.includes('In Stock') || stock === 'Available' || stock === '20+' || parseInt(stock) >= 10;
   const low = parseInt(stock) >= 1 && parseInt(stock) < 10;
   const color = inStock ? 'text-green-400' : low ? 'text-amber-400' : 'text-dark-500';
-  const label = inStock ? 'In Stock' : low ? `${parseInt(stock)} left` : stock || 'Available';
+  const label = inStock ? 'In Stock' : low ? `${parseInt(stock)} left` : stock === 'Contact us' ? 'Available' : stock || 'Available';
   return <span className={`text-[9px] font-medium ${color}`}>{label}</span>;
 }
 

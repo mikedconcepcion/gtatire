@@ -66,6 +66,7 @@ const boltPatterns = [...new Set(products.map(p => p.boltPattern))].filter(Boole
             stock={p.stock}
             type={p.wheelType}
             category="wheel"
+            noImage={p.noImage}
           />
         </div>
       ))}
