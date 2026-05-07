@@ -173,6 +173,7 @@ export default function SmartSearchResults() {
   const [error, setError] = useState(false);
   const [sortBy, setSortBy] = useState<'relevance' | 'price-asc' | 'price-desc'>('relevance');
   const [showCategory, setShowCategory] = useState<'all' | 'wheel' | 'tire'>('all');
+  const [seasonFilter, setSeasonFilter] = useState<'' | 'All Season' | 'Winter' | 'All Weather'>('');
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -537,15 +538,30 @@ export default function SmartSearchResults() {
   const sortedResults = useMemo(() => {
     let r = [...results];
     if (showCategory !== 'all') r = r.filter(p => p.category === showCategory);
+    // Season filter applies to tires only, wheels always show
+    if (seasonFilter) r = r.filter(p => p.category === 'wheel' || p.wheelType === seasonFilter);
     if (sortBy === 'price-asc') r.sort((a, b) => a.priceNum - b.priceNum);
     else if (sortBy === 'price-desc') r.sort((a, b) => b.priceNum - a.priceNum);
     else r.sort((a, b) => a.priceNum - b.priceNum);
     return r;
-  }, [results, sortBy, showCategory]);
+  }, [results, sortBy, showCategory, seasonFilter]);
 
   const wheelCount = results.filter(p => p.category === 'wheel').length;
-  const tireCount = results.filter(p => p.category === 'tire').length;
+  const tireResults = seasonFilter
+    ? results.filter(p => p.category === 'tire' && p.wheelType === seasonFilter)
+    : results.filter(p => p.category === 'tire');
+  const tireCount = tireResults.length;
   const hasBothCategories = wheelCount > 0 && tireCount > 0;
+
+  // Season counts for the picker
+  const seasonCounts = useMemo(() => {
+    const tires = results.filter(p => p.category === 'tire');
+    return {
+      'All Season': tires.filter(t => t.wheelType === 'All Season').length,
+      'Winter': tires.filter(t => t.wheelType === 'Winter').length,
+      'All Weather': tires.filter(t => t.wheelType === 'All Weather').length,
+    };
+  }, [results]);
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -661,9 +677,12 @@ export default function SmartSearchResults() {
           {/* Package combo banner — vehicle search with both tires and wheels */}
           {searchType === 'vehicle' && hasBothCategories && (() => {
             const wheels = results.filter(p => p.category === 'wheel' && p.priceNum > 0).sort((a, b) => a.priceNum - b.priceNum);
-            const tires = results.filter(p => p.category === 'tire' && p.priceNum > 0).sort((a, b) => a.priceNum - b.priceNum);
+            const filteredTires = (seasonFilter
+              ? results.filter(p => p.category === 'tire' && p.priceNum > 0 && p.wheelType === seasonFilter)
+              : results.filter(p => p.category === 'tire' && p.priceNum > 0)
+            ).sort((a, b) => a.priceNum - b.priceNum);
             const cheapWheel = wheels[0];
-            const cheapTire = tires[0];
+            const cheapTire = filteredTires[0];
             if (!cheapWheel || !cheapTire) return null;
             const pkgPrice = (cheapWheel.priceNum + cheapTire.priceNum) * 4;
 
@@ -711,6 +730,30 @@ export default function SmartSearchResults() {
                     <p className="text-dark-500 text-[10px]">
                       Starting from: {cheapTire.brand} {cheapTire.name} × 4 (${(cheapTire.priceNum * 4).toFixed(2)}) + {cheapWheel.brand} {cheapWheel.name} × 4 (${(cheapWheel.priceNum * 4).toFixed(2)})
                     </p>
+                    {/* Season picker */}
+                    <div className="flex items-center gap-2 mt-3">
+                      <span className="text-dark-500 text-[10px]">Season:</span>
+                      <div className="flex gap-1">
+                        {(['', 'All Season', 'Winter', 'All Weather'] as const).map(s => {
+                          const label = s || 'All';
+                          const count = s ? seasonCounts[s] : Object.values(seasonCounts).reduce((a, b) => a + b, 0);
+                          if (s && count === 0) return null;
+                          return (
+                            <button
+                              key={label}
+                              onClick={() => setSeasonFilter(s)}
+                              className={`px-2.5 py-1 rounded-md text-[10px] font-medium transition-all ${
+                                seasonFilter === s
+                                  ? s === 'Winter' ? 'bg-blue-600 text-white' : s === 'All Weather' ? 'bg-amber-600 text-white' : 'bg-green-600 text-white'
+                                  : 'bg-dark-800/60 text-dark-400 hover:text-white'
+                              }`}
+                            >
+                              {s === 'All Season' ? '☀️ All Season' : s === 'Winter' ? '❄️ Winter' : s === 'All Weather' ? '🌤️ All Weather' : 'All'} ({count})
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
