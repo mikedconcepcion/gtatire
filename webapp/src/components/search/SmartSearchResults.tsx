@@ -216,7 +216,7 @@ export default function SmartSearchResults() {
     minMatchCharLength: 2,
   }), [products]);
 
-  const { results, searchType, searchLabel } = useMemo(() => {
+  const searchResult = useMemo(() => {
     if (!query.trim() || products.length === 0) return { results: [], searchType: 'none', searchLabel: '' };
 
     const q = query.trim();
@@ -402,8 +402,9 @@ export default function SmartSearchResults() {
           results: filtered.length > 0 ? filtered : combinedResults,
           searchType: 'vehicle',
           searchLabel: `Fits ${label}`,
-          wheelCount,
-          tireCount,
+          vMake: detectedMake,
+          vModel: detectedModel,
+          vYear: detectedYear,
         };
       }
     }
@@ -524,6 +525,13 @@ export default function SmartSearchResults() {
     const fuseResults = fuse.search(query).map(r => r.item);
     return { results: fuseResults, searchType: 'fuzzy', searchLabel: '' };
   }, [query, products, fitment, tireFitment, vehicleNames, fuse]);
+
+  const results = searchResult.results || [];
+  const searchType = searchResult.searchType || 'none';
+  const searchLabel = searchResult.searchLabel || '';
+  const detectedMake = (searchResult as any).vMake || '';
+  const detectedModel = (searchResult as any).vModel || '';
+  const detectedYear = (searchResult as any).vYear || '';
 
   // Filter and sort results
   const sortedResults = useMemo(() => {
@@ -652,36 +660,57 @@ export default function SmartSearchResults() {
 
           {/* Package combo banner — vehicle search with both tires and wheels */}
           {searchType === 'vehicle' && hasBothCategories && (() => {
-            const cheapWheel = results.filter(p => p.category === 'wheel' && p.priceNum > 0).sort((a, b) => a.priceNum - b.priceNum)[0];
-            const cheapTire = results.filter(p => p.category === 'tire' && p.priceNum > 0).sort((a, b) => a.priceNum - b.priceNum)[0];
+            const wheels = results.filter(p => p.category === 'wheel' && p.priceNum > 0).sort((a, b) => a.priceNum - b.priceNum);
+            const tires = results.filter(p => p.category === 'tire' && p.priceNum > 0).sort((a, b) => a.priceNum - b.priceNum);
+            const cheapWheel = wheels[0];
+            const cheapTire = tires[0];
             if (!cheapWheel || !cheapTire) return null;
             const pkgPrice = (cheapWheel.priceNum + cheapTire.priceNum) * 4;
+
+            // Build vehicle image URL if we have make/model
+            const makeMap: Record<string, string> = {
+              'MERCEDES': 'Mercedes-Benz', 'LAND ROVER': 'Land Rover',
+              'ALFA ROMEO': 'Alfa Romeo',
+            };
+            const fmtMake = makeMap[detectedMake] || (detectedMake ? detectedMake.charAt(0) + detectedMake.slice(1).toLowerCase() : '');
+            const fmtModel = detectedModel ? detectedModel.split(' ').map((w: string) =>
+              w.length <= 3 ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
+            ).join(' ') : '';
+            const vehicleImgUrl = fmtMake && fmtModel
+              ? `https://cdn.imagin.studio/getImage?customer=img&make=${encodeURIComponent(fmtMake)}&modelFamily=${encodeURIComponent(fmtModel)}&modelYear=${detectedYear || '2025'}&angle=01&width=600&fileType=png`
+              : '';
+
             return (
-              <div className="bg-gradient-to-r from-primary-900/30 to-dark-900 border border-primary-700/30 rounded-xl p-4 sm:p-5 mb-6">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                  {/* Tire + Wheel preview */}
-                  <div className="flex items-center gap-3 shrink-0">
-                    <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center p-1.5">
-                      {cheapTire.image && <img src={cheapTire.image} alt="" className="w-full h-full object-contain mix-blend-multiply" />}
+              <div className="bg-gradient-to-r from-primary-900/30 via-dark-900 to-primary-900/20 border border-primary-700/30 rounded-xl overflow-hidden mb-6">
+                <div className="flex flex-col sm:flex-row">
+                  {/* Vehicle image */}
+                  {vehicleImgUrl && (
+                    <div className="sm:w-64 h-36 sm:h-auto bg-gradient-to-br from-dark-800 to-dark-900 flex items-center justify-center p-2 shrink-0">
+                      <img src={vehicleImgUrl} alt={`${fmtMake} ${fmtModel}`} className="max-w-full max-h-full object-contain" loading="lazy" />
                     </div>
-                    <span className="text-dark-500 text-lg">+</span>
-                    <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center p-1.5">
-                      {cheapWheel.image && <img src={cheapWheel.image} alt="" className="w-full h-full object-contain mix-blend-multiply" />}
+                  )}
+                  {/* Package info */}
+                  <div className="flex-1 p-4 sm:p-5">
+                    <p className="text-primary-300 text-sm font-semibold mb-2">
+                      Complete Package for {searchLabel?.replace('Fits ', '') || 'Your Vehicle'}
+                    </p>
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center p-1">
+                        {cheapTire.image && <img src={cheapTire.image} alt="" className="w-full h-full object-contain mix-blend-multiply" />}
+                      </div>
+                      <span className="text-dark-500">+</span>
+                      <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center p-1">
+                        {cheapWheel.image && <img src={cheapWheel.image} alt="" className="w-full h-full object-contain mix-blend-multiply" />}
+                      </div>
+                      <div className="text-dark-500 text-lg">=</div>
+                      <div>
+                        <p className="text-white font-bold text-xl">${pkgPrice.toFixed(2)}</p>
+                        <p className="text-dark-400 text-[10px]">4 tires + 4 wheels</p>
+                      </div>
                     </div>
-                  </div>
-                  {/* Info */}
-                  <div className="flex-1">
-                    <p className="text-primary-300 text-sm font-semibold">Complete Package</p>
-                    <p className="text-dark-300 text-xs mt-0.5">
-                      4 tires + 4 wheels starting from <span className="text-white font-bold text-base">${pkgPrice.toFixed(2)}</span>
+                    <p className="text-dark-500 text-[10px]">
+                      Starting from: {cheapTire.brand} {cheapTire.name} × 4 (${(cheapTire.priceNum * 4).toFixed(2)}) + {cheapWheel.brand} {cheapWheel.name} × 4 (${(cheapWheel.priceNum * 4).toFixed(2)})
                     </p>
-                    <p className="text-dark-500 text-[10px] mt-1">
-                      {cheapTire.brand} {cheapTire.name} ({cheapTire.tireSize}) × 4 = ${(cheapTire.priceNum * 4).toFixed(2)} + {cheapWheel.brand} {cheapWheel.name} × 4 = ${(cheapWheel.priceNum * 4).toFixed(2)}
-                    </p>
-                  </div>
-                  {/* CTA */}
-                  <div className="shrink-0">
-                    <span className="text-primary-400 text-xs font-medium">Browse below to customize ↓</span>
                   </div>
                 </div>
               </div>
