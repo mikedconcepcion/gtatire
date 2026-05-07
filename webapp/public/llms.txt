@@ -1,0 +1,38 @@
+# GTA Tire Distributor
+> Wholesale tire and wheel supplier serving the Greater Toronto Area, Ontario, Canada.
+
+## About
+GTA Tire Distributor is a B2B tire and wheel distributor based in Scarborough, Ontario. They supply tire shops and sub-distributors across the Greater Toronto Area with 6,898 products from 44 brands. The company specializes in hub centric wheel fitment — every wheel recommended for a specific vehicle is guaranteed to fit without vibration. They offer tire and wheel packages with live pricing, seasonal filtering, and 1-2 business day delivery across the GTA.
+
+## Products
+- **Tires**: 4,748 tires from 35 brands (Michelin, Bridgestone, Continental, Pirelli, Goodyear, Hankook, Kumho, Yokohama, Laufenn, Nexen, Toyo, Falken, BFGoodrich, Firestone, Uniroyal, Nokian, Sailun, and more)
+- **Wheels**: 2,150 wheels from 9 brands (Superspeed, RWC, Macpek, OE+, OE+ Forged, Blackhorn, Rocktrix, Superspeed Forged, Steel)
+- **Tire Types**: All Season, Winter, All Weather
+- **Wheel Types**: Alloy, Steel, OE Replacement (hub centric)
+- **Vehicle Coverage**: 9,153 vehicles from 2020-2026 with fitment data
+
+## Key Features
+- Vehicle package builder: search by year/make/model, select tires + wheels, see live 4+4 pricing
+- Hub centric wheel guarantee for vehicle-specific searches
+- Smart search: understands vehicle names, tire sizes (225/45R17), brands, bolt patterns (5x114.3), and specs
+- Season filtering: All Season, Winter, All Weather
+- Compatible product cross-selling on detail pages
+- Vehicle image visualization with color and angle customization
+
+## Service Area
+Greater Toronto Area including Toronto, Scarborough, Mississauga, Brampton, Markham, Vaughan, Richmond Hill, Oakville, Burlington, Hamilton, Oshawa, and Pickering. 1-2 business day delivery.
+
+## Pricing
+Competitive wholesale pricing for registered distributors. Public pricing displayed with compare-at MSRP. Contact for distributor account setup.
+
+## Contact
+- Email: james@gtatiredistributor.ca
+- Location: Scarborough, Ontario, Canada
+- Website: https://mikedconcepcion.github.io/gtatire/
+
+## Links
+- Website: https://mikedconcepcion.github.io/gtatire/
+- Tires: https://mikedconcepcion.github.io/gtatire/tires
+- Wheels: https://mikedconcepcion.github.io/gtatire/wheels
+- Search: https://mikedconcepcion.github.io/gtatire/search/
+- Contact: https://mikedconcepcion.github.io/gtatire/contact
