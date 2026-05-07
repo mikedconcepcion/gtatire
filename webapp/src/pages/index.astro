@@ -15,31 +15,31 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
 <Layout title="GTA Tire Distributor — Wholesale Tires & Wheels">
   <!-- Cinematic Intro Overlay -->
   <div id="hero-intro" class="fixed inset-0 z-[200] pointer-events-none" aria-hidden="true">
-    <!-- Dark backdrop that fades out -->
     <div class="hero-backdrop absolute inset-0 bg-dark-950"></div>
 
-    <!-- Wheel closeup sliding from right -->
-    <div class="hero-wheel absolute top-1/2 -translate-y-1/2">
+    <!-- Car sweeping across — low angle, wheel focused -->
+    <div class="hero-car absolute inset-0 flex items-center overflow-hidden">
       <img
-        src="/gtatire/data/images/wheels/GTA-W-0845.png"
+        src="https://cdn.imagin.studio/getImage?customer=img&make=BMW&modelFamily=M4&modelYear=2025&angle=05&width=1400&paintId=pspc0014&fileType=png"
         alt=""
-        class="w-[500px] h-[500px] sm:w-[700px] sm:h-[700px] object-contain drop-shadow-[0_0_80px_rgba(59,130,246,0.3)]"
+        class="hero-car-img w-[140%] sm:w-[120%] max-w-none object-cover"
         loading="eager"
       />
     </div>
 
-    <!-- Vehicle silhouette sliding from left -->
-    <div class="hero-vehicle absolute top-1/2 -translate-y-1/2">
-      <img
-        src="https://cdn.imagin.studio/getImage?customer=img&make=BMW&modelFamily=M4&modelYear=2025&angle=05&width=1000&paintId=pspc0014&fileType=png"
-        alt=""
-        class="w-[600px] sm:w-[900px] object-contain opacity-60"
-        loading="eager"
-      />
+    <!-- Cinematic bars (letterbox) -->
+    <div class="absolute top-0 left-0 right-0 h-[15%] bg-dark-950"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-[15%] bg-dark-950"></div>
+
+    <!-- Speed lines -->
+    <div class="hero-lines absolute inset-0 overflow-hidden">
+      <div class="absolute top-[40%] left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary-400/60 to-transparent"></div>
+      <div class="absolute top-[55%] left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+      <div class="absolute top-[65%] left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary-400/30 to-transparent"></div>
     </div>
 
-    <!-- Flash line -->
-    <div class="hero-flash absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-primary-400 to-transparent"></div>
+    <!-- Flash wipe -->
+    <div class="hero-flash absolute inset-y-0 w-[200px] bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
   </div>
 
   <!-- Hero -->
@@ -64,74 +64,76 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
   </section>
 
   <style>
-    /* ── Cinematic Intro: 1.5s total ── */
+    /* ── Cinematic Intro: 1.5s — car sweeps through, Fast & Furious style ── */
 
-    /* Backdrop fades out */
     .hero-backdrop {
-      animation: backdropFade 0.6s ease-out 0.9s forwards;
+      animation: backdropOut 0.4s ease-out 1.1s forwards;
     }
-    @keyframes backdropFade {
-      to { opacity: 0; }
-    }
+    @keyframes backdropOut { to { opacity: 0; } }
 
-    /* Vehicle slides in from left, then out */
-    .hero-vehicle {
-      left: -60%;
-      animation: vehicleSlide 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0s forwards;
+    /* Car sweeps from right to left — fast pan */
+    .hero-car {
+      animation: carOut 0.4s ease-out 1.1s forwards;
     }
-    @keyframes vehicleSlide {
-      0%   { left: -60%; opacity: 0; }
-      30%  { left: 5%; opacity: 0.7; }
-      50%  { left: 5%; opacity: 0.5; }
-      100% { left: -30%; opacity: 0; }
+    .hero-car-img {
+      animation: carSweep 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
     }
+    @keyframes carSweep {
+      0%   { transform: translateX(30%) scale(1.1); opacity: 0; }
+      15%  { opacity: 1; }
+      40%  { transform: translateX(-5%) scale(1.05); opacity: 1; }
+      70%  { transform: translateX(-15%) scale(1.0); opacity: 0.9; }
+      100% { transform: translateX(-25%) scale(1.0); opacity: 0.7; }
+    }
+    @keyframes carOut { to { opacity: 0; } }
 
-    /* Wheel slides in from right, spins, then out */
-    .hero-wheel {
-      right: -40%;
-      animation: wheelSlide 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0s forwards;
+    /* Speed lines streak across */
+    .hero-lines {
+      animation: linesOut 0.3s ease-out 1.1s forwards;
     }
-    @keyframes wheelSlide {
-      0%   { right: -40%; opacity: 0; transform: translateY(-50%) rotate(0deg); }
-      25%  { right: 10%; opacity: 1; transform: translateY(-50%) rotate(-30deg); }
-      50%  { right: 15%; opacity: 0.9; transform: translateY(-50%) rotate(-60deg); }
-      100% { right: -20%; opacity: 0; transform: translateY(-50%) rotate(-120deg); }
+    .hero-lines div {
+      animation: lineStreak 1.2s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+      transform: translateX(100%);
     }
+    .hero-lines div:nth-child(1) { animation-delay: 0.1s; }
+    .hero-lines div:nth-child(2) { animation-delay: 0.2s; }
+    .hero-lines div:nth-child(3) { animation-delay: 0.15s; }
+    @keyframes lineStreak {
+      0%   { transform: translateX(100%); opacity: 0; }
+      20%  { opacity: 1; }
+      100% { transform: translateX(-100%); opacity: 0; }
+    }
+    @keyframes linesOut { to { opacity: 0; } }
 
-    /* Flash line sweeps across */
+    /* White flash wipe */
     .hero-flash {
-      left: -5%;
-      opacity: 0;
-      animation: flashSweep 0.6s ease-out 0.5s forwards;
+      left: -200px;
+      animation: flashWipe 0.5s ease-out 0.8s forwards;
     }
-    @keyframes flashSweep {
-      0%   { left: 20%; opacity: 0; }
-      30%  { opacity: 1; }
-      100% { left: 105%; opacity: 0; }
+    @keyframes flashWipe {
+      0%   { left: -200px; opacity: 0; }
+      20%  { opacity: 1; }
+      100% { left: 110%; opacity: 0; }
     }
 
-    /* Hero content fades in after intro */
+    /* Content reveals after car passes */
     .hero-content {
       opacity: 0;
-      animation: contentReveal 0.5s ease-out 1.0s forwards;
+      animation: revealContent 0.5s ease-out 1.1s forwards;
     }
-    @keyframes contentReveal {
-      to { opacity: 1; }
-    }
+    @keyframes revealContent { to { opacity: 1; } }
 
-    /* Remove intro overlay after animation completes */
+    /* Kill overlay */
     #hero-intro {
-      animation: removeOverlay 0.01s linear 1.6s forwards;
+      animation: killOverlay 0.01s linear 1.6s forwards;
     }
-    @keyframes removeOverlay {
-      to { display: none; visibility: hidden; }
-    }
+    @keyframes killOverlay { to { display: none; visibility: hidden; } }
 
-    /* Reduce motion for accessibility */
+    /* Accessibility */
     @media (prefers-reduced-motion: reduce) {
-      .hero-backdrop, .hero-vehicle, .hero-wheel, .hero-flash, .hero-content, #hero-intro {
-        animation: none !important;
-        opacity: 1 !important;
+      .hero-backdrop, .hero-car, .hero-car-img, .hero-lines,
+      .hero-lines div, .hero-flash, .hero-content, #hero-intro {
+        animation: none !important; opacity: 1 !important;
       }
       #hero-intro { display: none !important; }
     }
