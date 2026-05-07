@@ -58,9 +58,9 @@ function parseWheelDescription(desc) {
   return specs;
 }
 
-// Pricing: public = 75% MSRP, wholesale = DC+20% (capped below public)
+// Pricing: retail = MSRP - 10%, wholesale = DC+20% (capped below retail)
 function calcPricing(msrp, dealerCost) {
-  const publicPrice = msrp > 0 ? Math.round(msrp * 0.75 * 100) / 100 : 0;
+  const publicPrice = msrp > 0 ? Math.round(msrp * 0.90 * 100) / 100 : 0;
   const dcBased = dealerCost > 0 ? Math.round(dealerCost * 1.20 * 100) / 100 : 0;
   const msrpBased = msrp > 0 ? Math.round(msrp * 0.60 * 100) / 100 : 0;
   const distPrice = dcBased > 0 && dcBased < publicPrice ? dcBased : msrpBased;
