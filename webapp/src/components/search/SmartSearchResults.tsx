@@ -36,6 +36,13 @@ interface VehicleTree {
   };
 }
 
+interface TireFitmentMap {
+  [vehicleKey: string]: {
+    sizes: string[];
+    oeWheel: number | null;
+  };
+}
+
 function StockBadge({ stock }: { stock: string }) {
   const inStock = stock.includes('In Stock') || stock === 'Available' || stock === '20+' || parseInt(stock) >= 10;
   const low = parseInt(stock) >= 1 && parseInt(stock) < 10;
@@ -160,10 +167,12 @@ export default function SmartSearchResults() {
   const [query, setQuery] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
   const [fitment, setFitment] = useState<FitmentMap>({});
+  const [tireFitment, setTireFitment] = useState<TireFitmentMap>({});
   const [vehicleTree, setVehicleTree] = useState<VehicleTree>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [sortBy, setSortBy] = useState<'relevance' | 'price-asc' | 'price-desc'>('relevance');
+  const [showCategory, setShowCategory] = useState<'all' | 'wheel' | 'tire'>('all');
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -177,11 +186,13 @@ export default function SmartSearchResults() {
       fetch(`${base}/data/products.json`).then(r => r.json()),
       fetch(`${base}/data/fitment.json`).then(r => r.json()),
       fetch(`${base}/data/vehicles.json`).then(r => r.json()),
+      fetch(`${base}/data/tire-fitment.json`).then(r => r.json()).catch(() => ({})),
     ])
-      .then(([prods, fit, vehs]) => {
+      .then(([prods, fit, vehs, tFit]) => {
         setProducts(prods);
         setFitment(fit);
         setVehicleTree(vehs);
+        setTireFitment(tFit);
         setLoading(false);
       })
       .catch(() => { setLoading(false); setError(true); });
@@ -333,9 +344,38 @@ export default function SmartSearchResults() {
         label = [detectedYear, detectedMake, detectedModel].filter(Boolean).join(' ');
       }
 
-      if (vehicleResults.length > 0) {
+      // Also find matching tires from tire fitment data
+      let matchingTires: Product[] = [];
+      if (detectedMake) {
+        // Find OE tire sizes for this vehicle
+        const oeSizes: string[] = [];
+        for (const [key, data] of Object.entries(tireFitment)) {
+          const parts = key.split('|');
+          const yMatch = !detectedYear || parts[0] === detectedYear;
+          const mkMatch = parts[1]?.toUpperCase() === detectedMake;
+          const mdMatch = !detectedModel || parts[2]?.toUpperCase().includes(detectedModel);
+          if (yMatch && mkMatch && mdMatch && data.sizes) {
+            oeSizes.push(...data.sizes);
+          }
+        }
+        const uniqueSizes = [...new Set(oeSizes)];
+
+        if (uniqueSizes.length > 0) {
+          // Find tires matching those OE sizes
+          matchingTires = products.filter(p => {
+            if (p.category !== 'tire' || !p.tireSize) return false;
+            // Parse tire size: P225/65R17 → 225/65R17
+            const normalized = p.tireSize.replace(/^[PL]T?/, '');
+            return uniqueSizes.some(s => normalized === s || p.tireSize.includes(s.replace('R', '/')));
+          });
+        }
+      }
+
+      const combinedResults = [...vehicleResults, ...matchingTires];
+
+      if (combinedResults.length > 0) {
         // Apply additional spec filters from unused words
-        let filtered = vehicleResults;
+        let filtered = combinedResults;
         const specWords = wordsUpper.filter(w => !usedWords.has(w));
 
         for (const w of specWords) {
@@ -348,15 +388,22 @@ export default function SmartSearchResults() {
             filtered = filtered.filter(p => p.wheelType === 'Steel Wheel');
           } else if (wLower === 'alloy') {
             filtered = filtered.filter(p => p.wheelType !== 'Steel Wheel');
+          } else if (wLower === 'winter') {
+            filtered = filtered.filter(p => p.wheelType === 'Winter' || p.category === 'wheel');
           } else if (['black','silver','chrome','bronze','gunmetal','anthracite','gold','white','red','satin'].includes(wLower)) {
             filtered = filtered.filter(p => p.finish?.toLowerCase().includes(wLower));
           }
         }
 
+        const wheelCount = (filtered.length > 0 ? filtered : combinedResults).filter(p => p.category === 'wheel').length;
+        const tireCount = (filtered.length > 0 ? filtered : combinedResults).filter(p => p.category === 'tire').length;
+
         return {
-          results: filtered.length > 0 ? filtered : vehicleResults,
+          results: filtered.length > 0 ? filtered : combinedResults,
           searchType: 'vehicle',
-          searchLabel: `Wheels that fit ${label}`,
+          searchLabel: `Fits ${label}`,
+          wheelCount,
+          tireCount,
         };
       }
     }
@@ -476,16 +523,21 @@ export default function SmartSearchResults() {
     // ── 6. Fuzzy fallback ──
     const fuseResults = fuse.search(query).map(r => r.item);
     return { results: fuseResults, searchType: 'fuzzy', searchLabel: '' };
-  }, [query, products, fitment, vehicleNames, fuse]);
+  }, [query, products, fitment, tireFitment, vehicleNames, fuse]);
 
-  // Sort results
+  // Filter and sort results
   const sortedResults = useMemo(() => {
-    const r = [...results];
+    let r = [...results];
+    if (showCategory !== 'all') r = r.filter(p => p.category === showCategory);
     if (sortBy === 'price-asc') r.sort((a, b) => a.priceNum - b.priceNum);
     else if (sortBy === 'price-desc') r.sort((a, b) => b.priceNum - a.priceNum);
-    else r.sort((a, b) => a.priceNum - b.priceNum); // default: price low
+    else r.sort((a, b) => a.priceNum - b.priceNum);
     return r;
-  }, [results, sortBy]);
+  }, [results, sortBy, showCategory]);
+
+  const wheelCount = results.filter(p => p.category === 'wheel').length;
+  const tireCount = results.filter(p => p.category === 'tire').length;
+  const hasBothCategories = wheelCount > 0 && tireCount > 0;
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -565,21 +617,37 @@ export default function SmartSearchResults() {
       ) : query ? (
         <>
           {/* Results header */}
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <div>
               {searchLabel ? (
                 <p className="text-dark-300 text-sm font-medium">{searchLabel}</p>
               ) : null}
-              <p className="text-dark-500 text-xs">{results.length} result{results.length !== 1 ? 's' : ''}</p>
+              <p className="text-dark-500 text-xs">{sortedResults.length} result{sortedResults.length !== 1 ? 's' : ''}</p>
             </div>
-            <select
-              value={sortBy}
-              onChange={e => setSortBy(e.target.value as any)}
-              className="bg-dark-800 border border-dark-600 text-dark-300 text-xs rounded-lg px-2 py-1.5 focus:outline-none"
-            >
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-            </select>
+            <div className="flex items-center gap-2">
+              {/* Category tabs when showing both */}
+              {hasBothCategories && (
+                <div className="flex gap-1 bg-[var(--color-dark-800)]/50 p-0.5 rounded-lg">
+                  <button onClick={() => setShowCategory('all')} className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${showCategory === 'all' ? 'bg-primary-600 text-white' : 'text-[var(--color-dark-400)]'}`}>
+                    All ({results.length})
+                  </button>
+                  <button onClick={() => setShowCategory('wheel')} className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${showCategory === 'wheel' ? 'bg-primary-600 text-white' : 'text-[var(--color-dark-400)]'}`}>
+                    Wheels ({wheelCount})
+                  </button>
+                  <button onClick={() => setShowCategory('tire')} className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${showCategory === 'tire' ? 'bg-primary-600 text-white' : 'text-[var(--color-dark-400)]'}`}>
+                    Tires ({tireCount})
+                  </button>
+                </div>
+              )}
+              <select
+                value={sortBy}
+                onChange={e => setSortBy(e.target.value as any)}
+                className="bg-dark-800 border border-dark-600 text-dark-300 text-xs rounded-lg px-2 py-1.5 focus:outline-none"
+              >
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+              </select>
+            </div>
           </div>
 
           {/* Grid */}
