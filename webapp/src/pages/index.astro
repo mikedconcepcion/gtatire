@@ -13,12 +13,41 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
 ---
 
 <Layout title="GTA Tire Distributor — Wholesale Tires & Wheels">
+  <!-- Cinematic Intro Overlay -->
+  <div id="hero-intro" class="fixed inset-0 z-[200] pointer-events-none" aria-hidden="true">
+    <!-- Dark backdrop that fades out -->
+    <div class="hero-backdrop absolute inset-0 bg-dark-950"></div>
+
+    <!-- Wheel closeup sliding from right -->
+    <div class="hero-wheel absolute top-1/2 -translate-y-1/2">
+      <img
+        src="/gtatire/data/images/wheels/GTA-W-0845.png"
+        alt=""
+        class="w-[500px] h-[500px] sm:w-[700px] sm:h-[700px] object-contain drop-shadow-[0_0_80px_rgba(59,130,246,0.3)]"
+        loading="eager"
+      />
+    </div>
+
+    <!-- Vehicle silhouette sliding from left -->
+    <div class="hero-vehicle absolute top-1/2 -translate-y-1/2">
+      <img
+        src="https://cdn.imagin.studio/getImage?customer=img&make=BMW&modelFamily=M4&modelYear=2025&angle=05&width=1000&paintId=pspc0014&fileType=png"
+        alt=""
+        class="w-[600px] sm:w-[900px] object-contain opacity-60"
+        loading="eager"
+      />
+    </div>
+
+    <!-- Flash line -->
+    <div class="hero-flash absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-primary-400 to-transparent"></div>
+  </div>
+
   <!-- Hero -->
   <section class="relative overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-b from-primary-950/50 via-dark-950 to-dark-950"></div>
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary-600/10 rounded-full blur-3xl"></div>
 
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-16 sm:pt-24 sm:pb-20">
+    <div class="hero-content relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-16 sm:pt-24 sm:pb-20">
       <div class="text-center mb-10">
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-4 tracking-tight">
           Find the Perfect
@@ -33,6 +62,80 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
       <HeroSearch client:load />
     </div>
   </section>
+
+  <style>
+    /* ── Cinematic Intro: 1.5s total ── */
+
+    /* Backdrop fades out */
+    .hero-backdrop {
+      animation: backdropFade 0.6s ease-out 0.9s forwards;
+    }
+    @keyframes backdropFade {
+      to { opacity: 0; }
+    }
+
+    /* Vehicle slides in from left, then out */
+    .hero-vehicle {
+      left: -60%;
+      animation: vehicleSlide 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0s forwards;
+    }
+    @keyframes vehicleSlide {
+      0%   { left: -60%; opacity: 0; }
+      30%  { left: 5%; opacity: 0.7; }
+      50%  { left: 5%; opacity: 0.5; }
+      100% { left: -30%; opacity: 0; }
+    }
+
+    /* Wheel slides in from right, spins, then out */
+    .hero-wheel {
+      right: -40%;
+      animation: wheelSlide 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0s forwards;
+    }
+    @keyframes wheelSlide {
+      0%   { right: -40%; opacity: 0; transform: translateY(-50%) rotate(0deg); }
+      25%  { right: 10%; opacity: 1; transform: translateY(-50%) rotate(-30deg); }
+      50%  { right: 15%; opacity: 0.9; transform: translateY(-50%) rotate(-60deg); }
+      100% { right: -20%; opacity: 0; transform: translateY(-50%) rotate(-120deg); }
+    }
+
+    /* Flash line sweeps across */
+    .hero-flash {
+      left: -5%;
+      opacity: 0;
+      animation: flashSweep 0.6s ease-out 0.5s forwards;
+    }
+    @keyframes flashSweep {
+      0%   { left: 20%; opacity: 0; }
+      30%  { opacity: 1; }
+      100% { left: 105%; opacity: 0; }
+    }
+
+    /* Hero content fades in after intro */
+    .hero-content {
+      opacity: 0;
+      animation: contentReveal 0.5s ease-out 1.0s forwards;
+    }
+    @keyframes contentReveal {
+      to { opacity: 1; }
+    }
+
+    /* Remove intro overlay after animation completes */
+    #hero-intro {
+      animation: removeOverlay 0.01s linear 1.6s forwards;
+    }
+    @keyframes removeOverlay {
+      to { display: none; visibility: hidden; }
+    }
+
+    /* Reduce motion for accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-backdrop, .hero-vehicle, .hero-wheel, .hero-flash, .hero-content, #hero-intro {
+        animation: none !important;
+        opacity: 1 !important;
+      }
+      #hero-intro { display: none !important; }
+    }
+  </style>
 
   <!-- Wheel brands -->
   <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-6">
