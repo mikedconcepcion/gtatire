@@ -817,12 +817,18 @@ export default function SmartSearchResults() {
             {sortedResults.slice(0, 60).map(p => (
               <a href={`${import.meta.env.BASE_URL}/${p.category === 'tire' ? 'tires' : 'wheels'}/${p.id}`} key={p.id} className="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all">
                 <div className="aspect-square bg-white rounded-t-xl flex items-center justify-center p-4 relative">
-                  {p.image ? (
+                  {p.image && !(p as any).noImage ? (
                     <img src={p.image} alt={p.description} className="w-full h-full object-contain mix-blend-multiply" loading="lazy" decoding="async" />
+                  ) : p.category === 'tire' ? (
+                    <svg className="w-16 h-16 text-dark-400" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2">
+                      <ellipse cx="50" cy="50" rx="45" ry="48" /><ellipse cx="50" cy="50" rx="30" ry="32" />
+                      <line x1="20" y1="15" x2="35" y2="25" /><line x1="80" y1="15" x2="65" y2="25" />
+                      <line x1="10" y1="50" x2="22" y2="50" /><line x1="90" y1="50" x2="78" y2="50" />
+                      <line x1="20" y1="85" x2="35" y2="75" /><line x1="80" y1="85" x2="65" y2="75" />
+                    </svg>
                   ) : (
-                    <svg className="w-16 h-16 text-dark-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <circle cx="12" cy="12" r="10" strokeWidth="1.5" />
-                      <circle cx="12" cy="12" r="2" strokeWidth="1.5" />
+                    <svg className="w-16 h-16 text-dark-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10" strokeWidth="1.5" /><circle cx="12" cy="12" r="6" strokeWidth="1" /><circle cx="12" cy="12" r="2" strokeWidth="1.5" />
                     </svg>
                   )}
                   {p.brand && (
