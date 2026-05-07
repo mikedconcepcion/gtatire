@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import Fuse from 'fuse.js';
+import VehiclePackageBuilder from './VehiclePackageBuilder';
 
 interface Product {
   id: string;
@@ -638,6 +639,16 @@ export default function SmartSearchResults() {
           <p className="text-dark-400 text-sm">No results for "{query}"</p>
           <p className="text-dark-600 text-xs mt-1">Try a vehicle name, brand, size, or bolt pattern</p>
         </div>
+      ) : query && searchType === 'vehicle' && hasBothCategories ? (
+        <VehiclePackageBuilder
+          vehicleLabel={searchLabel?.replace('Fits ', '') || ''}
+          vehicleMake={detectedMake}
+          vehicleModel={detectedModel}
+          vehicleYear={detectedYear}
+          wheels={results.filter(p => p.category === 'wheel')}
+          tires={results.filter(p => p.category === 'tire')}
+          seasonCounts={seasonCounts}
+        />
       ) : query ? (
         <>
           {/* Results header */}
@@ -674,8 +685,8 @@ export default function SmartSearchResults() {
             </div>
           </div>
 
-          {/* Package combo banner — vehicle search with both tires and wheels */}
-          {searchType === 'vehicle' && hasBothCategories && (() => {
+          {/* Package combo banner — only for non-builder vehicle searches */}
+          {searchType === 'vehicle' && !hasBothCategories && (() => {
             const wheels = results.filter(p => p.category === 'wheel' && p.priceNum > 0).sort((a, b) => a.priceNum - b.priceNum);
             const filteredTires = (seasonFilter
               ? results.filter(p => p.category === 'tire' && p.priceNum > 0 && p.wheelType === seasonFilter)
