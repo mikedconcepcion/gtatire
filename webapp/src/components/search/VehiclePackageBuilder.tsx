@@ -60,7 +60,7 @@ function getVehicleImgUrl(make: string, model: string, year: string, angle = '01
   if (!mk || !md) return '';
   const params = new URLSearchParams({
     customer: 'img', make: mk, modelFamily: md,
-    modelYear: year || '2025', angle, width: '800', fileType: 'png',
+    modelYear: year || '2025', angle, width: '1200', fileType: 'png',
   });
   if (paintId && paintId !== 'default') params.set('paintId', paintId);
   return `https://cdn.imagin.studio/getImage?${params.toString()}`;
@@ -169,11 +169,11 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
     <div className="space-y-0">
       {/* ── Vehicle header + Package summary ── */}
       <div className="bg-gradient-to-r from-primary-900/20 via-dark-900 to-primary-900/10 border border-primary-700/20 rounded-xl overflow-hidden mb-5">
-        <div className="flex flex-col md:flex-row">
-          {/* Vehicle image with controls */}
+        <div className="flex flex-col">
+          {/* Vehicle image with controls — full width */}
           {vehicleImgUrl && (
-            <div className="md:w-[420px] bg-gradient-to-br from-dark-800/50 to-dark-900 shrink-0 relative">
-              <div className="aspect-[16/9] md:aspect-auto md:h-full flex items-center justify-center p-3">
+            <div className="bg-gradient-to-br from-dark-800/50 to-dark-900 relative">
+              <div className="aspect-[21/9] flex items-center justify-center p-4 max-h-[350px]">
                 <img src={vehicleImgUrl} alt={vehicleLabel} className="max-w-full max-h-full object-contain" loading="lazy" />
               </div>
               {/* Color swatches */}
