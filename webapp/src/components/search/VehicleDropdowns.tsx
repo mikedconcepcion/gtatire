@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 interface VehicleTree {
   [year: string]: {
@@ -6,18 +6,29 @@ interface VehicleTree {
   };
 }
 
+interface TireFitmentMap {
+  [key: string]: { sizes: string[]; oeWheel: number | null };
+}
+
 export default function VehicleDropdowns() {
   const [year, setYear] = useState('');
   const [make, setMake] = useState('');
   const [model, setModel] = useState('');
+  const [size, setSize] = useState('');
   const [vehicleTree, setVehicleTree] = useState<VehicleTree>({});
+  const [tireFitment, setTireFitment] = useState<TireFitmentMap>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(import.meta.env.BASE_URL + '/data/vehicles.json')
-      .then(r => r.json())
-      .then(data => { setVehicleTree(data); setLoading(false); })
-      .catch(() => setLoading(false));
+    const base = import.meta.env.BASE_URL;
+    Promise.all([
+      fetch(base + '/data/vehicles.json').then(r => r.json()),
+      fetch(base + '/data/tire-fitment.json').then(r => r.json()).catch(() => ({})),
+    ]).then(([vehs, tFit]) => {
+      setVehicleTree(vehs);
+      setTireFitment(tFit);
+      setLoading(false);
+    }).catch(() => setLoading(false));
   }, []);
 
   const years = Object.keys(vehicleTree).sort((a, b) => Number(b) - Number(a));
@@ -31,9 +42,32 @@ export default function VehicleDropdowns() {
       ).sort()
     : [];
 
+  // Get OE tire sizes for selected vehicle from tire fitment data
+  const availableSizes = useMemo(() => {
+    if (!year || !make || !model) return [];
+    const sizes = new Set<string>();
+
+    // Exact match
+    const exactKey = `${year}|${make}|${model}`;
+    if (tireFitment[exactKey]?.sizes) {
+      tireFitment[exactKey].sizes.forEach(s => sizes.add(s));
+    }
+
+    // Partial match — model may be a substring (e.g., "CIVIC" matches "CIVIC LX SEDAN")
+    for (const [key, data] of Object.entries(tireFitment)) {
+      const parts = key.split('|');
+      if (parts[0] === year && parts[1] === make && parts[2]?.includes(model) && data.sizes) {
+        data.sizes.forEach(s => sizes.add(s));
+      }
+    }
+
+    return [...sizes].sort();
+  }, [year, make, model, tireFitment]);
+
   function handleSearch() {
     if (year && make && model) {
-      const q = `${year} ${make} ${model}`;
+      let q = `${year} ${make} ${model}`;
+      if (size) q += ` ${size.replace('R', '/')}`;
       window.location.href = import.meta.env.BASE_URL + `/search/?q=${encodeURIComponent(q)}`;
     }
   }
@@ -41,11 +75,11 @@ export default function VehicleDropdowns() {
   const selectClass = "bg-dark-800 border border-dark-600 text-white rounded-lg px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent appearance-none cursor-pointer w-full";
 
   return (
-    <div className="max-w-3xl mx-auto">
-      <div className="flex flex-col sm:flex-row gap-2">
+    <div className="max-w-4xl mx-auto">
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
         <select
           value={year}
-          onChange={e => { setYear(e.target.value); setMake(''); setModel(''); }}
+          onChange={e => { setYear(e.target.value); setMake(''); setModel(''); setSize(''); }}
           disabled={loading}
           className={selectClass}
         >
@@ -55,7 +89,7 @@ export default function VehicleDropdowns() {
 
         <select
           value={make}
-          onChange={e => { setMake(e.target.value); setModel(''); }}
+          onChange={e => { setMake(e.target.value); setModel(''); setSize(''); }}
           disabled={!year}
           className={`${selectClass} ${!year ? 'opacity-40' : ''}`}
         >
@@ -65,7 +99,7 @@ export default function VehicleDropdowns() {
 
         <select
           value={model}
-          onChange={e => setModel(e.target.value)}
+          onChange={e => { setModel(e.target.value); setSize(''); }}
           disabled={!make}
           className={`${selectClass} ${!make ? 'opacity-40' : ''}`}
         >
@@ -73,10 +107,20 @@ export default function VehicleDropdowns() {
           {models.map(m => <option key={m} value={m}>{m}</option>)}
         </select>
 
+        <select
+          value={size}
+          onChange={e => setSize(e.target.value)}
+          disabled={!model}
+          className={`${selectClass} ${!model ? 'opacity-40' : ''}`}
+        >
+          <option value="">{availableSizes.length > 0 ? 'Size (optional)' : 'All Sizes'}</option>
+          {availableSizes.map(s => <option key={s} value={s}>{s}</option>)}
+        </select>
+
         <button
           onClick={handleSearch}
           disabled={!year || !make || !model}
-          className="bg-primary-600 hover:bg-primary-700 disabled:bg-dark-700 disabled:text-dark-500 text-white font-semibold py-3 px-6 rounded-lg transition-all text-sm whitespace-nowrap shrink-0"
+          className="bg-primary-600 hover:bg-primary-700 disabled:bg-dark-700 disabled:text-dark-500 text-white font-semibold py-3 px-4 rounded-lg transition-all text-sm whitespace-nowrap col-span-2 sm:col-span-1"
         >
           Find Tires & Wheels
         </button>
