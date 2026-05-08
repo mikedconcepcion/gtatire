@@ -498,14 +498,21 @@ function buildDatabase() {
   saveJSON(pathMod.join(DATA_DIR, 'gta-products.json'), products, true);
   saveJSON(pathMod.join(DATA_DIR, 'gta-sku-map.json'), skuMap, true);
 
+  // ─── Mark placeholder images (tiny files = Alltire "no image" placeholders) ───
+  let noImageCount = 0;
+  for (const p of products) {
+    if (!p.image) { p.noImage = true; noImageCount++; continue; }
+    const localPath = p.image.replace('/gtatire/', pathMod.join(__dirname, '..', 'webapp', 'public') + '/');
+    if (fs.existsSync(localPath)) {
+      const size = fs.statSync(localPath).size;
+      if (p.category === 'tire' && size < 10000) { p.noImage = true; noImageCount++; }
+    }
+  }
+  console.log(`  Marked ${noImageCount} products with placeholder images`);
+
   // ─── Save public data (no supplier info) ───
   console.log('\nSaving public data...');
-  // Strip any internal fields before saving public version
-  const publicProducts = products.map(p => {
-    const pub = { ...p };
-    // These are clean already — no supplier field in the product
-    return pub;
-  });
+  const publicProducts = products.map(p => ({ ...p }));
 
   saveJSON(pathMod.join(OUT_DIR, 'products.json'), publicProducts);
   saveJSON(pathMod.join(OUT_DIR, 'fitment.json'), fitment);
