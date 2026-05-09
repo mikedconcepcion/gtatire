@@ -265,9 +265,16 @@ export default function SmartSearchResults() {
       if (modelsToSearch) {
         // Search within detected make's models
         for (const m of modelsToSearch) {
-          if (m === modelCandidate || m.includes(modelCandidate) || modelCandidate.includes(m.split(/[\s(]/)[0])) {
+          if (m === modelCandidate || m.includes(modelCandidate)) {
             detectedModel = m;
             remainingForModel.forEach(w => usedWords.add(w));
+            break;
+          }
+          // Check if first word of model matches — but only mark that word as used, not all
+          const mFirstWord = m.split(/[\s(]/)[0];
+          if (modelCandidate.includes(mFirstWord) && mFirstWord.length >= 3) {
+            detectedModel = m;
+            usedWords.add(mFirstWord);
             break;
           }
         }
