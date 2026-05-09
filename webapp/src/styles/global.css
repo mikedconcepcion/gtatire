@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  /* GTA Tire blue/black theme */
-  --color-primary-50: #eff4ff;
-  --color-primary-100: #dbe6fe;
-  --color-primary-200: #bfd3fe;
-  --color-primary-300: #93b4fd;
-  --color-primary-400: #6090fa;
-  --color-primary-500: #3b6cf6;
-  --color-primary-600: #2440c5;
-  --color-primary-700: #1e35a8;
-  --color-primary-800: #1e2f8a;
-  --color-primary-900: #1e2b6e;
-  --color-primary-950: #0f1740;
+  /* JSDC Wheels — Black & Gold, Modern & Sleek */
+  --color-primary-50: #fefce8;
+  --color-primary-100: #fef9c3;
+  --color-primary-200: #fef08a;
+  --color-primary-300: #fde047;
+  --color-primary-400: #facc15;
+  --color-primary-500: #d4a017;
+  --color-primary-600: #b8860b;
+  --color-primary-700: #92700c;
+  --color-primary-800: #785d10;
+  --color-primary-900: #654d12;
+  --color-primary-950: #3a2a06;
 
   --color-dark-50: #f6f6f6;
   --color-dark-100: #e7e7e7;
@@ -21,12 +21,12 @@
   --color-dark-400: #888888;
   --color-dark-500: #6d6d6d;
   --color-dark-600: #5d5d5d;
-  --color-dark-700: #4f4f4f;
-  --color-dark-800: #454545;
-  --color-dark-900: #1a1a1a;
-  --color-dark-950: #0d0d0d;
+  --color-dark-700: #3a3a3a;
+  --color-dark-800: #2a2a2a;
+  --color-dark-900: #151515;
+  --color-dark-950: #0a0a0a;
 
-  --color-accent: #f59e0b;
+  --color-accent: #d4a017;
 
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }

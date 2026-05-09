@@ -92,7 +92,7 @@ function ProductDetailInner({ product, vehicles, specs }: Props) {
         {/* CTA */}
         <div className="flex gap-2 mb-3 justify-center md:justify-start">
           <a
-            href={`mailto:james@gtatiredistributor.ca?subject=Inquiry: ${product.productNo}&body=Hi, I'm interested in ${product.description} (${product.productNo}).`}
+            href={`mailto:james@jsdcwheels.ca?subject=Inquiry: ${product.productNo}&body=Hi, I'm interested in ${product.description} (${product.productNo}).`}
             className="bg-[var(--color-primary-600)] hover:bg-[var(--color-primary-700)] text-white font-medium py-2 px-5 rounded-lg text-sm transition-colors"
           >
             {isDistributor ? 'Place Order' : 'Contact for Pricing'}

@@ -880,6 +880,566 @@
       "related_bugs": [],
       "occurrences": 3,
       "last_seen": "2026-05-06T03:05:51.340Z"
+    },
+    {
+      "id": "bug-056",
+      "timestamp": "2026-05-06T03:37:26.059Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/search/VehicleSearch.tsx",
+      "root_cause": "Had \" or \"",
+      "fix": "Changed to \", \"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T03:37:26.059Z"
+    },
+    {
+      "id": "bug-057",
+      "timestamp": "2026-05-06T03:45:09.197Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 21→34 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T03:45:09.198Z"
+    },
+    {
+      "id": "bug-058",
+      "timestamp": "2026-05-06T03:45:23.432Z",
+      "error_message": "CSS fix: model",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "model: string → string,",
+      "fix": "Changed model: string → string,",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-06T03:46:09.975Z"
+    },
+    {
+      "id": "bug-059",
+      "timestamp": "2026-05-06T21:51:54.655Z",
+      "error_message": "Missing guard clause",
+      "file": "scrapers/build-internal-db.js",
+      "root_cause": "No early return/throw for edge case: tiresRaw && Array.isArray(tiresRaw",
+      "fix": "Added guard clause: if (tiresRaw && Array.isArray(tiresRaw)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T21:51:54.655Z"
+    },
+    {
+      "id": "bug-060",
+      "timestamp": "2026-05-06T21:54:39.383Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/build-internal-db.js",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 4→8 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T21:54:39.383Z"
+    },
+    {
+      "id": "bug-061",
+      "timestamp": "2026-05-06T21:56:22.958Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/Header.astro",
+      "root_cause": "Had \"/gtatire/wheels\"",
+      "fix": "Changed to \"/gtatire/tires\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-06T21:56:29.092Z"
+    },
+    {
+      "id": "bug-062",
+      "timestamp": "2026-05-06T21:57:02.492Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 17→69 lines (5 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T21:57:02.492Z"
+    },
+    {
+      "id": "bug-063",
+      "timestamp": "2026-05-06T21:57:22.537Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "Had `${import.meta.env.BASE_URL}/wheels/${p.id}`",
+      "fix": "Changed to `${import.meta.env.BASE_URL}/${p.category === '",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-06T21:57:28.854Z"
+    },
+    {
+      "id": "bug-064",
+      "timestamp": "2026-05-06T22:18:28.163Z",
+      "error_message": "Null/undefined access in ",
+      "file": "scrapers/build-internal-db.js",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T22:18:28.163Z"
+    },
+    {
+      "id": "bug-065",
+      "timestamp": "2026-05-06T22:18:33.971Z",
+      "error_message": "Incorrect value in code",
+      "file": "scrapers/build-internal-db.js",
+      "root_cause": "Had '..'",
+      "fix": "Changed to '.png'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-06T22:18:39.628Z"
+    },
+    {
+      "id": "bug-066",
+      "timestamp": "2026-05-06T22:21:28.284Z",
+      "error_message": "Wrong condition in logic",
+      "file": "scrapers/build-internal-db.js",
+      "root_cause": "Condition was: if (extraName)",
+      "fix": "Changed to: if (extraImgName)",
+      "tags": [
+        "auto-detected",
+        "logic-fix",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T22:21:28.284Z"
+    },
+    {
+      "id": "bug-067",
+      "timestamp": "2026-05-06T22:58:37.518Z",
+      "error_message": "Wrong reference: brands should be wheelBrands",
+      "file": "webapp/src/pages/index.astro",
+      "root_cause": "Used \"brands\" instead of \"wheelBrands\"",
+      "fix": "Changed brands → wheelBrands",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T22:58:37.518Z"
+    },
+    {
+      "id": "bug-068",
+      "timestamp": "2026-05-06T22:58:52.615Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/pages/index.astro",
+      "root_cause": "9 lines replaced/restructured",
+      "fix": "Rewrote 20→35 lines (9 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T22:58:52.615Z"
+    },
+    {
+      "id": "bug-069",
+      "timestamp": "2026-05-06T23:14:05.613Z",
+      "error_message": "Null/undefined access in ",
+      "file": "scrapers/build-internal-db.js",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T23:14:05.613Z"
+    },
+    {
+      "id": "bug-070",
+      "timestamp": "2026-05-07T00:09:00.787Z",
+      "error_message": "Missing guard clause",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "No early return/throw for edge case: detectedMake",
+      "fix": "Added guard clause: if (detectedMake)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T00:09:00.787Z"
+    },
+    {
+      "id": "bug-071",
+      "timestamp": "2026-05-07T00:09:47.132Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 8→13 lines (4 removed) | Also: <div className=\"flex items-center justify-between ; <p className=\"text-dark-500 text-xs\">{results.leng",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-07T00:10:02.980Z"
+    },
+    {
+      "id": "bug-072",
+      "timestamp": "2026-05-07T00:28:27.659Z",
+      "error_message": "Missing guard clause",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "No early return/throw for edge case: !cheapWheel || !cheapTire",
+      "fix": "Added guard clause: if (!cheapWheel || !cheapTire)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T00:28:27.659Z"
+    },
+    {
+      "id": "bug-073",
+      "timestamp": "2026-05-07T00:38:01.226Z",
+      "error_message": "Null/undefined access in ",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T00:38:01.226Z"
+    },
+    {
+      "id": "bug-074",
+      "timestamp": "2026-05-07T00:38:08.231Z",
+      "error_message": "Wrong reference: useMemo should be vMake",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "Used \"useMemo\" instead of \"vMake\"",
+      "fix": "Changed useMemo → vMake",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T00:38:08.231Z"
+    },
+    {
+      "id": "bug-075",
+      "timestamp": "2026-05-07T00:38:51.244Z",
+      "error_message": "Type error",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T00:38:51.244Z"
+    },
+    {
+      "id": "bug-076",
+      "timestamp": "2026-05-07T00:50:54.057Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 13→28 lines (2 removed) | Also: const tires = results.filter(p => p.category === '; const cheapTire = tires[0];",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-07T00:51:04.475Z"
+    },
+    {
+      "id": "bug-077",
+      "timestamp": "2026-05-07T00:51:20.810Z",
+      "error_message": "Missing guard clause",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "No early return/throw for edge case: s && count === 0",
+      "fix": "Added guard clause: if (s && count === 0)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T00:51:20.810Z"
+    },
+    {
+      "id": "bug-078",
+      "timestamp": "2026-05-07T01:26:16.378Z",
+      "error_message": "Null/undefined access in ",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T01:26:16.378Z"
+    },
+    {
+      "id": "bug-079",
+      "timestamp": "2026-05-07T01:47:51.382Z",
+      "error_message": "CSS fix: make, https",
+      "file": "webapp/src/components/search/VehiclePackageBuilder.tsx",
+      "root_cause": "make: string, model: string, year: string) { → string, model: string, year: string, angle = '01', paintId = 'default') {; https: //cdn.imagin.studio/getImage?customer=img&make=${encodeURIComponent(fmtMake) → //cdn.imagin.studio/getImage?${params.toString()",
+      "fix": "Changed make: string, model: string, year: string) { → string, model: string, year: string, angle = '01', paintId = 'default') {; https: //cdn.imagin.studio/getImage?customer=img&make=${encodeURIComponent(fmtMake) → //cdn.imagin.studio/getImage?${params.toString()",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-07T01:48:43.742Z"
+    },
+    {
+      "id": "bug-080",
+      "timestamp": "2026-05-07T01:58:21.805Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/search/VehiclePackageBuilder.tsx",
+      "root_cause": "Had \"md:w-80 bg-gradient-to-br from-dark-800/50 to-dar",
+      "fix": "Changed to \"md:w-[420px] bg-gradient-to-br from-dark-800/50 t",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T01:58:21.805Z"
+    },
+    {
+      "id": "bug-081",
+      "timestamp": "2026-05-07T02:28:04.544Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/search/VehiclePackageBuilder.tsx",
+      "root_cause": "Had '800'",
+      "fix": "Changed to '1200'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T02:28:04.544Z"
+    },
+    {
+      "id": "bug-082",
+      "timestamp": "2026-05-07T03:37:42.159Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "Had `${stock} left`",
+      "fix": "Changed to `${parseInt(stock)} left`",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T03:37:42.159Z"
+    },
+    {
+      "id": "bug-083",
+      "timestamp": "2026-05-07T03:38:06.625Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/search/VehiclePackageBuilder.tsx",
+      "root_cause": "Had 'Available'",
+      "fix": "Changed to 'Contact us'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T03:38:06.625Z"
+    },
+    {
+      "id": "bug-084",
+      "timestamp": "2026-05-07T03:38:35.364Z",
+      "error_message": "CSS fix: results",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "results: filtered.length > 0 ? filtered : tireResults, → combined,",
+      "fix": "Changed results: filtered.length > 0 ? filtered : tireResults, → combined,",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T03:38:35.364Z"
+    },
+    {
+      "id": "bug-085",
+      "timestamp": "2026-05-07T05:14:24.072Z",
+      "error_message": "Type error",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T05:14:24.072Z"
+    },
+    {
+      "id": "bug-086",
+      "timestamp": "2026-05-07T07:37:36.670Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/pages/index.astro",
+      "root_cause": "Had \"hero-content relative max-w-7xl mx-auto px-4 sm:p",
+      "fix": "Changed to \"relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T07:37:36.670Z"
+    },
+    {
+      "id": "bug-087",
+      "timestamp": "2026-05-08T04:58:56.587Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/build-internal-db.js",
+      "root_cause": "6 lines replaced/restructured",
+      "fix": "Rewrote 8→15 lines (6 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-08T04:58:56.587Z"
+    },
+    {
+      "id": "bug-088",
+      "timestamp": "2026-05-09T02:14:05.922Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 26→39 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-09T02:14:05.922Z"
+    },
+    {
+      "id": "bug-089",
+      "timestamp": "2026-05-09T03:24:01.068Z",
+      "error_message": "Type error",
+      "file": "webapp/src/components/search/SmartSearchResults.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-09T03:24:01.068Z"
+    },
+    {
+      "id": "bug-090",
+      "timestamp": "2026-05-09T03:37:18.033Z",
+      "error_message": "Wrong reference: gtatiredistributor should be jsdcwheels",
+      "file": "webapp/src/layouts/Layout.astro",
+      "root_cause": "Used \"gtatiredistributor\" instead of \"jsdcwheels\"",
+      "fix": "Changed gtatiredistributor → jsdcwheels",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-09T03:37:18.033Z"
     }
   ]
 }

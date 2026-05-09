@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Contact — GTA Tire Distributor">
+<Layout title="Contact — JSDC Wheels">
   <section class="max-w-3xl mx-auto px-4 sm:px-6 py-12">
     <h1 class="text-3xl font-bold text-white mb-2">Contact Us</h1>
     <p class="text-dark-400 mb-8">Get in touch for wholesale inquiries, orders, or support.</p>
@@ -15,7 +15,7 @@ import Layout from '../layouts/Layout.astro';
           </svg>
         </div>
         <h3 class="text-white font-semibold mb-1">Email</h3>
-        <a href="mailto:james@gtatiredistributor.ca" class="text-primary-400 text-sm hover:underline">james@gtatiredistributor.ca</a>
+        <a href="mailto:james@jsdcwheels.ca" class="text-primary-400 text-sm hover:underline">james@jsdcwheels.ca</a>
       </div>
 
       <div class="bg-dark-900 border border-dark-700/50 rounded-xl p-6">
@@ -67,7 +67,7 @@ import Layout from '../layouts/Layout.astro';
           const message = (document.getElementById('contact-message') as HTMLTextAreaElement).value;
           const subject = company ? `Inquiry from ${name} (${company})` : `Inquiry from ${name}`;
           const body = `${message}\n\n---\nFrom: ${name}\nEmail: ${email}${company ? `\nCompany: ${company}` : ''}`;
-          window.location.href = `mailto:james@gtatiredistributor.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          window.location.href = `mailto:james@jsdcwheels.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
           document.getElementById('contact-success')?.classList.remove('hidden');
         });
       </script>

@@ -30,7 +30,11 @@
 - **Astro static generation:** 4,246 pages (2,089 vehicle + 2,150 product + 7 other) in ~142s build time
 - **Superspeed API is clean REST** — POST to `webapi/api/Product/getWheelsListByAengtId` with `pageSize:1000` returns all 803 wheels in one request. Image API: `webapi/api//Product/GetImage?imgName=FILENAME`. Login returns dealer ID (`Aid`) needed for API calls
 - **RWC (gpibtob.com) is OpenCart** — search `?route=product/search&search=RWC&limit=99999` returns all 964 products. Dealer cost is hidden in `.price-product` div (display:none), toggled by JS click. SKU in `.cart-button .pull-right` span
-- **Multi-supplier database:** build-database.js merges Alltire (383), Superspeed (803), RWC (964) = 2,150 unique wheels. Same pricing strategy across all: public=75% MSRP, wholesale=DC+20%
+- **Multi-supplier database:** build-internal-db.js merges Alltire wheels (383) + tires (4,748), Superspeed (803), RWC (964) = 6,898 total. Internal GTA SKU system (GTA-W-XXXX, GTA-T-XXXX). No supplier names in public output.
+- **Tire fitment:** 9,153 vehicles (2020-2026) with OE tire sizes from `searchTire.asp` API. Stored in tire-fitment.json.
+- **Vehicle Package Builder:** Interactive component — select tire + wheel, live 4+4 pricing, season picker, alloy/steel toggle, IMAGIN.studio vehicle render with color/angle
+- **Hub centric policy:** Vehicle search only shows hub centric wheels (from Alltire fitment). Aftermarket wheels browsable by brand/spec but not in fitment results.
+- **noImage fallback:** 228 products with placeholder images use SVG fallbacks (tire silhouette or wheel rim icon). Threshold: tire images < 10KB = placeholder.
 - **Fuse.js for smart search:** client-side fuzzy matching, also parses diameter ("18") and bolt pattern ("5x114.3") from queries
 
 ## Do-Not-Repeat

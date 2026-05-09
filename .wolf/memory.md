@@ -3,6 +3,8 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 
+| 2026-05-06 | Pricing analysis: researched MAP policies, analyzed 4,748 tires across 35 brands, created margin-analysis.md, pricing-strategy.md, brand-ranking.csv | pricing-analysis/* | Complete | ~8000 |
+
 ## Session: 2026-05-04 15:29
 
 | Time | Action | File(s) | Outcome | ~Tokens |
@@ -374,3 +376,183 @@
 | 11:20 | Edited scrapers/build-internal-db.js | 7→10 lines | ~109 |
 | 11:21 | Edited .gitignore | 1→3 lines | ~16 |
 | 11:21 | Edited webapp/src/pages/index.astro | inline fix | ~29 |
+| 11:25 | Session end: 34 writes across 13 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 13 reads | ~30632 tok |
+| 11:37 | Created webapp/src/components/search/SmartSearchResults.tsx | — | ~5158 |
+| 11:37 | Edited webapp/src/components/search/VehicleSearch.tsx | inline fix | ~22 |
+| 11:40 | Session end: 36 writes across 15 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 15 reads | ~40103 tok |
+| 11:45 | Edited webapp/src/components/search/SmartSearchResults.tsx | CSS: modelToMakes, reverse, lookup | ~409 |
+| 11:45 | Edited webapp/src/components/search/SmartSearchResults.tsx | added 2 condition(s) | ~463 |
+| 11:46 | Edited webapp/src/components/search/SmartSearchResults.tsx | CSS: make, detectedMake | ~1594 |
+| 11:46 | Edited webapp/src/components/search/SmartSearchResults.tsx | 10→12 lines | ~58 |
+| 11:49 | Session end: 40 writes across 15 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 15 reads | ~45402 tok |
+| 04:41 | Created webapp/src/components/search/HeroSearch.tsx | — | ~860 |
+| 04:42 | Created webapp/src/pages/index.astro | — | ~2485 |
+| 04:42 | Created webapp/src/components/Header.astro | — | ~1225 |
+| 04:43 | Created webapp/src/pages/wheels.astro | — | ~1696 |
+| 04:45 | Session end: 44 writes across 17 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 16 reads | ~52906 tok |
+| 05:44 | Created scrapers/scrape-alltire-tires.js | — | ~1925 |
+| 05:49 | Session end: 45 writes across 18 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 17 reads | ~58608 tok |
+| 05:51 | Edited scrapers/build-internal-db.js | added 3 condition(s) | ~720 |
+| 05:54 | Edited scrapers/build-internal-db.js | added 1 condition(s) | ~135 |
+| 05:54 | Edited scrapers/build-internal-db.js | modified copyImage() | ~164 |
+| 05:54 | Edited scrapers/build-internal-db.js | inline fix | ~23 |
+| 05:55 | Created webapp/src/pages/tires.astro | — | ~1742 |
+| 05:56 | Created webapp/src/pages/tires/[id].astro | — | ~841 |
+| 05:56 | Edited webapp/src/components/Header.astro | 2→3 lines | ~98 |
+| 05:56 | Edited webapp/src/components/Header.astro | 2→3 lines | ~81 |
+| 05:57 | Edited webapp/src/components/search/SmartSearchResults.tsx | CSS: filtered | ~911 |
+| 05:57 | Edited webapp/src/components/search/SmartSearchResults.tsx | 12→12 lines | ~59 |
+| 05:57 | Edited webapp/src/components/search/SmartSearchResults.tsx | CSS: category | ~46 |
+| 05:57 | Edited webapp/src/components/search/SmartSearchResults.tsx | "${import.meta.env.BASE_UR" → "${import.meta.env.BASE_UR" | ~70 |
+| 05:57 | Edited webapp/src/components/search/SmartSearchResults.tsx | 3→3 lines | ~70 |
+| 05:57 | Edited webapp/src/data/products.ts | 4→7 lines | ~46 |
+| 05:57 | Edited webapp/src/pages/index.astro | 8→8 lines | ~127 |
+| 06:07 | Session end: 60 writes across 18 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 18 reads | ~69416 tok |
+| 06:15 | designqc: captured 2 screenshots (34KB, ~5000 tok) | / | ready for eval | ~0 |
+| 06:15 | designqc: captured 6 screenshots (168KB, ~15000 tok) | C:/Program Files/Git/, C:/Program Files/Git/wheels, C:/Program Files/Git/tires, /search/?q=Hyundai | ready for eval | ~0 |
+| 06:17 | Edited webapp/src/pages/wheels.astro | 4→5 lines | ~49 |
+| 06:18 | Edited scrapers/build-internal-db.js | added 1 condition(s) | ~94 |
+| 06:18 | Edited scrapers/build-internal-db.js | added optional chaining | ~84 |
+| 06:18 | Edited scrapers/build-internal-db.js | 1→3 lines | ~77 |
+| 06:18 | Edited scrapers/build-internal-db.js | 1→3 lines | ~40 |
+| 06:18 | Edited scrapers/build-internal-db.js | 3→4 lines | ~73 |
+| 06:21 | Created webapp/src/pages/search.astro | — | ~79 |
+| 06:21 | Edited scrapers/build-internal-db.js | 5→5 lines | ~123 |
+| 06:32 | Session end: 68 writes across 19 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 19 reads | ~71162 tok |
+| 06:58 | Edited webapp/src/pages/index.astro | 1→2 lines | ~54 |
+| 06:58 | Edited webapp/src/pages/index.astro | expanded (+15 lines) | ~463 |
+| 06:59 | Edited webapp/src/pages/index.astro | 35→35 lines | ~705 |
+| 07:08 | Session end: 71 writes across 19 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 19 reads | ~74029 tok |
+| 07:12 | Created scrapers/scrape-tire-fitment.js | — | ~1426 |
+| 07:14 | Edited scrapers/build-internal-db.js | added optional chaining | ~622 |
+| 07:14 | Edited scrapers/build-internal-db.js | added 1 condition(s) | ~126 |
+| 07:15 | Created webapp/src/components/CompatibleProducts.tsx | — | ~1721 |
+| 07:15 | Edited webapp/src/pages/wheels/[id].astro | added 1 import(s) | ~35 |
+| 07:15 | Edited webapp/src/pages/wheels/[id].astro | expanded (+11 lines) | ~96 |
+| 07:15 | Edited webapp/src/pages/tires/[id].astro | added 1 import(s) | ~35 |
+| 07:16 | Edited webapp/src/pages/tires/[id].astro | expanded (+10 lines) | ~104 |
+| 07:27 | Session end: 79 writes across 21 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 20 reads | ~79095 tok |
+| 07:35 | Session end: 79 writes across 21 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 20 reads | ~79095 tok |
+| 07:52 | Session end: 79 writes across 21 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 20 reads | ~79095 tok |
+| 07:57 | Session end: 79 writes across 21 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 20 reads | ~79095 tok |
+| 08:08 | Edited webapp/src/components/search/SmartSearchResults.tsx | CSS: vehicleKey, sizes, oeWheel | ~53 |
+| 08:08 | Edited webapp/src/components/search/SmartSearchResults.tsx | 27→31 lines | ~356 |
+| 08:09 | Edited webapp/src/components/search/SmartSearchResults.tsx | CSS: matchingTires, oeSizes, size | ~810 |
+| 08:09 | Edited webapp/src/components/search/SmartSearchResults.tsx | inline fix | ~19 |
+| 08:09 | Edited webapp/src/components/search/SmartSearchResults.tsx | added 1 condition(s) | ~184 |
+| 08:10 | Edited webapp/src/components/search/SmartSearchResults.tsx | CSS: sm, sm | ~588 |
+| 08:19 | Session end: 85 writes across 21 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 20 reads | ~82448 tok |
+| 08:27 | Session end: 85 writes across 21 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 20 reads | ~82448 tok |
+| 08:28 | Edited webapp/src/components/search/SmartSearchResults.tsx | added 1 condition(s) | ~766 |
+| 08:38 | Edited webapp/src/components/search/SmartSearchResults.tsx | added optional chaining | ~1111 |
+| 08:38 | Edited webapp/src/components/search/SmartSearchResults.tsx | inline fix | ~24 |
+| 08:38 | Edited webapp/src/components/search/SmartSearchResults.tsx | CSS: vMake, vModel, vYear | ~76 |
+| 08:38 | Edited webapp/src/components/search/SmartSearchResults.tsx | inline fix | ~11 |
+| 08:38 | Edited webapp/src/components/search/SmartSearchResults.tsx | expanded (+7 lines) | ~114 |
+| 08:47 | Session end: 91 writes across 21 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 21 reads | ~89214 tok |
+| 08:50 | Edited webapp/src/components/search/SmartSearchResults.tsx | 2→3 lines | ~81 |
+| 08:50 | Edited webapp/src/components/search/SmartSearchResults.tsx | added 1 condition(s) | ~385 |
+| 08:51 | Edited webapp/src/components/search/SmartSearchResults.tsx | modified filter() | ~189 |
+| 08:51 | Edited webapp/src/components/search/SmartSearchResults.tsx | CSS: Season, hover | ~535 |
+| 09:00 | Session end: 95 writes across 21 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 21 reads | ~90501 tok |
+| 09:22 | Session end: 95 writes across 21 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 21 reads | ~90501 tok |
+| 09:25 | Created webapp/src/components/search/VehiclePackageBuilder.tsx | — | ~4366 |
+| 09:26 | Edited webapp/src/components/search/SmartSearchResults.tsx | added 1 import(s) | ~26 |
+| 09:26 | Edited webapp/src/components/search/SmartSearchResults.tsx | added optional chaining | ~147 |
+| 09:26 | Edited webapp/src/components/search/SmartSearchResults.tsx | 2→2 lines | ~43 |
+| 09:36 | Session end: 99 writes across 22 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 21 reads | ~95083 tok |
+| 09:38 | Session end: 99 writes across 22 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 21 reads | ~95083 tok |
+| 09:45 | Session end: 99 writes across 22 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 21 reads | ~95083 tok |
+| 09:47 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | added 1 condition(s) | ~375 |
+| 09:48 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | 6→8 lines | ~153 |
+| 09:48 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | expanded (+34 lines) | ~1451 |
+| 09:58 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | 2→2 lines | ~62 |
+| 09:58 | Session end: 103 writes across 22 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 22 reads | ~101490 tok |
+| 10:27 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | 5→5 lines | ~89 |
+| 10:28 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | 2→2 lines | ~34 |
+| 10:37 | Session end: 105 writes across 22 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 22 reads | ~101613 tok |
+| 10:43 | Session end: 105 writes across 22 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 23 reads | ~102358 tok |
+| 10:46 | Created docs/INTERNAL-WIKI.md | — | ~7037 |
+| 10:47 | Created docs/DATA-DICTIONARY.md | — | ~4690 |
+
+| 10:47 | Created comprehensive internal documentation | docs/INTERNAL-WIKI.md, docs/DATA-DICTIONARY.md | success | ~7200 tok |
+| 10:48 | Session end: 107 writes across 24 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 28 reads | ~119874 tok |
+| 11:32 | Session end: 107 writes across 24 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 28 reads | ~119874 tok |
+| 11:36 | Created webapp/src/components/ProductCard.astro | — | ~1044 |
+| 11:37 | Edited webapp/src/components/search/SmartSearchResults.tsx | inline fix | ~45 |
+| 11:38 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | inline fix | ~38 |
+| 11:38 | Edited webapp/src/components/search/SmartSearchResults.tsx | 5→10 lines | ~124 |
+| 11:39 | Edited webapp/src/components/search/SmartSearchResults.tsx | expanded (+13 lines) | ~368 |
+| 11:49 | Session end: 112 writes across 24 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 28 reads | ~121713 tok |
+| 12:00 | Session end: 112 writes across 24 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 28 reads | ~121713 tok |
+| 12:52 | Edited webapp/src/components/search/SmartSearchResults.tsx | CSS: hover, hover | ~234 |
+| 12:52 | Edited webapp/src/components/search/SmartSearchResults.tsx | added 4 condition(s) | ~174 |
+| 13:02 | Session end: 114 writes across 24 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 28 reads | ~122121 tok |
+| 13:12 | Session end: 114 writes across 24 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 28 reads | ~122121 tok |
+| 13:14 | Edited webapp/src/components/search/SmartSearchResults.tsx | expanded (+6 lines) | ~342 |
+| 13:25 | Session end: 115 writes across 24 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 28 reads | ~122990 tok |
+| 13:41 | Session end: 115 writes across 24 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 28 reads | ~122990 tok |
+| 14:04 | Created C:/Users/miked/.claude/projects/E--James-gtatire/memory/project_overview.md | — | ~681 |
+| 14:04 | Created C:/Users/miked/.claude/projects/E--James-gtatire/memory/MEMORY.md | — | ~201 |
+| 14:05 | Created C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_hubcentric.md | — | ~226 |
+| 14:05 | Session end: 118 writes across 27 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 30 reads | ~124960 tok |
+| 14:11 | Created webapp/src/layouts/Layout.astro | — | ~2635 |
+| 14:11 | Created webapp/public/robots.txt | — | ~123 |
+| 14:11 | Created webapp/public/llms.txt | — | ~636 |
+| 14:22 | Session end: 121 writes across 30 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 32 reads | ~129273 tok |
+| 14:29 | Session end: 121 writes across 30 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 32 reads | ~129273 tok |
+| 14:31 | Session end: 121 writes across 30 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 32 reads | ~129273 tok |
+| 14:35 | Session end: 121 writes across 30 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 34 reads | ~131212 tok |
+| 14:36 | Created webapp/src/pages/privacy.astro | — | ~2559 |
+| 14:36 | Created webapp/src/pages/terms.astro | — | ~2701 |
+| 14:37 | Created webapp/src/pages/accessibility.astro | — | ~2199 |
+| 14:37 | Edited webapp/src/components/Footer.astro | 14→19 lines | ~346 |
+
+| 11:00 | Created three compliance pages (privacy, terms, accessibility) and updated Footer with compliance links | webapp/src/pages/privacy.astro, terms.astro, accessibility.astro, webapp/src/components/Footer.astro | done | ~500 |
+| 14:48 | Session end: 125 writes across 34 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 34 reads | ~139574 tok |
+| 14:53 | Edited webapp/src/pages/index.astro | modified media() | ~1171 |
+| 15:04 | Session end: 126 writes across 34 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 34 reads | ~140829 tok |
+| 15:07 | Created C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_pricing.md | — | ~199 |
+| 15:08 | Edited scrapers/build-internal-db.js | modified calcPricing() | ~54 |
+| 15:08 | Edited webapp/src/pages/terms.astro | business() → prices() | ~262 |
+| 15:09 | Edited webapp/src/pages/terms.astro | 3→3 lines | ~54 |
+| 15:09 | Edited webapp/src/pages/index.astro | 2→2 lines | ~47 |
+| 15:20 | Session end: 131 writes across 35 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 35 reads | ~144186 tok |
+| 15:22 | Edited webapp/src/pages/index.astro | 0_0_80px_rgba() → bars() | ~395 |
+| 15:22 | Edited webapp/src/pages/index.astro | modified child() | ~656 |
+| 15:33 | Session end: 133 writes across 35 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 35 reads | ~145313 tok |
+| 15:37 | Edited webapp/src/pages/index.astro | removed 30 lines | ~4 |
+| 15:37 | Edited webapp/src/pages/index.astro | — | ~0 |
+| 15:37 | Edited webapp/src/pages/index.astro | "hero-content relative max" → "relative max-w-7xl mx-aut" | ~24 |
+| 15:47 | Session end: 136 writes across 35 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 35 reads | ~145343 tok |
+| 11:26 | Created webapp/src/components/search/VehicleDropdowns.tsx | — | ~835 |
+| 11:26 | Edited webapp/src/pages/index.astro | added 1 import(s) | ~34 |
+| 11:26 | Edited webapp/src/pages/index.astro | expanded (+7 lines) | ~103 |
+| 11:37 | Session end: 139 writes across 36 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 35 reads | ~146341 tok |
+| 12:34 | Created webapp/src/components/search/VehicleDropdowns.tsx | — | ~1311 |
+| 12:44 | Session end: 140 writes across 36 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 36 reads | ~148487 tok |
+| 12:55 | Session end: 140 writes across 36 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 36 reads | ~148487 tok |
+| 12:58 | Edited scrapers/build-internal-db.js | added 3 condition(s) | ~205 |
+| 13:08 | Session end: 141 writes across 36 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 36 reads | ~148692 tok |
+| 23:06 | Created webapp/src/components/search/HeroSearch.tsx | — | ~1870 |
+| 23:06 | Edited webapp/src/pages/index.astro | — | ~0 |
+| 23:07 | Edited webapp/src/pages/index.astro | removed 9 lines | ~7 |
+| 23:17 | Session end: 144 writes across 36 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 36 reads | ~150569 tok |
+| 10:14 | Edited webapp/src/components/search/SmartSearchResults.tsx | added 3 condition(s) | ~513 |
+| 10:32 | Session end: 145 writes across 36 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 36 reads | ~151275 tok |
+| 10:33 | Session end: 145 writes across 36 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 37 reads | ~151275 tok |
+| 10:36 | Created pricing-analysis/margin-analysis.md | — | ~2682 |
+| 10:38 | Created pricing-analysis/pricing-strategy.md | — | ~3197 |
+| 10:38 | Created pricing-analysis/brand-ranking.csv | — | ~1002 |
+| 10:40 | Session end: 148 writes across 39 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 39 reads | ~161962 tok |
+| 10:43 | Session end: 148 writes across 39 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 39 reads | ~161962 tok |
+| 10:51 | Session end: 148 writes across 39 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 39 reads | ~161962 tok |
+| 11:00 | Session end: 148 writes across 39 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 39 reads | ~161962 tok |
+| 11:24 | Edited webapp/src/components/search/SmartSearchResults.tsx | added 1 condition(s) | ~184 |
+| 11:33 | Session end: 149 writes across 39 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 39 reads | ~162322 tok |
+| 11:36 | Created webapp/src/styles/global.css | — | ~376 |
+| 11:36 | Edited webapp/src/components/Header.astro | 9→9 lines | ~159 |
+| 11:36 | Created webapp/src/components/Footer.astro | — | ~727 |
+| 11:37 | Edited webapp/src/pages/index.astro | inline fix | ~13 |
+| 11:37 | Edited webapp/src/layouts/Layout.astro | inline fix | ~3 |
+| 11:37 | Edited webapp/src/layouts/Layout.astro | inline fix | ~6 |
