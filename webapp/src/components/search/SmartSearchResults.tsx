@@ -348,8 +348,15 @@ export default function SmartSearchResults() {
 
       // Also find matching tires from tire fitment data
       let matchingTires: Product[] = [];
+      // Detect rim size from remaining words (e.g., "17" from "2025 HONDA CIVIC 17")
+      const specWords = wordsUpper.filter(w => !usedWords.has(w));
+      let detectedRimSize = 0;
+      for (const w of specWords) {
+        const d = parseInt(w);
+        if (w.match(/^\d{2}$/) && d >= 13 && d <= 24) { detectedRimSize = d; break; }
+      }
+
       if (detectedMake) {
-        // Find OE tire sizes for this vehicle
         const oeSizes: string[] = [];
         for (const [key, data] of Object.entries(tireFitment)) {
           const parts = key.split('|');
@@ -360,16 +367,22 @@ export default function SmartSearchResults() {
             oeSizes.push(...data.sizes);
           }
         }
-        const uniqueSizes = [...new Set(oeSizes)];
+        let uniqueSizes = [...new Set(oeSizes)];
+
+        // If rim size specified, only keep OE sizes for that rim
+        if (detectedRimSize > 0) {
+          uniqueSizes = uniqueSizes.filter(s => s.endsWith(`R${detectedRimSize}`));
+        }
 
         if (uniqueSizes.length > 0) {
-          // Find tires matching those OE sizes
           matchingTires = products.filter(p => {
             if (p.category !== 'tire' || !p.tireSize) return false;
-            // Parse tire size: P225/65R17 → 225/65R17
             const normalized = p.tireSize.replace(/^[PL]T?/, '');
             return uniqueSizes.some(s => normalized === s || p.tireSize.includes(s.replace('R', '/')));
           });
+        } else if (detectedRimSize > 0) {
+          // No OE sizes for this rim — show all tires of this rim diameter
+          matchingTires = products.filter(p => p.category === 'tire' && p.rimDiameter === detectedRimSize);
         }
       }
 
