@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build-data": "node build-data.js",
-    "start": "node build-data.js && vite"
+    "build-data": "node build-data.cjs",
+    "start": "node build-data.cjs && vite"
   },
   "dependencies": {
     "react": "^19.0.0",

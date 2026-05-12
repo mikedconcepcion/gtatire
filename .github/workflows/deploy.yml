@@ -37,7 +37,7 @@ jobs:
         run: npm ci
       - name: Build pricing data
         working-directory: ./pricing-tool
-        run: node build-data.js
+        run: node build-data.cjs
       - name: Build pricing tool
         working-directory: ./pricing-tool
         run: npx vite build
