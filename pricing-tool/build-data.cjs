@@ -151,7 +151,7 @@ function main() {
 
     const tier = BRAND_TIERS[p.brand] || (p.category === 'wheel' ? 'wheel' : 'unknown');
 
-    pricingData.push({
+    const item = {
       id: p.id,
       category: p.category,
       brand: p.brand,
@@ -164,20 +164,16 @@ function main() {
       dealerCost,
       currentPublic,
       currentDist,
-      publicMargin,
-      distMargin,
       stock: p.stock,
-      // Extra fields for context
-      ...(p.category === 'tire' ? {
-        tireSize: p.tireSize || null,
-        season: p.wheelType || null,
-      } : {
-        rimDiameter: p.rimDiameter,
-        rimWidth: p.rimWidth,
-        boltPattern: p.boltPattern,
-        finish: p.finish,
-      }),
-    });
+    };
+    // Add type-specific fields
+    if (p.category === 'tire') {
+      if (p.tireSize) item.tireSize = p.tireSize;
+      if (p.wheelType) item.season = p.wheelType;
+    } else {
+      if (p.finish) item.finish = p.finish;
+    }
+    pricingData.push(item);
   }
 
   // Summary stats
@@ -251,7 +247,7 @@ function main() {
 
   const outPath = path.join(__dirname, 'public', 'pricing-data.json');
   if (!fs.existsSync(path.dirname(outPath))) fs.mkdirSync(path.dirname(outPath), { recursive: true });
-  fs.writeFileSync(outPath, JSON.stringify(output, null, 2));
+  fs.writeFileSync(outPath, JSON.stringify(output));
   console.log(`\n  Saved: ${outPath} (${(fs.statSync(outPath).size / 1024 / 1024).toFixed(1)} MB)`);
 }
 

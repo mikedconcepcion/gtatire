@@ -31,13 +31,10 @@ jobs:
         working-directory: ./webapp
         run: npx astro build
 
-      # Build pricing tool
+      # Build pricing tool (pricing-data.json is pre-built and committed)
       - name: Install pricing tool dependencies
         working-directory: ./pricing-tool
         run: npm ci
-      - name: Build pricing data
-        working-directory: ./pricing-tool
-        run: node build-data.cjs
       - name: Build pricing tool
         working-directory: ./pricing-tool
         run: npx vite build
