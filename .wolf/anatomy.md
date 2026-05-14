@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-09T03:37:18.013Z
-> Files: 79 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-13T14:08:22.051Z
+> Files: 99 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -18,7 +18,7 @@
 
 ## .github/workflows/
 
-- `deploy.yml` — CI: Deploy to GitHub Pages (~246 tok)
+- `deploy.yml` — CI: Deploy to GitHub Pages (~399 tok)
 
 ## C:/Users/miked/.claude/projects/E--James-gtatire/memory/
 
@@ -27,9 +27,10 @@
 - `feedback_design.md` (~177 tok)
 - `feedback_hubcentric.md` (~225 tok)
 - `feedback_pricing.md` (~200 tok)
-- `MEMORY.md` — Memory Index (~188 tok)
+- `MEMORY.md` — Memory Index (~218 tok)
 - `project_overview.md` (~652 tok)
 - `reference_credentials.md` (~253 tok)
+- `reference_domain.md` (~246 tok)
 - `user_james.md` (~201 tok)
 
 ## docs/
@@ -44,6 +45,36 @@
 - `brand-ranking.csv` (~1002 tok)
 - `margin-analysis.md` — GTA Tire Distributor -- Brand Margin Analysis (~2515 tok)
 - `pricing-strategy.md` — GTA Tire Distributor -- Pricing Strategy Recommendations (~2997 tok)
+
+## pricing-tool/
+
+- `build-data.cjs` — Build pricing analysis dataset from raw supplier data. (~2332 tok)
+- `build-data.js` — Build pricing analysis dataset from raw supplier data. (~2524 tok)
+- `index.html` — GTA Pricing Command Center (~140 tok)
+- `package.json` — Node.js package manifest (~149 tok)
+- `postcss.config.js` (~24 tok)
+- `tailwind.config.js` (~74 tok)
+- `vite.config.js` (~61 tok)
+
+## pricing-tool/src/
+
+- `App.jsx` — TABS (~2215 tok)
+- `index.css` — Styles: 6 rules (~399 tok)
+- `main.jsx` (~54 tok)
+
+## pricing-tool/src/components/
+
+- `ApplyChanges.jsx` — ApplyChanges (~3801 tok)
+- `AuthGate.jsx` — ACCESS_CODE — renders form (~502 tok)
+- `BrandEditor.jsx` — EST_DC_RANGES (~4492 tok)
+- `Dashboard.jsx` — Stat (~2407 tok)
+- `FeeSettings.jsx` — FeeInput (~1170 tok)
+- `ImpactAnalysis.jsx` — ImpactAnalysis (~3731 tok)
+- `ProductTable.jsx` — PAGE_SIZE (~3288 tok)
+
+## pricing-tool/src/lib/
+
+- `pricing.js` — === Ontario Fees & Tax === (~1290 tok)
 
 ## scrapers/
 
@@ -69,6 +100,7 @@
 - `test-column-map.js` — config: delay (~790 tok)
 - `test-dc-price.js` — Declares config (~431 tok)
 - `test-wheel-extract.js` — config: delay (~1027 tok)
+- `tier-filter-check.js` — Declares fs (~513 tok)
 
 ## webapp/
 
@@ -102,7 +134,7 @@
 - `HeroSearch.tsx` — POPULAR — renders form (~1870 tok)
 - `SmartSearchResults.tsx` — StockBadge (~11217 tok)
 - `VehicleDropdowns.tsx` — VehicleDropdowns (~1311 tok)
-- `VehiclePackageBuilder.tsx` — MAKE_MAP (~5056 tok)
+- `VehiclePackageBuilder.tsx` — MAKE_MAP (~6337 tok)
 - `VehicleSearch.tsx` — POPULAR_VEHICLES — renders form (~1905 tok)
 
 ## webapp/src/data/

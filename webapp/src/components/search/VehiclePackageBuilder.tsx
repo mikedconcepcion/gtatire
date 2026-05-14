@@ -48,6 +48,68 @@ function fmtMake(make: string) {
   return MAKE_MAP[make] || (make ? make.charAt(0) + make.slice(1).toLowerCase() : '');
 }
 
+type TierFilter = 'all' | 'budget' | 'performance' | 'premium';
+
+// Narrow a product list to one price tercile. Used when the user clicks a tier pill.
+function filterTier<T extends { priceNum: number }>(items: T[], tier: TierFilter): T[] {
+  if (tier === 'all' || items.length < 3) return items;
+  const sorted = [...items].sort((a, b) => a.priceNum - b.priceNum);
+  const tierSize = Math.ceil(sorted.length / 3);
+  if (tier === 'budget') return sorted.slice(0, tierSize);
+  if (tier === 'performance') return sorted.slice(tierSize, tierSize * 2);
+  return sorted.slice(tierSize * 2);
+}
+
+// Pick a tier + brand diverse subset so recommendations span budget/mid/premium
+// and multiple brands, instead of stacking the cheapest brand at the top.
+function diversifyMix<T extends { priceNum: number; brand: string }>(items: T[], maxCount = 20): T[] {
+  if (items.length <= maxCount) return [...items].sort((a, b) => a.priceNum - b.priceNum);
+
+  const sorted = [...items].sort((a, b) => a.priceNum - b.priceNum);
+  const tierSize = Math.ceil(sorted.length / 3);
+
+  const buildTierQueue = (tier: T[]): T[][] => {
+    const byBrand = new Map<string, T[]>();
+    for (const item of tier) {
+      const key = item.brand || 'Unknown';
+      if (!byBrand.has(key)) byBrand.set(key, []);
+      byBrand.get(key)!.push(item);
+    }
+    return [...byBrand.values()];
+  };
+
+  const tierQueues = [
+    buildTierQueue(sorted.slice(0, tierSize)),
+    buildTierQueue(sorted.slice(tierSize, tierSize * 2)),
+    buildTierQueue(sorted.slice(tierSize * 2)),
+  ];
+
+  const picked: T[] = [];
+  const brandCursors = [0, 0, 0];
+  let tierIdx = 0;
+  let safety = maxCount * 6;
+  while (picked.length < maxCount && safety-- > 0) {
+    const totalLeft = tierQueues.reduce((s, t) => s + t.reduce((ss, q) => ss + q.length, 0), 0);
+    if (totalLeft === 0) break;
+
+    const tier = tierQueues[tierIdx];
+    if (tier.some(q => q.length > 0)) {
+      const start = brandCursors[tierIdx];
+      for (let attempts = 0; attempts < tier.length; attempts++) {
+        const idx = (start + attempts) % tier.length;
+        if (tier[idx].length > 0) {
+          picked.push(tier[idx].shift()!);
+          brandCursors[tierIdx] = (idx + 1) % tier.length;
+          break;
+        }
+      }
+    }
+    tierIdx = (tierIdx + 1) % 3;
+  }
+
+  return picked.sort((a, b) => a.priceNum - b.priceNum);
+}
+
 function fmtModel(model: string) {
   return model ? model.split(' ').map(w =>
     w.length <= 3 ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
@@ -64,6 +126,14 @@ function getVehicleImgUrl(make: string, model: string, year: string, angle = '01
   });
   if (paintId && paintId !== 'default') params.set('paintId', paintId);
   return `https://cdn.imagin.studio/getImage?${params.toString()}`;
+}
+
+function isInStock(stock: string | undefined): boolean {
+  const s = (stock || '').trim();
+  if (!s) return false;
+  if (s === '20+' || s.includes('In Stock') || s === 'Available' || s === 'Contact us') return true;
+  const n = parseInt(s);
+  return !isNaN(n) && n >= 1;
 }
 
 function StockBadge({ stock }: { stock: string }) {
@@ -129,6 +199,7 @@ function ProductCard({ product, isSelected, onSelect, detailUrl }: {
 export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehicleModel, vehicleYear, wheels, tires, seasonCounts }: Props) {
   const [season, setSeason] = useState<'' | 'All Season' | 'Winter' | 'All Weather'>('');
   const [wheelType, setWheelType] = useState<'' | 'alloy' | 'steel'>('');
+  const [tier, setTier] = useState<TierFilter>('all');
   const [selectedTireId, setSelectedTireId] = useState<string>('');
   const [selectedWheelId, setSelectedWheelId] = useState<string>('');
   const [vehicleColor, setVehicleColor] = useState('default');
@@ -137,27 +208,43 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
   const vehicleImgUrl = getVehicleImgUrl(vehicleMake, vehicleModel, vehicleYear, vehicleAngle, vehicleColor);
   const base = typeof import.meta !== 'undefined' ? (import.meta as any).env?.BASE_URL || '/gtatire' : '/gtatire';
 
-  // Filter tires by season
+  // In-stock universe for counts + filters
+  const inStockTires = useMemo(() => tires.filter(p => p.priceNum > 0 && isInStock(p.stock)), [tires]);
+  const inStockWheelsAll = useMemo(() => wheels.filter(w => w.priceNum > 0 && isInStock(w.stock)), [wheels]);
+
+  // Recompute season counts from in-stock tires only
+  const liveSeasonCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const t of inStockTires) {
+      counts[t.wheelType] = (counts[t.wheelType] || 0) + 1;
+    }
+    return counts;
+  }, [inStockTires]);
+
+  // Filter tires by stock + season, then narrow to tier, then mix brands within
   const filteredTires = useMemo(() => {
-    let t = tires.filter(p => p.priceNum > 0);
+    let t = inStockTires;
     if (season) t = t.filter(p => p.wheelType === season);
-    return t.sort((a, b) => a.priceNum - b.priceNum);
-  }, [tires, season]);
+    return diversifyMix(filterTier(t, tier));
+  }, [inStockTires, season, tier]);
 
   // Filter wheels — show selected type first, others as "also available"
   const { primaryWheels, altWheels, altLabel } = useMemo(() => {
-    const alloy = wheels.filter(w => w.wheelType !== 'Steel Wheel' && w.priceNum > 0).sort((a, b) => a.priceNum - b.priceNum);
-    const steel = wheels.filter(w => w.wheelType === 'Steel Wheel' && w.priceNum > 0).sort((a, b) => a.priceNum - b.priceNum);
+    const alloyAll = filterTier(inStockWheelsAll.filter(w => w.wheelType !== 'Steel Wheel'), tier);
+    const steelAll = filterTier(inStockWheelsAll.filter(w => w.wheelType === 'Steel Wheel'), tier);
+    const alloy = diversifyMix(alloyAll);
+    const steel = diversifyMix(steelAll);
 
     if (wheelType === 'steel') {
       return { primaryWheels: steel, altWheels: alloy, altLabel: 'Also available in Alloy' };
     }
     // Default: alloy first (or all if no preference)
     if (wheelType === 'alloy' || alloy.length > 0) {
-      return { primaryWheels: alloy.length > 0 ? alloy : wheels.filter(w => w.priceNum > 0), altWheels: steel, altLabel: 'Also available in Steel' };
+      const fallback = diversifyMix(filterTier(inStockWheelsAll, tier));
+      return { primaryWheels: alloy.length > 0 ? alloy : fallback, altWheels: steel, altLabel: 'Also available in Steel' };
     }
-    return { primaryWheels: wheels.filter(w => w.priceNum > 0).sort((a, b) => a.priceNum - b.priceNum), altWheels: [], altLabel: '' };
-  }, [wheels, wheelType]);
+    return { primaryWheels: diversifyMix(filterTier(inStockWheelsAll, tier)), altWheels: [], altLabel: '' };
+  }, [inStockWheelsAll, wheelType, tier]);
 
   // Auto-select cheapest if nothing selected
   const selectedTire = filteredTires.find(t => t.id === selectedTireId) || filteredTires[0];
@@ -220,6 +307,28 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
               <span className="text-green-400 text-xs font-medium">All wheels are hub centric fit</span>
             </div>
 
+            {/* Tier filter — affects both tires and wheels */}
+            <div className="flex items-center gap-1.5 mb-3 flex-wrap">
+              <span className="text-dark-500 text-[10px] font-medium mr-1 uppercase tracking-wide">Style</span>
+              {([
+                { id: 'all', label: 'All', title: 'Recommended mix across all tiers' },
+                { id: 'budget', label: '$ Budget', title: 'Lower-cost value picks' },
+                { id: 'performance', label: '$$ Performance', title: 'Mid-range options' },
+                { id: 'premium', label: '$$$ Premium', title: 'Top-shelf brands' },
+              ] as const).map(t => (
+                <button
+                  key={t.id}
+                  onClick={() => { setTier(t.id); setSelectedTireId(''); setSelectedWheelId(''); }}
+                  title={t.title}
+                  className={`px-2.5 py-1 rounded-md text-[10px] font-medium transition-all ${
+                    tier === t.id ? 'bg-primary-600 text-white' : 'bg-dark-800/60 text-dark-400 hover:text-white'
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+
             {/* Selected items + price */}
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
               {selectedTire && (
@@ -262,7 +371,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
           <div className="flex gap-1">
             {(['', 'All Season', 'Winter', 'All Weather'] as const).map(s => {
               const label = s || 'All';
-              const count = s ? (seasonCounts[s] || 0) : Object.values(seasonCounts).reduce((a, b) => a + b, 0);
+              const count = s ? (liveSeasonCounts[s] || 0) : Object.values(liveSeasonCounts).reduce((a, b) => a + b, 0);
               if (s && count === 0) return null;
               return (
                 <button
@@ -308,19 +417,19 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
               onClick={() => { setWheelType(''); setSelectedWheelId(''); }}
               className={`px-2 py-1 rounded-md text-[10px] font-medium transition-all ${wheelType === '' ? 'bg-primary-600 text-white' : 'bg-dark-800/60 text-dark-400 hover:text-white'}`}
             >
-              All ({wheels.filter(w => w.priceNum > 0).length})
+              All ({inStockWheelsAll.length})
             </button>
             <button
               onClick={() => { setWheelType('alloy'); setSelectedWheelId(''); }}
               className={`px-2 py-1 rounded-md text-[10px] font-medium transition-all ${wheelType === 'alloy' ? 'bg-primary-600 text-white' : 'bg-dark-800/60 text-dark-400 hover:text-white'}`}
             >
-              Alloy ({wheels.filter(w => w.wheelType !== 'Steel Wheel' && w.priceNum > 0).length})
+              Alloy ({inStockWheelsAll.filter(w => w.wheelType !== 'Steel Wheel').length})
             </button>
             <button
               onClick={() => { setWheelType('steel'); setSelectedWheelId(''); }}
               className={`px-2 py-1 rounded-md text-[10px] font-medium transition-all ${wheelType === 'steel' ? 'bg-primary-600 text-white' : 'bg-dark-800/60 text-dark-400 hover:text-white'}`}
             >
-              Steel ({wheels.filter(w => w.wheelType === 'Steel Wheel' && w.priceNum > 0).length})
+              Steel ({inStockWheelsAll.filter(w => w.wheelType === 'Steel Wheel').length})
             </button>
           </div>
         </div>

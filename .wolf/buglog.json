@@ -1440,6 +1440,214 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-09T03:37:18.033Z"
+    },
+    {
+      "id": "bug-091",
+      "timestamp": "2026-05-12T00:11:32.790Z",
+      "error_message": "Significant refactor of ",
+      "file": "pricing-tool/build-data.js",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 5→8 lines (3 removed) | Also: const supplierSku = gtaToSupplier[p.id];; const costInfo = supplierSku ? supplierCosts[suppl",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-12T00:11:43.252Z"
+    },
+    {
+      "id": "bug-092",
+      "timestamp": "2026-05-12T00:18:51.768Z",
+      "error_message": "Wrong return value",
+      "file": "pricing-tool/src/components/ProductTable.jsx",
+      "root_cause": "Was returning: <span className=\"text-gray-700 ml-1\">&#8597;</span",
+      "fix": "Now returns: <span className=\"text-gray-700 ml-1\">{'\\u2195'}</s",
+      "tags": [
+        "auto-detected",
+        "return-value",
+        "jsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-12T00:18:51.768Z"
+    },
+    {
+      "id": "bug-093",
+      "timestamp": "2026-05-12T01:14:31.179Z",
+      "error_message": "Missing guard clause",
+      "file": "pricing-tool/src/App.jsx",
+      "root_cause": "No early return/throw for edge case: !authed",
+      "fix": "Added guard clause: if (!authed)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "jsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-12T01:14:31.179Z"
+    },
+    {
+      "id": "bug-094",
+      "timestamp": "2026-05-12T01:16:16.681Z",
+      "error_message": "Incorrect value in code",
+      "file": "pricing-tool/src/App.jsx",
+      "root_cause": "Had './lib/pricing'",
+      "fix": "Changed to './components/ApplyChanges'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "jsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-12T01:16:16.681Z"
+    },
+    {
+      "id": "bug-095",
+      "timestamp": "2026-05-12T01:38:04.576Z",
+      "error_message": "Incorrect value in code",
+      "file": "pricing-tool/package.json",
+      "root_cause": "Had \"node build-data.js\"",
+      "fix": "Changed to \"node build-data.cjs\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "json"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-12T01:38:04.576Z"
+    },
+    {
+      "id": "bug-096",
+      "timestamp": "2026-05-13T02:09:35.120Z",
+      "error_message": "Missing guard clause",
+      "file": "webapp/src/components/search/VehiclePackageBuilder.tsx",
+      "root_cause": "No early return/throw for edge case: items.length <= maxCount",
+      "fix": "Added guard clause: if (items.length <= maxCount)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-13T02:09:35.120Z"
+    },
+    {
+      "id": "bug-097",
+      "timestamp": "2026-05-13T02:09:47.420Z",
+      "error_message": "CSS fix: primaryWheels",
+      "file": "webapp/src/components/search/VehiclePackageBuilder.tsx",
+      "root_cause": "primaryWheels: wheels.filter(w => w.priceNum > 0).sort((a, b) => a.priceNum - b.priceNum), altWheels: [], altLabel: '' → diversifyMix(wheels.filter(w => w.priceNum > 0)), altWheels: [], altLabel: ''",
+      "fix": "Changed primaryWheels: wheels.filter(w => w.priceNum > 0).sort((a, b) => a.priceNum - b.priceNum), altWheels: [], altLabel: '' → diversifyMix(wheels.filter(w => w.priceNum > 0)), altWheels: [], altLabel: ''",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-13T02:09:47.420Z"
+    },
+    {
+      "id": "bug-098",
+      "timestamp": "2026-05-13T02:24:31.954Z",
+      "error_message": "Missing guard clause",
+      "file": "webapp/src/components/search/VehiclePackageBuilder.tsx",
+      "root_cause": "No early return/throw for edge case: tier === 'all' || items.length < 3",
+      "fix": "Added guard clause: if (tier === 'all' || items.length < 3)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-13T02:24:31.954Z"
+    },
+    {
+      "id": "bug-099",
+      "timestamp": "2026-05-13T02:24:49.961Z",
+      "error_message": "CSS fix: primaryWheels",
+      "file": "webapp/src/components/search/VehiclePackageBuilder.tsx",
+      "root_cause": "primaryWheels: diversifyMix(wheels.filter(w => w.priceNum > 0)), altWheels: [], altLabel: '' → diversifyMix(filterTier(wheels.filter(w => w.priceNum > 0), tier)), altWheels: [], altLabel: ''",
+      "fix": "Changed primaryWheels: diversifyMix(wheels.filter(w => w.priceNum > 0)), altWheels: [], altLabel: '' → diversifyMix(filterTier(wheels.filter(w => w.priceNum > 0), tier)), altWheels: [], altLabel: ''",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-13T02:24:49.961Z"
+    },
+    {
+      "id": "bug-100",
+      "timestamp": "2026-05-13T02:25:01.710Z",
+      "error_message": "Type error",
+      "file": "webapp/src/components/search/VehiclePackageBuilder.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-13T02:25:01.710Z"
+    },
+    {
+      "id": "bug-101",
+      "timestamp": "2026-05-13T02:35:05.010Z",
+      "error_message": "Missing guard clause",
+      "file": "webapp/src/components/search/VehiclePackageBuilder.tsx",
+      "root_cause": "No early return/throw for edge case: !s",
+      "fix": "Added guard clause: if (!s)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-13T02:35:05.010Z"
+    },
+    {
+      "id": "bug-102",
+      "timestamp": "2026-05-13T02:35:17.737Z",
+      "error_message": "CSS fix: primaryWheels",
+      "file": "webapp/src/components/search/VehiclePackageBuilder.tsx",
+      "root_cause": "primaryWheels: diversifyMix(filterTier(wheels.filter(w => w.priceNum > 0), tier)), altWheels: [], altLabel: '' → diversifyMix(filterTier(inStockWheels, tier)), altWheels: [], altLabel: ''",
+      "fix": "Changed primaryWheels: diversifyMix(filterTier(wheels.filter(w => w.priceNum > 0), tier)), altWheels: [], altLabel: '' → diversifyMix(filterTier(inStockWheels, tier)), altWheels: [], altLabel: ''",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-13T02:35:49.380Z"
+    },
+    {
+      "id": "bug-103",
+      "timestamp": "2026-05-13T02:35:39.223Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/search/VehiclePackageBuilder.tsx",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 6→19 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-13T02:35:39.223Z"
     }
   ]
 }

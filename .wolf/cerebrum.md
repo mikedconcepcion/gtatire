@@ -27,7 +27,7 @@
 - **Wheel product table columns (15 cells):** [0]=rowNum [1]=hubCentric [2]=empty [3]=productNo [4]=image [5]=type [6]=description [7]=price [8]=msrp [9]=stock [10-13]=qty [14]=Add
 - **Image URLs:** `https://alltire.ca/Wheel/Steel/{productNo}.jpg` or `Alloy/{name}.jpg`
 - **GitHub Pages base path:** Site at `/gtatire/` — all links need prefix, `import.meta.env.BASE_URL` resolves to `/gtatire` (no trailing slash!) in client JS
-- **Astro static generation:** 4,246 pages (2,089 vehicle + 2,150 product + 7 other) in ~142s build time
+- **Astro static generation:** ~8,999 pages — 12 static .astro routes + 2,089 vehicle + 2,150 wheel detail + 4,748 tire detail (as of 2026-05-13). Was 4,246 at 2026-05-04 before tire detail pages got their own routes. Build time scales with page count — expect 3+ min for full generation.
 - **Superspeed API is clean REST** — POST to `webapi/api/Product/getWheelsListByAengtId` with `pageSize:1000` returns all 803 wheels in one request. Image API: `webapi/api//Product/GetImage?imgName=FILENAME`. Login returns dealer ID (`Aid`) needed for API calls
 - **RWC (gpibtob.com) is OpenCart** — search `?route=product/search&search=RWC&limit=99999` returns all 964 products. Dealer cost is hidden in `.price-product` div (display:none), toggled by JS click. SKU in `.cart-button .pull-right` span
 - **Multi-supplier database:** build-internal-db.js merges Alltire wheels (383) + tires (4,748), Superspeed (803), RWC (964) = 6,898 total. Internal GTA SKU system (GTA-W-XXXX, GTA-T-XXXX). No supplier names in public output.
@@ -36,6 +36,7 @@
 - **Hub centric policy:** Vehicle search only shows hub centric wheels (from Alltire fitment). Aftermarket wheels browsable by brand/spec but not in fitment results.
 - **noImage fallback:** 228 products with placeholder images use SVG fallbacks (tire silhouette or wheel rim icon). Threshold: tire images < 10KB = placeholder.
 - **Fuse.js for smart search:** client-side fuzzy matching, also parses diameter ("18") and bolt pattern ("5x114.3") from queries
+- **Vehicle package recommendations mix tiers + brands:** `diversifyMix()` in VehiclePackageBuilder.tsx splits products into 3 price terciles (budget/mid/premium), then round-robins by brand within each tier. Result: top 20 cards span all 3 tiers and multiple brands, not just the cheapest brand stacked. Applied to filteredTires, alloy wheels, steel wheels, and fallback wheel list. Final order still sorted by price ascending.
 
 ## Do-Not-Repeat
 

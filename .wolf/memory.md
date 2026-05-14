@@ -4,6 +4,10 @@
 > Old sessions are consolidated by the daemon weekly.
 
 | 2026-05-06 | Pricing analysis: researched MAP policies, analyzed 4,748 tires across 35 brands, created margin-analysis.md, pricing-strategy.md, brand-ranking.csv | pricing-analysis/* | Complete | ~8000 |
+| 2026-05-13 | Vehicle package recs: added tier+brand diversification so top 20 spans budget/mid/premium and multiple brands instead of cheapest-only | VehiclePackageBuilder.tsx | Complete | ~600 |
+| 2026-05-13 | Added user-facing tier filter pill row (All / $ Budget / $$ Performance / $$$ Premium) inside package summary; filters both tires + wheels via filterTier() | VehiclePackageBuilder.tsx | Complete | ~400 |
+| 2026-05-13 | Out-of-stock filter: hide products with stock=0/empty via isInStock() helper. Live season + wheel counts derived from in-stock set | VehiclePackageBuilder.tsx | Complete | ~300 |
+| 2026-05-13 | Verified tier filter end-to-end with playwright: Budget=$95-120 (ILINK/TRANSMATE), Perf=$180-191 (KUMHO/SAILUN/HANKOOK), Premium=$266-309 (MICHELIN/PIRELLI/GOODYEAR/CONTINENTAL) | scrapers/tier-filter-check.js | Pass | ~500 |
 
 ## Session: 2026-05-04 15:29
 
@@ -556,3 +560,113 @@
 | 11:37 | Edited webapp/src/pages/index.astro | inline fix | ~13 |
 | 11:37 | Edited webapp/src/layouts/Layout.astro | inline fix | ~3 |
 | 11:37 | Edited webapp/src/layouts/Layout.astro | inline fix | ~6 |
+| 11:47 | Session end: 155 writes across 40 files (config.js, scrape-superspeed.js, scrape-rwc.js, build-database.js, products.ts) | 40 reads | ~164175 tok |
+
+## Session: 2026-05-10 09:29
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 08:11 | Created pricing-tool/build-data.js | — | ~2414 |
+| 08:11 | Edited pricing-tool/build-data.js | entries() → values() | ~73 |
+| 08:11 | Edited pricing-tool/build-data.js | added 3 condition(s) | ~253 |
+| 08:12 | Created pricing-tool/package.json | — | ~149 |
+| 08:12 | Created pricing-tool/vite.config.js | — | ~39 |
+| 08:12 | Created pricing-tool/tailwind.config.js | — | ~74 |
+| 08:12 | Created pricing-tool/postcss.config.js | — | ~24 |
+| 08:12 | Created pricing-tool/index.html | — | ~140 |
+| 08:12 | Created pricing-tool/src/index.css | — | ~286 |
+| 08:12 | Created pricing-tool/src/main.jsx | — | ~54 |
+| 08:13 | Created pricing-tool/src/lib/pricing.js | — | ~1101 |
+| 08:13 | Created pricing-tool/src/App.jsx | — | ~1196 |
+| 08:14 | Created pricing-tool/src/components/Dashboard.jsx | — | ~2287 |
+| 08:15 | Created pricing-tool/src/components/BrandEditor.jsx | — | ~3861 |
+| 08:15 | Created pricing-tool/src/components/ProductTable.jsx | — | ~3707 |
+| 08:16 | Created pricing-tool/src/components/ImpactAnalysis.jsx | — | ~3871 |
+| 08:18 | Edited pricing-tool/src/components/ProductTable.jsx | 4→4 lines | ~66 |
+| 08:19 | Session end: 17 writes across 14 files (build-data.js, package.json, vite.config.js, tailwind.config.js, postcss.config.js) | 8 reads | ~31114 tok |
+| 08:20 | Session end: 17 writes across 14 files (build-data.js, package.json, vite.config.js, tailwind.config.js, postcss.config.js) | 8 reads | ~31114 tok |
+| 08:23 | Created pricing-tool/src/lib/pricing.js | — | ~1290 |
+| 08:24 | Created pricing-tool/src/index.css | — | ~399 |
+| 08:24 | Created pricing-tool/src/App.jsx | — | ~1950 |
+| 08:25 | Created pricing-tool/src/components/FeeSettings.jsx | — | ~1170 |
+| 08:26 | Created pricing-tool/src/components/Dashboard.jsx | — | ~3391 |
+| 08:27 | Created pricing-tool/src/components/BrandEditor.jsx | — | ~3950 |
+| 08:28 | Created pricing-tool/src/components/ProductTable.jsx | — | ~3393 |
+| 08:29 | Created pricing-tool/src/components/ImpactAnalysis.jsx | — | ~3500 |
+| 08:31 | Session end: 25 writes across 15 files (build-data.js, package.json, vite.config.js, tailwind.config.js, postcss.config.js) | 14 reads | ~50157 tok |
+| 08:49 | Created pricing-tool/src/components/BrandEditor.jsx | — | ~4492 |
+| 08:51 | Created pricing-tool/src/components/ImpactAnalysis.jsx | — | ~3731 |
+| 08:51 | Created pricing-tool/src/components/Dashboard.jsx | — | ~2407 |
+| 08:53 | Created pricing-tool/src/components/ProductTable.jsx | — | ~3288 |
+| 08:55 | Session end: 29 writes across 15 files (build-data.js, package.json, vite.config.js, tailwind.config.js, postcss.config.js) | 28 reads | ~64075 tok |
+| 09:13 | Edited pricing-tool/vite.config.js | 6→7 lines | ~47 |
+| 09:14 | Edited pricing-tool/src/App.jsx | added 1 import(s) | ~274 |
+| 09:14 | Created pricing-tool/src/components/AuthGate.jsx | — | ~502 |
+| 09:14 | Edited pricing-tool/src/App.jsx | added 2 condition(s) | ~93 |
+| 09:14 | Created .github/workflows/deploy.yml | — | ~416 |
+| 09:15 | Created pricing-tool/src/components/ApplyChanges.jsx | — | ~3801 |
+| 09:16 | Edited pricing-tool/src/App.jsx | added 1 import(s) | ~42 |
+| 09:16 | Edited pricing-tool/src/App.jsx | 1→2 lines | ~30 |
+| 09:16 | Edited pricing-tool/src/App.jsx | CSS: active | ~221 |
+| 09:17 | Edited pricing-tool/src/App.jsx | expanded (+10 lines) | ~73 |
+| 09:18 | Edited pricing-tool/vite.config.js | 7→7 lines | ~61 |
+| 09:22 | Session end: 40 writes across 18 files (build-data.js, package.json, vite.config.js, tailwind.config.js, postcss.config.js) | 33 reads | ~72859 tok |
+| 09:25 | Session end: 40 writes across 18 files (build-data.js, package.json, vite.config.js, tailwind.config.js, postcss.config.js) | 33 reads | ~72859 tok |
+| 09:38 | Edited pricing-tool/package.json | 2→2 lines | ~23 |
+| 09:38 | Edited .github/workflows/deploy.yml | inline fix | ~6 |
+| 09:46 | Session end: 42 writes across 18 files (build-data.js, package.json, vite.config.js, tailwind.config.js, postcss.config.js) | 33 reads | ~72888 tok |
+| 09:48 | Edited pricing-tool/build-data.cjs | added 4 condition(s) | ~150 |
+| 09:48 | Edited pricing-tool/build-data.cjs | inline fix | ~14 |
+| 09:49 | Edited .github/workflows/deploy.yml | 10→7 lines | ~82 |
+| 09:57 | Session end: 45 writes across 19 files (build-data.js, package.json, vite.config.js, tailwind.config.js, postcss.config.js) | 35 reads | ~75982 tok |
+
+## Session: 2026-05-13 10:04
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-13 10:04
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-13 10:05
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-13 10:06
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 10:09 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | added 5 condition(s) | ~538 |
+| 10:09 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | sort() → diversifyMix() | ~360 |
+| 10:10 | Session end: 2 writes across 1 files (VehiclePackageBuilder.tsx) | 5 reads | ~21775 tok |
+| 10:20 | Session end: 2 writes across 1 files (VehiclePackageBuilder.tsx) | 5 reads | ~21775 tok |
+| 10:24 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | CSS: tier | ~242 |
+| 10:24 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | 6→7 lines | ~137 |
+| 10:24 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | modified if() | ~388 |
+| 10:25 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | expanded (+22 lines) | ~522 |
+| 10:26 | Session end: 6 writes across 1 files (VehiclePackageBuilder.tsx) | 5 reads | ~24132 tok |
+| 10:35 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | added 2 condition(s) | ~229 |
+| 10:35 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | modified if() | ~404 |
+| 10:35 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | CSS: counts | ~239 |
+| 10:35 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | modified if() | ~291 |
+| 10:35 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | modified map() | ~83 |
+| 10:36 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | 18→18 lines | ~345 |
+| 10:36 | designqc: captured 0 screenshots (0KB, ~0 tok) | C:/Program Files/Git/ | ready for eval | ~0 |
+| 10:36 | designqc: captured 2 screenshots (34KB, ~5000 tok) | / | ready for eval | ~0 |
+| 10:37 | designqc: captured 2 screenshots (20KB, ~5000 tok) | /search?q=2024+honda+civic | ready for eval | ~0 |
+| 10:38 | designqc: captured 4 screenshots (124KB, ~10000 tok) | /gtatire/search?q=2024+honda+civic | ready for eval | ~0 |
+| 10:38 | Session end: 12 writes across 1 files (VehiclePackageBuilder.tsx) | 6 reads | ~25818 tok |
+| 11:19 | Created scrapers/tier-filter-check.js | — | ~513 |
+| 11:21 | Session end: 13 writes across 2 files (VehiclePackageBuilder.tsx, tier-filter-check.js) | 6 reads | ~26331 tok |
+| 22:08 | Created C:/Users/miked/.claude/projects/E--James-gtatire/memory/reference_domain.md | — | ~242 |
+| 22:08 | Edited C:/Users/miked/.claude/projects/E--James-gtatire/memory/MEMORY.md | 1→2 lines | ~59 |
+| 22:08 | Session end: 15 writes across 4 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md) | 7 reads | ~26843 tok |
+| 22:14 | Session end: 15 writes across 4 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md) | 12 reads | ~26843 tok |
+| 22:27 | Session end: 15 writes across 4 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md) | 12 reads | ~26843 tok |
+| 22:29 | Session end: 15 writes across 4 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md) | 12 reads | ~26843 tok |
+| 09:36 | Session end: 15 writes across 4 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md) | 12 reads | ~26843 tok |
+| 09:42 | Session end: 15 writes across 4 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md) | 12 reads | ~26843 tok |
+| 10:47 | Session end: 15 writes across 4 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md) | 12 reads | ~26843 tok |
