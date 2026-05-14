@@ -407,6 +407,87 @@ function buildDatabase() {
   console.log(`\nTotal products: ${products.length}`);
   console.log(`SKU mappings: ${skuMap.length}`);
 
+  // ─── Spec-based fitment augmentation ───
+  // Instead of relying solely on each supplier's year/make/model index, derive
+  // each vehicle's OE wheel specs (PCD, CB, diameter) and match every catalog
+  // wheel that physically fits. Sources for vehicle→specs:
+  //   1. AAIA chassis cache (authoritative aftermarket fitment data)
+  //   2. Existing Alltire OE fitment (each Alltire wheel's specs imply vehicle specs)
+  // Then every wheel in the catalog (any supplier) that matches a vehicle's
+  // (PCD|CB|diameter) tuple gets added to that vehicle's fitment.
+  console.log('\n=== Spec-based fitment augmentation ===');
+  const productsById = new Map(products.map(p => [p.id, p]));
+
+  // vehicleKey -> Set of "PCD|CB|diameter"
+  const vehicleSpecs = new Map();
+  function addSpec(vehicleKey, pcd, cb, dia) {
+    if (!pcd || !cb || !dia) return;
+    const spec = `${pcd}|${cb}|${dia}`;
+    if (!vehicleSpecs.has(vehicleKey)) vehicleSpecs.set(vehicleKey, new Set());
+    vehicleSpecs.get(vehicleKey).add(spec);
+  }
+
+  // Source 1: AAIA chassis cache
+  const aaia = loadJSON('aaia-chassis-cache.json');
+  if (aaia && aaia.chassisToVehicles && aaia.wheelsByChassis) {
+    let aaiaSpecs = 0;
+    for (const [chassisId, wheels] of Object.entries(aaia.wheelsByChassis)) {
+      const vehicles = aaia.chassisToVehicles[chassisId] || [];
+      for (const w of wheels) {
+        const dia = String(w.WheelSize || '').match(/x\s*(\d+(?:\.\d+)?)/)?.[1] || '';
+        const pcd = String(w.Pcd1 || '').replace(/\s/g, '');
+        const cb = String(w.BoreMax || '');
+        for (const v of vehicles) {
+          addSpec(v, pcd, cb, dia);
+          aaiaSpecs++;
+        }
+      }
+    }
+    console.log(`  AAIA: ${aaia.chassisToVehicles ? Object.keys(aaia.chassisToVehicles).length : 0} chassis → ${aaiaSpecs} spec entries`);
+  }
+
+  // Source 2: existing Alltire/RWC/Superspeed fitment in fitmentMap — derive specs from products
+  let derivedFromExisting = 0;
+  for (const [gtaId, vehicleSet] of Object.entries(fitmentMap)) {
+    const p = productsById.get(gtaId);
+    if (!p || p.category !== 'wheel') continue;
+    const pcd = (p.boltPattern || '').replace(/\s/g, '');
+    const cb = String(p.hubBore || '');
+    const dia = String(p.rimDiameter || '');
+    for (const v of vehicleSet) {
+      addSpec(v, pcd, cb, dia);
+      derivedFromExisting++;
+    }
+  }
+  console.log(`  From existing fitment: ${derivedFromExisting} spec entries derived (${vehicleSpecs.size} unique vehicles total)`);
+
+  // Match every catalog wheel to vehicle specs
+  let addedFitments = 0;
+  let productsExpanded = 0;
+  for (const p of products) {
+    if (p.category !== 'wheel') continue;
+    const pcd = (p.boltPattern || '').replace(/\s/g, '');
+    const cb = String(p.hubBore || '');
+    const dia = String(p.rimDiameter || '');
+    if (!pcd || !cb || !dia || cb === 'null' || cb === '0') continue;
+    const spec = `${pcd}|${cb}|${dia}`;
+
+    const before = fitmentMap[p.id]?.size || 0;
+    for (const [vehicleKey, specs] of vehicleSpecs) {
+      if (specs.has(spec)) {
+        if (!fitmentMap[p.id]) fitmentMap[p.id] = new Set();
+        fitmentMap[p.id].add(vehicleKey);
+      }
+    }
+    const after = fitmentMap[p.id]?.size || 0;
+    if (after > before) {
+      addedFitments += (after - before);
+      productsExpanded++;
+    }
+  }
+  console.log(`  Spec match added ${addedFitments} fitment entries to ${productsExpanded} products`);
+  console.log(`  Total products with fitment: ${Object.keys(fitmentMap).length}`);
+
   // ─── Build fitment (convert Sets to arrays) ───
   const fitment = {};
   for (const [gtaId, vehicles] of Object.entries(fitmentMap)) {

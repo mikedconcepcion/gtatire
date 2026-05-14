@@ -128,12 +128,20 @@ function getVehicleImgUrl(make: string, model: string, year: string, angle = '01
   return `https://cdn.imagin.studio/getImage?${params.toString()}`;
 }
 
+// Strict "in stock" — physical inventory only. "Available" and "Contact us"
+// are order-on-demand statuses and are excluded from recommendations.
 function isInStock(stock: string | undefined): boolean {
   const s = (stock || '').trim();
   if (!s) return false;
-  if (s === '20+' || s.includes('In Stock') || s === 'Available' || s === 'Contact us') return true;
+  if (s === '20+') return true;
+  if (s.includes('In Stock')) {
+    const n = parseInt(s);
+    return !isNaN(n) && n >= 1;  // "N In Stock" qualifies; bare "In Stock" with no number does too via parseInt fallback below
+  }
+  // Bare numeric stock value (Alltire format like "5")
   const n = parseInt(s);
-  return !isNaN(n) && n >= 1;
+  if (!isNaN(n) && n >= 1 && /^\d+$/.test(s)) return true;
+  return false;
 }
 
 function StockBadge({ stock }: { stock: string }) {

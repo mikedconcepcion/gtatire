@@ -1,6 +1,7 @@
-// Fitment-only scrape for RWC: iterate year/make/model from rwc-fitment-tree.json,
-// extract URL-slug SKUs from each search response, and attach fitment to the
-// already-scraped products in rwc-wheels-raw.json.
+// RWC fitment scrape — fetch year/make/model tree from the LIVE portal
+// (not the cached rwc-fitment-tree.json which was a truncated old scrape),
+// then per (year, make, model), fetch search-result HTML and extract
+// URL-slug SKUs. Join to products.sku by URL slug.
 
 const { chromium } = require('playwright');
 const config = require('./config');
@@ -8,15 +9,14 @@ const fs = require('fs');
 const path = require('path');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
-const TREE_PATH = path.join(DATA_DIR, 'rwc-fitment-tree.json');
 const WHEELS_PATH = path.join(DATA_DIR, 'rwc-wheels-raw.json');
 
+const MIN_YEAR = 2020;
+
 (async () => {
-  console.log('=== RWC FITMENT SCRAPE (URL-slug join) ===\n');
-  const tree = JSON.parse(fs.readFileSync(TREE_PATH, 'utf8'));
+  console.log('=== RWC FITMENT SCRAPE (live portal) ===\n');
   const products = JSON.parse(fs.readFileSync(WHEELS_PATH, 'utf8'));
-  const productsBySku = new Map(products.map(p => [p.sku, p]));
-  console.log(`Loaded ${products.length} products. Tree years: ${Object.keys(tree).join(', ')}\n`);
+  console.log(`Loaded ${products.length} products.\n`);
 
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage();
@@ -27,53 +27,99 @@ const WHEELS_PATH = path.join(DATA_DIR, 'rwc-wheels-raw.json');
   await page.fill('input[type="password"], input[name="password"]', config.rwc.password);
   await page.locator('button:has-text("Sign"), button:has-text("Log"), input[type="submit"]').first().click();
   await page.waitForLoadState('networkidle');
-  console.log('Logged in\n');
+  console.log('Logged in.\n');
 
-  // Build URL list
-  const tasks = [];
-  for (const year of Object.keys(tree)) {
-    for (const [make, data] of Object.entries(tree[year])) {
-      for (const model of data.models) {
-        tasks.push({ year, make, model, carId: data.id });
-      }
+  // Get list of years
+  await page.goto('https://gpibtob.com/product/searchwheel', { waitUntil: 'networkidle', timeout: 30000 });
+  const allYears = await page.locator('#year option').evaluateAll(opts =>
+    opts.map(o => o.value).filter(v => v && v !== '')
+  );
+  const years = allYears.filter(y => parseFloat(y) >= MIN_YEAR);
+  console.log(`Years to scrape (>=${MIN_YEAR}): ${years.join(', ')}\n`);
+
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  // Wrap fetch in try/catch INSIDE page.evaluate so network errors don't crash the scrape.
+  // RWC rate-limits aggressively — we retry with exponential backoff on empty results.
+  async function fetchMakes(year) {
+    for (let attempt = 1; attempt <= 6; attempt++) {
+      const makes = await page.evaluate(async (yr) => {
+        try {
+          const res = await fetch(`https://gpibtob.com/index.php?route=module/searchtyrecar/getcar&year=${yr}`, { credentials: 'include' });
+          const html = await res.text();
+          return [...html.matchAll(/<option value="(\d+)">([^<]+)<\/option>/g)].map(m => ({ id: m[1], name: m[2].trim() }));
+        } catch (e) { return []; }
+      }, year);
+      if (makes.length > 0) return makes;
+      await sleep(3000 * attempt);  // 3s, 6s, 9s, 12s, 15s, 18s backoff
+      console.log(`    retry ${attempt} for year ${year} (waited ${3 * attempt}s)`);
     }
+    return [];
   }
-  console.log(`Total year/make/model combinations: ${tasks.length}\n`);
 
-  const fitmentMap = {}; // slug -> [{year, make, model}]
-  let i = 0, hitCount = 0;
-  const startTime = Date.now();
+  async function fetchModels(year, makeId) {
+    for (let attempt = 1; attempt <= 6; attempt++) {
+      const html = await page.evaluate(async ({ y, mid }) => {
+        try {
+          const res = await fetch(`https://gpibtob.com/index.php?route=module/searchtyrecar/getmodel&year=${y}&id=${mid}`, { credentials: 'include' });
+          return await res.text();
+        } catch (e) { return ''; }
+      }, { y: year, mid: makeId });
+      const models = [...html.matchAll(/<option value="([^"]+)">([^<]+)<\/option>/g)].map(m => m[1]);
+      if (models.length > 0) return models;
+      await sleep(2000 * attempt);
+    }
+    return [];
+  }
 
-  for (const { year, make, model, carId } of tasks) {
+  // Step 1: build YMM list from live portal with per-call throttle
+  const tasks = [];
+  for (const year of years) {
+    const makes = await fetchMakes(year);
+    for (const { id, name } of makes) {
+      await sleep(120);  // gentle throttle between models requests
+      const models = await fetchModels(year, id);
+      for (const model of models) tasks.push({ year, makeId: id, makeName: name, model });
+    }
+    console.log(`  ${year}: ${makes.length} makes`);
+    await sleep(2000);  // cooldown between years
+  }
+  console.log(`\nTotal year/make/model combinations: ${tasks.length}\n`);
+
+  // Step 2: per YMM, fetch wheel slugs
+  const fitmentMap = {};
+  let i = 0, hits = 0;
+  const start = Date.now();
+
+  for (const { year, makeId, makeName, model } of tasks) {
     i++;
-    const url = `https://gpibtob.com/product/searchwheel?car=${carId}&model=${encodeURIComponent(model)}&year=${year}&filter_type=&limit=99999`;
-
+    const url = `https://gpibtob.com/product/searchwheel?car=${makeId}&model=${encodeURIComponent(model)}&year=${year}&filter_type=&limit=99999`;
     try {
       const slugs = await page.evaluate(async (u) => {
-        const res = await fetch(u, { credentials: 'include' });
-        const html = await res.text();
-        // Extract one URL slug per product card; slug appears as
-        //   href="https://gpibtob.com/rwc-xxxx"
-        // Take unique slugs only.
-        const set = new Set();
-        const re = /https?:\/\/gpibtob\.com\/(rwc-[a-z0-9-]+)(?=["?])/gi;
-        let m;
-        while ((m = re.exec(html))) set.add(m[1].toLowerCase());
-        return [...set];
+        try {
+          const res = await fetch(u, { credentials: 'include' });
+          const html = await res.text();
+          const set = new Set();
+          const re = /https?:\/\/gpibtob\.com\/(rwc-[a-z0-9-]+)(?=["?])/gi;
+          let m;
+          while ((m = re.exec(html))) set.add(m[1].toLowerCase());
+          return [...set];
+        } catch (e) { return null; }
       }, url);
+      if (slugs === null) { await sleep(3000); continue; }
 
       for (const slug of slugs) {
         if (!fitmentMap[slug]) fitmentMap[slug] = [];
-        fitmentMap[slug].push({ year, make, model });
+        fitmentMap[slug].push({ year, make: makeName, model });
       }
-      hitCount += slugs.length;
+      hits += slugs.length;
 
-      if (i % 25 === 0 || i === tasks.length) {
-        const eta = ((Date.now() - startTime) / i) * (tasks.length - i) / 1000;
-        console.log(`  ${i}/${tasks.length} (${slugs.length} slugs this | ${hitCount} total | ETA ${eta.toFixed(0)}s)`);
+      if (i % 50 === 0 || i === tasks.length) {
+        const eta = ((Date.now() - start) / i) * (tasks.length - i) / 1000;
+        console.log(`  ${i}/${tasks.length} (${slugs.length} slugs | ${hits} total | ETA ${eta.toFixed(0)}s)`);
       }
     } catch (e) {
-      console.log(`  ${i}/${tasks.length} ERR ${year} ${make} ${model}: ${e.message.slice(0, 80)}`);
+      console.log(`  ${i}/${tasks.length} ERR ${year} ${makeName} ${model}: ${e.message.slice(0, 80)}`);
     }
   }
 
@@ -86,11 +132,9 @@ const WHEELS_PATH = path.join(DATA_DIR, 'rwc-wheels-raw.json');
   }
   console.log(`\nDone. ${matched}/${products.length} products got fitment entries.`);
 
-  // Save back
   fs.writeFileSync(WHEELS_PATH, JSON.stringify(products, null, 2));
   console.log(`Wrote ${WHEELS_PATH}`);
 
-  // Also dump the slug -> fitment map separately
   const mapPath = path.join(DATA_DIR, 'rwc-fitment-map.json');
   fs.writeFileSync(mapPath, JSON.stringify(fitmentMap, null, 2));
   console.log(`Wrote ${mapPath} (${Object.keys(fitmentMap).length} unique slugs)`);
