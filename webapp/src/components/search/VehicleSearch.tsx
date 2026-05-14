@@ -13,7 +13,11 @@ const POPULAR_VEHICLES = [
   { label: 'Toyota RAV4', year: '2025', make: 'TOYOTA', model: 'RAV4' },
   { label: 'Ford F-150', year: '2025', make: 'FORD', model: 'F-150' },
   { label: 'Toyota Corolla', year: '2025', make: 'TOYOTA', model: 'COROLLA' },
+  { label: 'Hyundai Elantra', year: '2025', make: 'HYUNDAI', model: 'ELANTRA' },
   { label: 'Hyundai Tucson', year: '2025', make: 'HYUNDAI', model: 'TUCSON' },
+  { label: 'Hyundai Ioniq 5', year: '2025', make: 'HYUNDAI', model: 'IONIQ 5' },
+  { label: 'Hyundai Santa Fe', year: '2025', make: 'HYUNDAI', model: 'SANTA FE' },
+  { label: 'Tesla Model Y', year: '2025', make: 'TESLA', model: 'MODEL Y' },
 ];
 
 export default function VehicleSearch() {

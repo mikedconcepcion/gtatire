@@ -7,7 +7,9 @@ interface VehicleTree {
 const POPULAR = [
   { label: 'Honda Civic', q: 'Honda Civic' },
   { label: 'Toyota RAV4', q: 'Toyota RAV4' },
+  { label: 'Hyundai Elantra', q: 'Hyundai Elantra' },
   { label: 'Hyundai Tucson', q: 'Hyundai Tucson' },
+  { label: 'Hyundai Ioniq 5', q: 'Hyundai Ioniq 5' },
   { label: 'Ford F-150', q: 'Ford F-150' },
   { label: 'Tesla Model 3', q: 'Tesla Model 3' },
   { label: 'BMW 3 Series', q: 'BMW 3 Series' },

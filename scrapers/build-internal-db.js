@@ -83,6 +83,18 @@ function copyImageTo(srcPath, gtaSku, destDir, index = 0) {
   return newName;
 }
 
+// Normalize vehicle keys so AAIA's naming (e.g. "TESLA|Y", "MERCEDES-BENZ")
+// matches Alltire's (e.g. "TESLA|MODEL Y", "MERCEDES"). Without this we get
+// duplicate /vehicle/ pages and broken smart-search lookups.
+function normalizeVehicleKey(key) {
+  const parts = key.split('|');
+  if (parts.length !== 3) return key;
+  let [year, make, model] = parts;
+  if (make === 'MERCEDES-BENZ') make = 'MERCEDES';
+  if (make === 'TESLA' && /^[A-Z0-9]{1,2}$/.test(model)) model = `MODEL ${model}`;
+  return `${year}|${make}|${model}`;
+}
+
 function buildDatabase() {
   console.log('=== Building GTA Internal Database ===\n');
 
@@ -99,7 +111,7 @@ function buildDatabase() {
     for (const raw of rawWheels) {
       if (!raw.productNo) continue;
       const supplierSku = raw.productNo;
-      const vehicleKey = `${raw.vehicleYear}|${raw.vehicleMake}|${raw.vehicleModel}`;
+      const vehicleKey = normalizeVehicleKey(`${raw.vehicleYear}|${raw.vehicleMake}|${raw.vehicleModel}`);
 
       // Track fitment
       let gtaId;
@@ -185,10 +197,10 @@ function buildDatabase() {
       const gtaId = nextSku('W');
       count++;
 
-      // Attach AAIA fitment if available for this SKU
+      // Attach AAIA fitment if available for this SKU (normalize Tesla / Mercedes naming)
       const fits = ssFitment[w.SKU];
       if (fits && fits.length > 0) {
-        fitmentMap[gtaId] = new Set(fits);
+        fitmentMap[gtaId] = new Set(fits.map(normalizeVehicleKey));
       }
 
       const pricing = calcPricing(w.MSRP || 0, w.COST || 0);
@@ -295,7 +307,7 @@ function buildDatabase() {
         for (const f of w.fitment) {
           const make = (f.make || '').toUpperCase();
           const model = (f.model || '').toUpperCase();
-          fitmentMap[gtaId].add(`${f.year}|${make}|${model}`);
+          fitmentMap[gtaId].add(normalizeVehicleKey(`${f.year}|${make}|${model}`));
         }
       }
 
@@ -432,7 +444,7 @@ function buildDatabase() {
   if (aaia && aaia.chassisToVehicles && aaia.wheelsByChassis) {
     let aaiaSpecs = 0;
     for (const [chassisId, wheels] of Object.entries(aaia.wheelsByChassis)) {
-      const vehicles = aaia.chassisToVehicles[chassisId] || [];
+      const vehicles = (aaia.chassisToVehicles[chassisId] || []).map(normalizeVehicleKey);
       for (const w of wheels) {
         const dia = String(w.WheelSize || '').match(/x\s*(\d+(?:\.\d+)?)/)?.[1] || '';
         const pcd = String(w.Pcd1 || '').replace(/\s/g, '');
@@ -494,9 +506,41 @@ function buildDatabase() {
     fitment[gtaId] = Array.from(vehicles);
   }
 
-  // ─── Build vehicle tree ───
-  const vehicleTree = loadJSON('alltire-wheel-tree.json');
-  let vehicles = vehicleTree || {};
+  // ─── Build vehicle tree from normalized fitmentMap ───
+  // Sole source of truth: any vehicle a customer can find wheels for should
+  // appear in the dropdown / static-page generation. Building from fitmentMap
+  // (which already uses normalized keys) avoids the dupe entries we'd get if
+  // we started from Alltire's raw tree (e.g. TESLA|3 vs TESLA|MODEL 3).
+  const vehicles = {};
+  for (const [gtaId, vehicleSet] of Object.entries(fitmentMap)) {
+    const p = productsById.get(gtaId);
+    if (!p || p.category !== 'wheel') continue;
+    const dia = p.rimDiameter;
+    if (!dia) continue;
+    for (const vk of vehicleSet) {
+      const [year, make, model] = vk.split('|');
+      if (!year || !make || !model) continue;
+      if (!vehicles[year]) vehicles[year] = {};
+      if (!vehicles[year][make]) vehicles[year][make] = {};
+      if (!vehicles[year][make][model]) vehicles[year][make][model] = [];
+      const arr = vehicles[year][make][model];
+      const s = String(dia);
+      if (!arr.includes(s)) arr.push(s);
+    }
+  }
+  // Sort diameters numerically
+  for (const y of Object.keys(vehicles)) {
+    for (const mk of Object.keys(vehicles[y])) {
+      for (const md of Object.keys(vehicles[y][mk])) {
+        vehicles[y][mk][md].sort((a, b) => parseInt(a) - parseInt(b));
+      }
+    }
+  }
+  let totalYMM = 0;
+  for (const y of Object.keys(vehicles)) {
+    for (const mk of Object.keys(vehicles[y])) totalYMM += Object.keys(vehicles[y][mk]).length;
+  }
+  console.log(`Vehicle tree: ${totalYMM} year/make/model combos`);
 
   // ─── Build stats ───
   const brands = {}, types = {}, finishes = {}, diameters = {};
