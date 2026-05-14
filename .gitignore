@@ -15,9 +15,18 @@ data/alltire-fitment.json
 data/superspeed-wheels-raw.json
 data/rwc-wheels-raw.json
 data/rwc-fitment-tree.json
+data/rwc-fitment-map.json
+data/superspeed-fitment-map.json
+data/aaia-chassis-cache.json
 data/images/
 data/gta-products.json
 data/gta-sku-map.json
+
+# Scraper probe/recon artifacts (transient debugging outputs)
+scrapers/rwc-probe-output.html
+scrapers/superspeed-aaia-flow.json
+scrapers/superspeed-aaia-recon.json
+scrapers/superspeed-fitment-recon.json
 
 # Env
 .env

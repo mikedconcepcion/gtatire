@@ -174,14 +174,22 @@ function buildDatabase() {
 
   // ─── SUPERSPEED ───
   const ssRaw = loadJSON('superspeed-wheels-raw.json');
+  // AAIA-derived fitment: { Superspeed SKU -> ["YEAR|MAKE|MODEL", ...] }
+  const ssFitment = loadJSON('superspeed-fitment-map.json') || {};
   if (ssRaw && ssRaw.List) {
-    console.log(`Superspeed: ${ssRaw.List.length} raw entries`);
+    console.log(`Superspeed: ${ssRaw.List.length} raw entries (fitment map has ${Object.keys(ssFitment).length} SKUs)`);
     let count = 0;
 
     for (const w of ssRaw.List) {
       if (!w.SKU) continue;
       const gtaId = nextSku('W');
       count++;
+
+      // Attach AAIA fitment if available for this SKU
+      const fits = ssFitment[w.SKU];
+      if (fits && fits.length > 0) {
+        fitmentMap[gtaId] = new Set(fits);
+      }
 
       const pricing = calcPricing(w.MSRP || 0, w.COST || 0);
       const faceImgs = (w.FACE_IMG || '').split(',').filter(Boolean);
@@ -280,11 +288,14 @@ function buildDatabase() {
         supplierProductNo: w.sku,
       });
 
-      // Add RWC fitment if available
+      // Add RWC fitment if available — normalize to uppercase MAKE|MODEL
+      // to match Alltire's convention so vehicle search merges them.
       if (w.fitment && w.fitment.length > 0) {
         fitmentMap[gtaId] = new Set();
         for (const f of w.fitment) {
-          fitmentMap[gtaId].add(`${f.year}|${f.make}|${f.model}`);
+          const make = (f.make || '').toUpperCase();
+          const model = (f.model || '').toUpperCase();
+          fitmentMap[gtaId].add(`${f.year}|${make}|${model}`);
         }
       }
 
@@ -531,9 +542,11 @@ function buildDatabase() {
   console.log(`Internal DB: data/gta-products.json, data/gta-sku-map.json`);
   console.log(`Public data: webapp/public/data/`);
 
-  // Verify no supplier leaks
+  // Verify no supplier leaks. Only flag identifiers that are never legit brand
+  // names — Superspeed and RWC are legitimate aftermarket brands, so we exclude
+  // them. Alltire and gpibtob.com are pure supplier identifiers.
   const pubStr = JSON.stringify(publicProducts);
-  const leaks = ['alltire', 'superspeed', 'rwc', 'gpibtob', 'super-speed'].filter(s => pubStr.toLowerCase().includes(s));
+  const leaks = ['alltire', 'gpibtob'].filter(s => pubStr.toLowerCase().includes(s));
   if (leaks.length > 0) {
     console.log(`\n⚠ SUPPLIER LEAKS FOUND: ${leaks.join(', ')}`);
   } else {

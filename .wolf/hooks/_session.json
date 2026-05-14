@@ -23,7 +23,7 @@
       "first_read": "2026-05-13T02:08:04.758Z"
     },
     "E:/James/gtatire/webapp/src/components/search/SmartSearchResults.tsx": {
-      "count": 1,
+      "count": 4,
       "tokens": 11217,
       "first_read": "2026-05-13T02:08:39.490Z"
     },
@@ -61,6 +61,51 @@
       "count": 1,
       "tokens": 0,
       "first_read": "2026-05-13T14:13:42.768Z"
+    },
+    "C:/Users/miked/AppData/Local/Temp/claude/E--James-gtatire/209101b0-c6fa-44b8-9338-e7d2d7886dab/tasks/b0l2jqs7n.output": {
+      "count": 1,
+      "tokens": 0,
+      "first_read": "2026-05-14T02:57:13.211Z"
+    },
+    "E:/James/gtatire/scrapers/scrape-rwc.js": {
+      "count": 3,
+      "tokens": 3039,
+      "first_read": "2026-05-14T03:04:53.430Z"
+    },
+    "E:/James/gtatire/scrapers/config.js": {
+      "count": 1,
+      "tokens": 123,
+      "first_read": "2026-05-14T03:13:33.428Z"
+    },
+    "E:/James/gtatire/scrapers/recon-superspeed.js": {
+      "count": 1,
+      "tokens": 921,
+      "first_read": "2026-05-14T03:16:28.522Z"
+    },
+    "E:/James/gtatire/scrapers/build-internal-db.js": {
+      "count": 5,
+      "tokens": 6165,
+      "first_read": "2026-05-14T03:21:45.387Z"
+    },
+    "C:/Users/miked/AppData/Local/Temp/claude/E--James-gtatire/209101b0-c6fa-44b8-9338-e7d2d7886dab/tasks/b51keqlev.output": {
+      "count": 1,
+      "tokens": 0,
+      "first_read": "2026-05-14T03:28:26.093Z"
+    },
+    "C:/Users/miked/AppData/Local/Temp/claude/E--James-gtatire/209101b0-c6fa-44b8-9338-e7d2d7886dab/tasks/bmzdtxw39.output": {
+      "count": 3,
+      "tokens": 0,
+      "first_read": "2026-05-14T03:35:19.775Z"
+    },
+    "C:/Users/miked/AppData/Local/Temp/claude/E--James-gtatire/209101b0-c6fa-44b8-9338-e7d2d7886dab/tasks/b85kzp82m.output": {
+      "count": 3,
+      "tokens": 0,
+      "first_read": "2026-05-14T03:38:01.643Z"
+    },
+    "E:/James/gtatire/.gitignore": {
+      "count": 1,
+      "tokens": 138,
+      "first_read": "2026-05-14T03:50:24.286Z"
     }
   },
   "files_written": [
@@ -153,17 +198,122 @@
       "action": "edit",
       "tokens": 64,
       "at": "2026-05-13T14:08:22.070Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/probe-rwc-fitment.js",
+      "action": "create",
+      "tokens": 1078,
+      "at": "2026-05-14T03:13:52.348Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/scrape-rwc-fitment.js",
+      "action": "create",
+      "tokens": 1144,
+      "at": "2026-05-14T03:15:59.052Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/recon-superspeed-fitment.js",
+      "action": "create",
+      "tokens": 1397,
+      "at": "2026-05-14T03:16:55.152Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/recon-superspeed-application.js",
+      "action": "create",
+      "tokens": 1332,
+      "at": "2026-05-14T03:17:53.366Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/recon-superspeed-aaia-flow.js",
+      "action": "create",
+      "tokens": 1692,
+      "at": "2026-05-14T03:18:54.456Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
+      "action": "edit",
+      "tokens": 130,
+      "at": "2026-05-14T03:22:34.059Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/recon-superspeed-js-scan.js",
+      "action": "create",
+      "tokens": 695,
+      "at": "2026-05-14T03:26:40.166Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/scrape-superspeed-fitment.js",
+      "action": "create",
+      "tokens": 1718,
+      "at": "2026-05-14T03:32:26.387Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/scrape-superspeed-fitment.js",
+      "action": "create",
+      "tokens": 1866,
+      "at": "2026-05-14T03:33:18.585Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
+      "action": "edit",
+      "tokens": 195,
+      "at": "2026-05-14T03:34:03.778Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
+      "action": "edit",
+      "tokens": 130,
+      "at": "2026-05-14T03:35:14.435Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/scrape-superspeed-fitment.js",
+      "action": "edit",
+      "tokens": 210,
+      "at": "2026-05-14T03:36:54.799Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/scrape-superspeed-fitment.js",
+      "action": "edit",
+      "tokens": 310,
+      "at": "2026-05-14T03:37:10.901Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/scrape-superspeed-fitment.js",
+      "action": "edit",
+      "tokens": 137,
+      "at": "2026-05-14T03:37:22.759Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/scrape-superspeed-fitment.js",
+      "action": "edit",
+      "tokens": 119,
+      "at": "2026-05-14T03:37:32.933Z"
+    },
+    {
+      "file": "E:/James/gtatire/.gitignore",
+      "action": "edit",
+      "tokens": 179,
+      "at": "2026-05-14T03:50:32.382Z"
     }
   ],
   "edit_counts": {
     "webapp/src/components/search/VehiclePackageBuilder.tsx": 12,
     "scrapers/tier-filter-check.js": 1,
     "C:/Users/miked/.claude/projects/E--James-gtatire/memory/reference_domain.md": 1,
-    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/MEMORY.md": 1
+    "C:/Users/miked/.claude/projects/E--James-gtatire/memory/MEMORY.md": 1,
+    "scrapers/probe-rwc-fitment.js": 1,
+    "scrapers/scrape-rwc-fitment.js": 1,
+    "scrapers/recon-superspeed-fitment.js": 1,
+    "scrapers/recon-superspeed-application.js": 1,
+    "scrapers/recon-superspeed-aaia-flow.js": 1,
+    "scrapers/build-internal-db.js": 3,
+    "scrapers/recon-superspeed-js-scan.js": 1,
+    "scrapers/scrape-superspeed-fitment.js": 6,
+    ".gitignore": 1
   },
-  "anatomy_hits": 6,
-  "anatomy_misses": 6,
-  "repeated_reads_warned": 8,
+  "anatomy_hits": 11,
+  "anatomy_misses": 10,
+  "repeated_reads_warned": 21,
   "cerebrum_warnings": 0,
-  "stop_count": 12
+  "stop_count": 50
 }

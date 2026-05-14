@@ -1,11 +1,11 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-13T14:08:22.051Z
-> Files: 99 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-14T03:50:32.365Z
+> Files: 106 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
-- `.gitignore` — Git ignore rules (~138 tok)
+- `.gitignore` — Git ignore rules (~215 tok)
 - `CLAUDE.md` — OpenWolf (~57 tok)
 
 ## .claude/
@@ -79,19 +79,26 @@
 ## scrapers/
 
 - `build-database.js` — Build a normalized database from raw scraped data. (~3800 tok)
-- `build-internal-db.js` — Build internal GTA database from raw supplier data. (~5997 tok)
+- `build-internal-db.js` — Build internal GTA database from raw supplier data. (~6211 tok)
 - `config.js` — Supplier credentials and URLs (~123 tok)
 - `download-images.js` — fs: ensureDir, downloadImage, delay, downloadAllImages (~1196 tok)
 - `mobile-screenshots.js` — Declares browser (~301 tok)
+- `probe-rwc-fitment.js` — Probe: log in to RWC, fetch one search-by-vehicle URL, and dump SKU patterns (~1078 tok)
 - `recon-alltire.js` — Declares config (~1122 tok)
 - `recon-rwc.js` — Declares config (~1033 tok)
+- `recon-superspeed-aaia-flow.js` — Drive the Search-by-Application form: select Year → Make → Model and capture (~1692 tok)
+- `recon-superspeed-application.js` — Click "Search by Application" in Superspeed B2B and capture the full AAIA (~1332 tok)
+- `recon-superspeed-fitment.js` — Superspeed fitment recon: log in, capture every API call, sweep the UI for (~1397 tok)
+- `recon-superspeed-js-scan.js` — Load the Superspeed B2B SPA, intercept every JS bundle, and grep for AAIA (~695 tok)
 - `recon-superspeed.js` — Declares config (~921 tok)
 - `recon-superspeed2.js` — Declares config (~1155 tok)
 - `scrape-alltire-fast.js` — fs: delay, save, loadIfExists, parseWheelHtml (~2149 tok)
 - `scrape-alltire-tires.js` — fs: save, loadIfExists, getSearchSizes (~1925 tok)
 - `scrape-alltire-wheels.js` — fs: delay, save, loadIfExists, scrapeWheelTree, scrapeWheelProducts (~2902 tok)
 - `scrape-alltire.js` — fs: delay, login, scrapeWheelTree, scrapeWheelProducts, scrapeTires (~2524 tok)
+- `scrape-rwc-fitment.js` — Fitment-only scrape for RWC: iterate year/make/model from rwc-fitment-tree.json, (~1144 tok)
 - `scrape-rwc.js` — Declares config (~3039 tok)
+- `scrape-superspeed-fitment.js` — Build Superspeed wheel fitment via AAIA. Walks AAIA's tree (~2164 tok)
 - `scrape-superspeed.js` — Declares config (~1435 tok)
 - `scrape-tire-fitment.js` — config: save, loadIfExists (~1426 tok)
 - `test-all-wheels.js` — config: delay (~1477 tok)
