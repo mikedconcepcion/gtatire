@@ -15,7 +15,14 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
 <Layout title="JSDC Wheels — Premium Tires & Wheels in the GTA">
   <!-- Hero -->
   <section class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-b from-primary-950/50 via-dark-950 to-dark-950"></div>
+    <!-- Background photo (moody tire tread macro) -->
+    <div
+      class="absolute inset-0 bg-cover bg-center opacity-30"
+      style="background-image: url('/images/hero-tire.jpg');"
+      aria-hidden="true"
+    ></div>
+    <!-- Layered overlays: dark vignette + warm gold glow -->
+    <div class="absolute inset-0 bg-gradient-to-b from-dark-950/70 via-dark-950/85 to-dark-950"></div>
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary-600/10 rounded-full blur-3xl"></div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-16 sm:pt-24 sm:pb-20">
