@@ -135,10 +135,26 @@ async function main() {
   const wordmarkMeta = await sharp(wordmarkBuf).metadata();
   console.log(`Wordmark: ${wordmarkMeta.width}x${wordmarkMeta.height}`);
 
-  // Wheel — reuse the same tight bounds as the favicon
-  const wheelLogoBuf = wheelBuf;  // from earlier extraction
+  // Wheel — reuse the favicon's tight bounds, but replace the black artwork
+  // pixels with brand gold so the wheel reads on the dark header. Build a
+  // solid gold rectangle the same size as the wheel, then use the wheel's
+  // alpha as a "dest-in" mask: gold pixels survive only where the original
+  // wheel artwork was opaque.
+  const wheelMetaPre = await sharp(wheelBuf).metadata();
+  const goldLayer = await sharp({
+    create: {
+      width: wheelMetaPre.width,
+      height: wheelMetaPre.height,
+      channels: 4,
+      background: { r: 212, g: 147, b: 65, alpha: 1 },
+    },
+  }).png().toBuffer();
+  const wheelLogoBuf = await sharp(goldLayer)
+    .composite([{ input: wheelBuf, blend: 'dest-in' }])
+    .png()
+    .toBuffer();
   const wheelLogoMeta = await sharp(wheelLogoBuf).metadata();
-  console.log(`Wheel  : ${wheelLogoMeta.width}x${wheelLogoMeta.height}`);
+  console.log(`Wheel  : ${wheelLogoMeta.width}x${wheelLogoMeta.height} (gold-filled for dark bg)`);
 
   // Composite at unified height. Pick a render height (e.g. 80px for retina).
   for (const [renderH, suffix] of [[40, ''], [80, '@2x']]) {
