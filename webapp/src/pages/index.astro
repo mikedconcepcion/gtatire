@@ -15,25 +15,71 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
 <Layout title="JSDC Wheels — Premium Tires & Wheels in the GTA">
   <!-- Hero -->
   <section class="relative overflow-hidden">
-    <!-- Background video (looping 4s alloy-wheel-on-wet-asphalt cinematic).
-         Falls back to its first-frame poster on prefers-reduced-motion and
-         for users on browsers without autoplay. -->
+    <!-- Background video (4s F&F-Canadian winter alloy on wet downtown Toronto).
+         Plays ONCE on first visit per session — "showcase" intro — then
+         settles to its last frame at reduced opacity for the rest of the
+         session. SessionStorage flag skips the intro on repeat page loads.
+         Reduced-motion users get only the poster image, never the video. -->
     <video
-      class="absolute inset-0 w-full h-full object-cover opacity-40 motion-reduce:hidden"
+      id="hero-video"
+      class="absolute inset-0 w-full h-full object-cover opacity-30 transition-opacity duration-700 ease-out motion-reduce:hidden"
       src="/videos/hero.mp4"
       poster="/videos/hero-poster.jpg"
-      autoplay
       muted
-      loop
       playsinline
       preload="metadata"
       aria-hidden="true"
     ></video>
     <div
-      class="absolute inset-0 bg-cover bg-center opacity-40 hidden motion-reduce:block"
+      class="absolute inset-0 bg-cover bg-center opacity-30 hidden motion-reduce:block"
       style="background-image: url('/videos/hero-poster.jpg');"
       aria-hidden="true"
     ></div>
+    <script is:inline>
+      (function () {
+        var v = document.getElementById('hero-video');
+        if (!v) return;
+        var FLAG = 'jsdc_hero_intro_played';
+        var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return; // CSS already hides the video
+        var alreadyPlayed = false;
+        try { alreadyPlayed = sessionStorage.getItem(FLAG) === '1'; } catch (e) {}
+
+        function settle() {
+          v.style.opacity = '0.3';
+        }
+        function showcase() {
+          v.style.opacity = '0.75';
+        }
+
+        if (alreadyPlayed) {
+          // Settled state on repeat loads — jump to last frame, low opacity.
+          settle();
+          v.addEventListener('loadedmetadata', function () {
+            try { v.currentTime = Math.max(0, v.duration - 0.05); } catch (e) {}
+          }, { once: true });
+        } else {
+          // First visit this session — full-impact showcase, then settle.
+          showcase();
+          var playPromise = v.play();
+          if (playPromise && typeof playPromise.catch === 'function') {
+            playPromise.catch(function () {
+              // Autoplay blocked — fall through to settled state
+              settle();
+              v.addEventListener('loadedmetadata', function () {
+                try { v.currentTime = Math.max(0, v.duration - 0.05); } catch (e) {}
+              }, { once: true });
+            });
+          }
+          v.addEventListener('ended', function () {
+            try { sessionStorage.setItem(FLAG, '1'); } catch (e) {}
+            settle();
+            // Pause on the last frame instead of looping or going black
+            try { v.currentTime = Math.max(0, v.duration - 0.05); } catch (e) {}
+          }, { once: true });
+        }
+      })();
+    </script>
     <!-- Layered overlays: dark vignette + warm gold glow keep the headline crisp -->
     <div class="absolute inset-0 bg-gradient-to-b from-dark-950/70 via-dark-950/80 to-dark-950"></div>
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary-600/10 rounded-full blur-3xl"></div>
