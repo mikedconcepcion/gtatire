@@ -70,6 +70,13 @@ import Layout from '../layouts/Layout.astro';
           <input id="contact-subject" type="text" required class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="What is your inquiry about?" />
         </div>
         <div>
+          <label for="contact-referral" class="block text-dark-300 text-sm mb-1.5">
+            Referral / Agent Code
+            <span class="text-dark-500 font-normal">(optional — gets you 10% off if valid)</span>
+          </label>
+          <input id="contact-referral" type="text" autocapitalize="characters" class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent uppercase" placeholder="e.g. JSPR10" />
+        </div>
+        <div>
           <label for="contact-message" class="block text-dark-300 text-sm mb-1.5">Message</label>
           <textarea id="contact-message" rows="5" required class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none" placeholder="How can we help you?"></textarea>
         </div>
@@ -127,6 +134,15 @@ import Layout from '../layouts/Layout.astro';
             if (nameEl) nameEl.focus();
           }
 
+          // ─── Referral code pre-fill (URL param wins, else localStorage) ──
+          try {
+            var refFromUrl = (params.get('ref') || '').trim().toUpperCase();
+            var refStored = (localStorage.getItem('jsdc_ref_code') || '').trim().toUpperCase();
+            var refActive = refFromUrl || refStored;
+            var refEl = document.getElementById('contact-referral');
+            if (refEl && refActive) refEl.value = refActive;
+          } catch (e) { /* localStorage disabled */ }
+
           // ─── Submit handler ──────────────────────────────────────────────
           function gather() {
             return {
@@ -135,13 +151,15 @@ import Layout from '../layouts/Layout.astro';
               company: document.getElementById('contact-company').value.trim(),
               subject: document.getElementById('contact-subject').value.trim(),
               message: document.getElementById('contact-message').value.trim(),
+              referral: (document.getElementById('contact-referral').value || '').trim().toUpperCase(),
             };
           }
           function show(id) { var el = document.getElementById(id); if (el) el.classList.remove('hidden'); }
           function hide(id) { var el = document.getElementById(id); if (el) el.classList.add('hidden'); }
           function mailtoFallback(d) {
-            var subject = d.subject || (d.company ? 'Inquiry from ' + d.name + ' (' + d.company + ')' : 'Inquiry from ' + d.name);
-            var body = d.message + '\n\n---\nFrom: ' + d.name + '\nEmail: ' + d.email + (d.company ? '\nCompany: ' + d.company : '');
+            var subjPrefix = d.referral ? '[REF ' + d.referral + ' · 10%] ' : '';
+            var subject = subjPrefix + (d.subject || (d.company ? 'Inquiry from ' + d.name + ' (' + d.company + ')' : 'Inquiry from ' + d.name));
+            var body = d.message + '\n\n---\nFrom: ' + d.name + '\nEmail: ' + d.email + (d.company ? '\nCompany: ' + d.company : '') + (d.referral ? '\nReferral code: ' + d.referral + ' (apply 10% off)' : '');
             window.location.href = 'mailto:' + FALLBACK_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
             show('contact-success');
           }
@@ -163,6 +181,10 @@ import Layout from '../layouts/Layout.astro';
             btn.disabled = true;
             btn.textContent = 'Sending…';
 
+            // Surface the referral code in the subject so it's visible at a
+            // glance in the inbox — easy for James to spot and apply 10% off.
+            var subjPrefix = d.referral ? '[REF ' + d.referral + ' · 10%] ' : '';
+
             fetch('https://api.web3forms.com/submit', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -170,11 +192,12 @@ import Layout from '../layouts/Layout.astro';
                 access_key: WEB3FORMS_KEY,
                 from_name: d.name || 'JSDC website',
                 replyto: d.email,
-                subject: d.subject || 'JSDC Wheels inquiry',
+                subject: subjPrefix + (d.subject || 'JSDC Wheels inquiry'),
                 name: d.name,
                 email: d.email,
                 company: d.company,
-                message: d.message,
+                referral_code: d.referral || '(none)',
+                message: d.message + (d.referral ? '\n\n— Referral code: ' + d.referral + ' (apply 10% off)' : ''),
               }),
             })
               .then(function(r) { return r.json(); })
