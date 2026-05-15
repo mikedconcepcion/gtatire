@@ -1,5 +1,19 @@
 ---
 ---
+---
+const cities = [
+  { slug: 'toronto', name: 'Toronto' },
+  { slug: 'scarborough', name: 'Scarborough' },
+  { slug: 'mississauga', name: 'Mississauga' },
+  { slug: 'brampton', name: 'Brampton' },
+  { slug: 'markham', name: 'Markham' },
+  { slug: 'vaughan', name: 'Vaughan' },
+  { slug: 'north-york', name: 'North York' },
+  { slug: 'richmond-hill', name: 'Richmond Hill' },
+  { slug: 'etobicoke', name: 'Etobicoke' },
+  { slug: 'oakville', name: 'Oakville' },
+];
+---
 <footer class="bg-dark-900 border-t border-primary-600/30 mt-auto">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -17,17 +31,18 @@
         </a>
         <p class="text-dark-400 text-sm max-w-md">
           Premium tires and wheels for the Greater Toronto Area.
-          Top brands, competitive pricing, fast delivery.
+          Top brands, hub-centric fitment, 1-2 day delivery.
         </p>
       </div>
 
       <!-- Quick Links -->
       <div>
-        <h3 class="text-white font-semibold text-sm mb-4">Products</h3>
+        <h3 class="text-white font-semibold text-sm mb-4">Catalog</h3>
         <ul class="space-y-2">
           <li><a href="/tires" class="text-dark-400 hover:text-primary-400 text-sm transition-colors">Tires</a></li>
           <li><a href="/wheels" class="text-dark-400 hover:text-primary-400 text-sm transition-colors">Wheels</a></li>
           <li><a href="/search" class="text-dark-400 hover:text-primary-400 text-sm transition-colors">Search</a></li>
+          <li><a href="/about" class="text-dark-400 hover:text-primary-400 text-sm transition-colors">About JSDC</a></li>
         </ul>
       </div>
 
@@ -39,6 +54,16 @@
           <li><a href="/login" class="text-dark-400 hover:text-primary-400 text-sm transition-colors">Distributor Login</a></li>
           <li class="text-dark-500 text-sm">Greater Toronto Area, ON</li>
         </ul>
+      </div>
+    </div>
+
+    <!-- GTA cities served -->
+    <div class="border-t border-dark-700/40 mt-8 pt-6">
+      <h3 class="text-dark-500 text-xs font-semibold uppercase tracking-wider mb-3">Serving the GTA</h3>
+      <div class="flex flex-wrap gap-x-4 gap-y-1.5">
+        {cities.map(c => (
+          <a href={`/wheels-tires-${c.slug}`} class="text-dark-400 hover:text-primary-400 text-xs transition-colors">{c.name}</a>
+        ))}
       </div>
     </div>
 
