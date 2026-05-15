@@ -68,7 +68,7 @@ export default function LoginForm() {
       </form>
 
       <p className="text-dark-500 text-xs text-center mt-4">
-        Need access? <a href="/gtatire/contact" className="text-primary-400 hover:underline">Contact us</a>
+        Need access? <a href="/contact" className="text-primary-400 hover:underline">Contact us</a>
       </p>
     </div>
   );

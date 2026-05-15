@@ -20,7 +20,6 @@ export default function VehicleDropdowns() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const base = import.meta.env.BASE_URL;
     Promise.all([
       fetch(base + '/data/vehicles.json').then(r => r.json()),
       fetch(base + '/data/tire-fitment.json').then(r => r.json()).catch(() => ({})),
@@ -68,7 +67,7 @@ export default function VehicleDropdowns() {
     if (year && make && model) {
       let q = `${year} ${make} ${model}`;
       if (size) q += ` ${size.replace('R', '/')}`;
-      window.location.href = import.meta.env.BASE_URL + `/search/?q=${encodeURIComponent(q)}`;
+      window.location.href = '' + `/search/?q=${encodeURIComponent(q)}`;
     }
   }
 

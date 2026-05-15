@@ -30,7 +30,7 @@ export default function VehicleSearch() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(import.meta.env.BASE_URL + '/data/vehicles.json')
+    fetch('' + '/data/vehicles.json')
       .then(r => r.json())
       .then(data => { setVehicleTree(data); setLoading(false); })
       .catch(() => setLoading(false));
@@ -46,19 +46,19 @@ export default function VehicleSearch() {
 
   function handleClassicSearch() {
     if (year && make && model) {
-      window.location.href = import.meta.env.BASE_URL + `/vehicle/${year}/${make}/${model}`;
+      window.location.href = '' + `/vehicle/${year}/${make}/${model}`;
     }
   }
 
   function handleSmartSearch(e: React.FormEvent) {
     e.preventDefault();
     if (smartQuery.trim()) {
-      window.location.href = import.meta.env.BASE_URL + `/search/?q=${encodeURIComponent(smartQuery.trim())}`;
+      window.location.href = '' + `/search/?q=${encodeURIComponent(smartQuery.trim())}`;
     }
   }
 
   function handlePopularClick(v: typeof POPULAR_VEHICLES[0]) {
-    window.location.href = import.meta.env.BASE_URL + `/vehicle/${v.year}/${v.make}/${v.model}`;
+    window.location.href = '' + `/vehicle/${v.year}/${v.make}/${v.model}`;
   }
 
   const selectClass = "w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent appearance-none cursor-pointer";

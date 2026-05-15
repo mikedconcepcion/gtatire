@@ -183,12 +183,11 @@ export default function SmartSearchResults() {
 
   // Load all data
   useEffect(() => {
-    const base = import.meta.env.BASE_URL;
     Promise.all([
-      fetch(`${base}/data/products.json`).then(r => r.json()),
-      fetch(`${base}/data/fitment.json`).then(r => r.json()),
-      fetch(`${base}/data/vehicles.json`).then(r => r.json()),
-      fetch(`${base}/data/tire-fitment.json`).then(r => r.json()).catch(() => ({})),
+      fetch(`/data/products.json`).then(r => r.json()),
+      fetch(`/data/fitment.json`).then(r => r.json()),
+      fetch(`/data/vehicles.json`).then(r => r.json()),
+      fetch(`/data/tire-fitment.json`).then(r => r.json()).catch(() => ({})),
     ])
       .then(([prods, fit, vehs, tFit]) => {
         setProducts(prods);
@@ -835,7 +834,7 @@ export default function SmartSearchResults() {
           {/* Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {sortedResults.slice(0, 60).map(p => (
-              <a href={`${import.meta.env.BASE_URL}/${p.category === 'tire' ? 'tires' : 'wheels'}/${p.id}`} key={p.id} className="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all">
+              <a href={`/${p.category === 'tire' ? 'tires' : 'wheels'}/${p.id}`} key={p.id} className="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all">
                 <div className="aspect-square bg-white rounded-t-xl flex items-center justify-center p-4 relative">
                   {p.image && !(p as any).noImage ? (
                     <img src={p.image} alt={p.description} className="w-full h-full object-contain mix-blend-multiply" loading="lazy" decoding="async" />

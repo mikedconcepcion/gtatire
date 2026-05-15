@@ -28,11 +28,11 @@ Competitive wholesale pricing for registered distributors. Public pricing displa
 ## Contact
 - Email: james@jsdcwheels.ca
 - Location: Scarborough, Ontario, Canada
-- Website: https://mikedconcepcion.github.io/gtatire/
+- Website: https://mikedconcepcion.github.io/
 
 ## Links
-- Website: https://mikedconcepcion.github.io/gtatire/
-- Tires: https://mikedconcepcion.github.io/gtatire/tires
-- Wheels: https://mikedconcepcion.github.io/gtatire/wheels
-- Search: https://mikedconcepcion.github.io/gtatire/search/
-- Contact: https://mikedconcepcion.github.io/gtatire/contact
+- Website: https://mikedconcepcion.github.io/
+- Tires: https://mikedconcepcion.github.io/tires
+- Wheels: https://mikedconcepcion.github.io/wheels
+- Search: https://mikedconcepcion.github.io/search/
+- Contact: https://mikedconcepcion.github.io/contact

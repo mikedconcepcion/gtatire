@@ -34,4 +34,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://mikedconcepcion.github.io/gtatire/sitemap.xml
+Sitemap: https://mikedconcepcion.github.io/sitemap.xml

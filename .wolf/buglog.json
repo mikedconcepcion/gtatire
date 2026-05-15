@@ -1696,6 +1696,326 @@
       "related_bugs": [],
       "occurrences": 2,
       "last_seen": "2026-05-14T03:37:32.939Z"
+    },
+    {
+      "id": "bug-107",
+      "timestamp": "2026-05-14T04:13:31.478Z",
+      "error_message": "Missing guard clause",
+      "file": "scrapers/scrape-rwc-fitment.js",
+      "root_cause": "No early return/throw for edge case: makes.length > 0",
+      "fix": "Added guard clause: if (makes.length > 0)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-14T04:13:31.478Z"
+    },
+    {
+      "id": "bug-108",
+      "timestamp": "2026-05-14T04:14:57.303Z",
+      "error_message": "Missing error handling in function",
+      "file": "scrapers/scrape-rwc-fitment.js",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block | Also: } catch (e) { return null; }; if (slugs === null) { await sleep(3000); continue; }",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-14T04:15:07.940Z"
+    },
+    {
+      "id": "bug-109",
+      "timestamp": "2026-05-14T04:20:22.236Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/search/VehiclePackageBuilder.tsx",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 7→15 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-14T04:20:22.236Z"
+    },
+    {
+      "id": "bug-110",
+      "timestamp": "2026-05-14T04:21:04.885Z",
+      "error_message": "Null/undefined access in ",
+      "file": "scrapers/build-internal-db.js",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-14T04:21:04.885Z"
+    },
+    {
+      "id": "bug-111",
+      "timestamp": "2026-05-14T04:26:44.344Z",
+      "error_message": "Missing guard clause",
+      "file": "scrapers/build-internal-db.js",
+      "root_cause": "No early return/throw for edge case: !p || p.category !== 'wheel'",
+      "fix": "Added guard clause: if (!p || p.category !== 'wheel')",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-05-14T04:29:38.430Z"
+    },
+    {
+      "id": "bug-112",
+      "timestamp": "2026-05-14T04:29:03.215Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/build-internal-db.js",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 5→5 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-14T04:29:03.215Z"
+    },
+    {
+      "id": "bug-113",
+      "timestamp": "2026-05-14T04:37:20.050Z",
+      "error_message": "CSS fix: label",
+      "file": "webapp/src/components/search/VehicleSearch.tsx",
+      "root_cause": "label: 'Hyundai Tucson', year: '2025', make: 'HYUNDAI', model: 'TUCSON' → 'Tesla Model Y', year: '2025', make: 'TESLA', model: 'MODEL Y'",
+      "fix": "Changed label: 'Hyundai Tucson', year: '2025', make: 'HYUNDAI', model: 'TUCSON' → 'Tesla Model Y', year: '2025', make: 'TESLA', model: 'MODEL Y'",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-14T04:37:20.050Z"
+    },
+    {
+      "id": "bug-114",
+      "timestamp": "2026-05-15T01:47:13.519Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/build-favicon.cjs",
+      "root_cause": "6 lines replaced/restructured",
+      "fix": "Rewrote 25→33 lines (6 removed) | Also: // Get the cropped wheel as a buffer; const wheelBuf = await sharp(BANNER) | Also: // Get the cropped wheel, then trim white/near-whi; // bounding box becomes the new canvas. Without th | Also: // Extract a tight bounding box around the wheel. ; // fit:contain in onGold/transparent will pad to t",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "cjs"
+      ],
+      "related_bugs": [],
+      "occurrences": 4,
+      "last_seen": "2026-05-15T01:54:21.109Z"
+    },
+    {
+      "id": "bug-115",
+      "timestamp": "2026-05-15T02:01:12.786Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/build-internal-db.js",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 11→19 lines (3 removed) | Also: // Strip parenthetical suffixes and trim; model = model.replace(/\\s*\\([^)]*\\)\\s*/g, ' ').rep",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-15T02:01:26.888Z"
+    },
+    {
+      "id": "bug-116",
+      "timestamp": "2026-05-15T02:30:48.189Z",
+      "error_message": "Missing await",
+      "file": "scrapers/build-favicon.cjs",
+      "root_cause": "Async call without await — returned Promise instead of value",
+      "fix": "Added await to async call",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "cjs"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-15T02:32:08.161Z"
+    },
+    {
+      "id": "bug-117",
+      "timestamp": "2026-05-15T02:51:39.940Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/build-favicon.cjs",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 4→12 lines (3 removed) | Also: // Wheel — reuse the favicon's tight bounds, BUT r; // to brand gold so it's visible on the dark heade",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "cjs"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-15T02:52:19.082Z"
+    },
+    {
+      "id": "bug-118",
+      "timestamp": "2026-05-15T02:52:50.417Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/Header.astro",
+      "root_cause": "Had \"bg-dark-900/80 backdrop-blur-md border-b border-d",
+      "fix": "Changed to \"bg-dark-800/90 backdrop-blur-md border-b border-p",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-15T02:53:08.447Z"
+    },
+    {
+      "id": "bug-119",
+      "timestamp": "2026-05-15T03:14:33.113Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/build-favicon.cjs",
+      "root_cause": "16 lines replaced/restructured",
+      "fix": "Rewrote 23→12 lines (16 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "cjs"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T03:14:33.113Z"
+    },
+    {
+      "id": "bug-120",
+      "timestamp": "2026-05-15T03:15:41.347Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/search/HeroSearch.tsx",
+      "root_cause": "Had \"bg-dark-800 border border-dark-600 text-white rou",
+      "fix": "Changed to \"bg-dark-700/70 border border-dark-500 text-white ",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T03:15:41.347Z"
+    },
+    {
+      "id": "bug-121",
+      "timestamp": "2026-05-15T03:15:50.764Z",
+      "error_message": "CSS fix: hover",
+      "file": "webapp/src/components/search/HeroSearch.tsx",
+      "root_cause": "hover: bg-primary-700 disabled:bg-dark-700 disabled:text-dark-500 text-white font-semibold py-2.5 px-4 rounded-lg transition-all text-sm col-span-2 sm:col-span-1\" → bg-primary-700 disabled:bg-primary-600/40 disabled:text-white/70 text-white font-semibold py-2.5 px-4 rounded-lg transition-all text-sm col-span-2 sm:col-span-1\"",
+      "fix": "Changed hover: bg-primary-700 disabled:bg-dark-700 disabled:text-dark-500 text-white font-semibold py-2.5 px-4 rounded-lg transition-all text-sm col-span-2 sm:col-span-1\" → bg-primary-700 disabled:bg-primary-600/40 disabled:text-white/70 text-white font-semibold py-2.5 px-4 rounded-lg transition-all text-sm col-span-2 sm:col-span-1\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T03:15:50.764Z"
+    },
+    {
+      "id": "bug-122",
+      "timestamp": "2026-05-15T03:16:03.131Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/Footer.astro",
+      "root_cause": "Had \"bg-dark-900 border-t border-dark-700/50 mt-auto\"",
+      "fix": "Changed to \"bg-dark-900 border-t border-primary-600/30 mt-aut",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T03:16:03.131Z"
+    },
+    {
+      "id": "bug-123",
+      "timestamp": "2026-05-15T03:41:02.089Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/layouts/Layout.astro",
+      "root_cause": "Had \"https://fonts.googleapis.com/css2?family=Inter:wg",
+      "fix": "Changed to \"https://fonts.googleapis.com/css2?family=Inter:wg",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T03:41:02.089Z"
+    },
+    {
+      "id": "bug-124",
+      "timestamp": "2026-05-15T03:49:05.091Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/Header.astro",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 5→15 lines (3 removed) | Also: <a href={`${base}/`} class=\"flex items-center shri; <img",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-15T03:52:12.265Z"
+    },
+    {
+      "id": "bug-125",
+      "timestamp": "2026-05-15T03:52:21.840Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/Footer.astro",
+      "root_cause": "13 lines replaced/restructured",
+      "fix": "Rewrote 14→4 lines (13 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T03:52:21.840Z"
+    },
+    {
+      "id": "bug-126",
+      "timestamp": "2026-05-15T04:09:45.544Z",
+      "error_message": "Incorrect value in code",
+      "file": "scrapers/build-internal-db.js",
+      "root_cause": "Had ', pathMod.join(__dirname, '",
+      "fix": "Changed to '..'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T04:09:45.544Z"
     }
   ]
 }

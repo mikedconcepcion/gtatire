@@ -8,8 +8,8 @@
       "first_read": "2026-05-13T02:07:44.823Z"
     },
     "E:/James/gtatire/webapp/src/components/search/VehiclePackageBuilder.tsx": {
-      "count": 8,
-      "tokens": 6219,
+      "count": 9,
+      "tokens": 6337,
       "first_read": "2026-05-13T02:07:49.399Z"
     },
     "E:/James/gtatire/webapp/src/data/products.ts": {
@@ -43,7 +43,7 @@
       "first_read": "2026-05-13T14:12:58.851Z"
     },
     "E:/James/gtatire/webapp/public/brand/jsdc-banner.png": {
-      "count": 1,
+      "count": 2,
       "tokens": 0,
       "first_read": "2026-05-13T14:13:05.245Z"
     },
@@ -68,7 +68,7 @@
       "first_read": "2026-05-14T02:57:13.211Z"
     },
     "E:/James/gtatire/scrapers/scrape-rwc.js": {
-      "count": 3,
+      "count": 4,
       "tokens": 3039,
       "first_read": "2026-05-14T03:04:53.430Z"
     },
@@ -83,8 +83,8 @@
       "first_read": "2026-05-14T03:16:28.522Z"
     },
     "E:/James/gtatire/scrapers/build-internal-db.js": {
-      "count": 5,
-      "tokens": 6165,
+      "count": 8,
+      "tokens": 7986,
       "first_read": "2026-05-14T03:21:45.387Z"
     },
     "C:/Users/miked/AppData/Local/Temp/claude/E--James-gtatire/209101b0-c6fa-44b8-9338-e7d2d7886dab/tasks/b51keqlev.output": {
@@ -106,6 +106,91 @@
       "count": 1,
       "tokens": 138,
       "first_read": "2026-05-14T03:50:24.286Z"
+    },
+    "C:/Users/miked/AppData/Local/Temp/claude/E--James-gtatire/209101b0-c6fa-44b8-9338-e7d2d7886dab/tasks/bi92025lw.output": {
+      "count": 1,
+      "tokens": 0,
+      "first_read": "2026-05-14T04:13:07.083Z"
+    },
+    "C:/Users/miked/AppData/Local/Temp/claude/E--James-gtatire/209101b0-c6fa-44b8-9338-e7d2d7886dab/tasks/bcxwaafqt.output": {
+      "count": 1,
+      "tokens": 0,
+      "first_read": "2026-05-14T04:14:24.888Z"
+    },
+    "E:/James/gtatire/webapp/src/components/search/HeroSearch.tsx": {
+      "count": 2,
+      "tokens": 1901,
+      "first_read": "2026-05-14T04:25:30.828Z"
+    },
+    "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx": {
+      "count": 1,
+      "tokens": 1905,
+      "first_read": "2026-05-14T04:25:38.976Z"
+    },
+    "E:/James/gtatire/webapp/src/layouts/Layout.astro": {
+      "count": 2,
+      "tokens": 2703,
+      "first_read": "2026-05-15T01:44:55.821Z"
+    },
+    "E:/James/gtatire/webapp/public/brand/jsdc-wheel-mark.png": {
+      "count": 7,
+      "tokens": 0,
+      "first_read": "2026-05-15T01:45:38.135Z"
+    },
+    "E:/James/gtatire/webapp/public/apple-touch-icon.png": {
+      "count": 4,
+      "tokens": 0,
+      "first_read": "2026-05-15T01:46:37.347Z"
+    },
+    "E:/James/gtatire/webapp/public/favicon-32.png": {
+      "count": 2,
+      "tokens": 0,
+      "first_read": "2026-05-15T01:48:00.452Z"
+    },
+    "E:/James/gtatire/webapp/public/icon-512.png": {
+      "count": 9,
+      "tokens": 0,
+      "first_read": "2026-05-15T01:48:09.631Z"
+    },
+    "C:/Users/miked/AppData/Local/Temp/claude/E--James-gtatire/209101b0-c6fa-44b8-9338-e7d2d7886dab/tasks/bpqjhvhx7.output": {
+      "count": 1,
+      "tokens": 0,
+      "first_read": "2026-05-15T02:00:29.759Z"
+    },
+    "C:/Users/miked/AppData/Local/Temp/claude/E--James-gtatire/209101b0-c6fa-44b8-9338-e7d2d7886dab/tasks/bjabjpf2e.output": {
+      "count": 1,
+      "tokens": 0,
+      "first_read": "2026-05-15T02:18:19.038Z"
+    },
+    "E:/James/gtatire/webapp/src/components/Header.astro": {
+      "count": 2,
+      "tokens": 1272,
+      "first_read": "2026-05-15T02:29:30.339Z"
+    },
+    "E:/James/gtatire/webapp/public/brand/jsdc-logo@2x.png": {
+      "count": 5,
+      "tokens": 0,
+      "first_read": "2026-05-15T02:31:17.405Z"
+    },
+    "C:/Users/miked/AppData/Local/Temp/claude/E--James-gtatire/209101b0-c6fa-44b8-9338-e7d2d7886dab/tasks/bjan5hhm3.output": {
+      "count": 1,
+      "tokens": 0,
+      "first_read": "2026-05-15T02:48:06.842Z"
+    },
+    "E:/James/gtatire/webapp/src/components/Footer.astro": {
+      "count": 1,
+      "tokens": 727,
+      "first_read": "2026-05-15T02:53:13.638Z"
+    },
+    "E:/James/gtatire/webapp/src/styles/global.css": {
+      "count": 1,
+      "tokens": 376,
+      "first_read": "2026-05-15T03:41:29.427Z"
+    },
+    "E:/James/gtatire/webapp/astro.config.mjs": {
+      "count": 1,
+      "tokens": 91,
+      "first_read": "2026-05-15T04:05:39.793Z"
     }
   },
   "files_written": [
@@ -294,26 +379,432 @@
       "action": "edit",
       "tokens": 179,
       "at": "2026-05-14T03:50:32.382Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/probe-rwc-2025-hyundai.js",
+      "action": "create",
+      "tokens": 1122,
+      "at": "2026-05-14T04:09:24.565Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/scrape-rwc-fitment.js",
+      "action": "create",
+      "tokens": 1378,
+      "at": "2026-05-14T04:11:29.198Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/scrape-rwc-fitment.js",
+      "action": "edit",
+      "tokens": 567,
+      "at": "2026-05-14T04:13:31.473Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/scrape-rwc-fitment.js",
+      "action": "edit",
+      "tokens": 464,
+      "at": "2026-05-14T04:14:57.298Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/scrape-rwc-fitment.js",
+      "action": "edit",
+      "tokens": 209,
+      "at": "2026-05-14T04:15:07.936Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/VehiclePackageBuilder.tsx",
+      "action": "edit",
+      "tokens": 184,
+      "at": "2026-05-14T04:20:22.231Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
+      "action": "edit",
+      "tokens": 1082,
+      "at": "2026-05-14T04:21:04.879Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
+      "action": "edit",
+      "tokens": 491,
+      "at": "2026-05-14T04:26:44.340Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
+      "action": "edit",
+      "tokens": 171,
+      "at": "2026-05-14T04:28:43.021Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
+      "action": "edit",
+      "tokens": 237,
+      "at": "2026-05-14T04:28:54.075Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
+      "action": "edit",
+      "tokens": 69,
+      "at": "2026-05-14T04:29:03.210Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
+      "action": "edit",
+      "tokens": 13,
+      "at": "2026-05-14T04:29:30.388Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
+      "action": "edit",
+      "tokens": 176,
+      "at": "2026-05-14T04:29:38.425Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
+      "action": "edit",
+      "tokens": 63,
+      "at": "2026-05-14T04:35:46.059Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
+      "action": "edit",
+      "tokens": 136,
+      "at": "2026-05-14T04:35:54.591Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
+      "action": "edit",
+      "tokens": 438,
+      "at": "2026-05-14T04:36:45.651Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/HeroSearch.tsx",
+      "action": "edit",
+      "tokens": 119,
+      "at": "2026-05-14T04:37:09.895Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/VehicleSearch.tsx",
+      "action": "edit",
+      "tokens": 208,
+      "at": "2026-05-14T04:37:20.044Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "create",
+      "tokens": 1042,
+      "at": "2026-05-15T01:45:27.063Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 58,
+      "at": "2026-05-15T01:45:50.189Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 18,
+      "at": "2026-05-15T01:46:16.799Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 432,
+      "at": "2026-05-15T01:47:13.513Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 266,
+      "at": "2026-05-15T01:47:26.845Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 18,
+      "at": "2026-05-15T01:48:32.902Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 55,
+      "at": "2026-05-15T01:49:09.399Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 58,
+      "at": "2026-05-15T01:49:37.796Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 149,
+      "at": "2026-05-15T01:50:10.446Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 61,
+      "at": "2026-05-15T01:51:19.897Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 96,
+      "at": "2026-05-15T01:51:29.235Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 119,
+      "at": "2026-05-15T01:51:56.425Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 336,
+      "at": "2026-05-15T01:54:21.104Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 38,
+      "at": "2026-05-15T01:54:27.975Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 77,
+      "at": "2026-05-15T01:54:52.984Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 96,
+      "at": "2026-05-15T01:55:35.495Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/layouts/Layout.astro",
+      "action": "edit",
+      "tokens": 127,
+      "at": "2026-05-15T01:56:43.286Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/layouts/Layout.astro",
+      "action": "edit",
+      "tokens": 57,
+      "at": "2026-05-15T01:57:07.927Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
+      "action": "edit",
+      "tokens": 295,
+      "at": "2026-05-15T02:01:12.780Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
+      "action": "edit",
+      "tokens": 88,
+      "at": "2026-05-15T02:01:26.882Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 502,
+      "at": "2026-05-15T02:30:48.183Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 769,
+      "at": "2026-05-15T02:32:08.156Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
+      "action": "edit",
+      "tokens": 189,
+      "at": "2026-05-15T02:32:49.671Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 192,
+      "at": "2026-05-15T02:51:39.935Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 258,
+      "at": "2026-05-15T02:52:19.077Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
+      "action": "edit",
+      "tokens": 36,
+      "at": "2026-05-15T02:52:50.413Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
+      "action": "edit",
+      "tokens": 111,
+      "at": "2026-05-15T02:52:59.717Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
+      "action": "edit",
+      "tokens": 62,
+      "at": "2026-05-15T02:53:08.443Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/Footer.astro",
+      "action": "edit",
+      "tokens": 191,
+      "at": "2026-05-15T02:53:24.848Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-favicon.cjs",
+      "action": "edit",
+      "tokens": 192,
+      "at": "2026-05-15T03:14:33.109Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
+      "action": "edit",
+      "tokens": 76,
+      "at": "2026-05-15T03:14:59.898Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/Footer.astro",
+      "action": "edit",
+      "tokens": 79,
+      "at": "2026-05-15T03:15:08.941Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/HeroSearch.tsx",
+      "action": "edit",
+      "tokens": 69,
+      "at": "2026-05-15T03:15:41.343Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/search/HeroSearch.tsx",
+      "action": "edit",
+      "tokens": 101,
+      "at": "2026-05-15T03:15:50.756Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/Footer.astro",
+      "action": "edit",
+      "tokens": 20,
+      "at": "2026-05-15T03:16:03.126Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/layouts/Layout.astro",
+      "action": "edit",
+      "tokens": 45,
+      "at": "2026-05-15T03:41:02.084Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
+      "action": "edit",
+      "tokens": 102,
+      "at": "2026-05-15T03:41:12.417Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/Footer.astro",
+      "action": "edit",
+      "tokens": 89,
+      "at": "2026-05-15T03:41:21.059Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/styles/global.css",
+      "action": "edit",
+      "tokens": 250,
+      "at": "2026-05-15T03:41:40.731Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
+      "action": "edit",
+      "tokens": 203,
+      "at": "2026-05-15T03:49:05.087Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/Footer.astro",
+      "action": "edit",
+      "tokens": 188,
+      "at": "2026-05-15T03:49:14.041Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
+      "action": "edit",
+      "tokens": 78,
+      "at": "2026-05-15T03:51:56.615Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/Header.astro",
+      "action": "edit",
+      "tokens": 99,
+      "at": "2026-05-15T03:52:12.258Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/components/Footer.astro",
+      "action": "edit",
+      "tokens": 91,
+      "at": "2026-05-15T03:52:21.834Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/astro.config.mjs",
+      "action": "edit",
+      "tokens": 29,
+      "at": "2026-05-15T04:05:46.796Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/strip-basepath.cjs",
+      "action": "create",
+      "tokens": 782,
+      "at": "2026-05-15T04:06:36.634Z"
+    },
+    {
+      "file": "E:/James/gtatire/webapp/src/layouts/Layout.astro",
+      "action": "edit",
+      "tokens": 6,
+      "at": "2026-05-15T04:08:03.456Z"
+    },
+    {
+      "file": "E:/James/gtatire/scrapers/build-internal-db.js",
+      "action": "edit",
+      "tokens": 29,
+      "at": "2026-05-15T04:09:45.539Z"
     }
   ],
   "edit_counts": {
-    "webapp/src/components/search/VehiclePackageBuilder.tsx": 12,
+    "webapp/src/components/search/VehiclePackageBuilder.tsx": 13,
     "scrapers/tier-filter-check.js": 1,
     "C:/Users/miked/.claude/projects/E--James-gtatire/memory/reference_domain.md": 1,
     "C:/Users/miked/.claude/projects/E--James-gtatire/memory/MEMORY.md": 1,
     "scrapers/probe-rwc-fitment.js": 1,
-    "scrapers/scrape-rwc-fitment.js": 1,
+    "scrapers/scrape-rwc-fitment.js": 5,
     "scrapers/recon-superspeed-fitment.js": 1,
     "scrapers/recon-superspeed-application.js": 1,
     "scrapers/recon-superspeed-aaia-flow.js": 1,
-    "scrapers/build-internal-db.js": 3,
+    "scrapers/build-internal-db.js": 16,
     "scrapers/recon-superspeed-js-scan.js": 1,
     "scrapers/scrape-superspeed-fitment.js": 6,
-    ".gitignore": 1
+    ".gitignore": 1,
+    "scrapers/probe-rwc-2025-hyundai.js": 1,
+    "webapp/src/components/search/HeroSearch.tsx": 3,
+    "webapp/src/components/search/VehicleSearch.tsx": 1,
+    "scrapers/build-favicon.cjs": 21,
+    "webapp/src/layouts/Layout.astro": 4,
+    "webapp/src/components/Header.astro": 9,
+    "webapp/src/components/Footer.astro": 6,
+    "webapp/src/styles/global.css": 1,
+    "webapp/astro.config.mjs": 1,
+    "scrapers/strip-basepath.cjs": 1
   },
-  "anatomy_hits": 11,
-  "anatomy_misses": 10,
-  "repeated_reads_warned": 21,
+  "anatomy_hits": 18,
+  "anatomy_misses": 20,
+  "repeated_reads_warned": 52,
   "cerebrum_warnings": 0,
-  "stop_count": 50
+  "stop_count": 93
 }

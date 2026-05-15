@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-14T03:50:32.365Z
-> Files: 106 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-15T04:09:45.522Z
+> Files: 109 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -79,10 +79,12 @@
 ## scrapers/
 
 - `build-database.js` — Build a normalized database from raw scraped data. (~3800 tok)
-- `build-internal-db.js` — Build internal GTA database from raw supplier data. (~6211 tok)
+- `build-favicon.cjs` — Crop the JSDC wheel icon out of jsdc-banner.png and generate favicons at (~2196 tok)
+- `build-internal-db.js` — Build internal GTA database from raw supplier data. (~7972 tok)
 - `config.js` — Supplier credentials and URLs (~123 tok)
 - `download-images.js` — fs: ensureDir, downloadImage, delay, downloadAllImages (~1196 tok)
 - `mobile-screenshots.js` — Declares browser (~301 tok)
+- `probe-rwc-2025-hyundai.js` — Probe RWC's portal directly for 2025 Hyundai Santa Fe. (~1122 tok)
 - `probe-rwc-fitment.js` — Probe: log in to RWC, fetch one search-by-vehicle URL, and dump SKU patterns (~1078 tok)
 - `recon-alltire.js` — Declares config (~1122 tok)
 - `recon-rwc.js` — Declares config (~1033 tok)
@@ -96,11 +98,12 @@
 - `scrape-alltire-tires.js` — fs: save, loadIfExists, getSearchSizes (~1925 tok)
 - `scrape-alltire-wheels.js` — fs: delay, save, loadIfExists, scrapeWheelTree, scrapeWheelProducts (~2902 tok)
 - `scrape-alltire.js` — fs: delay, login, scrapeWheelTree, scrapeWheelProducts, scrapeTires (~2524 tok)
-- `scrape-rwc-fitment.js` — Fitment-only scrape for RWC: iterate year/make/model from rwc-fitment-tree.json, (~1144 tok)
+- `scrape-rwc-fitment.js` — RWC fitment scrape — fetch year/make/model tree from the LIVE portal (~1728 tok)
 - `scrape-rwc.js` — Declares config (~3039 tok)
 - `scrape-superspeed-fitment.js` — Build Superspeed wheel fitment via AAIA. Walks AAIA's tree (~2164 tok)
 - `scrape-superspeed.js` — Declares config (~1435 tok)
 - `scrape-tire-fitment.js` — config: save, loadIfExists (~1426 tok)
+- `strip-basepath.cjs` — One-shot script: strip /gtatire/ basepath and BASE_URL templates from (~730 tok)
 - `test-all-wheels.js` — config: delay (~1477 tok)
 - `test-alltire.js` — fs: delay (~2230 tok)
 - `test-api-direct.js` — config: delay (~746 tok)
@@ -111,7 +114,7 @@
 
 ## webapp/
 
-- `astro.config.mjs` — https://astro.build/config (~91 tok)
+- `astro.config.mjs` — https://astro.build/config (~96 tok)
 
 ## webapp/public/
 
@@ -121,8 +124,8 @@
 ## webapp/src/components/
 
 - `CompatibleProducts.tsx` — CompatibleProducts (~1721 tok)
-- `Footer.astro` — Astro: Footer (~727 tok)
-- `Header.astro` — Astro: Header (~1320 tok)
+- `Footer.astro` — Astro: Footer (~714 tok)
+- `Header.astro` — Astro: Header (~1272 tok)
 - `ProductCard.astro` — Astro: ProductCard (~1044 tok)
 - `ProductDetail.tsx` — ProductDetailInner (~1994 tok)
 - `VehicleResults.tsx` — StockBadge (~2453 tok)
@@ -138,11 +141,11 @@
 
 ## webapp/src/components/search/
 
-- `HeroSearch.tsx` — POPULAR — renders form (~1870 tok)
+- `HeroSearch.tsx` — POPULAR — renders form (~1917 tok)
 - `SmartSearchResults.tsx` — StockBadge (~11217 tok)
 - `VehicleDropdowns.tsx` — VehicleDropdowns (~1311 tok)
-- `VehiclePackageBuilder.tsx` — MAKE_MAP (~6337 tok)
-- `VehicleSearch.tsx` — POPULAR_VEHICLES — renders form (~1905 tok)
+- `VehiclePackageBuilder.tsx` — MAKE_MAP (~6443 tok)
+- `VehicleSearch.tsx` — POPULAR_VEHICLES — renders form (~1997 tok)
 
 ## webapp/src/data/
 
@@ -150,7 +153,7 @@
 
 ## webapp/src/layouts/
 
-- `Layout.astro` — Astro: Layout (~2597 tok)
+- `Layout.astro` — Astro: Layout (~2694 tok)
 
 ## webapp/src/pages/
 
@@ -179,4 +182,4 @@
 
 ## webapp/src/styles/
 
-- `global.css` — Styles: 4 rules, 24 vars (~376 tok)
+- `global.css` — Styles: 5 rules, 24 vars (~577 tok)

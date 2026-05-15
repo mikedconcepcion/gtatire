@@ -40,13 +40,13 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
     <div class="flex flex-wrap justify-center gap-2">
       {wheelBrands.map(brand => (
         <a
-          href={`/gtatire/search/?q=${encodeURIComponent(brand)}`}
+          href={`/search/?q=${encodeURIComponent(brand)}`}
           class="text-dark-300 hover:text-white bg-dark-800/50 hover:bg-dark-800 border border-dark-700/50 hover:border-primary-600/30 px-4 py-2 rounded-xl text-sm font-semibold transition-all"
         >
           {brand}
         </a>
       ))}
-      <a href="/gtatire/wheels" class="text-primary-400 hover:text-primary-300 bg-primary-600/10 hover:bg-primary-600/20 border border-primary-600/20 px-4 py-2 rounded-xl text-sm font-semibold transition-all">
+      <a href="/wheels" class="text-primary-400 hover:text-primary-300 bg-primary-600/10 hover:bg-primary-600/20 border border-primary-600/20 px-4 py-2 rounded-xl text-sm font-semibold transition-all">
         All Wheels →
       </a>
     </div>
@@ -58,13 +58,13 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
     <div class="flex flex-wrap justify-center gap-2">
       {tireBrands.map(brand => (
         <a
-          href={`/gtatire/search/?q=${encodeURIComponent(brand)}`}
+          href={`/search/?q=${encodeURIComponent(brand)}`}
           class="text-dark-300 hover:text-white bg-dark-800/50 hover:bg-dark-800 border border-dark-700/50 hover:border-primary-600/30 px-4 py-2 rounded-xl text-sm font-semibold transition-all"
         >
           {brand}
         </a>
       ))}
-      <a href="/gtatire/tires" class="text-primary-400 hover:text-primary-300 bg-primary-600/10 hover:bg-primary-600/20 border border-primary-600/20 px-4 py-2 rounded-xl text-sm font-semibold transition-all">
+      <a href="/tires" class="text-primary-400 hover:text-primary-300 bg-primary-600/10 hover:bg-primary-600/20 border border-primary-600/20 px-4 py-2 rounded-xl text-sm font-semibold transition-all">
         All Tires →
       </a>
     </div>
@@ -76,7 +76,7 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
     <div class="flex flex-wrap justify-center gap-2">
       {[15, 16, 17, 18, 19, 20, 21, 22].map(d => (
         <a
-          href={`/gtatire/search/?q=${d}+inch`}
+          href={`/search/?q=${d}+inch`}
           class="text-dark-300 hover:text-white bg-dark-800/50 hover:bg-dark-800 border border-dark-700/50 hover:border-primary-600/30 w-14 h-14 rounded-xl text-sm font-bold flex items-center justify-center transition-all"
         >
           {d}"
@@ -88,7 +88,7 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
   <!-- Categories -->
   <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <a href="/gtatire/wheels" class="group relative bg-dark-900 border border-dark-700/50 rounded-2xl p-8 hover:border-primary-600/50 transition-all overflow-hidden">
+      <a href="/wheels" class="group relative bg-dark-900 border border-dark-700/50 rounded-2xl p-8 hover:border-primary-600/50 transition-all overflow-hidden">
         <div class="absolute top-0 right-0 w-32 h-32 bg-primary-600/5 rounded-full -translate-y-8 translate-x-8 group-hover:bg-primary-600/10 transition-all"></div>
         <div class="relative">
           <div class="w-14 h-14 bg-dark-800 rounded-xl flex items-center justify-center mb-5">
@@ -106,7 +106,7 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
         </div>
       </a>
 
-      <a href="/gtatire/tires" class="group relative bg-dark-900 border border-dark-700/50 rounded-2xl p-8 hover:border-primary-600/50 transition-all overflow-hidden">
+      <a href="/tires" class="group relative bg-dark-900 border border-dark-700/50 rounded-2xl p-8 hover:border-primary-600/50 transition-all overflow-hidden">
         <div class="absolute top-0 right-0 w-32 h-32 bg-primary-600/5 rounded-full -translate-y-8 translate-x-8 group-hover:bg-primary-600/10 transition-all"></div>
         <div class="relative">
           <div class="w-14 h-14 bg-dark-800 rounded-xl flex items-center justify-center mb-5">
@@ -124,7 +124,7 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
         </div>
       </a>
 
-      <a href="/gtatire/login" class="group relative bg-gradient-to-br from-primary-900/50 to-dark-900 border border-primary-700/30 rounded-2xl p-8 hover:border-primary-600/50 transition-all overflow-hidden sm:col-span-2 lg:col-span-1">
+      <a href="/login" class="group relative bg-gradient-to-br from-primary-900/50 to-dark-900 border border-primary-700/30 rounded-2xl p-8 hover:border-primary-600/50 transition-all overflow-hidden sm:col-span-2 lg:col-span-1">
         <div class="absolute top-0 right-0 w-32 h-32 bg-primary-600/5 rounded-full -translate-y-8 translate-x-8 group-hover:bg-primary-600/10 transition-all"></div>
         <div class="relative">
           <div class="w-14 h-14 bg-primary-800/50 rounded-xl flex items-center justify-center mb-5">
