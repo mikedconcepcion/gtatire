@@ -25,7 +25,7 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
           <span class="text-primary-400"> Tires & Wheels</span>
         </h1>
         <p class="text-dark-300 text-lg sm:text-xl max-w-xl mx-auto">
-          {stats.totalProducts?.toLocaleString() || '6,000+' } products from {Object.keys(stats.byBrand || {}).length || 40} brands.
+          {(Math.floor((stats.totalProducts || 6800) / 100) * 100).toLocaleString()}+ products from {Object.keys(stats.byBrand || {}).length || 40} brands.
           Search by vehicle, tire size, or wheel specs.
         </p>
       </div>

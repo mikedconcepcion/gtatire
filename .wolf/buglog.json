@@ -2256,6 +2256,39 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-15T12:23:45.240Z"
+    },
+    {
+      "id": "bug-142",
+      "timestamp": "2026-05-15T13:25:26.040Z",
+      "error_message": "Vehicle search shows 0 wheels available for every vehicle (e.g. 2025 Hyundai Santa Fe) despite fitment data existing",
+      "file": "webapp/src/pages/vehicle/[year]/[make]/[model].astro, webapp/src/pages/wheels/[id].astro",
+      "root_cause": "fitment.json is keyed by internal SKU (product.id like GTA-W-0001) but the page lookup used p.productNo, which is undefined on wheel products. Every vehicle therefore returned an empty match set.",
+      "fix": "Changed matchingProductNos lookup to use p.id; same fix on wheels/[id].astro line 22 for cross-vehicle fitment.",
+      "tags": [
+        "fitment",
+        "vehicle-search",
+        "data-key-mismatch",
+        "critical"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T13:25:26.040Z"
+    },
+    {
+      "id": "bug-143",
+      "timestamp": "2026-05-15T13:26:42.532Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/Header.astro",
+      "root_cause": "Had \"h-10 sm:h-12 w-auto\"",
+      "fix": "Changed to \"h-12 sm:h-14 w-auto\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T13:26:42.532Z"
     }
   ]
 }

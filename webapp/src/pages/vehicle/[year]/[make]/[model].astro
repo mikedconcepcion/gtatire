@@ -20,14 +20,15 @@ if (fs.existsSync(vehiclesPath)) vehicles = JSON.parse(fs.readFileSync(vehiclesP
 const { year, make, model } = Astro.params;
 const vehicleKey = `${year}|${make}|${model}`;
 
-// Find matching products
-const matchingProductNos = new Set<string>();
-for (const [productNo, vehicleList] of Object.entries(fitment)) {
+// Find matching products. fitment.json is keyed by internal SKU (product.id),
+// not the supplier-side productNo field, so match against p.id.
+const matchingIds = new Set<string>();
+for (const [sku, vehicleList] of Object.entries(fitment)) {
   if (vehicleList.includes(vehicleKey)) {
-    matchingProductNos.add(productNo);
+    matchingIds.add(sku);
   }
 }
-const products = allProducts.filter(p => matchingProductNos.has(p.productNo));
+const products = allProducts.filter(p => matchingIds.has(p.id));
 const availableDiameters = vehicles?.[year!]?.[make!]?.[model!] || [];
 
 export async function getStaticPaths() {

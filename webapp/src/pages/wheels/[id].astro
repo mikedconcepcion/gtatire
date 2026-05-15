@@ -18,8 +18,9 @@ if (fs.existsSync(fitmentPath)) fitment = JSON.parse(fs.readFileSync(fitmentPath
 const { id } = Astro.params;
 const product = allProducts.find(p => p.id === id);
 
-// Fitment data (shown only to distributors via React component)
-const vehicleKeys = product ? (fitment[product.productNo] || []) : [];
+// Fitment data (shown only to distributors via React component). fitment.json
+// is keyed by internal SKU (product.id), not the supplier-side productNo field.
+const vehicleKeys = product ? (fitment[product.id] || []) : [];
 const vehicles = vehicleKeys.map(k => {
   const [year, make, model] = k.split('|');
   return { year, make, model, url: `/vehicle/${year}/${make}/${model}` };
