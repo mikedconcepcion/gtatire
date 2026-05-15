@@ -41,42 +41,86 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
         if (!v) return;
         var FLAG = 'jsdc_hero_intro_played';
         var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReducedMotion) return; // CSS already hides the video
+        if (prefersReducedMotion) return; // CSS hides the video, poster fallback shows instead.
+
         var alreadyPlayed = false;
         try { alreadyPlayed = sessionStorage.getItem(FLAG) === '1'; } catch (e) {}
 
+        function freezeOnLastFrame() {
+          try { v.currentTime = Math.max(0, (v.duration || 0) - 0.05); } catch (e) {}
+        }
         function settle() {
           v.style.opacity = '0.3';
-        }
-        function showcase() {
-          v.style.opacity = '0.75';
+          v.loop = false;
+          try { sessionStorage.setItem(FLAG, '1'); } catch (e) {}
         }
 
         if (alreadyPlayed) {
-          // Settled state on repeat loads — jump to last frame, low opacity.
+          // Repeat load in same session — skip the intro entirely.
           settle();
-          v.addEventListener('loadedmetadata', function () {
-            try { v.currentTime = Math.max(0, v.duration - 0.05); } catch (e) {}
-          }, { once: true });
-        } else {
-          // First visit this session — full-impact showcase, then settle.
-          showcase();
-          var playPromise = v.play();
-          if (playPromise && typeof playPromise.catch === 'function') {
-            playPromise.catch(function () {
-              // Autoplay blocked — fall through to settled state
-              settle();
-              v.addEventListener('loadedmetadata', function () {
-                try { v.currentTime = Math.max(0, v.duration - 0.05); } catch (e) {}
-              }, { once: true });
-            });
-          }
-          v.addEventListener('ended', function () {
-            try { sessionStorage.setItem(FLAG, '1'); } catch (e) {}
+          if (v.readyState >= 1) freezeOnLastFrame();
+          else v.addEventListener('loadedmetadata', freezeOnLastFrame, { once: true });
+          return;
+        }
+
+        // First visit — showcase loop until the user engages OR the ceiling fires.
+        // The video loops smoothly until: (a) the visitor scrolls, clicks, taps,
+        // or types — i.e., signals they're ready to use the page; or (b) the
+        // MAX_LOOPS ceiling hits. Either way, the current loop plays out
+        // gracefully and we freeze on the last frame at 30% opacity for the
+        // rest of the session.
+        v.style.opacity = '0.75';
+        v.loop = false; // We replay manually so we can count loops + settle gracefully.
+
+        var MAX_LOOPS = 3;          // 3 × 4s ≈ 12s safety ceiling
+        var loopCount = 0;
+        var userEngaged = false;
+        var settleQueued = false;
+
+        function queueSettle() {
+          settleQueued = true;
+        }
+        ['scroll', 'click', 'touchstart', 'keydown'].forEach(function (evt) {
+          window.addEventListener(evt, function () {
+            userEngaged = true;
+            queueSettle();
+          }, { once: true, passive: true });
+        });
+
+        v.addEventListener('ended', function () {
+          loopCount++;
+          if (settleQueued || userEngaged || loopCount >= MAX_LOOPS) {
             settle();
-            // Pause on the last frame instead of looping or going black
-            try { v.currentTime = Math.max(0, v.duration - 0.05); } catch (e) {}
-          }, { once: true });
+            freezeOnLastFrame();
+            return;
+          }
+          v.currentTime = 0;
+          var p = v.play();
+          if (p && p.catch) p.catch(function () { settle(); freezeOnLastFrame(); });
+        });
+
+        // Pause when the tab is hidden — saves battery + data.
+        document.addEventListener('visibilitychange', function () {
+          if (document.hidden) {
+            v.pause();
+          } else {
+            var stillShowing = !sessionStorage.getItem(FLAG);
+            if (stillShowing && v.paused) {
+              var p = v.play();
+              if (p && p.catch) p.catch(function () {});
+            }
+          }
+        });
+
+        // Kick off the first play.
+        var playPromise = v.play();
+        if (playPromise && playPromise.catch) {
+          playPromise.catch(function () {
+            // Autoplay blocked (rare for muted) — settle immediately.
+            settle();
+            if (v.readyState >= 1) freezeOnLastFrame();
+            else v.addEventListener('loadedmetadata', freezeOnLastFrame, { once: true });
+          });
         }
       })();
     </script>
