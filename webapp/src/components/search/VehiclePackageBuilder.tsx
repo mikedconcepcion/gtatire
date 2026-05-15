@@ -204,6 +204,8 @@ function ProductCard({ product, isSelected, onSelect, detailUrl }: {
   );
 }
 
+type BuilderMode = 'package' | 'tires-only' | 'wheels-only';
+
 export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehicleModel, vehicleYear, wheels, tires, seasonCounts }: Props) {
   const [season, setSeason] = useState<'' | 'All Season' | 'Winter' | 'All Weather'>('');
   const [wheelType, setWheelType] = useState<'' | 'alloy' | 'steel'>('');
@@ -212,6 +214,9 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
   const [selectedWheelId, setSelectedWheelId] = useState<string>('');
   const [vehicleColor, setVehicleColor] = useState('default');
   const [vehicleAngle, setVehicleAngle] = useState('01');
+  const [mode, setMode] = useState<BuilderMode>('package');
+  const includeTires = mode !== 'wheels-only';
+  const includeWheels = mode !== 'tires-only';
 
   const vehicleImgUrl = getVehicleImgUrl(vehicleMake, vehicleModel, vehicleYear, vehicleAngle, vehicleColor);
   const base = typeof import.meta !== 'undefined' ? (import.meta as any).env?.BASE_URL || '' : '';
@@ -258,22 +263,50 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
   const selectedTire = filteredTires.find(t => t.id === selectedTireId) || filteredTires[0];
   const selectedWheel = primaryWheels.find(w => w.id === selectedWheelId) || altWheels.find(w => w.id === selectedWheelId) || primaryWheels[0];
 
-  const pkgPrice = selectedTire && selectedWheel ? (selectedTire.priceNum + selectedWheel.priceNum) * 4 : 0;
+  // Price reflects the active mode: package (4+4), tires only (4), wheels only (4).
+  const pkgPrice = (() => {
+    const tirePart = includeTires && selectedTire ? selectedTire.priceNum * 4 : 0;
+    const wheelPart = includeWheels && selectedWheel ? selectedWheel.priceNum * 4 : 0;
+    return tirePart + wheelPart;
+  })();
+  const ctaReady = (includeTires ? !!selectedTire : true) && (includeWheels ? !!selectedWheel : true) && pkgPrice > 0;
+  const ctaLabel = mode === 'tires-only' ? 'Inquire — Tires Only →'
+    : mode === 'wheels-only' ? 'Inquire — Wheels Only →'
+    : 'Get This Package →';
+  const pkgLineLabel = mode === 'tires-only' ? '4 tires'
+    : mode === 'wheels-only' ? '4 wheels'
+    : '4 tires + 4 wheels';
 
-  // Build /contact URL pre-filled with the selected package — wired into both
-  // the desktop and mobile-sticky "Get This Package" CTAs.
+  // Build /contact URL pre-filled with the selected items. Adapts to mode:
+  // package (both), tires only, or wheels only.
   const packageContactUrl = (() => {
-    if (!(selectedTire && selectedWheel)) return '/contact';
-    const tireLabel = `${selectedTire.brand || ''} ${selectedTire.name || ''} ${selectedTire.tireSize || ''}`.trim();
-    const wheelLabel = `${selectedWheel.brand || ''} ${selectedWheel.name || ''} ${selectedWheel.rimDiameter || ''}x${selectedWheel.rimWidth || ''}`.trim();
-    const subject = `Package: ${vehicleLabel} — ${selectedTire.id} + ${selectedWheel.id}`;
+    if (!ctaReady) return '/contact';
+    const tireLabel = selectedTire ? `${selectedTire.brand || ''} ${selectedTire.name || ''} ${selectedTire.tireSize || ''}`.trim() : '';
+    const wheelLabel = selectedWheel ? `${selectedWheel.brand || ''} ${selectedWheel.name || ''} ${selectedWheel.rimDiameter || ''}x${selectedWheel.rimWidth || ''}`.trim() : '';
+    const skus: string[] = [];
+    if (includeTires && selectedTire) skus.push(selectedTire.id);
+    if (includeWheels && selectedWheel) skus.push(selectedWheel.id);
+    const heading = mode === 'tires-only' ? `Tires inquiry: ${vehicleLabel}`
+      : mode === 'wheels-only' ? `Wheels inquiry: ${vehicleLabel}`
+      : `Package: ${vehicleLabel}`;
+    const subject = `${heading} — ${skus.join(' + ')}`;
+    const lines: string[] = [];
+    if (includeTires && selectedTire) {
+      lines.push(`• Tires (×4): ${tireLabel} — SKU ${selectedTire.id} — $${(selectedTire.priceNum * 4).toFixed(2)}`);
+    }
+    if (includeWheels && selectedWheel) {
+      lines.push(`• Wheels (×4): ${wheelLabel} — SKU ${selectedWheel.id} — $${(selectedWheel.priceNum * 4).toFixed(2)}`);
+    }
+    const totalLabel = mode === 'package' ? 'Estimated total (4+4)' : 'Estimated total';
+    const intro = mode === 'tires-only' ? `Hi, I'd like to order these tires for my ${vehicleLabel}:`
+      : mode === 'wheels-only' ? `Hi, I'd like to order these wheels for my ${vehicleLabel}:`
+      : `Hi, I'd like to order this package for my ${vehicleLabel}:`;
     const note =
-      `Hi, I'd like to order this package for my ${vehicleLabel}:\n\n` +
-      `• Tires (×4): ${tireLabel} — SKU ${selectedTire.id} — $${(selectedTire.priceNum * 4).toFixed(2)}\n` +
-      `• Wheels (×4): ${wheelLabel} — SKU ${selectedWheel.id} — $${(selectedWheel.priceNum * 4).toFixed(2)}\n` +
-      `• Estimated total (4+4): $${pkgPrice.toFixed(2)}\n\n` +
+      `${intro}\n\n` +
+      lines.join('\n') +
+      `\n• ${totalLabel}: $${pkgPrice.toFixed(2)}\n\n` +
       `Please confirm availability, total with taxes/fees, and GTA delivery timing.`;
-    const label = `Package for ${vehicleLabel}: ${selectedTire.id} + ${selectedWheel.id}`;
+    const label = `${heading}: ${skus.join(' + ')}`;
     return `/contact?subject=${encodeURIComponent(subject)}&note=${encodeURIComponent(note)}&label=${encodeURIComponent(label)}`;
   })();
 
@@ -334,6 +367,26 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
               </span>
             </div>
 
+            {/* Mode toggle — package / tires only / wheels only */}
+            <div className="flex items-center gap-1.5 mb-2 flex-wrap">
+              <span className="text-dark-500 text-[10px] font-medium mr-1 uppercase tracking-wide">Build</span>
+              {([
+                { id: 'package', label: 'Tires + Wheels', icon: 'pkg' },
+                { id: 'tires-only', label: 'Tires Only', icon: 'tire' },
+                { id: 'wheels-only', label: 'Wheels Only', icon: 'wheel' },
+              ] as const).map(m => (
+                <button
+                  key={m.id}
+                  onClick={() => setMode(m.id)}
+                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-semibold transition-all ${
+                    mode === m.id ? 'bg-primary-600 text-white' : 'bg-dark-800/60 text-dark-400 hover:text-white'
+                  }`}
+                >
+                  {m.label}
+                </button>
+              ))}
+            </div>
+
             {/* Tier filter — affects both tires and wheels */}
             <div className="flex items-center gap-1.5 mb-3 flex-wrap">
               <span className="text-dark-500 text-[10px] font-medium mr-1 uppercase tracking-wide">Style</span>
@@ -356,9 +409,9 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
               ))}
             </div>
 
-            {/* Selected items + price */}
+            {/* Selected items + price (sections adapt to mode) */}
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-              {selectedTire && (
+              {includeTires && selectedTire && (
                 <div className="flex items-center gap-2 bg-dark-800/60 rounded-lg px-2.5 py-1.5">
                   <div className="w-9 h-9 bg-white rounded flex items-center justify-center p-0.5 shrink-0">
                     {selectedTire.image && <img src={selectedTire.image} alt="" className="w-full h-full object-contain mix-blend-multiply" />}
@@ -369,8 +422,8 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
                   </div>
                 </div>
               )}
-              <span className="text-dark-500 text-lg">+</span>
-              {selectedWheel && (
+              {includeTires && includeWheels && <span className="text-dark-500 text-lg">+</span>}
+              {includeWheels && selectedWheel && (
                 <div className="flex items-center gap-2 bg-dark-800/60 rounded-lg px-2.5 py-1.5">
                   <div className="w-9 h-9 bg-white rounded flex items-center justify-center p-0.5 shrink-0">
                     {selectedWheel.image && <img src={selectedWheel.image} alt="" className="w-full h-full object-contain mix-blend-multiply" />}
@@ -384,14 +437,14 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
               <span className="text-dark-500 text-lg">=</span>
               <div className="bg-primary-600/20 border border-primary-500/30 rounded-lg px-4 py-2">
                 <p className="text-white font-bold text-xl">${pkgPrice.toFixed(2)}</p>
-                <p className="text-primary-300 text-[9px]">4 tires + 4 wheels</p>
+                <p className="text-primary-300 text-[9px]">{pkgLineLabel}</p>
               </div>
-              {selectedTire && selectedWheel && (
+              {ctaReady && (
                 <a
                   href={packageContactUrl}
                   className="hidden sm:inline-block bg-primary-600 hover:bg-primary-500 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors shadow-lg shadow-primary-900/30"
                 >
-                  Get This Package →
+                  {ctaLabel}
                 </a>
               )}
             </div>
@@ -399,7 +452,8 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
         </div>
       </div>
 
-      {/* ── Tire selection ── */}
+      {/* ── Tire selection (hidden in wheels-only mode) ── */}
+      {includeTires && (
       <div className="mb-5">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-white text-sm font-semibold">Choose Your Tires</h3>
@@ -442,8 +496,10 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
           <p className="text-dark-500 text-[10px] mt-2">{filteredTires.length} tires in stock for this vehicle.</p>
         )}
       </div>
+      )}
 
-      {/* ── Wheel selection ── */}
+      {/* ── Wheel selection (hidden in tires-only mode) ── */}
+      {includeWheels && (
       <div className="mb-5">
         <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
           <h3 className="text-white text-sm font-semibold">Choose Your Wheels</h3>
@@ -509,17 +565,18 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
           </div>
         )}
       </div>
+      )}
 
-      {/* ── Sticky bottom CTA (mobile) ── */}
-      {selectedTire && selectedWheel && (
+      {/* ── Sticky bottom CTA (mobile) — adapts to mode ── */}
+      {ctaReady && (
         <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-dark-900/95 backdrop-blur border-t border-dark-700 px-4 py-3 z-50">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-white font-bold text-lg">${pkgPrice.toFixed(2)}</p>
-              <p className="text-dark-400 text-[10px]">4 tires + 4 wheels</p>
+              <p className="text-dark-400 text-[10px]">{pkgLineLabel}</p>
             </div>
             <a href={packageContactUrl} className="bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">
-              Get This Package
+              {ctaLabel}
             </a>
           </div>
         </div>
