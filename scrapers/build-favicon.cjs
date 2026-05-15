@@ -110,58 +110,67 @@ async function main() {
     console.log('Removed favicon.svg (legacy Astro default)');
   }
 
-  // ─── Header logo: JSDC wordmark + wheel horizontal lockup ───
-  // The banner has wordmark/tagline/wheel stacked vertically, so a single
-  // rectangular crop always grabs the tagline. Extract wordmark and wheel
-  // separately (alpha-tight) and composite side-by-side.
-  async function tightExtract(crop) {
-    const rough = await sharp(BANNER).extract(crop).png().toBuffer();
-    const meta = await sharp(rough).metadata();
-    const alpha = await sharp(rough).extractChannel(3).raw().toBuffer();
-    let lx = meta.width, lX = 0, ly = meta.height, lY = 0;
-    for (let y = 0; y < meta.height; y++) {
-      for (let x = 0; x < meta.width; x++) {
-        if (alpha[y * meta.width + x] > 50) {
-          if (x < lx) lx = x; if (x > lX) lX = x;
-          if (y < ly) ly = y; if (y > lY) lY = y;
-        }
-      }
-    }
-    return sharp(rough).extract({ left: lx, top: ly, width: lX - lx + 1, height: lY - ly + 1 }).png().toBuffer();
-  }
-
-  // Wordmark only (no tagline below) — vertical range stops above tagline
-  const wordmarkBuf = await tightExtract({ left: 150, top: 330, width: 820, height: 120 });
-  const wordmarkMeta = await sharp(wordmarkBuf).metadata();
-  console.log(`Wordmark: ${wordmarkMeta.width}x${wordmarkMeta.height}`);
-
-  // Wheel — reuse the favicon's tight bounds, but replace the black artwork
-  // pixels with brand gold so the wheel reads on the dark header. Build a
-  // solid gold rectangle the same size as the wheel, then use the wheel's
-  // alpha as a "dest-in" mask: gold pixels survive only where the original
-  // wheel artwork was opaque.
-  const wheelMetaPre = await sharp(wheelBuf).metadata();
-  const goldLayer = await sharp({
-    create: {
-      width: wheelMetaPre.width,
-      height: wheelMetaPre.height,
-      channels: 4,
-      background: { r: 212, g: 147, b: 65, alpha: 1 },
-    },
-  }).png().toBuffer();
-  const wheelLogoBuf = await sharp(goldLayer)
-    .composite([{ input: wheelBuf, blend: 'dest-in' }])
+  // ─── Header logo: the full Wix lockup (car + JSDC + tagline + wheel) ───
+  // Stretch the "TIRES AND WHEELS" tagline to match the JSDC wordmark width
+  // for visual symmetry. The Wix source has the tagline ~7% narrower than
+  // JSDC's right edge (which overlaps the wheel artwork), so a plain crop
+  // looks misaligned. We:
+  //   1. Erase the original tagline pixels (including the area behind the wheel)
+  //   2. Composite a horizontally-stretched tagline spanning JSDC's full width
+  //   3. Re-composite the wheel artwork on top so the right edge of the stretched
+  //      tagline tucks behind the wheel — mirroring how JSDC's gold "C" does.
+  const SRC_TAGLINE = { left: 148, top: 473, width: 723, height: 32 };
+  const SRC_JSDC = { left: 161, top: 340, width: 782, height: 103 };
+  const SRC_WHEEL = { left: 858, top: 340, width: 365, height: 230 };
+  const taglineStrip = await sharp(BANNER).extract(SRC_TAGLINE).png().toBuffer();
+  const stretchedTag = await sharp(taglineStrip)
+    .resize({ width: SRC_JSDC.width, height: SRC_TAGLINE.height, fit: 'fill' })
     .png()
     .toBuffer();
-  const wheelLogoMeta = await sharp(wheelLogoBuf).metadata();
-  console.log(`Wheel  : ${wheelLogoMeta.width}x${wheelLogoMeta.height} (gold-filled for dark bg)`);
+  const wheelLayer = await sharp(BANNER).extract(SRC_WHEEL).png().toBuffer();
+  // Erase the tagline strip in the banner (full width including wheel zone).
+  const { data: bannerRaw, info: bannerInfo } = await sharp(BANNER)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  for (let y = SRC_TAGLINE.top; y < SRC_TAGLINE.top + SRC_TAGLINE.height; y++) {
+    for (let x = 0; x < bannerInfo.width; x++) {
+      const idx = (y * bannerInfo.width + x) * 4 + 3;
+      bannerRaw[idx] = 0;
+    }
+  }
+  const erasedBanner = await sharp(bannerRaw, { raw: { width: bannerInfo.width, height: bannerInfo.height, channels: 4 } }).png().toBuffer();
+  const fullLockup = await sharp(erasedBanner)
+    .composite([
+      { input: stretchedTag, left: SRC_JSDC.left, top: SRC_TAGLINE.top },
+      { input: wheelLayer, left: SRC_WHEEL.left, top: SRC_WHEEL.top },
+    ])
+    .png()
+    .toBuffer();
+  const fullMeta = await sharp(fullLockup).metadata();
+  const fullAlpha = await sharp(fullLockup).extractChannel(3).raw().toBuffer();
+  let fx0 = fullMeta.width, fx1 = 0, fy0 = fullMeta.height, fy1 = 0;
+  for (let y = 0; y < fullMeta.height; y++) {
+    for (let x = 0; x < fullMeta.width; x++) {
+      if (fullAlpha[y * fullMeta.width + x] > 50) {
+        if (x < fx0) fx0 = x; if (x > fx1) fx1 = x;
+        if (y < fy0) fy0 = y; if (y > fy1) fy1 = y;
+      }
+    }
+  }
+  const logoBuf = await sharp(fullLockup)
+    .extract({ left: fx0, top: fy0, width: fx1 - fx0 + 1, height: fy1 - fy0 + 1 })
+    .png()
+    .toBuffer();
+  const logoMeta = await sharp(logoBuf).metadata();
+  console.log(`Lockup: ${logoMeta.width}x${logoMeta.height}`);
 
-  // Render at 1x (40h) and 2x (80h) retina. Wordmark only — the wheel mark
-  // lives on the favicon; duplicating it next to the wordmark made the
-  // recolored outline read as a ribbon instead of a wheel.
-  for (const [renderH, suffix] of [[40, ''], [80, '@2x']]) {
-    const w = Math.round(wordmarkMeta.width * (renderH / wordmarkMeta.height));
-    const out = await sharp(wordmarkBuf)
+  // Render at 1x (44h) and 2x (88h) retina. The lockup is ~16:9 so this is
+  // proportionally wider than a wordmark-only logo, which is what we want —
+  // it reads as the full Wix brand mark.
+  for (const [renderH, suffix] of [[44, ''], [88, '@2x']]) {
+    const w = Math.round(logoMeta.width * (renderH / logoMeta.height));
+    const out = await sharp(logoBuf)
       .resize(w, renderH, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
       .png()
       .toBuffer();

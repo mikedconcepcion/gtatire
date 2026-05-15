@@ -398,7 +398,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
           </div>
         </div>
         <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-thin">
-          {filteredTires.slice(0, 20).map(t => (
+          {filteredTires.map(t => (
             <ProductCard
               key={t.id}
               product={t}
@@ -411,8 +411,8 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
             <p className="text-dark-500 text-sm py-8">No tires found for this season. Try another.</p>
           )}
         </div>
-        {filteredTires.length > 20 && (
-          <p className="text-dark-500 text-[10px] mt-1">{filteredTires.length - 20} more available. Narrow by season above.</p>
+        {filteredTires.length > 0 && (
+          <p className="text-dark-500 text-[10px] mt-1">{filteredTires.length} in stock — scroll to see all.</p>
         )}
       </div>
 
@@ -442,7 +442,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
           </div>
         </div>
         <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-thin">
-          {primaryWheels.slice(0, 20).map(w => (
+          {primaryWheels.map(w => (
             <ProductCard
               key={w.id}
               product={w}
@@ -452,6 +452,9 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
             />
           ))}
         </div>
+        {primaryWheels.length > 0 && (
+          <p className="text-dark-500 text-[10px] mt-1">{primaryWheels.length} in stock — scroll to see all.</p>
+        )}
         {/* Subtle alternative type */}
         {altWheels.length > 0 && (
           <div className="mt-3 pt-3 border-t border-dark-700/20">

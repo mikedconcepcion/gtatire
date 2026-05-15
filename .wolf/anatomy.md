@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-15T04:09:45.522Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-15T12:23:45.218Z
 > Files: 109 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -18,7 +18,7 @@
 
 ## .github/workflows/
 
-- `deploy.yml` — CI: Deploy to GitHub Pages (~399 tok)
+- `deploy.yml` — CI: Deploy to GitHub Pages (disabled — site moved to Cloudflare Pages) (~452 tok)
 
 ## C:/Users/miked/.claude/projects/E--James-gtatire/memory/
 
@@ -79,7 +79,7 @@
 ## scrapers/
 
 - `build-database.js` — Build a normalized database from raw scraped data. (~3800 tok)
-- `build-favicon.cjs` — Crop the JSDC wheel icon out of jsdc-banner.png and generate favicons at (~2196 tok)
+- `build-favicon.cjs` — Crop the JSDC wheel icon out of jsdc-banner.png and generate favicons at (~2350 tok)
 - `build-internal-db.js` — Build internal GTA database from raw supplier data. (~7972 tok)
 - `config.js` — Supplier credentials and URLs (~123 tok)
 - `download-images.js` — fs: ensureDir, downloadImage, delay, downloadAllImages (~1196 tok)
@@ -114,7 +114,7 @@
 
 ## webapp/
 
-- `astro.config.mjs` — https://astro.build/config (~96 tok)
+- `astro.config.mjs` — https://astro.build/config (~207 tok)
 
 ## webapp/public/
 
@@ -124,8 +124,8 @@
 ## webapp/src/components/
 
 - `CompatibleProducts.tsx` — CompatibleProducts (~1721 tok)
-- `Footer.astro` — Astro: Footer (~714 tok)
-- `Header.astro` — Astro: Header (~1272 tok)
+- `Footer.astro` — Astro: Footer (~691 tok)
+- `Header.astro` — Astro: Header (~1241 tok)
 - `ProductCard.astro` — Astro: ProductCard (~1044 tok)
 - `ProductDetail.tsx` — ProductDetailInner (~1994 tok)
 - `VehicleResults.tsx` — StockBadge (~2453 tok)
@@ -142,9 +142,9 @@
 ## webapp/src/components/search/
 
 - `HeroSearch.tsx` — POPULAR — renders form (~1917 tok)
-- `SmartSearchResults.tsx` — StockBadge (~11217 tok)
+- `SmartSearchResults.tsx` — StockBadge (~11173 tok)
 - `VehicleDropdowns.tsx` — VehicleDropdowns (~1311 tok)
-- `VehiclePackageBuilder.tsx` — MAKE_MAP (~6443 tok)
+- `VehiclePackageBuilder.tsx` — MAKE_MAP (~6465 tok)
 - `VehicleSearch.tsx` — POPULAR_VEHICLES — renders form (~1997 tok)
 
 ## webapp/src/data/
@@ -153,32 +153,32 @@
 
 ## webapp/src/layouts/
 
-- `Layout.astro` — Astro: Layout (~2694 tok)
+- `Layout.astro` — Astro: Layout (~2695 tok)
 
 ## webapp/src/pages/
 
 - `404.astro` — Astro: 404 (~237 tok)
 - `accessibility.astro` — Astro: accessibility (~2199 tok)
 - `contact.astro` — Astro: contact (~1359 tok)
-- `index.astro` — Astro: index (~2730 tok)
+- `index.astro` — Astro: index (~2668 tok)
 - `login.astro` — Astro: login (~74 tok)
 - `privacy.astro` — Astro: privacy (~2559 tok)
 - `search.astro` — Astro: search (~79 tok)
 - `terms.astro` — Astro: terms (~2685 tok)
-- `tires.astro` — Astro: tires (~1742 tok)
-- `wheels.astro` — Astro: wheels (~1713 tok)
+- `tires.astro` — Astro: tires (~1707 tok)
+- `wheels.astro` — Astro: wheels (~1671 tok)
 
 ## webapp/src/pages/tires/
 
-- `[id].astro` — Astro: [id] (~931 tok)
+- `[id].astro` — Astro: [id] (~846 tok)
 
 ## webapp/src/pages/vehicle/[year]/[make]/
 
-- `[model].astro` — Astro: [model] (~1476 tok)
+- `[model].astro` — Astro: [model] (~1307 tok)
 
 ## webapp/src/pages/wheels/
 
-- `[id].astro` — Astro: [id] (~1259 tok)
+- `[id].astro` — Astro: [id] (~1171 tok)
 
 ## webapp/src/styles/
 

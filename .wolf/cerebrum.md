@@ -11,6 +11,7 @@
 - Wants AI-like intelligent search, not tree-based dropdowns
 - Key feature: wheel visualizer — customers see how wheels fit on their car
 - Don't expose cross-vehicle fitment data to customers — that's competitive info. Product pages should NOT show "fits these other vehicles"
+- Show ALL recommendation results, not a slice. User pushed back on `slice(0, 20)` caps in the package builder and `slice(0, 60)` in smart search — said "95 recommended but showing 20, where are the others?" / "count varies sometimes 100+". Horizontal scroll + responsive grid handle the volume; don't pre-trim.
 
 ## Key Learnings
 

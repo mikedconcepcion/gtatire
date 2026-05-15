@@ -833,7 +833,7 @@ export default function SmartSearchResults() {
 
           {/* Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {sortedResults.slice(0, 60).map(p => (
+            {sortedResults.map(p => (
               <a href={`/${p.category === 'tire' ? 'tires' : 'wheels'}/${p.id}`} key={p.id} className="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all">
                 <div className="aspect-square bg-white rounded-t-xl flex items-center justify-center p-4 relative">
                   {p.image && !(p as any).noImage ? (
@@ -875,9 +875,9 @@ export default function SmartSearchResults() {
             ))}
           </div>
 
-          {sortedResults.length > 60 && (
+          {sortedResults.length > 0 && (
             <p className="text-center text-dark-500 text-xs mt-6">
-              Showing 60 of {sortedResults.length} results. Try a more specific search.
+              {sortedResults.length} results.
             </p>
           )}
         </>

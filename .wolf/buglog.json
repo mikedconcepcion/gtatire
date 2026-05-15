@@ -2016,6 +2016,246 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-15T04:09:45.544Z"
+    },
+    {
+      "id": "bug-127",
+      "timestamp": "2026-05-15T06:00:04.856Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/Header.astro",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 5→12 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:00:04.857Z"
+    },
+    {
+      "id": "bug-128",
+      "timestamp": "2026-05-15T06:00:21.219Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/Footer.astro",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 4→11 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:00:21.219Z"
+    },
+    {
+      "id": "bug-129",
+      "timestamp": "2026-05-15T06:05:47.901Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/layouts/Layout.astro",
+      "root_cause": "Had 'JSDC Wheels is a wholesale tire and wheel supplie",
+      "fix": "Changed to 'JSDC Wheels is a wholesale tire and wheel supplie",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:05:47.901Z"
+    },
+    {
+      "id": "bug-130",
+      "timestamp": "2026-05-15T06:11:46.943Z",
+      "error_message": "Significant refactor of ",
+      "file": ".github/workflows/deploy.yml",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 6→6 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "yml"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:11:46.943Z"
+    },
+    {
+      "id": "bug-131",
+      "timestamp": "2026-05-15T06:21:40.939Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/astro.config.mjs",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 17→29 lines (2 removed) | Also: ssr: {; // products.json + fitment.json are large — import",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "mjs"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-15T06:25:54.597Z"
+    },
+    {
+      "id": "bug-132",
+      "timestamp": "2026-05-15T06:24:32.485Z",
+      "error_message": "Missing await",
+      "file": "webapp/src/pages/wheels/[id].astro",
+      "root_cause": "Async call without await — returned Promise instead of value",
+      "fix": "Added await to async call | Also: export const prerender = false;; // SSR mode: fetch data from public assets at request time.",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-15T06:24:59.783Z"
+    },
+    {
+      "id": "bug-133",
+      "timestamp": "2026-05-15T06:25:33.686Z",
+      "error_message": "Missing await",
+      "file": "webapp/src/pages/vehicle/[year]/[make]/[model].astro",
+      "root_cause": "Async call without await — returned Promise instead of value",
+      "fix": "Added await to async call",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:25:33.686Z"
+    },
+    {
+      "id": "bug-134",
+      "timestamp": "2026-05-15T06:28:44.732Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/pages/index.astro",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 9→4 lines (5 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:28:44.732Z"
+    },
+    {
+      "id": "bug-135",
+      "timestamp": "2026-05-15T06:29:19.077Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/pages/wheels.astro",
+      "root_cause": "8 lines replaced/restructured",
+      "fix": "Rewrote 12→6 lines (8 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:29:19.077Z"
+    },
+    {
+      "id": "bug-136",
+      "timestamp": "2026-05-15T06:29:34.089Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/pages/tires.astro",
+      "root_cause": "7 lines replaced/restructured",
+      "fix": "Rewrote 13→7 lines (7 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:29:34.089Z"
+    },
+    {
+      "id": "bug-137",
+      "timestamp": "2026-05-15T06:53:35.738Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/Header.astro",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 4→6 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:53:35.738Z"
+    },
+    {
+      "id": "bug-138",
+      "timestamp": "2026-05-15T06:53:45.716Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/Footer.astro",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 4→6 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:53:45.716Z"
+    },
+    {
+      "id": "bug-139",
+      "timestamp": "2026-05-15T12:17:59.053Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/build-favicon.cjs",
+      "root_cause": "45 lines replaced/restructured",
+      "fix": "Rewrote 60→34 lines (45 removed) | Also: // Crop the entire artwork from the 1280x720 banne; // bounds so the surrounding transparent margin di",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "cjs"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-15T12:20:45.694Z"
+    },
+    {
+      "id": "bug-140",
+      "timestamp": "2026-05-15T12:18:33.463Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/Header.astro",
+      "root_cause": "11 lines replaced/restructured",
+      "fix": "Rewrote 17→11 lines (11 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T12:18:33.463Z"
+    },
+    {
+      "id": "bug-141",
+      "timestamp": "2026-05-15T12:23:45.240Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/Footer.astro",
+      "root_cause": "11 lines replaced/restructured",
+      "fix": "Rewrote 16→10 lines (11 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T12:23:45.240Z"
     }
   ]
 }
