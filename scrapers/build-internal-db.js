@@ -83,15 +83,28 @@ function copyImageTo(srcPath, gtaSku, destDir, index = 0) {
   return newName;
 }
 
-// Normalize vehicle keys so AAIA's naming (e.g. "TESLA|Y", "MERCEDES-BENZ")
-// matches Alltire's (e.g. "TESLA|MODEL Y", "MERCEDES"). Without this we get
-// duplicate /vehicle/ pages and broken smart-search lookups.
+// Normalize vehicle keys so AAIA's naming (e.g. "TESLA|Y", "MERCEDES-BENZ",
+// "DURANGO (AWD / FWD)") matches Alltire's (e.g. "TESLA|MODEL Y", "MERCEDES",
+// "DURANGO"). Three jobs:
+//   1) Tesla 1-2 char models get the "MODEL " prefix.
+//   2) "Mercedes-Benz" -> "Mercedes" (Alltire's convention).
+//   3) Strip parenthetical suffixes from models. AAIA returns sub-trim
+//      variants like "(AWD / FWD)" and "(EXCL. SPORT BREMBO)" — the slashes
+//      and periods break Astro's [year]/[make]/[model] dynamic route and
+//      the trim distinction isn't useful for our fitment-by-spec model.
 function normalizeVehicleKey(key) {
   const parts = key.split('|');
   if (parts.length !== 3) return key;
   let [year, make, model] = parts;
   if (make === 'MERCEDES-BENZ') make = 'MERCEDES';
   if (make === 'TESLA' && /^[A-Z0-9]{1,2}$/.test(model)) model = `MODEL ${model}`;
+  // Strip parenthetical suffixes, replace any remaining route-breaking chars
+  // (slash, backslash, hash, question mark), collapse whitespace.
+  model = model
+    .replace(/\s*\([^)]*\)\s*/g, ' ')
+    .replace(/[/\\#?]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
   return `${year}|${make}|${model}`;
 }
 
