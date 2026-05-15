@@ -91,14 +91,23 @@ function ProductDetailInner({ product, vehicles, specs }: Props) {
 
         {/* CTA */}
         <div className="flex gap-2 mb-3 justify-center md:justify-start">
-          <a
-            href={`mailto:james@jsdcwheels.ca?subject=Inquiry: ${product.productNo}&body=Hi, I'm interested in ${product.description} (${product.productNo}).`}
-            className="bg-[var(--color-primary-600)] hover:bg-[var(--color-primary-700)] text-white font-medium py-2 px-5 rounded-lg text-sm transition-colors"
-          >
-            {isDistributor ? 'Place Order' : 'Contact for Pricing'}
-          </a>
+          {(() => {
+            const sku = product.id || product.productNo || '';
+            const label = product.brand ? `${product.brand} ${product.name || ''}`.trim() : (product.name || product.description || '');
+            const subject = `Inquiry: ${sku}${label ? ' — ' + label : ''}`;
+            const note = `Hi, I'm interested in ${label || product.description} (SKU ${sku}). Please send pricing, availability, and delivery timing for the GTA.`;
+            const href = `/contact?subject=${encodeURIComponent(subject)}&note=${encodeURIComponent(note)}&label=${encodeURIComponent(`Asking about: ${sku} — ${label || product.description}`)}`;
+            return (
+              <a
+                href={href}
+                className="bg-[var(--color-primary-600)] hover:bg-[var(--color-primary-700)] text-white font-medium py-2 px-5 rounded-lg text-sm transition-colors"
+              >
+                {isDistributor ? 'Place Order' : 'Inquire — Pricing & Stock'}
+              </a>
+            );
+          })()}
           <a href="/contact" className="bg-[var(--color-dark-800)] hover:bg-[var(--color-dark-700)] text-[var(--color-dark-300)] hover:text-white py-2 px-5 rounded-lg text-sm transition-colors border border-[var(--color-dark-600)]">
-            Call Us
+            Contact
           </a>
         </div>
 

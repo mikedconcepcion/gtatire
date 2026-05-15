@@ -260,6 +260,23 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
 
   const pkgPrice = selectedTire && selectedWheel ? (selectedTire.priceNum + selectedWheel.priceNum) * 4 : 0;
 
+  // Build /contact URL pre-filled with the selected package — wired into both
+  // the desktop and mobile-sticky "Get This Package" CTAs.
+  const packageContactUrl = (() => {
+    if (!(selectedTire && selectedWheel)) return '/contact';
+    const tireLabel = `${selectedTire.brand || ''} ${selectedTire.name || ''} ${selectedTire.tireSize || ''}`.trim();
+    const wheelLabel = `${selectedWheel.brand || ''} ${selectedWheel.name || ''} ${selectedWheel.rimDiameter || ''}x${selectedWheel.rimWidth || ''}`.trim();
+    const subject = `Package: ${vehicleLabel} — ${selectedTire.id} + ${selectedWheel.id}`;
+    const note =
+      `Hi, I'd like to order this package for my ${vehicleLabel}:\n\n` +
+      `• Tires (×4): ${tireLabel} — SKU ${selectedTire.id} — $${(selectedTire.priceNum * 4).toFixed(2)}\n` +
+      `• Wheels (×4): ${wheelLabel} — SKU ${selectedWheel.id} — $${(selectedWheel.priceNum * 4).toFixed(2)}\n` +
+      `• Estimated total (4+4): $${pkgPrice.toFixed(2)}\n\n` +
+      `Please confirm availability, total with taxes/fees, and GTA delivery timing.`;
+    const label = `Package for ${vehicleLabel}: ${selectedTire.id} + ${selectedWheel.id}`;
+    return `/contact?subject=${encodeURIComponent(subject)}&note=${encodeURIComponent(note)}&label=${encodeURIComponent(label)}`;
+  })();
+
   return (
     <div className="space-y-0">
       {/* ── Vehicle header + Package summary ── */}
@@ -367,6 +384,14 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
                 <p className="text-white font-bold text-xl">${pkgPrice.toFixed(2)}</p>
                 <p className="text-primary-300 text-[9px]">4 tires + 4 wheels</p>
               </div>
+              {selectedTire && selectedWheel && (
+                <a
+                  href={packageContactUrl}
+                  className="hidden sm:inline-block bg-primary-600 hover:bg-primary-500 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors shadow-lg shadow-primary-900/30"
+                >
+                  Get This Package →
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -482,7 +507,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
               <p className="text-white font-bold text-lg">${pkgPrice.toFixed(2)}</p>
               <p className="text-dark-400 text-[10px]">4 tires + 4 wheels</p>
             </div>
-            <a href={`/contact`} className="bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">
+            <a href={packageContactUrl} className="bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">
               Get This Package
             </a>
           </div>

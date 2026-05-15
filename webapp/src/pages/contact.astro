@@ -33,6 +33,10 @@ import Layout from '../layouts/Layout.astro';
     <!-- Contact form -->
     <div class="bg-dark-900 border border-dark-700/50 rounded-xl p-6 sm:p-8">
       <h2 class="text-xl font-bold text-white mb-6">Send a Message</h2>
+      <div id="contact-prefilled-banner" class="hidden mb-4 bg-primary-600/10 border border-primary-500/30 rounded-lg px-4 py-3">
+        <p class="text-primary-300 text-xs uppercase tracking-wider font-semibold mb-1">Pre-filled inquiry</p>
+        <p id="contact-prefilled-label" class="text-white text-sm"></p>
+      </div>
       <form id="contact-form" class="space-y-4">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
@@ -45,12 +49,16 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
         <div>
-          <label for="contact-company" class="block text-dark-300 text-sm mb-1.5">Company</label>
-          <input id="contact-company" type="text" class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="Your company name" />
+          <label for="contact-company" class="block text-dark-300 text-sm mb-1.5">Company <span class="text-dark-500">(optional — leave blank if you're an individual buyer)</span></label>
+          <input id="contact-company" type="text" class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="Tire shop name, if applicable" />
+        </div>
+        <div>
+          <label for="contact-subject" class="block text-dark-300 text-sm mb-1.5">Subject</label>
+          <input id="contact-subject" type="text" required class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="What is your inquiry about?" />
         </div>
         <div>
           <label for="contact-message" class="block text-dark-300 text-sm mb-1.5">Message</label>
-          <textarea id="contact-message" rows="4" required class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none" placeholder="How can we help you?"></textarea>
+          <textarea id="contact-message" rows="5" required class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none" placeholder="How can we help you?"></textarea>
         </div>
         <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2.5 px-6 rounded-lg transition-colors text-sm">
           Send Message
@@ -58,18 +66,44 @@ import Layout from '../layouts/Layout.astro';
         <div id="contact-success" class="hidden text-green-400 text-sm mt-2">Your email client will open with the message pre-filled.</div>
       </form>
 
-      <script>
-        document.getElementById('contact-form')?.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const name = (document.getElementById('contact-name') as HTMLInputElement).value;
-          const email = (document.getElementById('contact-email') as HTMLInputElement).value;
-          const company = (document.getElementById('contact-company') as HTMLInputElement).value;
-          const message = (document.getElementById('contact-message') as HTMLTextAreaElement).value;
-          const subject = company ? `Inquiry from ${name} (${company})` : `Inquiry from ${name}`;
-          const body = `${message}\n\n---\nFrom: ${name}\nEmail: ${email}${company ? `\nCompany: ${company}` : ''}`;
-          window.location.href = `mailto:james@jsdcwheels.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-          document.getElementById('contact-success')?.classList.remove('hidden');
-        });
+      <script is:inline>
+        (function() {
+          var params = new URLSearchParams(window.location.search);
+          var subjPrefill = params.get('subject');
+          var notePrefill = params.get('note');
+          var labelPrefill = params.get('label') || subjPrefill;
+          if (subjPrefill) {
+            var subjEl = document.getElementById('contact-subject');
+            if (subjEl) subjEl.value = subjPrefill;
+          }
+          if (notePrefill) {
+            var msgEl = document.getElementById('contact-message');
+            if (msgEl) msgEl.value = notePrefill + '\n\n';
+          }
+          if (subjPrefill || notePrefill) {
+            var banner = document.getElementById('contact-prefilled-banner');
+            var bannerLabel = document.getElementById('contact-prefilled-label');
+            if (banner && bannerLabel) {
+              banner.classList.remove('hidden');
+              bannerLabel.textContent = labelPrefill || 'Your inquiry has been pre-filled below. Add your name and email, then send.';
+            }
+            // Move focus to name so the user can keep typing
+            var nameEl = document.getElementById('contact-name');
+            if (nameEl) nameEl.focus();
+          }
+
+          document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var name = document.getElementById('contact-name').value;
+            var email = document.getElementById('contact-email').value;
+            var company = document.getElementById('contact-company').value;
+            var subject = document.getElementById('contact-subject').value || (company ? 'Inquiry from ' + name + ' (' + company + ')' : 'Inquiry from ' + name);
+            var message = document.getElementById('contact-message').value;
+            var body = message + '\n\n---\nFrom: ' + name + '\nEmail: ' + email + (company ? '\nCompany: ' + company : '');
+            window.location.href = 'mailto:james@jsdcwheels.ca?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+            document.getElementById('contact-success').classList.remove('hidden');
+          });
+        })();
       </script>
     </div>
   </section>
