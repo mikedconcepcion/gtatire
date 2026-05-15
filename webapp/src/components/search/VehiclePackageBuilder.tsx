@@ -161,7 +161,7 @@ function ProductCard({ product, isSelected, onSelect, detailUrl }: {
   return (
     <div
       onClick={onSelect}
-      className={`shrink-0 w-36 sm:w-40 cursor-pointer rounded-xl border-2 transition-all overflow-hidden ${
+      className={`w-full cursor-pointer rounded-xl border-2 transition-all overflow-hidden ${
         isSelected
           ? 'border-primary-500 shadow-lg shadow-primary-900/30 bg-dark-800'
           : 'border-dark-700/30 bg-dark-900 hover:border-dark-600'
@@ -279,13 +279,13 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
 
   return (
     <div className="space-y-0">
-      {/* ── Vehicle header + Package summary ── */}
-      <div className="bg-gradient-to-r from-primary-900/20 via-dark-900 to-primary-900/10 border border-primary-700/20 rounded-xl overflow-hidden mb-5">
+      {/* ── Vehicle header + Package summary (sticky under the site header) ── */}
+      <div className="bg-gradient-to-r from-primary-900/20 via-dark-900 to-primary-900/10 border border-primary-700/20 rounded-xl overflow-hidden mb-5 sticky top-16 z-30 shadow-xl shadow-black/30">
         <div className="flex flex-col">
           {/* Vehicle image with controls — full width */}
           {vehicleImgUrl && (
             <div className="bg-gradient-to-br from-dark-800/50 to-dark-900 relative">
-              <div className="aspect-[21/9] flex items-center justify-center p-4 max-h-[350px]">
+              <div className="flex items-center justify-center p-3 h-32 sm:h-40 lg:h-48">
                 <img src={vehicleImgUrl} alt={vehicleLabel} className="max-w-full max-h-full object-contain" loading="lazy" />
               </div>
               {/* Color swatches */}
@@ -323,13 +323,15 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
             </div>
           )}
           {/* Package summary */}
-          <div className="flex-1 p-4 md:p-5">
-            <p className="text-primary-300 text-sm font-semibold">{vehicleLabel}</p>
-            <div className="flex items-center gap-2 mt-1 mb-3">
-              <svg className="w-3.5 h-3.5 text-green-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              <span className="text-green-400 text-xs font-medium">All wheels are hub centric fit</span>
+          <div className="flex-1 p-3 sm:p-4">
+            <div className="flex items-center gap-2 flex-wrap">
+              <p className="text-primary-300 text-sm font-semibold">{vehicleLabel}</p>
+              <span className="inline-flex items-center gap-1 text-green-400 text-[10px] font-medium bg-green-500/10 border border-green-500/20 rounded-full px-2 py-0.5">
+                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                Hub centric fit
+              </span>
             </div>
 
             {/* Tier filter — affects both tires and wheels */}
@@ -422,7 +424,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
             })}
           </div>
         </div>
-        <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-thin">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
           {filteredTires.map(t => (
             <ProductCard
               key={t.id}
@@ -432,41 +434,50 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
               detailUrl={`/tires/${t.id}`}
             />
           ))}
-          {filteredTires.length === 0 && (
-            <p className="text-dark-500 text-sm py-8">No tires found for this season. Try another.</p>
-          )}
         </div>
+        {filteredTires.length === 0 && (
+          <p className="text-dark-500 text-sm py-8 text-center">No tires found for this season. Try another.</p>
+        )}
         {filteredTires.length > 0 && (
-          <p className="text-dark-500 text-[10px] mt-1">{filteredTires.length} in stock — scroll to see all.</p>
+          <p className="text-dark-500 text-[10px] mt-2">{filteredTires.length} tires in stock for this vehicle.</p>
         )}
       </div>
 
       {/* ── Wheel selection ── */}
       <div className="mb-5">
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
           <h3 className="text-white text-sm font-semibold">Choose Your Wheels</h3>
-          <div className="flex gap-1">
+          <div className="inline-flex bg-dark-800/60 rounded-lg p-0.5 border border-dark-700/40">
             <button
               onClick={() => { setWheelType(''); setSelectedWheelId(''); }}
-              className={`px-2 py-1 rounded-md text-[10px] font-medium transition-all ${wheelType === '' ? 'bg-primary-600 text-white' : 'bg-dark-800/60 text-dark-400 hover:text-white'}`}
+              className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-semibold transition-all ${wheelType === '' ? 'bg-primary-600 text-white' : 'text-dark-400 hover:text-white'}`}
+              aria-label="Show all wheels"
+              title="All wheels"
             >
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
               All ({inStockWheelsAll.length})
             </button>
             <button
               onClick={() => { setWheelType('alloy'); setSelectedWheelId(''); }}
-              className={`px-2 py-1 rounded-md text-[10px] font-medium transition-all ${wheelType === 'alloy' ? 'bg-primary-600 text-white' : 'bg-dark-800/60 text-dark-400 hover:text-white'}`}
+              className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-semibold transition-all ${wheelType === 'alloy' ? 'bg-primary-600 text-white' : 'text-dark-400 hover:text-white'}`}
+              aria-label="Show alloy wheels"
+              title="Alloy wheels"
             >
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" strokeWidth={2} /><path strokeLinecap="round" strokeWidth={1.5} d="M12 2v8m0 4v8M2 12h8m4 0h8M5 5l5 5m4 4l5 5M5 19l5-5m4-4l5-5" /></svg>
               Alloy ({inStockWheelsAll.filter(w => w.wheelType !== 'Steel Wheel').length})
             </button>
             <button
               onClick={() => { setWheelType('steel'); setSelectedWheelId(''); }}
-              className={`px-2 py-1 rounded-md text-[10px] font-medium transition-all ${wheelType === 'steel' ? 'bg-primary-600 text-white' : 'bg-dark-800/60 text-dark-400 hover:text-white'}`}
+              className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-semibold transition-all ${wheelType === 'steel' ? 'bg-primary-600 text-white' : 'text-dark-400 hover:text-white'}`}
+              aria-label="Show steel wheels"
+              title="Steel wheels"
             >
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" strokeWidth={2} /><circle cx="6" cy="12" r="1" strokeWidth={2} /><circle cx="12" cy="6" r="1" strokeWidth={2} /><circle cx="18" cy="12" r="1" strokeWidth={2} /><circle cx="12" cy="18" r="1" strokeWidth={2} /></svg>
               Steel ({inStockWheelsAll.filter(w => w.wheelType === 'Steel Wheel').length})
             </button>
           </div>
         </div>
-        <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-thin">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
           {primaryWheels.map(w => (
             <ProductCard
               key={w.id}
@@ -478,13 +489,13 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
           ))}
         </div>
         {primaryWheels.length > 0 && (
-          <p className="text-dark-500 text-[10px] mt-1">{primaryWheels.length} in stock — scroll to see all.</p>
+          <p className="text-dark-500 text-[10px] mt-2">{primaryWheels.length} wheels in stock for this vehicle.</p>
         )}
-        {/* Subtle alternative type */}
+        {/* Subtle alternative type — show as collapsed link to switch view */}
         {altWheels.length > 0 && (
           <div className="mt-3 pt-3 border-t border-dark-700/20">
             <p className="text-dark-500 text-[10px] mb-2">{altLabel} ({altWheels.length})</p>
-            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
               {altWheels.slice(0, 10).map(w => (
                 <ProductCard
                   key={w.id}

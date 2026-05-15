@@ -111,19 +111,19 @@ const defaultJsonLd = {
       Skip to main content
     </a>
 
-    <!-- Referral discount banner — appears when ?ref=CODE is in the URL or
-         a code has been captured to localStorage in a prior visit. -->
+    <!-- Referral promo bar — visible site-wide. Two states:
+         a) No code in URL/storage → generic incentive (ask your agent)
+         b) Code in URL or stored from prior visit → echo the code as a
+            reminder to enter it on the contact form. Dismissible per session. -->
     <div id="referral-banner" class="hidden bg-gradient-to-r from-primary-700/40 via-primary-600/30 to-primary-700/40 border-b border-primary-500/40 text-primary-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex items-center justify-between gap-3">
-        <p class="text-xs sm:text-sm">
-          <span class="inline-flex items-center gap-1.5">
-            <svg class="w-4 h-4 text-primary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            10% referral discount active — code
-            <span id="referral-banner-code" class="font-mono font-bold bg-primary-600/40 px-2 py-0.5 rounded text-white">—</span>
+        <p class="text-xs sm:text-sm flex-1 min-w-0">
+          <span id="referral-banner-text" class="inline-flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-primary-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>Save 10% with a referral code — ask your shop or agent, enter it on the <a href="/contact" class="font-semibold underline underline-offset-2 hover:text-white">contact form</a>.</span>
           </span>
-          <span class="hidden sm:inline text-primary-200/80 ml-1">— mention it when you contact us to redeem.</span>
         </p>
-        <button id="referral-banner-dismiss" type="button" class="text-primary-200 hover:text-white text-xs underline-offset-2 hover:underline shrink-0" aria-label="Dismiss referral banner">
+        <button id="referral-banner-dismiss" type="button" class="text-primary-200 hover:text-white text-xs underline-offset-2 hover:underline shrink-0" aria-label="Dismiss promo">
           dismiss
         </button>
       </div>
@@ -135,19 +135,23 @@ const defaultJsonLd = {
           var fromUrl = (params.get('ref') || '').trim().toUpperCase();
           var stored = (localStorage.getItem('jsdc_ref_code') || '').trim().toUpperCase();
           var dismissed = sessionStorage.getItem('jsdc_ref_dismissed') === '1';
-          // URL param wins — overwrites any previously stored code.
+          // URL param wins — capture for the contact form, reset dismissal.
           if (fromUrl) {
             localStorage.setItem('jsdc_ref_code', fromUrl);
             sessionStorage.removeItem('jsdc_ref_dismissed');
           }
           var active = fromUrl || stored;
-          if (active && !dismissed) {
-            var banner = document.getElementById('referral-banner');
-            var codeEl = document.getElementById('referral-banner-code');
-            if (banner && codeEl) {
-              codeEl.textContent = active;
-              banner.classList.remove('hidden');
+          var banner = document.getElementById('referral-banner');
+          var textEl = document.getElementById('referral-banner-text');
+          if (banner && textEl && !dismissed) {
+            // If we have a code (URL or stored), echo it as a reminder. Otherwise
+            // show the generic incentive copy already in the markup.
+            if (active) {
+              textEl.innerHTML =
+                '<svg class="w-4 h-4 text-primary-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>' +
+                '<span>Use code <span class="font-mono font-bold bg-primary-600/40 px-2 py-0.5 rounded text-white">' + active + '</span> for 10% off — enter it on the <a href="/contact" class="font-semibold underline underline-offset-2 hover:text-white">contact form</a>.</span>';
             }
+            banner.classList.remove('hidden');
           }
           var dismiss = document.getElementById('referral-banner-dismiss');
           if (dismiss) dismiss.addEventListener('click', function() {
@@ -155,7 +159,7 @@ const defaultJsonLd = {
             var b = document.getElementById('referral-banner');
             if (b) b.classList.add('hidden');
           });
-        } catch (e) { /* localStorage disabled — silently skip */ }
+        } catch (e) { /* localStorage disabled — banner stays hidden */ }
       })();
     </script>
 
