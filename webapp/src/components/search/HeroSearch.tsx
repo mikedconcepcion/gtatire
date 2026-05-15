@@ -75,7 +75,7 @@ export default function HeroSearch() {
     window.location.href = `${import.meta.env.BASE_URL}/search/?q=${encodeURIComponent(q)}`;
   }
 
-  const selClass = "bg-dark-800 border border-dark-600 text-white rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 appearance-none cursor-pointer w-full";
+  const selClass = "bg-dark-700/70 border border-dark-500 text-white rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 appearance-none cursor-pointer w-full hover:border-primary-600/50 transition-colors";
 
   return (
     <div className="w-full max-w-3xl mx-auto">
@@ -121,7 +121,7 @@ export default function HeroSearch() {
         <button
           onClick={handleSubmit as any}
           disabled={!query.trim()}
-          className="bg-primary-600 hover:bg-primary-700 disabled:bg-dark-700 disabled:text-dark-500 text-white font-semibold py-2.5 px-4 rounded-lg transition-all text-sm col-span-2 sm:col-span-1"
+          className="bg-primary-600 hover:bg-primary-700 disabled:bg-primary-600/40 disabled:text-white/70 text-white font-semibold py-2.5 px-4 rounded-lg transition-all text-sm col-span-2 sm:col-span-1"
         >
           Find Tires & Wheels
         </button>

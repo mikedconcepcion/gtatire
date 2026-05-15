@@ -156,28 +156,17 @@ async function main() {
   const wheelLogoMeta = await sharp(wheelLogoBuf).metadata();
   console.log(`Wheel  : ${wheelLogoMeta.width}x${wheelLogoMeta.height} (gold-filled for dark bg)`);
 
-  // Composite at unified height. Pick a render height (e.g. 80px for retina).
+  // Render at 1x (40h) and 2x (80h) retina. Wordmark only — the wheel mark
+  // lives on the favicon; duplicating it next to the wordmark made the
+  // recolored outline read as a ribbon instead of a wheel.
   for (const [renderH, suffix] of [[40, ''], [80, '@2x']]) {
-    const wordW = Math.round(wordmarkMeta.width * (renderH / wordmarkMeta.height));
-    const wheelW = Math.round(wheelLogoMeta.width * (renderH / wheelLogoMeta.height));
-    const gap = Math.round(renderH * 0.15);
-    const totalW = wordW + gap + wheelW;
-
-    const wordResized = await sharp(wordmarkBuf).resize(wordW, renderH, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer();
-    const wheelResized = await sharp(wheelLogoBuf).resize(wheelW, renderH, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer();
-
-    const composed = await sharp({
-      create: { width: totalW, height: renderH, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } },
-    })
-      .composite([
-        { input: wordResized, left: 0, top: 0 },
-        { input: wheelResized, left: wordW + gap, top: 0 },
-      ])
+    const w = Math.round(wordmarkMeta.width * (renderH / wordmarkMeta.height));
+    const out = await sharp(wordmarkBuf)
+      .resize(w, renderH, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
       .png()
       .toBuffer();
-
-    fs.writeFileSync(path.join(OUT_DIR, 'brand', `jsdc-logo${suffix}.png`), composed);
-    console.log(`Wrote brand/jsdc-logo${suffix}.png (${totalW}x${renderH})`);
+    fs.writeFileSync(path.join(OUT_DIR, 'brand', `jsdc-logo${suffix}.png`), out);
+    console.log(`Wrote brand/jsdc-logo${suffix}.png (${w}x${renderH})`);
   }
 
   console.log('\nAll favicons written to webapp/public/');
