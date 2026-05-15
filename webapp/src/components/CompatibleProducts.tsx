@@ -31,7 +31,7 @@ export default function CompatibleProducts({ productCategory, rimDiameter, boltP
   const [activeTab, setActiveTab] = useState<'tires' | 'wheels'>(productCategory === 'wheel' ? 'tires' : 'wheels');
 
   useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}/data/cross-ref.json`)
+    fetch(`/data/cross-ref.json`)
       .then(r => r.json())
       .then(data => { setCrossRef(data); setLoading(false); })
       .catch(() => setLoading(false));
@@ -114,7 +114,7 @@ export default function CompatibleProducts({ productCategory, rimDiameter, boltP
         {showItems.slice(0, showCount).map(item => (
           <a
             key={item.id}
-            href={`${import.meta.env.BASE_URL}/${activeTab === 'tires' ? 'tires' : 'wheels'}/${item.id}`}
+            href={`/${activeTab === 'tires' ? 'tires' : 'wheels'}/${item.id}`}
             className="group bg-[var(--color-dark-900)] border border-[var(--color-dark-700)]/50 rounded-lg overflow-hidden hover:border-primary-600/40 transition-all"
           >
             <div className="aspect-square bg-white flex items-center justify-center p-2">
@@ -138,7 +138,7 @@ export default function CompatibleProducts({ productCategory, rimDiameter, boltP
 
       {showItems.length > showCount && (
         <a
-          href={`${import.meta.env.BASE_URL}/search/?q=${rimDiameter}+inch+${activeTab === 'tires' ? '' : ''}`}
+          href={`/search/?q=${rimDiameter}+inch+${activeTab === 'tires' ? '' : ''}`}
           className="text-primary-400 text-xs mt-3 inline-block hover:underline"
         >
           View all {showItems.length} compatible {activeTab} →

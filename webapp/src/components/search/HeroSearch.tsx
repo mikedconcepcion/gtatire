@@ -26,7 +26,7 @@ export default function HeroSearch() {
   const [selSize, setSelSize] = useState('');
 
   useEffect(() => {
-    fetch(import.meta.env.BASE_URL + '/data/vehicles.json')
+    fetch('' + '/data/vehicles.json')
       .then(r => r.json())
       .then(data => setVehicleTree(data))
       .catch(() => {});
@@ -67,12 +67,12 @@ export default function HeroSearch() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (query.trim()) {
-      window.location.href = `${import.meta.env.BASE_URL}/search/?q=${encodeURIComponent(query.trim())}`;
+      window.location.href = `/search/?q=${encodeURIComponent(query.trim())}`;
     }
   }
 
   function goTo(q: string) {
-    window.location.href = `${import.meta.env.BASE_URL}/search/?q=${encodeURIComponent(q)}`;
+    window.location.href = `/search/?q=${encodeURIComponent(q)}`;
   }
 
   const selClass = "bg-dark-700/70 border border-dark-500 text-white rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 appearance-none cursor-pointer w-full hover:border-primary-600/50 transition-colors";

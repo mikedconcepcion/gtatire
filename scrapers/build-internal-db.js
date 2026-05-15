@@ -177,7 +177,7 @@ function buildDatabase() {
         wheelType: raw.wheelType || '',
         name: specs.name || raw.description?.split(' ')[0] || '',
         description: raw.description || '',
-        image: newImgName ? `/gtatire/data/images/wheels/${newImgName}` : '',
+        image: newImgName ? `/data/images/wheels/${newImgName}` : '',
         price: pricing.publicPrice > 0 ? `$${pricing.publicPrice.toFixed(2)}` : '',
         priceNum: pricing.publicPrice,
         distPrice: pricing.distPrice > 0 ? `$${pricing.distPrice.toFixed(2)}` : '',
@@ -234,7 +234,7 @@ function buildDatabase() {
         const extraSrc = [pathMod.join(DATA_DIR, 'images', 'superspeed', extraFileName),
                           pathMod.join(DATA_DIR, 'images', 'superspeed', faceImgs[i])].find(p => fs.existsSync(p)) || '';
         const extraImgName = copyImage(extraSrc, gtaId, i);
-        if (extraImgName) extraImages.push(`/gtatire/data/images/wheels/${extraImgName}`);
+        if (extraImgName) extraImages.push(`/data/images/wheels/${extraImgName}`);
       }
 
       let stockText = '';
@@ -259,7 +259,7 @@ function buildDatabase() {
         wheelType: 'Alloy',
         name: w.MODEL || '',
         description: `${w.MODEL} ${w.DIAMETER}x${w.WIDTH} ${w.PCD} ET${w.ET} CB${w.CB} ${w.FINISH}`,
-        image: newImgName ? `/gtatire/data/images/wheels/${newImgName}` : '',
+        image: newImgName ? `/data/images/wheels/${newImgName}` : '',
         images: extraImages.length > 0 ? extraImages : undefined,
         price: pricing.publicPrice > 0 ? `$${pricing.publicPrice.toFixed(2)}` : '',
         priceNum: pricing.publicPrice,
@@ -332,7 +332,7 @@ function buildDatabase() {
         wheelType: 'Alloy',
         name: w.modelCode1 || w.name || '',
         description: w.name || '',
-        image: newImgName ? `/gtatire/data/images/wheels/${newImgName}` : '',
+        image: newImgName ? `/data/images/wheels/${newImgName}` : '',
         price: pricing.publicPrice > 0 ? `$${pricing.publicPrice.toFixed(2)}` : '',
         priceNum: pricing.publicPrice,
         distPrice: pricing.distPrice > 0 ? `$${pricing.distPrice.toFixed(2)}` : '',
@@ -407,7 +407,7 @@ function buildDatabase() {
         wheelType: t.type || 'All Season',
         name: t.model || '',
         description: t.description || '',
-        image: tireImgName ? `/gtatire/data/images/tires/${tireImgName}` : '',
+        image: tireImgName ? `/data/images/tires/${tireImgName}` : '',
         price: pricing.publicPrice > 0 ? `$${pricing.publicPrice.toFixed(2)}` : '',
         priceNum: pricing.publicPrice,
         distPrice: pricing.distPrice > 0 ? `$${pricing.distPrice.toFixed(2)}` : '',
@@ -651,7 +651,7 @@ function buildDatabase() {
   let noImageCount = 0;
   for (const p of products) {
     if (!p.image) { p.noImage = true; noImageCount++; continue; }
-    const localPath = p.image.replace('/gtatire/', pathMod.join(__dirname, '..', 'webapp', 'public') + '/');
+    const localPath = pathMod.join(__dirname, '..', 'webapp', 'public', p.image.replace(/^\//, ''));
     if (fs.existsSync(localPath)) {
       const size = fs.statSync(localPath).size;
       if (p.category === 'tire' && size < 10000) { p.noImage = true; noImageCount++; }

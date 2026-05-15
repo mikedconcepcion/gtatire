@@ -214,7 +214,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
   const [vehicleAngle, setVehicleAngle] = useState('01');
 
   const vehicleImgUrl = getVehicleImgUrl(vehicleMake, vehicleModel, vehicleYear, vehicleAngle, vehicleColor);
-  const base = typeof import.meta !== 'undefined' ? (import.meta as any).env?.BASE_URL || '/gtatire' : '/gtatire';
+  const base = typeof import.meta !== 'undefined' ? (import.meta as any).env?.BASE_URL || '' : '';
 
   // In-stock universe for counts + filters
   const inStockTires = useMemo(() => tires.filter(p => p.priceNum > 0 && isInStock(p.stock)), [tires]);
@@ -404,7 +404,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
               product={t}
               isSelected={t.id === (selectedTire?.id || '')}
               onSelect={() => setSelectedTireId(t.id)}
-              detailUrl={`${base}/tires/${t.id}`}
+              detailUrl={`/tires/${t.id}`}
             />
           ))}
           {filteredTires.length === 0 && (
@@ -448,7 +448,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
               product={w}
               isSelected={w.id === (selectedWheel?.id || '')}
               onSelect={() => setSelectedWheelId(w.id)}
-              detailUrl={`${base}/wheels/${w.id}`}
+              detailUrl={`/wheels/${w.id}`}
             />
           ))}
         </div>
@@ -463,7 +463,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
                   product={w}
                   isSelected={w.id === (selectedWheel?.id || '')}
                   onSelect={() => setSelectedWheelId(w.id)}
-                  detailUrl={`${base}/wheels/${w.id}`}
+                  detailUrl={`/wheels/${w.id}`}
                 />
               ))}
             </div>
@@ -479,7 +479,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
               <p className="text-white font-bold text-lg">${pkgPrice.toFixed(2)}</p>
               <p className="text-dark-400 text-[10px]">4 tires + 4 wheels</p>
             </div>
-            <a href={`${base}/contact`} className="bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">
+            <a href={`/contact`} className="bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">
               Get This Package
             </a>
           </div>
