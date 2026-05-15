@@ -110,65 +110,52 @@ async function main() {
     console.log('Removed favicon.svg (legacy Astro default)');
   }
 
-  // ─── Header logo: the full Wix lockup (car + JSDC + tagline + wheel) ───
-  // Stretch the "TIRES AND WHEELS" tagline to match the JSDC wordmark width
-  // for visual symmetry. The Wix source has the tagline ~7% narrower than
-  // JSDC's right edge (which overlaps the wheel artwork), so a plain crop
-  // looks misaligned. We:
-  //   1. Erase the original tagline pixels (including the area behind the wheel)
-  //   2. Composite a horizontally-stretched tagline spanning JSDC's full width
-  //   3. Re-composite the wheel artwork on top so the right edge of the stretched
-  //      tagline tucks behind the wheel — mirroring how JSDC's gold "C" does.
-  const SRC_TAGLINE = { left: 148, top: 473, width: 723, height: 32 };
-  const SRC_JSDC = { left: 161, top: 340, width: 782, height: 103 };
-  const SRC_WHEEL = { left: 858, top: 340, width: 365, height: 230 };
-  const taglineStrip = await sharp(BANNER).extract(SRC_TAGLINE).png().toBuffer();
-  const stretchedTag = await sharp(taglineStrip)
-    .resize({ width: SRC_JSDC.width, height: SRC_TAGLINE.height, fit: 'fill' })
-    .png()
-    .toBuffer();
-  const wheelLayer = await sharp(BANNER).extract(SRC_WHEEL).png().toBuffer();
-  // Erase the tagline strip in the banner (full width including wheel zone).
-  const { data: bannerRaw, info: bannerInfo } = await sharp(BANNER)
+  // ─── Header logo: the OFFICIAL JSDC Wheels lockup ───
+  // The official artwork is shipped on a solid black background (jsdc-logo-source-dark.jpg).
+  // Strip the black background by making near-black pixels transparent, keep
+  // the white car silhouette + wheel and gold JSDC + white "WHEELS" tagline,
+  // then alpha-tight crop and render at 1x / 2x.
+  const OFFICIAL_LOGO = path.join(ROOT, 'brand', 'jsdc-logo-source-dark.jpg');
+  const { data: officialRaw, info: officialInfo } = await sharp(OFFICIAL_LOGO)
     .ensureAlpha()
     .raw()
     .toBuffer({ resolveWithObject: true });
-  for (let y = SRC_TAGLINE.top; y < SRC_TAGLINE.top + SRC_TAGLINE.height; y++) {
-    for (let x = 0; x < bannerInfo.width; x++) {
-      const idx = (y * bannerInfo.width + x) * 4 + 3;
-      bannerRaw[idx] = 0;
+  // Threshold: pixels darker than ~30 in all channels become transparent.
+  // Use a feathered band (30-55) for soft edges to avoid jagged outlines on
+  // antialiased artwork.
+  for (let i = 0; i < officialRaw.length; i += 4) {
+    const r = officialRaw[i], g = officialRaw[i + 1], b = officialRaw[i + 2];
+    const luma = Math.max(r, g, b);
+    if (luma < 30) {
+      officialRaw[i + 3] = 0;
+    } else if (luma < 55) {
+      officialRaw[i + 3] = Math.round(((luma - 30) / 25) * 255);
     }
   }
-  const erasedBanner = await sharp(bannerRaw, { raw: { width: bannerInfo.width, height: bannerInfo.height, channels: 4 } }).png().toBuffer();
-  const fullLockup = await sharp(erasedBanner)
-    .composite([
-      { input: stretchedTag, left: SRC_JSDC.left, top: SRC_TAGLINE.top },
-      { input: wheelLayer, left: SRC_WHEEL.left, top: SRC_WHEEL.top },
-    ])
-    .png()
-    .toBuffer();
-  const fullMeta = await sharp(fullLockup).metadata();
-  const fullAlpha = await sharp(fullLockup).extractChannel(3).raw().toBuffer();
-  let fx0 = fullMeta.width, fx1 = 0, fy0 = fullMeta.height, fy1 = 0;
-  for (let y = 0; y < fullMeta.height; y++) {
-    for (let x = 0; x < fullMeta.width; x++) {
-      if (fullAlpha[y * fullMeta.width + x] > 50) {
-        if (x < fx0) fx0 = x; if (x > fx1) fx1 = x;
-        if (y < fy0) fy0 = y; if (y > fy1) fy1 = y;
+  const transparentLogo = await sharp(officialRaw, {
+    raw: { width: officialInfo.width, height: officialInfo.height, channels: 4 },
+  }).png().toBuffer();
+  // Alpha-tight crop.
+  const tlMeta = await sharp(transparentLogo).metadata();
+  const tlAlpha = await sharp(transparentLogo).extractChannel(3).raw().toBuffer();
+  let tx0 = tlMeta.width, tx1 = 0, ty0 = tlMeta.height, ty1 = 0;
+  for (let y = 0; y < tlMeta.height; y++) {
+    for (let x = 0; x < tlMeta.width; x++) {
+      if (tlAlpha[y * tlMeta.width + x] > 50) {
+        if (x < tx0) tx0 = x; if (x > tx1) tx1 = x;
+        if (y < ty0) ty0 = y; if (y > ty1) ty1 = y;
       }
     }
   }
-  const logoBuf = await sharp(fullLockup)
-    .extract({ left: fx0, top: fy0, width: fx1 - fx0 + 1, height: fy1 - fy0 + 1 })
+  const logoBuf = await sharp(transparentLogo)
+    .extract({ left: tx0, top: ty0, width: tx1 - tx0 + 1, height: ty1 - ty0 + 1 })
     .png()
     .toBuffer();
   const logoMeta = await sharp(logoBuf).metadata();
-  console.log(`Lockup: ${logoMeta.width}x${logoMeta.height}`);
+  console.log(`Official logo (transparent): ${logoMeta.width}x${logoMeta.height}`);
 
-  // Render at 1x (44h) and 2x (88h) retina. The lockup is ~16:9 so this is
-  // proportionally wider than a wordmark-only logo, which is what we want —
-  // it reads as the full Wix brand mark.
-  for (const [renderH, suffix] of [[44, ''], [88, '@2x']]) {
+  // Render at 1x and 2x retina. Header uses h-12 (48px) / h-14 (56px) on desktop.
+  for (const [renderH, suffix] of [[56, ''], [112, '@2x']]) {
     const w = Math.round(logoMeta.width * (renderH / logoMeta.height));
     const out = await sharp(logoBuf)
       .resize(w, renderH, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
