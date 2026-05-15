@@ -51,7 +51,7 @@ export async function getStaticPaths() {
   const pPath = path.join(process.cwd(), 'public', 'data', 'products.json');
   if (!fs.existsSync(pPath)) return [];
   const products = JSON.parse(fs.readFileSync(pPath, 'utf-8'));
-  return products.map((p: any) => ({ params: { id: p.id } }));
+  return products.filter((p: any) => p.category === 'wheel').map((p: any) => ({ params: { id: p.id } }));
 }
 ---
 
