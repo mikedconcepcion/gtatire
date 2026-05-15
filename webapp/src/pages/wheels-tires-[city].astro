@@ -87,21 +87,13 @@ const CITIES: City[] = [
     popularCars: ['Honda Civic', 'Toyota RAV4', 'Ford F-150', 'Tesla Model 3'],
     blurb: 'Etobicoke installers serving the airport and Gardiner corridor get fast restocks — JSDC routes through Pearson-adjacent shops daily.',
   },
-  {
-    slug: 'oakville',
-    name: 'Oakville',
-    hood: 'Bronte, Glen Abbey, Joshua Creek and Kerr Village',
-    delivery: '1-business-day delivery across Oakville via the QEW.',
-    popularCars: ['Tesla Model Y', 'BMW X3', 'Audi Q5', 'Lexus RX'],
-    blurb: 'Oakville skews luxury — JSDC stocks the larger-diameter alloys and OE+ wheel lines that fit premium German and Japanese platforms.',
-  },
 ];
 
 export async function getStaticPaths() {
   // Re-declared inside getStaticPaths because Astro hoists it before module body.
   const all = [
     'toronto','scarborough','mississauga','brampton','markham','vaughan',
-    'north-york','richmond-hill','etobicoke','oakville',
+    'north-york','richmond-hill','etobicoke',
   ];
   return all.map(slug => ({ params: { city: slug } }));
 }
