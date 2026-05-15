@@ -280,7 +280,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
   return (
     <div className="space-y-0">
       {/* ── Vehicle header + Package summary (sticky under the site header) ── */}
-      <div className="bg-gradient-to-r from-primary-900/20 via-dark-900 to-primary-900/10 border border-primary-700/20 rounded-xl overflow-hidden mb-5 sticky top-16 z-30 shadow-xl shadow-black/30">
+      <div className="bg-dark-950 border border-primary-700/30 rounded-xl overflow-hidden mb-5 sticky top-16 z-30 shadow-2xl shadow-black/60 backdrop-blur-md">
         <div className="flex flex-col">
           {/* Vehicle image with controls — full width */}
           {vehicleImgUrl && (
