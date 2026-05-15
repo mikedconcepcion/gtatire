@@ -1,0 +1,126 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: 'How to Read a Tire Size — 225/65R17 Explained',
+  description: 'Plain-language breakdown of metric tire size codes — section width, aspect ratio, construction, rim diameter, load index, and speed rating.',
+  author: { '@type': 'Organization', name: 'JSDC Wheels' },
+  publisher: { '@type': 'Organization', name: 'JSDC Wheels' },
+  about: ['tire size', 'tire sidewall', 'load index', 'speed rating', 'aspect ratio'],
+};
+---
+
+<Layout
+  title="Tire Sizes Explained — 225/65R17 Decoded | JSDC Wheels Guides"
+  description="What every number on a tire sidewall means — section width, aspect ratio, R for radial, rim diameter, load index, speed rating. Plain-language reference."
+  jsonLd={articleJsonLd}
+>
+  <article class="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+    <nav class="flex items-center gap-2 text-xs text-dark-500 mb-6">
+      <a href="/" class="hover:text-dark-300">Home</a>
+      <span>/</span>
+      <a href="/guides/tire-sizes" class="hover:text-dark-300">Guides</a>
+      <span>/</span>
+      <span class="text-dark-300">Tire Sizes</span>
+    </nav>
+
+    <p class="text-primary-400 text-xs font-semibold uppercase tracking-[0.2em] mb-3">Tire Sizing Guide</p>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">A tire sidewall, decoded.</h1>
+    <p class="text-dark-300 text-base sm:text-lg leading-relaxed mb-8">
+      Every tire's sidewall has a code that looks like
+      <span class="font-mono text-white">225/65R17 102H</span>. Each number means something specific —
+      here's the breakdown.
+    </p>
+
+    <!-- Visual breakdown -->
+    <div class="bg-dark-900/60 border border-dark-700/40 rounded-2xl p-6 mb-10">
+      <p class="text-center font-mono text-2xl sm:text-3xl text-white tracking-wide mb-6">
+        <span class="text-primary-400">225</span><span class="text-dark-500">/</span><span class="text-blue-400">65</span><span class="text-green-400">R</span><span class="text-amber-400">17</span> <span class="text-pink-400">102</span><span class="text-purple-400">H</span>
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+        <div><span class="text-primary-400 font-bold">225</span><br/><span class="text-dark-400">Section width (mm)</span></div>
+        <div><span class="text-blue-400 font-bold">65</span><br/><span class="text-dark-400">Aspect ratio (%)</span></div>
+        <div><span class="text-green-400 font-bold">R</span><br/><span class="text-dark-400">Radial construction</span></div>
+        <div><span class="text-amber-400 font-bold">17</span><br/><span class="text-dark-400">Rim diameter (")</span></div>
+        <div><span class="text-pink-400 font-bold">102</span><br/><span class="text-dark-400">Load index</span></div>
+        <div><span class="text-purple-400 font-bold">H</span><br/><span class="text-dark-400">Speed rating</span></div>
+      </div>
+    </div>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mt-10 mb-3">Section width — 225</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-4">
+      The tire's width in millimetres, measured sidewall to sidewall when mounted on its design rim
+      and inflated to spec. A 225 mm tire is wider than a 205 mm tire, but the actual contact patch
+      depends on tread pattern, inflation, and load.
+    </p>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mt-10 mb-3">Aspect ratio — 65</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-4">
+      Sidewall height as a percentage of section width. <span class="font-mono">65</span> means the
+      sidewall is 65% of 225 mm = 146.25 mm tall. A lower aspect ratio (45, 40, 35) means a shorter
+      sidewall — sportier handling but a harsher ride and more wheel damage from potholes.
+    </p>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mt-10 mb-3">Construction — R</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-4">
+      <span class="font-mono">R</span> means radial (internal cords run perpendicular to direction of
+      travel). Virtually every modern passenger tire is radial. You may occasionally see
+      <span class="font-mono">D</span> (bias-ply, mostly trailer tires) or
+      <span class="font-mono">B</span> (belted-bias, vintage).
+    </p>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mt-10 mb-3">Rim diameter — 17</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-4">
+      The wheel diameter the tire is designed to mount on, in inches. A 17" tire mounts on a 17" wheel —
+      they're not interchangeable. This is the number that connects your tire size to the wheel selection.
+    </p>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mt-10 mb-3">Load index — 102</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-4">
+      A coded number indicating the maximum weight the tire can support. <span class="font-mono">102</span>
+      = 850 kg per tire. Always match or exceed your vehicle's OE load index — going lower can void
+      insurance and warranty. Common ranges: 91-95 for compact cars, 99-105 for sedans/SUVs, 110-120 for
+      trucks.
+    </p>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mt-10 mb-3">Speed rating — H</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-4">
+      Maximum sustained speed the tire is rated for:
+    </p>
+    <ul class="text-dark-300 text-sm leading-relaxed list-disc list-inside marker:text-primary-500/60 space-y-1.5 mb-4">
+      <li><span class="font-mono text-white">Q</span> — 160 km/h (winter tires)</li>
+      <li><span class="font-mono text-white">S</span> — 180 km/h</li>
+      <li><span class="font-mono text-white">T</span> — 190 km/h</li>
+      <li><span class="font-mono text-white">H</span> — 210 km/h (most all-season)</li>
+      <li><span class="font-mono text-white">V</span> — 240 km/h</li>
+      <li><span class="font-mono text-white">W</span> — 270 km/h (performance)</li>
+      <li><span class="font-mono text-white">Y</span> — 300 km/h</li>
+    </ul>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mt-10 mb-3">When sizes get prefixed</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-4">
+      Some sizes have a letter <em>before</em> the section width — most commonly
+      <span class="font-mono">P</span> (P-metric, passenger car) or
+      <span class="font-mono">LT</span> (light truck). LT tires have stiffer sidewalls and higher load
+      capacity; don't fit them on a vehicle that calls for P-metric without a knowledgeable check.
+    </p>
+
+    <div class="bg-dark-900/50 border border-primary-600/30 rounded-2xl p-6 mt-10">
+      <p class="text-dark-300 text-sm mb-4">Search for your exact tire size:</p>
+      <a href="/search" class="inline-block bg-primary-600 hover:bg-primary-500 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm">
+        Open search →
+      </a>
+    </div>
+
+    <!-- Related -->
+    <section class="mt-12 pt-8 border-t border-dark-700/40">
+      <p class="text-dark-500 text-xs font-semibold uppercase tracking-wider mb-3">Related guides</p>
+      <ul class="space-y-2">
+        <li><a href="/guides/hub-centric-wheels" class="text-primary-400 hover:text-primary-300 text-sm">Hub-centric wheels — what centre bore means →</a></li>
+        <li><a href="/guides/bolt-patterns" class="text-primary-400 hover:text-primary-300 text-sm">Bolt pattern compatibility (5x114.3, 5x100, 5x120) →</a></li>
+      </ul>
+    </section>
+  </article>
+</Layout>
