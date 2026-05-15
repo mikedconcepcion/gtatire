@@ -75,7 +75,12 @@ export default function HeroSearch() {
     window.location.href = `/search/?q=${encodeURIComponent(q)}`;
   }
 
-  const selClass = "bg-dark-700/70 border border-dark-500 text-white rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 appearance-none cursor-pointer w-full hover:border-primary-600/50 transition-colors";
+  const selClass = "bg-dark-700/70 border border-dark-500 text-white rounded-lg pl-3 pr-9 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 appearance-none cursor-pointer w-full hover:border-primary-600/50 transition-colors";
+  const chevron = (
+    <svg className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+    </svg>
+  );
 
   return (
     <div className="w-full max-w-3xl mx-auto">
@@ -102,26 +107,38 @@ export default function HeroSearch() {
 
       {/* Dropdown helpers — populate the search bar */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-5">
-        <select value={selYear} onChange={e => onYearChange(e.target.value)} className={selClass}>
-          <option value="">Year</option>
-          {years.map(y => <option key={y} value={y}>{y}</option>)}
-        </select>
-        <select value={selMake} onChange={e => onMakeChange(e.target.value)} disabled={!selYear} className={`${selClass} ${!selYear ? 'opacity-40' : ''}`}>
-          <option value="">Make</option>
-          {makes.map(m => <option key={m} value={m}>{m}</option>)}
-        </select>
-        <select value={selModel} onChange={e => onModelChange(e.target.value)} disabled={!selMake} className={`${selClass} ${!selMake ? 'opacity-40' : ''}`}>
-          <option value="">Model</option>
-          {models.map(m => <option key={m} value={m}>{m}</option>)}
-        </select>
-        <select value={selSize} onChange={e => onSizeChange(e.target.value)} disabled={!selModel} className={`${selClass} ${!selModel ? 'opacity-40' : ''}`}>
-          <option value="">Size</option>
-          {RIM_SIZES.map(s => <option key={s} value={s}>{s}"</option>)}
-        </select>
+        <div className="relative">
+          <select value={selYear} onChange={e => onYearChange(e.target.value)} className={selClass}>
+            <option value="">Year</option>
+            {years.map(y => <option key={y} value={y}>{y}</option>)}
+          </select>
+          {chevron}
+        </div>
+        <div className={`relative ${!selYear ? 'opacity-50' : ''}`}>
+          <select value={selMake} onChange={e => onMakeChange(e.target.value)} disabled={!selYear} className={selClass}>
+            <option value="">Make</option>
+            {makes.map(m => <option key={m} value={m}>{m}</option>)}
+          </select>
+          {chevron}
+        </div>
+        <div className={`relative ${!selMake ? 'opacity-50' : ''}`}>
+          <select value={selModel} onChange={e => onModelChange(e.target.value)} disabled={!selMake} className={selClass}>
+            <option value="">Model</option>
+            {models.map(m => <option key={m} value={m}>{m}</option>)}
+          </select>
+          {chevron}
+        </div>
+        <div className={`relative ${!selModel ? 'opacity-50' : ''}`}>
+          <select value={selSize} onChange={e => onSizeChange(e.target.value)} disabled={!selModel} className={selClass}>
+            <option value="">Size</option>
+            {RIM_SIZES.map(s => <option key={s} value={s}>{s}"</option>)}
+          </select>
+          {chevron}
+        </div>
         <button
           onClick={handleSubmit as any}
           disabled={!query.trim()}
-          className="bg-primary-600 hover:bg-primary-700 disabled:bg-primary-600/40 disabled:text-white/70 text-white font-semibold py-2.5 px-4 rounded-lg transition-all text-sm col-span-2 sm:col-span-1"
+          className="bg-primary-600 hover:bg-primary-700 disabled:bg-primary-600/40 disabled:text-white/70 text-white font-semibold py-2.5 px-4 rounded-lg transition-all text-sm col-span-2 sm:col-span-1 shadow-lg shadow-primary-900/30"
         >
           Find Tires & Wheels
         </button>
