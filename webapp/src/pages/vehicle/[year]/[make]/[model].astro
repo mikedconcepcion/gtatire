@@ -28,7 +28,17 @@ for (const [sku, vehicleList] of Object.entries(fitment)) {
     matchingIds.add(sku);
   }
 }
-const products = allProducts.filter(p => matchingIds.has(p.id));
+// Hide discontinued wheels entirely — they can't be sold and pollute results.
+const sellable = allProducts.filter(p => matchingIds.has(p.id) && !/discontinu/i.test(String(p.stock || '')));
+function inStock(s: string): boolean {
+  if (!s) return false;
+  if (/in stock/i.test(s)) return true;
+  if (s === '20+') return true;
+  const n = parseInt(s, 10);
+  return !isNaN(n) && n >= 1;
+}
+const inStockProducts = sellable.filter(p => inStock(String(p.stock || '')));
+const products = sellable;
 const availableDiameters = vehicles?.[year!]?.[make!]?.[model!] || [];
 
 export async function getStaticPaths() {
@@ -48,8 +58,8 @@ export async function getStaticPaths() {
 
 const displayMake = make ? make.charAt(0) + make.slice(1).toLowerCase() : '';
 const displayModel = model || '';
-const steelCount = products.filter((p: any) => p.wheelType === 'Steel Wheel').length;
-const alloyCount = products.filter((p: any) => p.wheelType === 'Alloy Wheel').length;
+const steelCount = inStockProducts.filter((p: any) => p.wheelType === 'Steel Wheel').length;
+const alloyCount = inStockProducts.filter((p: any) => p.wheelType === 'Alloy Wheel').length;
 ---
 
 <Layout title={`${year} ${displayMake} ${displayModel} — Wheels & Tires`}>
@@ -66,7 +76,10 @@ const alloyCount = products.filter((p: any) => p.wheelType === 'Alloy Wheel').le
             {year} {make} <span class="text-primary-400">{displayModel}</span>
           </h1>
           <p class="text-dark-400 mt-1">
-            {products.length} wheel{products.length !== 1 ? 's' : ''} available
+            {inStockProducts.length} in stock
+            {sellable.length > inStockProducts.length && (
+              <span> · {sellable.length - inStockProducts.length} order-on-demand</span>
+            )}
             {availableDiameters.length > 0 && (
               <span> · Fits {availableDiameters.map((d: string) => `${d}"`).join(', ')} rims</span>
             )}

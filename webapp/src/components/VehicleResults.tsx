@@ -3,11 +3,13 @@ import { useState, useMemo } from 'react';
 interface Product {
   id: string;
   productNo: string;
+  brand: string;
   wheelType: string;
   name: string;
   description: string;
   image: string;
   msrp: string;
+  price: string;
   priceNum: number;
   stock: string;
   hubCentric: boolean;
@@ -24,14 +26,39 @@ interface Props {
   availableDiameters: string[];
 }
 
+// Classify supplier stock strings into a small set of states.
+// In stock: "20+", "20+ In Stock", "3 In Stock", or a bare positive integer.
+// On order: "Available", "Contact us", "In Production", "NEW - In Production".
+// Out:      "Out of Stock", "N/A", and any empty/unknown value.
+// Hidden:   anything matching /discontinu/i — these never reach the grid.
+function isInStock(stock: string | null | undefined): boolean {
+  if (!stock) return false;
+  const s = String(stock).trim();
+  if (/in stock/i.test(s)) return true;
+  if (s === '20+') return true;
+  const n = parseInt(s, 10);
+  return !isNaN(n) && n >= 1;
+}
+function isDiscontinued(stock: string | null | undefined): boolean {
+  return /discontinu/i.test(String(stock || ''));
+}
+function isOnOrder(stock: string | null | undefined): boolean {
+  const s = String(stock || '').toLowerCase();
+  return s === 'available' || s.startsWith('contact') || /production/i.test(s);
+}
+
 function StockBadge({ stock }: { stock: string }) {
-  const num = parseInt(stock);
-  const inStock = stock === '20+' || num >= 10;
-  const low = num >= 1 && num < 10;
-  const contact = stock === 'Contact us';
-  const color = inStock ? 'text-green-400' : low ? 'text-amber-400' : contact ? 'text-dark-400' : 'text-red-400';
-  const label = inStock ? 'In Stock' : contact ? 'Contact Us' : low ? `${stock} left` : stock;
-  return <span className={`text-xs font-medium ${color}`}>{label}</span>;
+  if (isInStock(stock)) {
+    const n = parseInt(stock, 10);
+    const low = !isNaN(n) && n > 0 && n < 10;
+    return <span className={`text-xs font-medium ${low ? 'text-amber-400' : 'text-green-400'}`}>{low ? `${n} left` : 'In Stock'}</span>;
+  }
+  if (isOnOrder(stock)) return <span className="text-xs font-medium text-amber-400">Order on Demand</span>;
+  return <span className="text-xs font-medium text-red-400">Out of Stock</span>;
+}
+
+function cleanName(name: string | null | undefined, fallback: string = ''): string {
+  return (name || fallback).replace(/_/g, ' ').trim();
 }
 
 function TypeBadge({ type }: { type: string }) {
@@ -45,19 +72,30 @@ export default function VehicleResults({ products, availableDiameters }: Props) 
   const [activeType, setActiveType] = useState<'all' | 'steel' | 'alloy'>('all');
   const [activeDiameter, setActiveDiameter] = useState<string>('all');
   const [sort, setSort] = useState<'price-asc' | 'price-desc' | 'stock'>('price-asc');
+  const [showOutOfStock, setShowOutOfStock] = useState(false);
 
-  const steelCount = products.filter(p => p.wheelType === 'Steel Wheel').length;
-  const alloyCount = products.filter(p => p.wheelType === 'Alloy Wheel').length;
+  // Hide discontinued always; in-stock only by default unless the user opts in.
+  const sellable = useMemo(
+    () => products.filter(p => !isDiscontinued(p.stock)),
+    [products],
+  );
+  const visiblePool = useMemo(
+    () => (showOutOfStock ? sellable : sellable.filter(p => isInStock(p.stock))),
+    [sellable, showOutOfStock],
+  );
 
-  // Get unique diameters from products
+  const steelCount = visiblePool.filter(p => p.wheelType === 'Steel Wheel').length;
+  const alloyCount = visiblePool.filter(p => p.wheelType === 'Alloy Wheel').length;
+
+  // Diameter counts reflect the current visiblePool (in-stock filter applied).
   const diameters = useMemo(() => {
-    const d = [...new Set(products.map(p => p.rimDiameter).filter(Boolean))].sort((a, b) => (a || 0) - (b || 0));
-    return d.map(v => ({ value: String(v), label: `${v}"`, count: products.filter(p => p.rimDiameter === v).length }));
-  }, [products]);
+    const d = [...new Set(visiblePool.map(p => p.rimDiameter).filter(Boolean))].sort((a, b) => (a || 0) - (b || 0));
+    return d.map(v => ({ value: String(v), label: `${v}"`, count: visiblePool.filter(p => p.rimDiameter === v).length }));
+  }, [visiblePool]);
 
-  // Filter
+  // Final filter on top of visiblePool.
   const filtered = useMemo(() => {
-    let result = [...products];
+    let result = [...visiblePool];
     if (activeType === 'steel') result = result.filter(p => p.wheelType === 'Steel Wheel');
     if (activeType === 'alloy') result = result.filter(p => p.wheelType === 'Alloy Wheel');
     if (activeDiameter !== 'all') result = result.filter(p => String(p.rimDiameter) === activeDiameter);
@@ -71,7 +109,9 @@ export default function VehicleResults({ products, availableDiameters }: Props) 
     });
 
     return result;
-  }, [products, activeType, activeDiameter, sort]);
+  }, [visiblePool, activeType, activeDiameter, sort]);
+
+  const hiddenCount = sellable.length - (showOutOfStock ? sellable.length : sellable.filter(p => isInStock(p.stock)).length);
 
   const pillBase = "text-xs px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer border";
   const pillActive = "bg-primary-600 text-white border-primary-600";
@@ -90,7 +130,7 @@ export default function VehicleResults({ products, availableDiameters }: Props) 
               onClick={() => setActiveDiameter('all')}
               className={`${pillBase} ${activeDiameter === 'all' ? pillActive : pillInactive}`}
             >
-              All ({products.length})
+              All ({visiblePool.length})
             </button>
             {diameters.map(d => (
               <button
@@ -120,8 +160,8 @@ export default function VehicleResults({ products, availableDiameters }: Props) 
           </div>
         </div>
 
-        {/* Sort */}
-        <div className="flex items-center gap-2 mt-2">
+        {/* Sort + in-stock toggle */}
+        <div className="flex items-center gap-2 mt-2 flex-wrap">
           <span className="text-dark-500 text-xs">Sort:</span>
           <select
             value={sort}
@@ -132,7 +172,23 @@ export default function VehicleResults({ products, availableDiameters }: Props) 
             <option value="price-desc">Price: High to Low</option>
             <option value="stock">In Stock First</option>
           </select>
-          <span className="text-dark-600 text-xs ml-2">{filtered.length} results</span>
+          <span className="text-dark-600 text-xs ml-1">{filtered.length} results</span>
+          {hiddenCount > 0 && !showOutOfStock && (
+            <button
+              onClick={() => setShowOutOfStock(true)}
+              className="ml-auto text-xs text-primary-400 hover:text-primary-300 underline-offset-2 hover:underline"
+            >
+              + Show {hiddenCount} order-on-demand
+            </button>
+          )}
+          {showOutOfStock && (
+            <button
+              onClick={() => setShowOutOfStock(false)}
+              className="ml-auto text-xs text-dark-400 hover:text-white"
+            >
+              In-stock only
+            </button>
+          )}
         </div>
       </div>
 
@@ -163,8 +219,11 @@ export default function VehicleResults({ products, availableDiameters }: Props) 
 
               {/* Info */}
               <div className="p-3 sm:p-4">
+                {p.brand && (
+                  <p className="text-primary-400 text-[10px] uppercase tracking-wide font-semibold mb-0.5">{p.brand}</p>
+                )}
                 <h3 className="text-white font-semibold text-xs sm:text-sm mb-0.5 line-clamp-1 group-hover:text-primary-300 transition-colors">
-                  {p.name || p.description.split(' ')[0]}
+                  {cleanName(p.name, p.description.split(' ')[0])}
                 </h3>
                 <p className="text-dark-400 text-[11px] line-clamp-1 mb-2">
                   {p.rimDiameter}" · {p.boltPattern}
@@ -179,13 +238,27 @@ export default function VehicleResults({ products, availableDiameters }: Props) 
         </div>
       ) : (
         <div className="text-center py-16 mt-6">
-          <p className="text-dark-500 text-sm">No wheels match the current filters.</p>
-          <button
-            onClick={() => { setActiveType('all'); setActiveDiameter('all'); }}
-            className="text-primary-400 text-sm mt-2 hover:underline"
-          >
-            Clear filters
-          </button>
+          <p className="text-dark-500 text-sm">
+            {!showOutOfStock && hiddenCount > 0
+              ? `No wheels in stock match the current filters. ${hiddenCount} order-on-demand wheel${hiddenCount === 1 ? '' : 's'} available.`
+              : 'No wheels match the current filters.'}
+          </p>
+          <div className="flex justify-center gap-3 mt-3">
+            <button
+              onClick={() => { setActiveType('all'); setActiveDiameter('all'); }}
+              className="text-primary-400 text-sm hover:underline"
+            >
+              Clear filters
+            </button>
+            {!showOutOfStock && hiddenCount > 0 && (
+              <button
+                onClick={() => setShowOutOfStock(true)}
+                className="text-primary-400 text-sm hover:underline"
+              >
+                Show order-on-demand
+              </button>
+            )}
+          </div>
         </div>
       )}
     </div>
