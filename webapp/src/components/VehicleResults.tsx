@@ -163,15 +163,23 @@ export default function VehicleResults({ products, availableDiameters }: Props) 
         {/* Sort + in-stock toggle */}
         <div className="flex items-center gap-2 mt-2 flex-wrap">
           <span className="text-dark-500 text-xs">Sort:</span>
-          <select
-            value={sort}
-            onChange={e => setSort(e.target.value as any)}
-            className="bg-dark-800 border border-dark-700/50 text-dark-300 text-xs rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-primary-500"
-          >
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-            <option value="stock">In Stock First</option>
-          </select>
+          <div className="inline-flex rounded-lg border border-dark-700/50 overflow-hidden bg-dark-800/50">
+            {([
+              ['price-asc', '$↑'],
+              ['price-desc', '$↓'],
+              ['stock', 'In Stock'],
+            ] as const).map(([val, label], i, arr) => (
+              <button
+                key={val}
+                onClick={() => setSort(val)}
+                className={`px-2.5 py-1 text-xs font-medium transition-colors ${
+                  sort === val ? 'bg-primary-600 text-white' : 'text-dark-300 hover:text-white hover:bg-dark-700/60'
+                } ${i < arr.length - 1 ? 'border-r border-dark-700/50' : ''}`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
           <span className="text-dark-600 text-xs ml-1">{filtered.length} results</span>
           {hiddenCount > 0 && !showOutOfStock && (
             <button
@@ -210,11 +218,6 @@ export default function VehicleResults({ products, availableDiameters }: Props) 
                   </svg>
                 )}
                 <TypeBadge type={p.wheelType} />
-                {p.hubCentric && (
-                  <span className="absolute top-3 right-3 text-[10px] font-medium px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20">
-                    Hub Centric
-                  </span>
-                )}
               </div>
 
               {/* Info */}
