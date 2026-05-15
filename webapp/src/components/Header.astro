@@ -1,17 +1,19 @@
 ---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <header class="bg-dark-900/80 backdrop-blur-md border-b border-dark-700/50 sticky top-0 z-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
     <div class="flex items-center justify-between h-16 gap-4">
       <!-- Logo -->
-      <a href="/gtatire/" class="flex items-center gap-3 shrink-0">
-        <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center shadow-lg shadow-primary-900/30">
-          <span class="text-dark-950 font-extrabold text-sm tracking-tight">JSDC</span>
-        </div>
-        <div class="hidden sm:block">
-          <div class="text-white font-bold text-lg leading-tight">JSDC <span class="text-primary-400">Wheels</span></div>
-          <div class="text-dark-400 text-xs leading-tight">Tires & Wheels</div>
-        </div>
+      <a href={`${base}/`} class="flex items-center shrink-0" aria-label="JSDC Wheels home">
+        <img
+          src={`${base}/brand/jsdc-logo.png`}
+          srcset={`${base}/brand/jsdc-logo.png 1x, ${base}/brand/jsdc-logo@2x.png 2x`}
+          alt="JSDC Wheels"
+          width="344"
+          height="40"
+          class="h-9 sm:h-10 w-auto"
+        />
       </a>
 
       <!-- Search bar (desktop) -->

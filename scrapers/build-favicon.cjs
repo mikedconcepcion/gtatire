@@ -110,6 +110,60 @@ async function main() {
     console.log('Removed favicon.svg (legacy Astro default)');
   }
 
+  // ─── Header logo: JSDC wordmark + wheel horizontal lockup ───
+  // The banner has wordmark/tagline/wheel stacked vertically, so a single
+  // rectangular crop always grabs the tagline. Extract wordmark and wheel
+  // separately (alpha-tight) and composite side-by-side.
+  async function tightExtract(crop) {
+    const rough = await sharp(BANNER).extract(crop).png().toBuffer();
+    const meta = await sharp(rough).metadata();
+    const alpha = await sharp(rough).extractChannel(3).raw().toBuffer();
+    let lx = meta.width, lX = 0, ly = meta.height, lY = 0;
+    for (let y = 0; y < meta.height; y++) {
+      for (let x = 0; x < meta.width; x++) {
+        if (alpha[y * meta.width + x] > 50) {
+          if (x < lx) lx = x; if (x > lX) lX = x;
+          if (y < ly) ly = y; if (y > lY) lY = y;
+        }
+      }
+    }
+    return sharp(rough).extract({ left: lx, top: ly, width: lX - lx + 1, height: lY - ly + 1 }).png().toBuffer();
+  }
+
+  // Wordmark only (no tagline below) — vertical range stops above tagline
+  const wordmarkBuf = await tightExtract({ left: 150, top: 330, width: 820, height: 120 });
+  const wordmarkMeta = await sharp(wordmarkBuf).metadata();
+  console.log(`Wordmark: ${wordmarkMeta.width}x${wordmarkMeta.height}`);
+
+  // Wheel — reuse the same tight bounds as the favicon
+  const wheelLogoBuf = wheelBuf;  // from earlier extraction
+  const wheelLogoMeta = await sharp(wheelLogoBuf).metadata();
+  console.log(`Wheel  : ${wheelLogoMeta.width}x${wheelLogoMeta.height}`);
+
+  // Composite at unified height. Pick a render height (e.g. 80px for retina).
+  for (const [renderH, suffix] of [[40, ''], [80, '@2x']]) {
+    const wordW = Math.round(wordmarkMeta.width * (renderH / wordmarkMeta.height));
+    const wheelW = Math.round(wheelLogoMeta.width * (renderH / wheelLogoMeta.height));
+    const gap = Math.round(renderH * 0.15);
+    const totalW = wordW + gap + wheelW;
+
+    const wordResized = await sharp(wordmarkBuf).resize(wordW, renderH, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer();
+    const wheelResized = await sharp(wheelLogoBuf).resize(wheelW, renderH, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer();
+
+    const composed = await sharp({
+      create: { width: totalW, height: renderH, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } },
+    })
+      .composite([
+        { input: wordResized, left: 0, top: 0 },
+        { input: wheelResized, left: wordW + gap, top: 0 },
+      ])
+      .png()
+      .toBuffer();
+
+    fs.writeFileSync(path.join(OUT_DIR, 'brand', `jsdc-logo${suffix}.png`), composed);
+    console.log(`Wrote brand/jsdc-logo${suffix}.png (${totalW}x${renderH})`);
+  }
+
   console.log('\nAll favicons written to webapp/public/');
 }
 
