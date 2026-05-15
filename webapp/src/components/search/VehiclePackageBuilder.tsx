@@ -62,7 +62,7 @@ function filterTier<T extends { priceNum: number }>(items: T[], tier: TierFilter
 
 // Pick a tier + brand diverse subset so recommendations span budget/mid/premium
 // and multiple brands, instead of stacking the cheapest brand at the top.
-function diversifyMix<T extends { priceNum: number; brand: string }>(items: T[], maxCount = 20): T[] {
+function diversifyMix<T extends { priceNum: number; brand: string }>(items: T[], maxCount = 500): T[] {
   if (items.length <= maxCount) return [...items].sort((a, b) => a.priceNum - b.priceNum);
 
   const sorted = [...items].sort((a, b) => a.priceNum - b.priceNum);
