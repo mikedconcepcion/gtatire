@@ -15,17 +15,16 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
 <Layout title="JSDC Wheels — Premium Tires & Wheels in the GTA">
   <!-- Hero -->
   <section class="relative overflow-hidden">
-    <!-- Background video (4s F&F-Canadian winter alloy on wet downtown Toronto).
-         Plays ONCE on first visit per session — "showcase" intro — then
-         settles to its last frame at reduced opacity for the rest of the
-         session. SessionStorage flag skips the intro on repeat page loads.
+    <!-- Background video: loops continuously at 30% opacity behind headline.
          Reduced-motion users get only the poster image, never the video. -->
     <video
       id="hero-video"
-      class="absolute inset-0 w-full h-full object-cover opacity-30 transition-opacity duration-700 ease-out motion-reduce:hidden"
+      class="absolute inset-0 w-full h-full object-cover opacity-30 motion-reduce:hidden"
       src="/videos/hero.mp4"
       poster="/videos/hero-poster.jpg"
       muted
+      loop
+      autoplay
       playsinline
       preload="metadata"
       aria-hidden="true"
@@ -39,89 +38,17 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
       (function () {
         var v = document.getElementById('hero-video');
         if (!v) return;
-        var FLAG = 'jsdc_hero_intro_played';
         var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReducedMotion) return; // CSS hides the video, poster fallback shows instead.
+        if (prefersReducedMotion) return;
 
-        var alreadyPlayed = false;
-        try { alreadyPlayed = sessionStorage.getItem(FLAG) === '1'; } catch (e) {}
-
-        function freezeOnLastFrame() {
-          try { v.currentTime = Math.max(0, (v.duration || 0) - 0.05); } catch (e) {}
-        }
-        function settle() {
-          v.style.opacity = '0.3';
-          v.loop = false;
-          try { sessionStorage.setItem(FLAG, '1'); } catch (e) {}
-        }
-
-        if (alreadyPlayed) {
-          // Repeat load in same session — skip the intro entirely.
-          settle();
-          if (v.readyState >= 1) freezeOnLastFrame();
-          else v.addEventListener('loadedmetadata', freezeOnLastFrame, { once: true });
-          return;
-        }
-
-        // First visit — showcase loop until the user engages OR the ceiling fires.
-        // The video loops smoothly until: (a) the visitor scrolls, clicks, taps,
-        // or types — i.e., signals they're ready to use the page; or (b) the
-        // MAX_LOOPS ceiling hits. Either way, the current loop plays out
-        // gracefully and we freeze on the last frame at 30% opacity for the
-        // rest of the session.
-        v.style.opacity = '0.75';
-        v.loop = false; // We replay manually so we can count loops + settle gracefully.
-
-        var MAX_LOOPS = 3;          // 3 × 4s ≈ 12s safety ceiling
-        var loopCount = 0;
-        var userEngaged = false;
-        var settleQueued = false;
-
-        function queueSettle() {
-          settleQueued = true;
-        }
-        ['scroll', 'click', 'touchstart', 'keydown'].forEach(function (evt) {
-          window.addEventListener(evt, function () {
-            userEngaged = true;
-            queueSettle();
-          }, { once: true, passive: true });
-        });
-
-        v.addEventListener('ended', function () {
-          loopCount++;
-          if (settleQueued || userEngaged || loopCount >= MAX_LOOPS) {
-            settle();
-            freezeOnLastFrame();
-            return;
-          }
-          v.currentTime = 0;
-          var p = v.play();
-          if (p && p.catch) p.catch(function () { settle(); freezeOnLastFrame(); });
-        });
-
-        // Pause when the tab is hidden — saves battery + data.
         document.addEventListener('visibilitychange', function () {
           if (document.hidden) {
             v.pause();
-          } else {
-            var stillShowing = !sessionStorage.getItem(FLAG);
-            if (stillShowing && v.paused) {
-              var p = v.play();
-              if (p && p.catch) p.catch(function () {});
-            }
+          } else if (v.paused) {
+            var p = v.play();
+            if (p && p.catch) p.catch(function () {});
           }
         });
-
-        // Kick off the first play.
-        var playPromise = v.play();
-        if (playPromise && playPromise.catch) {
-          playPromise.catch(function () {
-            // Autoplay blocked (rare for muted) — settle immediately.
-            settle();
-            if (v.readyState >= 1) freezeOnLastFrame();
-            else v.addEventListener('loadedmetadata', freezeOnLastFrame, { once: true });
-          });
-        }
       })();
     </script>
     <!-- Layered overlays: dark vignette + warm gold glow keep the headline crisp -->
