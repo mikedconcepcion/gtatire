@@ -30,12 +30,15 @@ for (const [sku, vehicleList] of Object.entries(fitment)) {
 }
 // Hide discontinued wheels entirely — they can't be sold and pollute results.
 const sellable = allProducts.filter(p => matchingIds.has(p.id) && !/discontinu/i.test(String(p.stock || '')));
+// Anything not explicitly out-of-stock or discontinued counts as in stock —
+// "Available", "Contact us", and "Production" are all fulfilled via supplier
+// order so they're effectively available to the customer.
 function inStock(s: string): boolean {
-  if (!s) return false;
-  if (/in stock/i.test(s)) return true;
-  if (s === '20+') return true;
-  const n = parseInt(s, 10);
-  return !isNaN(n) && n >= 1;
+  const t = String(s || '').trim();
+  if (/out of stock/i.test(t)) return false;
+  if (/^n\/?a$/i.test(t)) return false;
+  if (/discontinu/i.test(t)) return false;
+  return true;
 }
 const inStockProducts = sellable.filter(p => inStock(String(p.stock || '')));
 const products = sellable;
@@ -77,9 +80,6 @@ const alloyCount = inStockProducts.filter((p: any) => p.wheelType === 'Alloy Whe
           </h1>
           <p class="text-dark-400 mt-1">
             {inStockProducts.length} in stock
-            {sellable.length > inStockProducts.length && (
-              <span> · {sellable.length - inStockProducts.length} order-on-demand</span>
-            )}
             {availableDiameters.length > 0 && (
               <span> · Fits {availableDiameters.map((d: string) => `${d}"`).join(', ')} rims</span>
             )}

@@ -26,35 +26,28 @@ interface Props {
   availableDiameters: string[];
 }
 
-// Classify supplier stock strings into a small set of states.
-// In stock: "20+", "20+ In Stock", "3 In Stock", or a bare positive integer.
-// On order: "Available", "Contact us", "In Production", "NEW - In Production".
-// Out:      "Out of Stock", "N/A", and any empty/unknown value.
-// Hidden:   anything matching /discontinu/i — these never reach the grid.
+// Anything not explicitly out-of-stock or discontinued counts as in stock.
+// Supplier "Available" / "Contact us" / "Production" items are all fulfillable
+// via order, so the customer sees them as in stock.
 function isInStock(stock: string | null | undefined): boolean {
-  if (!stock) return false;
-  const s = String(stock).trim();
-  if (/in stock/i.test(s)) return true;
-  if (s === '20+') return true;
-  const n = parseInt(s, 10);
-  return !isNaN(n) && n >= 1;
+  const s = String(stock || '').trim();
+  if (/out of stock/i.test(s)) return false;
+  if (/^n\/?a$/i.test(s)) return false;
+  if (/discontinu/i.test(s)) return false;
+  return true;
 }
 function isDiscontinued(stock: string | null | undefined): boolean {
   return /discontinu/i.test(String(stock || ''));
 }
-function isOnOrder(stock: string | null | undefined): boolean {
-  const s = String(stock || '').toLowerCase();
-  return s === 'available' || s.startsWith('contact') || /production/i.test(s);
-}
 
 function StockBadge({ stock }: { stock: string }) {
-  if (isInStock(stock)) {
-    const n = parseInt(stock, 10);
-    const low = !isNaN(n) && n > 0 && n < 10;
-    return <span className={`text-xs font-medium ${low ? 'text-amber-400' : 'text-green-400'}`}>{low ? `${n} left` : 'In Stock'}</span>;
-  }
-  if (isOnOrder(stock)) return <span className="text-xs font-medium text-amber-400">Order on Demand</span>;
-  return <span className="text-xs font-medium text-red-400">Out of Stock</span>;
+  const s = String(stock || '').trim();
+  const n = parseInt(s, 10);
+  const out = /out of stock/i.test(s) || /^n\/?a$/i.test(s) || /discontinu/i.test(s);
+  const low = !out && !isNaN(n) && n >= 1 && n < 10;
+  const color = out ? 'text-red-400' : low ? 'text-amber-400' : 'text-green-400';
+  const label = out ? 'Out of Stock' : low ? `${n} left` : 'In Stock';
+  return <span className={`text-xs font-medium ${color}`}>{label}</span>;
 }
 
 function cleanName(name: string | null | undefined, fallback: string = ''): string {

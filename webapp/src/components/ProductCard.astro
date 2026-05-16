@@ -26,20 +26,12 @@ const typeColors: Record<string, string> = {
 };
 const typeClass = typeColors[type] || 'bg-dark-700/50 text-dark-300 border-dark-600';
 
-const stockNum = parseInt(stock);
-const inStock = stock === '20+' || stock.includes('In Stock') || stock === 'Available' || stockNum >= 10 || stock.includes('20+');
-const lowStock = stockNum >= 1 && stockNum < 10;
-const contactUs = stock === 'Contact us';
-const outOfStock = stock.includes('Out of Stock');
-const stockColor = inStock
-  ? 'text-green-400'
-  : lowStock
-    ? 'text-amber-400'
-    : outOfStock
-      ? 'text-red-400'
-      : 'text-dark-400';
-// Fix: "Contact us" → "Available" (friendlier)
-const stockLabel = inStock ? 'In Stock' : lowStock ? `${stockNum} left` : outOfStock ? 'Out of Stock' : contactUs ? 'Available' : stock || 'Available';
+const stockStr = String(stock || '').trim();
+const stockNum = parseInt(stockStr, 10);
+const outOfStock = /out of stock/i.test(stockStr) || /^n\/?a$/i.test(stockStr) || /discontinu/i.test(stockStr);
+const lowStock = !outOfStock && !isNaN(stockNum) && stockNum >= 1 && stockNum < 10;
+const stockLabel = outOfStock ? 'Out of Stock' : lowStock ? `${stockNum} left` : 'In Stock';
+const stockColor = outOfStock ? 'text-red-400' : lowStock ? 'text-amber-400' : 'text-green-400';
 
 const showImage = image && !noImage;
 const isTire = category === 'tire';

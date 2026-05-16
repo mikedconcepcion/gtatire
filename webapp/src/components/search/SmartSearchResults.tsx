@@ -45,11 +45,12 @@ interface TireFitmentMap {
 }
 
 function StockBadge({ stock }: { stock: string }) {
-  const inStock = stock.includes('In Stock') || stock === 'Available' || stock === '20+' || parseInt(stock) >= 10;
-  const low = parseInt(stock) >= 1 && parseInt(stock) < 10;
-  const out = stock.includes('Out of Stock');
-  const color = inStock ? 'text-green-400' : low ? 'text-amber-400' : out ? 'text-red-400' : 'text-dark-400';
-  const label = inStock ? 'In Stock' : low ? `${parseInt(stock)} left` : out ? 'Out of Stock' : stock === 'Contact us' ? 'Available' : stock || 'Available';
+  const s = String(stock || '').trim();
+  const n = parseInt(s, 10);
+  const out = /out of stock/i.test(s) || /^n\/?a$/i.test(s) || /discontinu/i.test(s);
+  const low = !out && !isNaN(n) && n >= 1 && n < 10;
+  const color = out ? 'text-red-400' : low ? 'text-amber-400' : 'text-green-400';
+  const label = out ? 'Out of Stock' : low ? `${n} left` : 'In Stock';
   return <span className={`text-xs font-medium ${color}`}>{label}</span>;
 }
 
