@@ -35,6 +35,15 @@
         <a href="/tires" class="text-dark-300 hover:text-white transition-colors text-sm font-medium">Tires</a>
         <a href="/wheels" class="text-dark-300 hover:text-white transition-colors text-sm font-medium">Wheels</a>
         <a href="/contact" class="text-dark-300 hover:text-white transition-colors text-sm font-medium">Contact</a>
+        <a
+          href="/inquire"
+          id="desktop-inquiry-link"
+          class="hidden text-primary-400 hover:text-primary-300 transition-colors text-sm font-semibold items-center gap-1.5"
+          aria-label="Open inquiry list"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+          Inquiry (<span data-inquiry-count>0</span>)
+        </a>
         <a href="tel:+16476123341" class="inline-flex items-center gap-1.5 bg-primary-600 hover:bg-primary-500 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-lg shadow-primary-900/30" aria-label="Call JSDC Wheels">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.95.68l1.5 4.49a1 1 0 01-.5 1.21l-2.26 1.13a11 11 0 005.52 5.52l1.13-2.26a1 1 0 011.21-.5l4.49 1.5a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" /></svg>
           647-612-3341
@@ -123,6 +132,22 @@
       </ul>
     </div>
 
+    <!-- Inquiry list (only shown when there's at least 1 item) -->
+    <a
+      href="/inquire"
+      id="mobile-inquiry-link"
+      class="hidden mx-4 mt-3 px-3 py-3 rounded-lg bg-primary-600/15 border border-primary-500/40 text-primary-200 hover:text-white hover:bg-primary-600/25 items-center justify-between text-sm font-semibold transition-colors"
+    >
+      <span class="inline-flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+        Inquiry list
+      </span>
+      <span class="inline-flex items-center gap-1.5">
+        <span data-inquiry-count class="bg-primary-600/40 text-white px-2 py-0.5 rounded text-xs">0</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+      </span>
+    </a>
+
     <!-- Primary action: call -->
     <div class="px-4 py-4 bg-dark-950/50">
       <a href="tel:+16476123341" class="flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-500 active:bg-primary-700 text-white font-semibold py-3 rounded-lg text-base shadow-lg shadow-primary-900/30">
@@ -157,4 +182,105 @@
       btn?.setAttribute('aria-expanded', 'false');
     });
   });
+
+  // ─── Inquiry count sync (desktop + mobile badges) ─────────────────
+  function readInquiryCount() {
+    try {
+      const raw = localStorage.getItem('jsdc_inquiry');
+      if (!raw) return 0;
+      const items = JSON.parse(raw);
+      return Array.isArray(items) ? items.length : 0;
+    } catch (e) { return 0; }
+  }
+  function paintInquiryCount() {
+    const n = readInquiryCount();
+    document.querySelectorAll('[data-inquiry-count]').forEach((el) => {
+      (el as HTMLElement).textContent = String(n);
+    });
+    const desktopLink = document.getElementById('desktop-inquiry-link');
+    const mobileLink = document.getElementById('mobile-inquiry-link');
+    if (n > 0) {
+      desktopLink?.classList.remove('hidden');
+      desktopLink?.classList.add('inline-flex');
+      mobileLink?.classList.remove('hidden');
+      mobileLink?.classList.add('flex');
+    } else {
+      desktopLink?.classList.add('hidden');
+      desktopLink?.classList.remove('inline-flex');
+      mobileLink?.classList.add('hidden');
+      mobileLink?.classList.remove('flex');
+    }
+  }
+  paintInquiryCount();
+  window.addEventListener('jsdc-inquiry-change', paintInquiryCount);
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'jsdc_inquiry') paintInquiryCount();
+  });
+
+  // ─── Global inquiry-button click handler (for .astro product cards) ───
+  function readInquiry() {
+    try {
+      const raw = localStorage.getItem('jsdc_inquiry');
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) { return []; }
+  }
+  function writeInquiry(items: any[]) {
+    try { localStorage.setItem('jsdc_inquiry', JSON.stringify(items)); } catch (e) {}
+    try { window.dispatchEvent(new CustomEvent('jsdc-inquiry-change')); } catch (e) {}
+  }
+  function paintTriggerStates() {
+    const items = readInquiry();
+    const ids = new Set(items.map((i: any) => i.id));
+    document.querySelectorAll<HTMLElement>('.jsdc-inquiry-trigger').forEach((btn) => {
+      const id = btn.dataset.inquiryId;
+      if (!id) return;
+      const inList = ids.has(id);
+      const item = items.find((i: any) => i.id === id);
+      const label = btn.querySelector<HTMLElement>('.jsdc-inquiry-label');
+      const plus = btn.querySelector<HTMLElement>('.jsdc-inquiry-plus');
+      const check = btn.querySelector<HTMLElement>('.jsdc-inquiry-check');
+      if (inList) {
+        btn.classList.add('bg-green-600/20', 'border-green-500/40', 'text-green-300');
+        btn.classList.remove('bg-primary-600/15', 'border-primary-500/30', 'text-primary-200');
+        if (label) label.textContent = `Added (×${item?.qty || 4})`;
+        plus?.classList.add('hidden');
+        check?.classList.remove('hidden');
+        btn.setAttribute('aria-pressed', 'true');
+      } else {
+        btn.classList.remove('bg-green-600/20', 'border-green-500/40', 'text-green-300');
+        btn.classList.add('bg-primary-600/15', 'border-primary-500/30', 'text-primary-200');
+        if (label) label.textContent = 'Add to Inquiry';
+        plus?.classList.remove('hidden');
+        check?.classList.add('hidden');
+        btn.setAttribute('aria-pressed', 'false');
+      }
+    });
+  }
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLElement>('.jsdc-inquiry-trigger');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const id = btn.dataset.inquiryId;
+    if (!id) return;
+    let items = readInquiry();
+    const idx = items.findIndex((i: any) => i.id === id);
+    if (idx >= 0) {
+      items = items.filter((i: any) => i.id !== id);
+    } else {
+      items.push({
+        id,
+        name: btn.dataset.inquiryName || id,
+        category: btn.dataset.inquiryCategory || 'wheel',
+        image: btn.dataset.inquiryImage || undefined,
+        size: btn.dataset.inquirySize || undefined,
+        priceNum: parseFloat(btn.dataset.inquiryPrice || '0') || 0,
+        qty: 4,
+      });
+    }
+    writeInquiry(items);
+  });
+  paintTriggerStates();
+  window.addEventListener('jsdc-inquiry-change', paintTriggerStates);
 </script>

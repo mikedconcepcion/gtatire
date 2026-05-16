@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import InquiryButton from '../InquiryButton';
 
 interface Product {
   id: string;
@@ -152,12 +153,13 @@ function StockBadge({ stock }: { stock: string }) {
   return <span className={`text-[9px] font-medium ${color}`}>{label}</span>;
 }
 
-function ProductCard({ product, isSelected, onSelect, detailUrl, layout = 'grid' }: {
+function ProductCard({ product, isSelected, onSelect, detailUrl, layout = 'grid', vehicle }: {
   product: Product;
   isSelected: boolean;
   onSelect: () => void;
   detailUrl: string;
   layout?: 'strip' | 'grid';
+  vehicle?: string;
 }) {
   const sizing = layout === 'strip' ? 'shrink-0 w-36 sm:w-40' : 'w-full';
   return (
@@ -190,10 +192,21 @@ function ProductCard({ product, isSelected, onSelect, detailUrl, layout = 'grid'
         <p className="text-dark-400 text-[9px] line-clamp-1">
           {product.tireSize || `${product.rimDiameter}x${product.rimWidth} ${product.boltPattern}`} {product.finish}
         </p>
-        <div className="flex items-center justify-between mt-1">
+        <div className="flex items-center justify-between mt-1 mb-1.5">
           <span className="text-white font-bold text-sm">{product.price}</span>
           <StockBadge stock={product.stock} />
         </div>
+        <InquiryButton
+          item={{
+            id: product.id,
+            name: `${product.brand || ''} ${product.name || ''}`.trim() || product.description,
+            category: product.category as 'wheel' | 'tire',
+            image: product.image,
+            size: product.tireSize || (product.rimDiameter ? `${product.rimDiameter}x${product.rimWidth}` : ''),
+            priceNum: product.priceNum,
+            vehicle,
+          }}
+        />
       </div>
       <a
         href={detailUrl}
@@ -508,6 +521,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
                 onSelect={() => setSelectedTireId(t.id)}
                 detailUrl={`/tires/${t.id}`}
                 layout="grid"
+                vehicle={vehicleLabel}
               />
             ))}
           </div>
@@ -521,6 +535,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
                 onSelect={() => setSelectedTireId(t.id)}
                 detailUrl={`/tires/${t.id}`}
                 layout="strip"
+                vehicle={vehicleLabel}
               />
             ))}
           </div>
@@ -593,6 +608,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
                 onSelect={() => setSelectedWheelId(w.id)}
                 detailUrl={`/wheels/${w.id}`}
                 layout="grid"
+                vehicle={vehicleLabel}
               />
             ))}
           </div>
@@ -606,6 +622,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
                 onSelect={() => setSelectedWheelId(w.id)}
                 detailUrl={`/wheels/${w.id}`}
                 layout="strip"
+                vehicle={vehicleLabel}
               />
             ))}
           </div>
@@ -640,6 +657,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
                   onSelect={() => setSelectedWheelId(w.id)}
                   detailUrl={`/wheels/${w.id}`}
                   layout="strip"
+                  vehicle={vehicleLabel}
                 />
               ))}
             </div>
