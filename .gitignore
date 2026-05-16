@@ -38,3 +38,12 @@ scrapers/superspeed-fitment-recon.json
 # OS
 Thumbs.db
 .DS_Store
+
+# Local generation scripts (may contain API keys; not part of the deployed site)
+_scripts/
+
+# AI-generated video candidates (large binaries, kept locally for review)
+_video-candidates/
+
+# Wrangler / Cloudflare build cache
+webapp/.wrangler/
