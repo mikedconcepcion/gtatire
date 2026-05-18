@@ -47,6 +47,26 @@ function nextSku(category = 'W') {
   return `GTA-${category}-${String(skuCounter).padStart(4, '0')}`;
 }
 
+// Brand-name normalization. Alltire's tire feed sometimes ships UPPER and
+// sometimes "Hankook" / "HANKOOk" / "Hankook " — fold to a single canonical
+// Title Case form so filters don't show duplicates.
+function normalizeBrand(b) {
+  if (!b) return '';
+  const trimmed = String(b).trim();
+  if (!trimmed) return '';
+  // Preserve known stylized names; otherwise Title Case
+  const PRESERVE = {
+    'OE+': 'OE+', 'OE+ FORGED': 'OE+ Forged',
+    'BFGOODRICH': 'BFGoodrich',
+    'RWC': 'RWC',
+    'SUPERSPEED FORGED': 'Superspeed Forged',
+  };
+  const up = trimmed.toUpperCase();
+  if (PRESERVE[up]) return PRESERVE[up];
+  // Title Case: first letter upper, rest lower, per whitespace-separated word
+  return up.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
+}
+
 // Parse wheel description for specs
 function parseWheelDescription(desc) {
   const specs = {};
@@ -178,7 +198,7 @@ function buildDatabase() {
       });
 
       // Alltire brand: Steel wheels are generic, Alloy wheels are "Macpek"
-      const alltireBrand = raw.wheelType === 'Steel Wheel' ? 'Steel' : 'Macpek';
+      const alltireBrand = normalizeBrand(raw.wheelType === 'Steel Wheel' ? 'Steel' : 'Macpek');
 
       products.push({
         id: gtaId,
@@ -266,7 +286,7 @@ function buildDatabase() {
         id: gtaId,
         sku: gtaId,
         category: 'wheel',
-        brand: w.BRAND || 'Superspeed',
+        brand: normalizeBrand(w.BRAND || 'Superspeed'),
         wheelType: 'Alloy Wheel',
         name: w.MODEL || '',
         description: `${w.MODEL} ${w.DIAMETER}x${w.WIDTH} ${w.PCD} ET${w.ET} CB${w.CB} ${w.FINISH}`,
@@ -339,7 +359,7 @@ function buildDatabase() {
         id: gtaId,
         sku: gtaId,
         category: 'wheel',
-        brand: 'RWC',
+        brand: normalizeBrand('RWC'),
         wheelType: 'Alloy Wheel',
         name: w.modelCode1 || w.name || '',
         description: w.name || '',
@@ -414,7 +434,7 @@ function buildDatabase() {
         id: gtaId,
         sku: gtaId,
         category: 'tire',
-        brand: t.maker || '',
+        brand: normalizeBrand(t.maker || ''),
         wheelType: t.type || 'All Season',
         name: t.model || '',
         description: t.description || '',
