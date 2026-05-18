@@ -7,6 +7,10 @@
 // In dev (when PROD=false) the base is empty, so paths resolve to
 // webapp/public/ via the local dev server. In prod it points at jsDelivr
 // pinned to a branch. Override either by setting PUBLIC_CDN_BASE.
+// Fallback if PUBLIC_CDN_BASE isn't injected at build (e.g. local prod build
+// without the env var). Branch-pinned URLs cache for ~12hr at jsDelivr's
+// edge; the CI workflow overrides this with @<commit-sha> so every deploy
+// gets fresh URLs without needing a manual cache purge.
 const DEFAULT_PROD_BASE = 'https://cdn.jsdelivr.net/gh/mikedconcepcion/gtatire@cloudflare-migration/webapp/public';
 
 const envBase = (import.meta as any).env?.PUBLIC_CDN_BASE;

@@ -54,6 +54,11 @@ jobs:
 
       - name: Build (also strips CDN assets from dist/)
         working-directory: webapp
+        # Pin the CDN base to this commit's SHA so every deploy gets
+        # immutable URLs. Means clients always see the matching catalogue
+        # data for the code they downloaded, with no jsDelivr cache lag.
+        env:
+          PUBLIC_CDN_BASE: https://cdn.jsdelivr.net/gh/mikedconcepcion/gtatire@${{ github.sha }}/webapp/public
         run: npm run build
 
       - name: Deploy to Cloudflare Pages
