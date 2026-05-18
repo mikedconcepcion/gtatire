@@ -17,7 +17,17 @@ const envBase = (import.meta as any).env?.PUBLIC_CDN_BASE;
 const isProd = !!(import.meta as any).env?.PROD;
 const CDN_BASE = (envBase ?? (isProd ? DEFAULT_PROD_BASE : '')).replace(/\/$/, '');
 
+// Files served from the same-origin Cloudflare Pages build instead of the
+// jsDelivr CDN. fitment.json is 24MB which is over jsDelivr's 20MB per-file
+// limit (returns 403), but well under Cloudflare's 25MB per-file cap.
+// Trade-off: a catalogue refresh needs a Cloudflare rebuild for fitment to
+// update (every other JSON file ships via `git push` alone).
+const LOCAL_ONLY = new Set<string>([
+  '/data/fitment.json',
+]);
+
 export function cdnUrl(path: string): string {
+  if (LOCAL_ONLY.has(path)) return path;
   if (!CDN_BASE) return path;
   return `${CDN_BASE}/${path.replace(/^\//, '')}`;
 }
