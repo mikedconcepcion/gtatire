@@ -26,7 +26,7 @@ export default function HeroSearch() {
   const [selSize, setSelSize] = useState('');
 
   useEffect(() => {
-    fetch('' + '/data/vehicles.json')
+    fetch(cdnUrl('/data/vehicles.json'))
       .then(r => r.json())
       .then(data => setVehicleTree(data))
       .catch(() => {});

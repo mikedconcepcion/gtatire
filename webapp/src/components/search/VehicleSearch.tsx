@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { cdnUrl } from '../../lib/cdn';
 
 interface VehicleTree {
   [year: string]: {
@@ -30,7 +31,7 @@ export default function VehicleSearch() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('' + '/data/vehicles.json')
+    fetch(cdnUrl('/data/vehicles.json'))
       .then(r => r.json())
       .then(data => { setVehicleTree(data); setLoading(false); })
       .catch(() => setLoading(false));

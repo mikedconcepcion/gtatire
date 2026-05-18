@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { cdnUrl } from '../../lib/cdn';
 
 interface VehicleTree {
   [year: string]: {
@@ -21,8 +22,8 @@ export default function VehicleDropdowns() {
 
   useEffect(() => {
     Promise.all([
-      fetch(base + '/data/vehicles.json').then(r => r.json()),
-      fetch(base + '/data/tire-fitment.json').then(r => r.json()).catch(() => ({})),
+      fetch(cdnUrl('/data/vehicles.json')).then(r => r.json()),
+      fetch(cdnUrl('/data/tire-fitment.json')).then(r => r.json()).catch(() => ({})),
     ]).then(([vehs, tFit]) => {
       setVehicleTree(vehs);
       setTireFitment(tFit);

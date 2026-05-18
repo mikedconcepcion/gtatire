@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Fuse from 'fuse.js';
 import VehiclePackageBuilder from './VehiclePackageBuilder';
+import { cdnUrl } from '../../lib/cdn';
 
 interface Product {
   id: string;
@@ -185,10 +186,10 @@ export default function SmartSearchResults() {
   // Load all data
   useEffect(() => {
     Promise.all([
-      fetch(`/data/products.json`).then(r => r.json()),
-      fetch(`/data/fitment.json`).then(r => r.json()),
-      fetch(`/data/vehicles.json`).then(r => r.json()),
-      fetch(`/data/tire-fitment.json`).then(r => r.json()).catch(() => ({})),
+      fetch(cdnUrl('/data/products.json')).then(r => r.json()),
+      fetch(cdnUrl('/data/fitment.json')).then(r => r.json()),
+      fetch(cdnUrl('/data/vehicles.json')).then(r => r.json()),
+      fetch(cdnUrl('/data/tire-fitment.json')).then(r => r.json()).catch(() => ({})),
     ])
       .then(([prods, fit, vehs, tFit]) => {
         setProducts(prods);

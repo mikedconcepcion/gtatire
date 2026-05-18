@@ -1,4 +1,5 @@
 // Product types and data loading from static JSON files
+import { cdnUrl } from '../lib/cdn';
 
 export interface Product {
   id: string;
@@ -60,22 +61,22 @@ export interface CatalogStats {
 
 // Load static JSON at build time (Astro)
 export async function loadProducts(): Promise<Product[]> {
-  const res = await fetch('/data/products.json');
+  const res = await fetch(cdnUrl('/data/products.json'));
   return res.json();
 }
 
 export async function loadVehicles(): Promise<VehicleTree> {
-  const res = await fetch('/data/vehicles.json');
+  const res = await fetch(cdnUrl('/data/vehicles.json'));
   return res.json();
 }
 
 export async function loadFitment(): Promise<FitmentMap> {
-  const res = await fetch('/data/fitment.json');
+  const res = await fetch(cdnUrl('/data/fitment.json'));
   return res.json();
 }
 
 export async function loadStats(): Promise<CatalogStats> {
-  const res = await fetch('/data/stats.json');
+  const res = await fetch(cdnUrl('/data/stats.json'));
   return res.json();
 }
 
