@@ -1148,3 +1148,27 @@
 | 10:39 | Created webapp/src/lib/cdn.ts | — | ~276 |
 
 | 10:41 | CDN refactor: detail pages client-hydrated, images+JSON via jsDelivr | webapp/, scrapers/build-internal-db.js | dist/ 25k->67 files, 2 commits, pushed | ~1200 |
+| 10:42 | Session end: 37 writes across 21 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 26 reads | ~29486 tok |
+| 10:44 | Created webapp/src/components/detail/WheelsListingPage.tsx | — | ~1612 |
+| 10:44 | Created webapp/src/components/detail/TiresListingPage.tsx | — | ~1695 |
+| 10:44 | Created webapp/src/pages/wheels.astro | — | ~56 |
+| 10:44 | Created webapp/src/pages/tires.astro | — | ~55 |
+| 10:50 | Session end: 41 writes across 25 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 27 reads | ~32912 tok |
+| 10:51 | Session end: 41 writes across 25 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 27 reads | ~32912 tok |
+| 10:54 | Session end: 41 writes across 25 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 27 reads | ~32912 tok |
+| 11:06 | Created .github/workflows/deploy-cloudflare.yml | — | ~600 |
+| 11:06 | Session end: 42 writes across 26 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 27 reads | ~33512 tok |
+| 11:12 | Session end: 42 writes across 26 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 27 reads | ~33512 tok |
+| 11:17 | Session end: 42 writes across 26 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 27 reads | ~33512 tok |
+| 11:20 | Edited .github/workflows/deploy-cloudflare.yml | 5→9 lines | ~117 |
+| 11:20 | Edited .github/workflows/deploy-cloudflare.yml | inline fix | ~35 |
+| 11:23 | Session end: 44 writes across 26 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 27 reads | ~33664 tok |
+| 11:24 | Edited webapp/src/components/search/HeroSearch.tsx | added 1 import(s) | ~34 |
+| 11:27 | Edited scrapers/build-internal-db.js | added 1 condition(s) | ~146 |
+| 11:36 | Edited webapp/src/lib/cdn.ts | 1→5 lines | ~114 |
+| 11:36 | Edited .github/workflows/deploy-cloudflare.yml | 3→8 lines | ~131 |
+| 11:38 | Session end: 48 writes across 26 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 27 reads | ~36216 tok |
+| 11:40 | Edited webapp/src/lib/cdn.ts | added 1 condition(s) | ~226 |
+| 11:40 | Edited webapp/scripts/strip-cdn-assets.mjs | 8→9 lines | ~76 |
+
+| 11:42 | CDN pipeline live: SHA-pinned URLs, fitment.json served from origin (>20MB) | webapp/, .github/workflows/ | 5 commits, all autodeployed via CI | ~1500 |
