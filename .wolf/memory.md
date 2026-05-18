@@ -1172,3 +1172,25 @@
 | 11:40 | Edited webapp/scripts/strip-cdn-assets.mjs | 8→9 lines | ~76 |
 
 | 11:42 | CDN pipeline live: SHA-pinned URLs, fitment.json served from origin (>20MB) | webapp/, .github/workflows/ | 5 commits, all autodeployed via CI | ~1500 |
+| 11:42 | Session end: 50 writes across 26 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 27 reads | ~36523 tok |
+| 11:48 | Edited webapp/public/_redirects | expanded (+8 lines) | ~279 |
+| 11:51 | Edited webapp/public/_redirects | 5→3 lines | ~42 |
+| 11:54 | Session end: 52 writes across 26 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 27 reads | ~36867 tok |
+| 12:03 | Session end: 52 writes across 26 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 27 reads | ~36867 tok |
+| 12:05 | Edited scrapers/build-internal-db.js | added 3 condition(s) | ~276 |
+| 12:05 | Edited scrapers/build-internal-db.js | 2→2 lines | ~50 |
+| 12:05 | Edited scrapers/build-internal-db.js | 2→2 lines | ~26 |
+| 12:05 | Edited scrapers/build-internal-db.js | 2→2 lines | ~21 |
+| 12:05 | Edited scrapers/build-internal-db.js | 2→2 lines | ~26 |
+| 12:07 | Edited webapp/src/components/Header.astro | expanded (+7 lines) | ~1112 |
+| 12:08 | Edited webapp/src/layouts/Layout.astro | expanded (+13 lines) | ~492 |
+| 12:09 | Created webapp/src/pages/vehicle/[year]/[make]/[model].astro | — | ~639 |
+| 12:09 | Created webapp/src/pages/wheels/[id].astro | — | ~651 |
+| 12:10 | Created webapp/src/pages/tires/[id].astro | — | ~559 |
+| 12:10 | Edited webapp/public/_redirects | reduced (-11 lines) | ~81 |
+| 12:14 | Edited webapp/src/pages/vehicle/[year]/[make]/[model].astro | 4→6 lines | ~135 |
+| 12:14 | Edited webapp/src/pages/vehicle/[year]/[make]/[model].astro | 13→13 lines | ~140 |
+| 12:14 | Edited webapp/src/pages/wheels/[id].astro | expanded (+8 lines) | ~304 |
+| 12:15 | Edited webapp/src/pages/tires/[id].astro | 8→10 lines | ~152 |
+
+| 12:23 | Shipped P0 audit fixes: per-page SEO chrome, brand normalize, WhatsApp FAB | webapp/, scrapers/ | sitemap 28->14450, 34 tire brands, 3 wa.me surfaces | ~2000 |

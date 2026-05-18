@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-18T02:39:28.622Z
-> Files: 47 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-18T04:15:01.146Z
+> Files: 56 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -15,6 +15,7 @@
 
 ## .github/workflows/
 
+- `deploy-cloudflare.yml` — CI: Deploy to Cloudflare Pages (~782 tok)
 
 ## C:/Users/miked/.claude/projects/E--James-gtatire/memory/
 
@@ -52,7 +53,7 @@
 
 ## scrapers/
 
-- `build-internal-db.js` — Build internal GTA database from raw supplier data. (~8174 tok)
+- `build-internal-db.js` — Build internal GTA database from raw supplier data. (~8480 tok)
 - `probe-click-diag.js` — Diagnostic: for ONE failing vehicle (2020 Acura ILX), navigate to the (~971 tok)
 - `probe-fastco-api.js` — Probe fastco's REST API endpoints with our logged-in session cookies. (~602 tok)
 - `probe-fastco-picker.js` — Probe: open fastco's vehicle picker page, dump the dropdown structure (~894 tok)
@@ -75,7 +76,7 @@
 
 ## webapp/public/
 
-- `_redirects` — Cloudflare Pages redirects (~736 tok)
+- `_redirects` — Cloudflare Pages redirects (~641 tok)
 
 ## webapp/public/data/
 
@@ -83,11 +84,12 @@
 
 ## webapp/scripts/
 
-- `strip-cdn-assets.mjs` — Strip GitHub-CDN-served assets from dist/ after `astro build` so Cloudflare (~475 tok)
+- `strip-cdn-assets.mjs` — Strip GitHub-CDN-served assets from dist/ after `astro build` so Cloudflare (~505 tok)
 
 ## webapp/src/components/
 
 - `CompatibleProducts.tsx` — CompatibleProducts (~1711 tok)
+- `Header.astro` — Astro: Header (~5296 tok)
 - `ProductCard.astro` — Astro: ProductCard (~1302 tok)
 - `ProductCard.tsx` — TSX version of ProductCard.astro for use inside other React components (~1397 tok)
 - `VehicleResults.tsx` — isInStock (~3236 tok)
@@ -99,12 +101,14 @@
 ## webapp/src/components/detail/
 
 - `TireDetailPage.tsx` — Mirrors WheelDetailPage for /tires/{id} — see that file for the rationale (~1056 tok)
+- `TiresListingPage.tsx` — PAGE_SIZE (~1695 tok)
 - `VehicleDetailPage.tsx` — Hydrator for /vehicle/{year}/{make}/{model}. Replaces the previously (~1918 tok)
 - `WheelDetailPage.tsx` — Reads /wheels/{id} from window.location, fetches products + fitment from the (~1451 tok)
+- `WheelsListingPage.tsx` — PAGE_SIZE (~1612 tok)
 
 ## webapp/src/components/search/
 
-- `HeroSearch.tsx` — POPULAR — renders form (~2127 tok)
+- `HeroSearch.tsx` — POPULAR — renders form (~2139 tok)
 - `SmartSearchResults.tsx` — StockBadge (~12322 tok)
 - `VehicleDropdowns.tsx` — VehicleDropdowns (~1512 tok)
 - `VehiclePackageBuilder.tsx` — MAKE_MAP (~9529 tok)
@@ -116,16 +120,20 @@
 
 ## webapp/src/layouts/
 
+- `Layout.astro` — Astro: Layout (~4280 tok)
 
 ## webapp/src/lib/
 
-- `cdn.ts` — CDN base for static catalogue assets (images, large JSON). (~276 tok)
+- `cdn.ts` — CDN base for static catalogue assets (images, large JSON). (~490 tok)
 
 ## webapp/src/pages/
 
+- `tires.astro` — Astro: tires (~55 tok)
+- `wheels.astro` — Astro: wheels (~56 tok)
 
 ## webapp/src/pages/tires/
 
+- `[id].astro` — Parametric SSG for every tire detail page (~4,748). Mirrors the wheel (~587 tok)
 - `detail.astro` — Astro: detail (~55 tok)
 
 ## webapp/src/pages/vehicle/
@@ -134,10 +142,11 @@
 
 ## webapp/src/pages/vehicle/[year]/[make]/
 
-- `[model].astro` — Astro: [model] (~2048 tok)
+- `[model].astro` — Parametric SSG route for every vehicle in the catalogue (~7,540 pages). (~675 tok)
 
 ## webapp/src/pages/wheels/
 
+- `[id].astro` — Parametric SSG for every wheel detail page (~2,137). Same idea as the (~751 tok)
 - `detail.astro` — Astro: detail (~56 tok)
 
 ## webapp/src/styles/
