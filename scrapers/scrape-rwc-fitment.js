@@ -11,7 +11,7 @@ const path = require('path');
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const WHEELS_PATH = path.join(DATA_DIR, 'rwc-wheels-raw.json');
 
-const MIN_YEAR = 2020;
+const MIN_YEAR = 2012;
 
 (async () => {
   console.log('=== RWC FITMENT SCRAPE (live portal) ===\n');
@@ -123,10 +123,15 @@ const MIN_YEAR = 2020;
     }
   }
 
-  // Attach fitment to products
+  // Attach fitment to products. Products are joined by URL slug (rwc-...),
+  // not by encoded SKU (RW...), because the search-results HTML only links
+  // to the URL slug. The two formats refer to the same product but aren't
+  // string-equal. Extract slug from product.url to match fitmentMap keys.
   let matched = 0;
   for (const product of products) {
-    const fit = fitmentMap[product.sku?.toLowerCase()] || [];
+    const m = (product.url || '').match(/gpibtob\.com\/(rwc-[a-z0-9-]+)/i);
+    const slug = m ? m[1].toLowerCase() : null;
+    const fit = (slug && fitmentMap[slug]) || [];
     product.fitment = fit;
     if (fit.length > 0) matched++;
   }

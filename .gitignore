@@ -47,3 +47,12 @@ _video-candidates/
 
 # Wrangler / Cloudflare build cache
 webapp/.wrangler/
+
+# Tier-2 wheel rotation proof-of-concept sandbox (local only)
+_wheel-tier2-pov/
+
+# Local-only vehicle imagery (scraped from iConfigurators for internal reference;
+# do NOT ship to the public site)
+webapp/public/data/vehicle-images.json
+webapp/public/images/vehicles/
+scrapers/.fastco-profile/

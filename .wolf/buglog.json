@@ -2289,6 +2289,342 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-15T13:26:42.532Z"
+    },
+    {
+      "id": "bug-144",
+      "timestamp": "2026-05-16T18:56:11.247Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/pages/vehicle/[year]/[make]/[model].astro",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 8→11 lines (5 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-16T18:56:11.247Z"
+    },
+    {
+      "id": "bug-145",
+      "timestamp": "2026-05-16T18:56:28.988Z",
+      "error_message": "Type error",
+      "file": "webapp/src/components/VehicleResults.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-16T18:56:28.988Z"
+    },
+    {
+      "id": "bug-146",
+      "timestamp": "2026-05-16T19:34:21.265Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "scrapers/recon-fastco-images.js",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-16T19:34:21.265Z"
+    },
+    {
+      "id": "bug-147",
+      "timestamp": "2026-05-16T19:43:54.893Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "scrapers/recon-fastco-images.js",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-16T19:43:54.893Z"
+    },
+    {
+      "id": "bug-148",
+      "timestamp": "2026-05-16T20:58:53.096Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/probe-fastco-api.js",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 4→3 lines (2 removed) | Also: const TESTS = [; '/api/Canada/makes/Honda/years/2024/models/Civic/s",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-16T20:59:48.359Z"
+    },
+    {
+      "id": "bug-149",
+      "timestamp": "2026-05-16T21:00:13.037Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "scrapers/probe-fastco-api.js",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-16T21:00:13.037Z"
+    },
+    {
+      "id": "bug-150",
+      "timestamp": "2026-05-16T21:12:42.724Z",
+      "error_message": "Null/undefined access in ",
+      "file": "scrapers/probe-row-icon.js",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-16T21:12:42.724Z"
+    },
+    {
+      "id": "bug-151",
+      "timestamp": "2026-05-16T21:14:30.836Z",
+      "error_message": "Missing guard clause",
+      "file": "scrapers/scrape-iconfig-vehicles.js",
+      "root_cause": "No early return/throw for edge case: !link",
+      "fix": "Added guard clause: if (!link)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-16T21:15:12.087Z"
+    },
+    {
+      "id": "bug-152",
+      "timestamp": "2026-05-16T21:15:29.475Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "scrapers/scrape-iconfig-vehicles.js",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-16T21:15:29.475Z"
+    },
+    {
+      "id": "bug-153",
+      "timestamp": "2026-05-16T21:19:29.629Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/probe-row-icon.js",
+      "root_cause": "29 lines replaced/restructured",
+      "fix": "Rewrote 42→25 lines (29 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-16T21:19:29.629Z"
+    },
+    {
+      "id": "bug-154",
+      "timestamp": "2026-05-17T03:42:55.215Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/scrape-iconfig-vehicles.js",
+      "root_cause": "8 lines replaced/restructured",
+      "fix": "Rewrote 9→3 lines (8 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T03:42:55.215Z"
+    },
+    {
+      "id": "bug-155",
+      "timestamp": "2026-05-17T03:43:25.501Z",
+      "error_message": "Missing error handling in function",
+      "file": "scrapers/scrape-iconfig-vehicles.js",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T03:43:25.501Z"
+    },
+    {
+      "id": "bug-156",
+      "timestamp": "2026-05-17T10:38:29.450Z",
+      "error_message": "Missing error handling in modelSlug",
+      "file": "scrapers/scrape-wheelsize-vehicles.js",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T10:38:29.450Z"
+    },
+    {
+      "id": "bug-157",
+      "timestamp": "2026-05-17T10:38:50.267Z",
+      "error_message": "Null/undefined access in ",
+      "file": "scrapers/scrape-wheelsize-vehicles.js",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T10:38:50.267Z"
+    },
+    {
+      "id": "bug-158",
+      "timestamp": "2026-05-17T18:23:35.057Z",
+      "error_message": "Significant refactor of ",
+      "file": "_wheel-tier2-pov/render_meshes.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 4→9 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T18:23:35.057Z"
+    },
+    {
+      "id": "bug-159",
+      "timestamp": "2026-05-17T20:32:49.249Z",
+      "error_message": "Wrong reference: 2020 should be 2012",
+      "file": "scrapers/scrape-rwc-fitment.js",
+      "root_cause": "Used \"2020\" instead of \"2012\"",
+      "fix": "Changed 2020 → 2012",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T20:32:49.249Z"
+    },
+    {
+      "id": "bug-160",
+      "timestamp": "2026-05-17T20:32:50.702Z",
+      "error_message": "Wrong reference: 2020 should be 2012",
+      "file": "scrapers/scrape-superspeed-fitment.js",
+      "root_cause": "Used \"2020\" instead of \"2012\"",
+      "fix": "Changed 2020 → 2012",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T20:32:50.702Z"
+    },
+    {
+      "id": "bug-161",
+      "timestamp": "2026-05-17T20:32:51.730Z",
+      "error_message": "Wrong reference: 2020 should be 2012",
+      "file": "scrapers/scrape-tire-fitment.js",
+      "root_cause": "Used \"2020\" instead of \"2012\"",
+      "fix": "Changed 2020 → 2012",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T20:32:51.730Z"
+    },
+    {
+      "id": "bug-162",
+      "timestamp": "2026-05-17T20:32:53.670Z",
+      "error_message": "Incorrect value in code",
+      "file": "scrapers/scrape-rwc.js",
+      "root_cause": "Had `Scraping ${recentYears.length} years (2020+)`",
+      "fix": "Changed to `Scraping ${recentYears.length} years (2012+)`",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T20:32:53.670Z"
+    },
+    {
+      "id": "bug-163",
+      "timestamp": "2026-05-17T20:34:48.715Z",
+      "error_message": "Wrong operator: && should be ===",
+      "file": "scrapers/scrape-alltire-wheels.js",
+      "root_cause": "Used \"&&\" instead of \"===\"",
+      "fix": "Changed operator && → ===",
+      "tags": [
+        "auto-detected",
+        "operator-fix",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T20:34:48.715Z"
+    },
+    {
+      "id": "bug-164",
+      "timestamp": "2026-05-17T21:42:26.355Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/scrape-rwc-fitment.js",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 8→13 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T21:42:26.355Z"
     }
   ]
 }

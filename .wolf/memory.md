@@ -942,3 +942,174 @@
 | 20:22 | Edited scrapers/build-favicon.cjs | modified for() | ~536 |
 | 20:23 | Edited webapp/src/components/Footer.astro | reduced (-6 lines) | ~95 |
 | 20:24 | Session end: 9 writes across 5 files (VehiclePackageBuilder.tsx, SmartSearchResults.tsx, build-favicon.cjs, Header.astro, Footer.astro) | 6 reads | ~23260 tok |
+| 00:20 | Session end: 97 writes across 23 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 38 reads | ~75926 tok |
+| 00:21 | Session end: 97 writes across 23 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 38 reads | ~75926 tok |
+| 02:53 | Edited webapp/src/components/ProductCard.astro | reduced (-8 lines) | ~126 |
+| 02:53 | Edited webapp/src/components/search/SmartSearchResults.tsx | modified StockBadge() | ~140 |
+| 02:54 | Edited webapp/src/components/search/VehiclePackageBuilder.tsx | modified StockBadge() | ~141 |
+| 02:54 | Edited webapp/src/components/auth/PriceDisplay.tsx | modified return() | ~417 |
+| 02:55 | Edited webapp/src/components/VehicleResults.tsx | modified StockBadge() | ~140 |
+| 02:56 | Edited webapp/src/pages/vehicle/[year]/[make]/[model].astro | modified inStock() | ~137 |
+| 02:56 | Edited webapp/src/pages/vehicle/[year]/[make]/[model].astro | removed 4 lines | ~12 |
+| 02:56 | Edited webapp/src/components/VehicleResults.tsx | modified isInStock() | ~166 |
+| 02:56 | Session end: 105 writes across 28 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 40 reads | ~55741 tok |
+| 03:11 | Created scrapers/recon-fastco-images.js | — | ~1570 |
+| 03:14 | Created scrapers/recon-fastco-images.js | — | ~1322 |
+| 03:14 | Session end: 107 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 41 reads | ~58633 tok |
+| 03:18 | Session end: 107 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 41 reads | ~58633 tok |
+| 03:20 | Session end: 107 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 41 reads | ~58633 tok |
+| 03:22 | Session end: 107 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 41 reads | ~58633 tok |
+| 03:23 | Session end: 107 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 41 reads | ~58633 tok |
+| 03:24 | Session end: 107 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 41 reads | ~58633 tok |
+| 03:28 | Session end: 107 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 41 reads | ~58633 tok |
+| 03:28 | Session end: 107 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 41 reads | ~58633 tok |
+| 03:30 | Session end: 107 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 41 reads | ~58633 tok |
+| 03:34 | Edited scrapers/recon-fastco-images.js | 2→3 lines | ~112 |
+| 03:34 | Edited scrapers/recon-fastco-images.js | added error handling | ~447 |
+| 03:35 | Session end: 109 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 41 reads | ~59192 tok |
+| 03:37 | Edited scrapers/recon-fastco-images.js | added 2 condition(s) | ~227 |
+| 03:37 | Session end: 110 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 41 reads | ~59419 tok |
+| 03:38 | Session end: 110 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 41 reads | ~59419 tok |
+| 03:39 | Session end: 110 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 42 reads | ~59419 tok |
+| 03:43 | Edited scrapers/recon-fastco-images.js | added error handling | ~1542 |
+| 03:44 | Session end: 111 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 42 reads | ~60961 tok |
+| 03:48 | Created scrapers/recon-fastco-images.js | — | ~774 |
+| 03:48 | Session end: 112 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 42 reads | ~61735 tok |
+| 03:52 | Session end: 112 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 42 reads | ~61735 tok |
+| 03:57 | Session end: 112 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 42 reads | ~61735 tok |
+| 04:21 | Session end: 112 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 42 reads | ~61735 tok |
+| 04:36 | Session end: 112 writes across 29 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 42 reads | ~61735 tok |
+| 04:38 | Created webapp/public/data/vehicle-images.json | — | ~40 |
+| 04:38 | Edited webapp/src/pages/vehicle/[year]/[make]/[model].astro | added 1 condition(s) | ~276 |
+| 04:38 | Edited webapp/src/pages/vehicle/[year]/[make]/[model].astro | expanded (+13 lines) | ~692 |
+| 04:40 | Session end: 115 writes across 30 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 42 reads | ~64617 tok |
+| 04:44 | Edited .gitignore | expanded (+6 lines) | ~71 |
+| 04:45 | Created scrapers/probe-fastco-url-pattern.js | — | ~789 |
+| 04:48 | Created scrapers/probe-fastco-picker.js | — | ~894 |
+| 04:49 | Created scrapers/recon-fastco-xhr.js | — | ~879 |
+| 04:50 | Session end: 119 writes across 33 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 42 reads | ~67117 tok |
+| 04:54 | Created scrapers/scrape-iconfig-one.js | — | ~1789 |
+| 04:56 | Created scrapers/probe-fastco-api.js | — | ~431 |
+| 04:57 | Edited scrapers/probe-fastco-api.js | 4→7 lines | ~76 |
+| 04:58 | Edited scrapers/probe-fastco-api.js | 7→4 lines | ~56 |
+| 04:58 | Edited scrapers/probe-fastco-api.js | 4→3 lines | ~32 |
+| 04:59 | Edited scrapers/probe-fastco-api.js | 3→4 lines | ~100 |
+| 05:00 | Edited scrapers/probe-fastco-api.js | added error handling | ~349 |
+| 05:02 | Created scrapers/scrape-iconfig-vehicles.js | — | ~2589 |
+| 05:03 | Session end: 127 writes across 36 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 42 reads | ~72539 tok |
+| 05:08 | Edited scrapers/scrape-iconfig-vehicles.js | modified if() | ~167 |
+| 05:08 | Session end: 128 writes across 36 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 42 reads | ~72706 tok |
+| 05:10 | Created scrapers/probe-row-icon.js | — | ~870 |
+| 05:11 | Session end: 129 writes across 37 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 42 reads | ~73576 tok |
+| 05:12 | Edited scrapers/probe-row-icon.js | added 1 condition(s) | ~557 |
+| 05:14 | Edited scrapers/scrape-iconfig-vehicles.js | added 1 condition(s) | ~450 |
+| 05:14 | Edited scrapers/scrape-iconfig-vehicles.js | modified log() | ~141 |
+| 05:15 | Edited scrapers/scrape-iconfig-vehicles.js | added 3 condition(s) | ~399 |
+| 05:15 | Edited scrapers/scrape-iconfig-vehicles.js | added error handling | ~234 |
+| 05:15 | Created webapp/public/data/vehicle-images.json | — | ~1 |
+| 05:16 | Session end: 135 writes across 37 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 43 reads | ~75358 tok |
+| 05:19 | Edited scrapers/probe-row-icon.js | reduced (-17 lines) | ~241 |
+| 05:19 | Edited scrapers/probe-row-icon.js | 7→8 lines | ~92 |
+| 05:20 | Session end: 137 writes across 37 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 43 reads | ~75691 tok |
+| 05:22 | Edited scrapers/probe-row-icon.js | 25→27 lines | ~254 |
+| 05:22 | Edited scrapers/probe-row-icon.js | 8→8 lines | ~104 |
+| 05:22 | Session end: 139 writes across 37 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 43 reads | ~76049 tok |
+| 05:24 | Edited scrapers/scrape-iconfig-vehicles.js | trigger() → icon() | ~164 |
+| 05:25 | Session end: 140 writes across 37 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 43 reads | ~76213 tok |
+| 05:33 | Edited scrapers/scrape-iconfig-vehicles.js | modified catch() | ~413 |
+| 05:33 | Session end: 141 writes across 37 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 43 reads | ~76626 tok |
+| 05:39 | Edited scrapers/scrape-iconfig-vehicles.js | modified catch() | ~288 |
+| 05:39 | Session end: 142 writes across 37 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 43 reads | ~76914 tok |
+| 05:47 | Created scrapers/probe-click-diag.js | — | ~971 |
+| 05:47 | Session end: 143 writes across 38 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 43 reads | ~77885 tok |
+| 05:51 | Edited scrapers/scrape-iconfig-vehicles.js | 8→13 lines | ~173 |
+| 05:52 | Session end: 144 writes across 38 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 43 reads | ~78058 tok |
+| 11:40 | Session end: 144 writes across 38 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 44 reads | ~78058 tok |
+| 11:42 | Edited scrapers/scrape-iconfig-vehicles.js | reduced (-6 lines) | ~36 |
+| 11:43 | Edited scrapers/scrape-iconfig-vehicles.js | added error handling | ~692 |
+| 11:46 | Session end: 146 writes across 38 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 44 reads | ~78786 tok |
+| 11:46 | Edited scrapers/scrape-iconfig-vehicles.js | added 1 condition(s) | ~220 |
+| 11:47 | Session end: 147 writes across 38 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 44 reads | ~79006 tok |
+| 12:01 | Session end: 147 writes across 38 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 44 reads | ~79006 tok |
+| 12:03 | Session end: 147 writes across 38 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 44 reads | ~79006 tok |
+| 12:42 | Session end: 147 writes across 38 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 44 reads | ~79006 tok |
+| 18:28 | Session end: 147 writes across 38 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 44 reads | ~79006 tok |
+| 18:37 | Created scrapers/scrape-wheelsize-vehicles.js | — | ~2151 |
+| 18:38 | Edited scrapers/scrape-wheelsize-vehicles.js | added optional chaining | ~431 |
+| 18:38 | Edited scrapers/scrape-wheelsize-vehicles.js | added optional chaining | ~374 |
+| 18:39 | Edited scrapers/scrape-wheelsize-vehicles.js | 20→21 lines | ~237 |
+| 18:40 | Session end: 151 writes across 39 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 45 reads | ~82199 tok |
+| 18:49 | Session end: 151 writes across 39 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 45 reads | ~82199 tok |
+| 18:54 | Session end: 151 writes across 39 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 45 reads | ~82199 tok |
+| 18:55 | Session end: 151 writes across 39 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 45 reads | ~82199 tok |
+| 21:26 | Session end: 151 writes across 39 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 45 reads | ~82199 tok |
+| 00:48 | Session end: 151 writes across 39 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 45 reads | ~82199 tok |
+| 00:51 | Session end: 151 writes across 39 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 45 reads | ~82199 tok |
+| 00:59 | Session end: 151 writes across 39 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 45 reads | ~82199 tok |
+| 01:01 | Session end: 151 writes across 39 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 45 reads | ~82199 tok |
+| 01:08 | Edited .gitignore | 2→5 lines | ~36 |
+| 01:08 | Created _wheel-tier2-pov/requirements.txt | — | ~28 |
+| 01:08 | Created _wheel-tier2-pov/README.md | — | ~549 |
+| 01:09 | Created _wheel-tier2-pov/run.py | — | ~2055 |
+| 01:10 | Session end: 155 writes across 42 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 48 reads | ~84911 tok |
+| 01:22 | Session end: 155 writes across 42 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 51 reads | ~84911 tok |
+| 01:24 | Session end: 155 writes across 42 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 51 reads | ~84911 tok |
+| 01:27 | Created _wheel-tier2-pov/run.py | — | ~2611 |
+| 01:30 | Session end: 156 writes across 42 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 53 reads | ~87522 tok |
+| 01:33 | Created _wheel-tier2-pov/compose.py | — | ~1470 |
+| 01:36 | Session end: 157 writes across 43 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 56 reads | ~88992 tok |
+| 01:39 | Session end: 157 writes across 43 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 56 reads | ~88992 tok |
+| 01:40 | Session end: 157 writes across 43 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 56 reads | ~88992 tok |
+| 01:42 | Session end: 157 writes across 43 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 56 reads | ~88992 tok |
+| 01:48 | Session end: 157 writes across 43 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 56 reads | ~88992 tok |
+| 01:49 | Session end: 157 writes across 43 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 56 reads | ~88992 tok |
+| 01:51 | Session end: 157 writes across 43 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 56 reads | ~88992 tok |
+| 01:53 | Session end: 157 writes across 43 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 56 reads | ~88992 tok |
+| 02:08 | Edited _wheel-tier2-pov/TripoSR/tsr/models/isosurface.py | modified marching_cubes() | ~153 |
+| 02:18 | Created _wheel-tier2-pov/render_meshes.py | — | ~1637 |
+| 02:20 | Edited _wheel-tier2-pov/render_meshes.py | 8→8 lines | ~64 |
+| 02:23 | Edited _wheel-tier2-pov/render_meshes.py | modified render_mesh() | ~184 |
+| 02:23 | Edited _wheel-tier2-pov/render_meshes.py | 4→9 lines | ~167 |
+| 02:28 | Session end: 162 writes across 45 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 62 reads | ~91197 tok |
+| 02:31 | Session end: 162 writes across 45 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 62 reads | ~91197 tok |
+| 02:36 | Created _wheel-tier2-pov/run_hunyuan.py | — | ~575 |
+| 02:39 | Edited _wheel-tier2-pov/run_hunyuan.py | 1→2 lines | ~30 |
+| 02:39 | Edited _wheel-tier2-pov/run_hunyuan.py | inline fix | ~26 |
+| 02:46 | Edited _wheel-tier2-pov/run_hunyuan.py | added 1 import(s) | ~52 |
+| 02:49 | Edited _wheel-tier2-pov/run_hunyuan.py | modified is_available() | ~88 |
+| 03:45 | Session end: 167 writes across 46 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 62 reads | ~91968 tok |
+| 04:28 | Session end: 167 writes across 46 files (VehiclePackageBuilder.tsx, tier-filter-check.js, reference_domain.md, MEMORY.md, probe-rwc-fitment.js) | 62 reads | ~91968 tok |
+
+## Session: 2026-05-17 04:29
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-17 04:29
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 04:32 | Edited scrapers/scrape-alltire-wheels.js | inline fix | ~23 |
+| 04:32 | Edited scrapers/scrape-rwc-fitment.js | 2020 → 2012 | ~7 |
+| 04:32 | Edited scrapers/scrape-superspeed-fitment.js | 2020 → 2012 | ~7 |
+| 04:32 | Edited scrapers/scrape-tire-fitment.js | 2020 → 2012 | ~7 |
+| 04:32 | Edited scrapers/scrape-rwc.js | 3→3 lines | ~58 |
+| 04:34 | Edited scrapers/scrape-alltire-wheels.js | added 1 condition(s) | ~409 |
+| 04:36 | Session end: 6 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 8 reads | ~5149 tok |
+
+| 04:38 | widened year range 2020->2012 across 5 scrapers + alltire tree merge | scrape-alltire-wheels.js,scrape-rwc.js,scrape-rwc-fitment.js,scrape-superspeed-fitment.js,scrape-tire-fitment.js | edits done, scrapers launched | ~600 |
+| 04:38 | launched 3 parallel scraper pipelines (alltire/superspeed/rwc) | .wolf/scrape-logs/ | running in background | ~200 |
+| 04:39 | Session end: 6 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 8 reads | ~5149 tok |
+| 04:50 | Session end: 6 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 8 reads | ~5149 tok |
+| 05:22 | Session end: 6 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 9 reads | ~5149 tok |
+| 05:26 | Session end: 6 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 9 reads | ~5149 tok |
+| 05:42 | Edited scrapers/scrape-rwc-fitment.js | modified for() | ~195 |
+| 05:42 | Session end: 7 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 10 reads | ~5344 tok |
+| 05:56 | Session end: 7 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 10 reads | ~5344 tok |
+| 06:13 | Session end: 7 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 10 reads | ~5344 tok |
+| 06:44 | Session end: 7 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 10 reads | ~5344 tok |
+| 07:10 | Session end: 7 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 10 reads | ~5344 tok |
+
+| 07:41 | autonomous scrape complete: 3 suppliers + tire-fitment for 2012-2027 | data/, webapp/public/data/ | 6885 products, 7541 vehicles, 17 years (was 2089/8) | ~800 |
+| 07:41 | Session end: 7 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 10 reads | ~5344 tok |
+| 07:41 | Session end: 7 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 10 reads | ~5344 tok |

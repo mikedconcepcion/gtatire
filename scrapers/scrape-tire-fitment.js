@@ -4,7 +4,7 @@ const fs = require('fs');
 const pathMod = require('path');
 
 const DATA_DIR = pathMod.join(__dirname, '..', 'data');
-const MIN_YEAR = 2020;
+const MIN_YEAR = 2012;
 
 function save(filename, data) {
   fs.writeFileSync(pathMod.join(DATA_DIR, filename), JSON.stringify(data, null, 2));
