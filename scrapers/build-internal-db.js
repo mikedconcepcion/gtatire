@@ -103,6 +103,10 @@ function normalizeVehicleKey(key) {
   const parts = key.split('|');
   if (parts.length !== 3) return key;
   let [year, make, model] = parts;
+  // RWC's portal exposes mid-cycle refresh years like "2017.5" (Jeep Compass
+  // redesign). One vehicle isn't worth its own dropdown bucket, so fold it
+  // into the integer year.
+  if (/\.\d+$/.test(year)) year = year.split('.')[0];
   if (make === 'MERCEDES-BENZ') make = 'MERCEDES';
   if (make === 'TESLA' && /^[A-Z0-9]{1,2}$/.test(model)) model = `MODEL ${model}`;
   // Strip parenthetical suffixes, replace any remaining route-breaking chars
