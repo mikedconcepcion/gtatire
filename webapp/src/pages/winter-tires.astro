@@ -1,0 +1,132 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeroSearch from '../components/search/HeroSearch';
+
+const winterBrands = ['Michelin X-Ice', 'Bridgestone Blizzak', 'Continental WinterContact', 'Pirelli Ice Zero', 'Goodyear WinterCommand', 'Hankook iPike', 'Yokohama iceGUARD', 'Nokian Hakkapeliitta'];
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Winter Tires in Canada — Sizing, Brands and Hub-Centric Wheels',
+  description: 'Guide to winter tire selection in Canada and the GTA — sizes, marked-snowflake regulations, recommended brands, and how to bundle with hub-centric wheels.',
+  author: { '@type': 'Organization', name: 'JSDC Wheels' },
+  publisher: { '@type': 'Organization', name: 'JSDC Wheels' },
+  mainEntityOfPage: 'https://jsdcwheels.ca/winter-tires',
+  about: ['winter tires', 'snow tires', 'Canadian winter tire regulations', 'hub centric wheels'],
+};
+---
+
+<Layout
+  title="Winter Tires in Canada | GTA Delivery | JSDC Wheels"
+  description="Browse winter tires by vehicle for the Greater Toronto Area. Marked-snowflake compliant tires from Michelin, Bridgestone, Continental, Pirelli, Hankook and more. 1-2 day GTA delivery, hub-centric steel and alloy options."
+  jsonLd={articleJsonLd}
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden border-b border-dark-700/50">
+    <div class="absolute inset-0 bg-gradient-to-b from-blue-950/40 via-dark-950 to-dark-950"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-500/10 rounded-full blur-3xl"></div>
+
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-12 sm:pt-16 sm:pb-14">
+      <p class="text-blue-400 text-xs font-semibold uppercase tracking-[0.2em] mb-3 inline-flex items-center gap-2">
+        <span class="h-px w-6 bg-blue-500/40"></span>
+        Seasonal Setup
+      </p>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 tracking-tight">
+        Winter Tires for Canadian Roads
+      </h1>
+      <p class="text-dark-300 text-base sm:text-lg max-w-2xl mb-6">
+        Search by your vehicle to see only winter-rated tires that fit, paired with hub-centric steel
+        or alloy wheels for cleaner seasonal swaps. JSDC delivers across the GTA in 1-2 business days
+        — sold to tire shops and individual drivers alike.
+      </p>
+      <HeroSearch client:load />
+    </div>
+  </section>
+
+  <!-- Key facts -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+    <h2 class="text-white text-xl sm:text-2xl font-bold mb-6">What Canadians need to know</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-2xl p-6">
+        <p class="text-blue-400 font-bold text-2xl mb-1">-7°C</p>
+        <h3 class="text-white font-semibold mb-1 text-sm">When to switch</h3>
+        <p class="text-dark-400 text-sm">All-season rubber stiffens below ~7°C. Winter tire compound stays pliable, biting into snow and ice.</p>
+      </div>
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-2xl p-6">
+        <p class="text-blue-400 font-bold text-2xl mb-1">3PMSF</p>
+        <h3 class="text-white font-semibold mb-1 text-sm">Three-peak snowflake</h3>
+        <p class="text-dark-400 text-sm">Look for the mountain-and-snowflake symbol on the sidewall. It's the Transport Canada standard for true winter tires.</p>
+      </div>
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-2xl p-6">
+        <p class="text-blue-400 font-bold text-2xl mb-1">4 of 4</p>
+        <h3 class="text-white font-semibold mb-1 text-sm">All four corners</h3>
+        <p class="text-dark-400 text-sm">Mixing winter and all-season tires unbalances handling. Always change all four — even on AWD vehicles.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brands -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+    <h2 class="text-white text-xl sm:text-2xl font-bold mb-2">Winter tire brands we carry</h2>
+    <p class="text-dark-400 text-sm mb-6">All sourced from authorized Canadian suppliers with full manufacturer warranty.</p>
+    <div class="flex flex-wrap gap-2">
+      {winterBrands.map(b => (
+        <a
+          href={`/search/?q=${encodeURIComponent(b)}`}
+          class="text-dark-200 hover:text-white bg-dark-800/60 hover:bg-dark-800 border border-dark-700/50 hover:border-blue-500/40 px-4 py-2 rounded-xl text-sm font-medium transition-all"
+        >
+          {b}
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Why steel wheels in winter -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+    <h2 class="text-white text-xl sm:text-2xl font-bold mb-3">Steel wheels for winter — why bother?</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-3">
+      Most GTA drivers run a dedicated winter wheel set — usually steel — for three reasons. First,
+      seasonal swaps stop using up tire mounting service every six months. Second, road salt and
+      grit pit alloy finishes; cheap steel wheels take the abuse without showing it. Third, the
+      total cost is recovered in 2-3 seasons of avoided mounting/balancing fees.
+    </p>
+    <p class="text-dark-300 text-sm leading-relaxed mb-3">
+      Every winter steel wheel we stock for vehicle search is hub-centric — the centre bore matches
+      your vehicle's hub exactly, so the install is vibration-free without hub rings.
+    </p>
+    <a href="/" class="inline-block mt-3 text-blue-400 hover:text-blue-300 text-sm font-medium">
+      Find your vehicle's winter setup →
+    </a>
+  </section>
+
+  <!-- FAQ -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 py-12" itemscope itemtype="https://schema.org/FAQPage">
+    <h2 class="text-white text-xl sm:text-2xl font-bold mb-6">Winter tire FAQ</h2>
+    <div class="space-y-4">
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-xl p-5" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="text-white font-semibold mb-2" itemprop="name">Are winter tires required by law in Ontario?</h3>
+        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+          <p class="text-dark-300 text-sm" itemprop="text">Winter tires are not mandatory in Ontario (unlike Quebec, where they are required Dec 1 to Mar 15), but most Ontario insurers offer a discount when you install them. They are strongly recommended once temperatures drop below 7°C.</p>
+        </div>
+      </div>
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-xl p-5" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="text-white font-semibold mb-2" itemprop="name">Can I run winter tires year-round?</h3>
+        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+          <p class="text-dark-300 text-sm" itemprop="text">No. Winter compound wears rapidly above 10°C — you'll lose tread life within a single summer and get worse dry-pavement grip than an all-season. Swap to all-seasons (or summers) when temperatures stay above 7°C consistently.</p>
+        </div>
+      </div>
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-xl p-5" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="text-white font-semibold mb-2" itemprop="name">Do I need new TPMS sensors for winter wheels?</h3>
+        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+          <p class="text-dark-300 text-sm" itemprop="text">Depends on your vehicle. Most 2008+ cars with direct TPMS need a sensor in each wheel. Some shops re-use the OE sensors at every swap; others install a second TPMS set in the winter wheels for faster turnaround. We stock both standalone wheels and pre-assembled TPMS-ready winter packages.</p>
+        </div>
+      </div>
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-xl p-5" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="text-white font-semibold mb-2" itemprop="name">Can I size down for winter?</h3>
+        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+          <p class="text-dark-300 text-sm" itemprop="text">Often yes — a smaller-diameter wheel with a taller sidewall (a "minus-size" setup) improves snow traction and lets you fit cheaper, more common tire sizes. Search by your vehicle on this site and we'll show every diameter that fits hub-centric.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

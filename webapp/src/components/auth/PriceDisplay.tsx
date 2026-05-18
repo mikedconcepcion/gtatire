@@ -10,10 +10,10 @@ interface Props {
 export default function PriceDisplay({ price, compareAt, distPrice, stock }: Props) {
   const { isDistributor } = useAuth();
 
-  const stockNum = parseInt(stock);
-  const inStock = stock === '20+' || stockNum >= 10;
-  const low = stockNum >= 1 && stockNum < 10;
-  const contact = stock === 'Contact us';
+  const s = String(stock || '').trim();
+  const n = parseInt(s, 10);
+  const out = /out of stock/i.test(s) || /^n\/?a$/i.test(s) || /discontinu/i.test(s);
+  const low = !out && !isNaN(n) && n >= 1 && n < 10;
 
   return (
     <div>
@@ -37,11 +37,11 @@ export default function PriceDisplay({ price, compareAt, distPrice, stock }: Pro
         </div>
       )}
       <div className={`text-xs font-medium mt-1 ${
-        inStock ? 'text-green-400' : low ? 'text-amber-400' : contact ? 'text-dark-400' : 'text-red-400'
+        out ? 'text-red-400' : low ? 'text-amber-400' : 'text-green-400'
       }`}>
         {isDistributor
-          ? (inStock ? `In Stock (${stock})` : contact ? 'Contact Us' : `${stock} left`)
-          : (inStock ? 'In Stock' : contact ? 'Contact Us' : low ? 'Low Stock' : stock)
+          ? (out ? 'Out of Stock' : low ? `${n} left` : `In Stock${s ? ` (${s})` : ''}`)
+          : (out ? 'Out of Stock' : low ? `${n} left` : 'In Stock')
         }
       </div>
     </div>

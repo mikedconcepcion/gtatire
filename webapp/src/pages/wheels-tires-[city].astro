@@ -1,0 +1,251 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeroSearch from '../components/search/HeroSearch';
+
+// GTA municipalities JSDC serves. Each entry tunes the page content so
+// pages aren't templated duplicates — Google penalises near-identical
+// city pages, and ChatGPT/Perplexity score them on substantive local info.
+type City = {
+  slug: string;
+  name: string;
+  hood: string;       // surrounding neighbourhood / region phrasing
+  delivery: string;   // delivery line tuned to distance from Scarborough HQ
+  popularCars: string[];
+  blurb: string;
+};
+
+const CITIES: City[] = [
+  {
+    slug: 'toronto',
+    name: 'Toronto',
+    hood: 'downtown Toronto, the Beaches, Yorkville and the Annex',
+    delivery: 'Next-business-day delivery to most Toronto postal codes.',
+    popularCars: ['Honda Civic', 'Toyota RAV4', 'Tesla Model 3', 'BMW 3 Series'],
+    blurb: 'From Lake Ontario waterfront commutes to highway 401 runs, JSDC supplies hub-centric wheels and premium tires direct to Toronto tire shops and installers — no broker markup.',
+  },
+  {
+    slug: 'scarborough',
+    name: 'Scarborough',
+    hood: 'Scarborough Town Centre, Agincourt, Malvern and Birch Cliff',
+    delivery: 'Same-day delivery available in Scarborough — JSDC operates out of the east end.',
+    popularCars: ['Honda Civic', 'Toyota Corolla', 'Hyundai Elantra', 'Toyota RAV4'],
+    blurb: 'Scarborough is our home base. Local tire shops and bodyshops can pick up the same morning they order, with the broadest in-stock alloy and steel selection in the east GTA.',
+  },
+  {
+    slug: 'mississauga',
+    name: 'Mississauga',
+    hood: 'Square One, Streetsville, Port Credit and Meadowvale',
+    delivery: '1-business-day delivery across Mississauga, daily routes via the 403 and QEW.',
+    popularCars: ['Toyota RAV4', 'Honda CR-V', 'Hyundai Tucson', 'Ford F-150'],
+    blurb: 'Mississauga shops get next-day fitment guarantees on every wheel — pulling from the same warehouse as our Scarborough partners.',
+  },
+  {
+    slug: 'brampton',
+    name: 'Brampton',
+    hood: 'Bramalea, Mount Pleasant, Heart Lake and Springdale',
+    delivery: '1-business-day delivery across Brampton via the 410.',
+    popularCars: ['Honda Civic', 'Toyota RAV4', 'Hyundai Elantra', 'Ford F-150'],
+    blurb: 'Brampton installers run a high mix of crossovers and family sedans — JSDC stocks the OE diameters those vehicles need, hub centric guaranteed.',
+  },
+  {
+    slug: 'markham',
+    name: 'Markham',
+    hood: 'Unionville, Cornell, Berczy Village and Cathedraltown',
+    delivery: '1-business-day delivery across Markham via the 404 and 407.',
+    popularCars: ['Tesla Model 3', 'Toyota RAV4', 'Lexus RX', 'BMW 3 Series'],
+    blurb: 'Markham customers lean premium — Tesla Model 3 winter setups and luxury fitment are some of our most-shipped packages here.',
+  },
+  {
+    slug: 'vaughan',
+    name: 'Vaughan',
+    hood: 'Woodbridge, Maple, Concord and Thornhill',
+    delivery: '1-business-day delivery across Vaughan via the 400 and 407.',
+    popularCars: ['Toyota RAV4', 'Honda CR-V', 'Audi Q5', 'BMW X3'],
+    blurb: 'Vaughan tire shops benefit from JSDC\'s direct relationships with Macpek, Superspeed and RWC — premium alloys at distributor pricing.',
+  },
+  {
+    slug: 'north-york',
+    name: 'North York',
+    hood: 'Don Mills, Willowdale, Bayview and North York Centre',
+    delivery: 'Next-business-day delivery across North York.',
+    popularCars: ['Honda Civic', 'Toyota Corolla', 'Tesla Model Y', 'Lexus RX'],
+    blurb: 'North York\'s mix of compact daily drivers and luxury SUVs is well-covered by our 6,800+ product catalog — single-source distribution, hub-centric fitment.',
+  },
+  {
+    slug: 'richmond-hill',
+    name: 'Richmond Hill',
+    hood: 'Oak Ridges, Mill Pond and Bayview Hill',
+    delivery: '1-business-day delivery across Richmond Hill via the 404.',
+    popularCars: ['Toyota RAV4', 'Tesla Model Y', 'Honda CR-V', 'Audi Q5'],
+    blurb: 'Richmond Hill\'s family-SUV-heavy fleet needs winter tires and AWD-ready packages every season — JSDC stocks the OE sizes pre-mounted on request.',
+  },
+  {
+    slug: 'etobicoke',
+    name: 'Etobicoke',
+    hood: 'Mimico, Long Branch, Islington and Humber Bay',
+    delivery: 'Next-business-day delivery across Etobicoke via the QEW and Gardiner.',
+    popularCars: ['Honda Civic', 'Toyota RAV4', 'Ford F-150', 'Tesla Model 3'],
+    blurb: 'Etobicoke installers serving the airport and Gardiner corridor get fast restocks — JSDC routes through Pearson-adjacent shops daily.',
+  },
+];
+
+export async function getStaticPaths() {
+  // Re-declared inside getStaticPaths because Astro hoists it before module body.
+  const all = [
+    'toronto','scarborough','mississauga','brampton','markham','vaughan',
+    'north-york','richmond-hill','etobicoke',
+  ];
+  return all.map(slug => ({ params: { city: slug } }));
+}
+
+const { city: citySlug } = Astro.params;
+const city = CITIES.find(c => c.slug === citySlug)!;
+const otherCities = CITIES.filter(c => c.slug !== citySlug);
+
+const localBusinessJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AutoPartsStore',
+  name: 'JSDC Wheels',
+  description: `Tire and wheel distributor serving ${city.name}, Ontario — wholesale to tire shops and retail to individual customers.`,
+  url: `https://jsdcwheels.ca/wheels-tires-${city.slug}`,
+  areaServed: { '@type': 'City', name: city.name, containedInPlace: { '@type': 'AdministrativeArea', name: 'Greater Toronto Area' } },
+  priceRange: '$$',
+  paymentAccepted: 'Cash, Credit Card, E-Transfer',
+};
+---
+
+<Layout
+  title={`Wheels & Tires in ${city.name} | JSDC Wholesale GTA`}
+  description={`Wholesale tires and wheels delivered to ${city.name}. ${city.delivery} 6,800+ products from 44 brands. Hub-centric guaranteed fitment for ${city.popularCars.slice(0,3).join(', ')} and more.`}
+  jsonLd={localBusinessJsonLd}
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden border-b border-dark-700/50">
+    <div class="absolute inset-0 bg-gradient-to-b from-primary-950/30 via-dark-950 to-dark-950"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary-600/10 rounded-full blur-3xl"></div>
+
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-12 sm:pt-16 sm:pb-14">
+      <p class="text-primary-400 text-xs font-semibold uppercase tracking-[0.2em] mb-3 inline-flex items-center gap-2">
+        <span class="h-px w-6 bg-primary-500/40"></span>
+        Serving the GTA
+      </p>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 tracking-tight">
+        Wheels & Tires in <span class="text-primary-400">{city.name}</span>
+      </h1>
+      <p class="text-dark-300 text-base sm:text-lg max-w-2xl mb-6">
+        {city.blurb}
+      </p>
+      <p class="text-dark-400 text-sm inline-flex items-center gap-2 mb-8">
+        <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        {city.delivery}
+      </p>
+      <HeroSearch client:load />
+    </div>
+  </section>
+
+  <!-- Popular vehicles in this city -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+    <h2 class="text-white text-xl sm:text-2xl font-bold mb-2">Popular vehicles in {city.name}</h2>
+    <p class="text-dark-400 text-sm mb-6">Click to see hub-centric wheels and OE tire sizes that fit your vehicle.</p>
+    <div class="flex flex-wrap gap-2">
+      {city.popularCars.map(car => (
+        <a
+          href={`/search/?q=${encodeURIComponent(car)}`}
+          class="text-dark-200 hover:text-white bg-dark-800/60 hover:bg-dark-800 border border-dark-700/50 hover:border-primary-600/40 px-4 py-2.5 rounded-xl text-sm font-medium transition-all"
+        >
+          {car}
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Why JSDC for this city -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+    <h2 class="text-white text-xl sm:text-2xl font-bold mb-6">Why {city.name} shops choose JSDC</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-2xl p-6">
+        <div class="w-10 h-10 bg-dark-800 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <h3 class="text-white font-semibold mb-1">Local routes</h3>
+        <p class="text-dark-400 text-sm">{city.delivery}</p>
+      </div>
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-2xl p-6">
+        <div class="w-10 h-10 bg-dark-800 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-white font-semibold mb-1">Hub-centric guaranteed</h3>
+        <p class="text-dark-400 text-sm">Every wheel returned by vehicle search has a matching centre bore. No vibration, no hub rings needed.</p>
+      </div>
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-2xl p-6">
+        <div class="w-10 h-10 bg-dark-800 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18" />
+          </svg>
+        </div>
+        <h3 class="text-white font-semibold mb-1">6,800+ products in stock</h3>
+        <p class="text-dark-400 text-sm">Michelin, Bridgestone, Continental, Pirelli, Superspeed and 40+ other brands — sourced direct.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- City FAQ — feeds AI/SGE -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 py-12" itemscope itemtype="https://schema.org/FAQPage">
+    <h2 class="text-white text-xl sm:text-2xl font-bold mb-6">Frequently asked — {city.name}</h2>
+    <div class="space-y-4">
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-xl p-5" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="text-white font-semibold mb-2" itemprop="name">Do you deliver to {city.name}?</h3>
+        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+          <p class="text-dark-300 text-sm" itemprop="text">
+            Yes. {city.delivery} JSDC routes through {city.hood} on regular schedules — most orders placed before noon ship the same business day.
+          </p>
+        </div>
+      </div>
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-xl p-5" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="text-white font-semibold mb-2" itemprop="name">Are the wheels guaranteed to fit my vehicle?</h3>
+        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+          <p class="text-dark-300 text-sm" itemprop="text">
+            Every wheel returned by our vehicle search is hub-centric — the centre bore matches the vehicle's hub diameter exactly, so installation is vibration-free without spacer rings. We carry fitment data for 2,000+ vehicle trims sold in Canada.
+          </p>
+        </div>
+      </div>
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-xl p-5" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="text-white font-semibold mb-2" itemprop="name">Do I need a distributor account to buy?</h3>
+        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+          <p class="text-dark-300 text-sm" itemprop="text">
+            No — retail pricing is shown by default. Registered distributors and tire shops in {city.name} sign in for wholesale pricing tiers and bulk order management.
+          </p>
+        </div>
+      </div>
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-xl p-5" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="text-white font-semibold mb-2" itemprop="name">What's the most-shipped vehicle in {city.name}?</h3>
+        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+          <p class="text-dark-300 text-sm" itemprop="text">
+            {city.popularCars[0]} sets and winter tire packages for the {city.popularCars.slice(1, 3).join(' and ')} are our top {city.name}-area shipments.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cross-link to other GTA cities -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-12 border-t border-dark-700/40">
+    <p class="text-dark-500 text-xs font-semibold uppercase tracking-wider mb-4">Also serving</p>
+    <div class="flex flex-wrap gap-2">
+      {otherCities.map(c => (
+        <a
+          href={`/wheels-tires-${c.slug}`}
+          class="text-dark-300 hover:text-white bg-dark-800/40 hover:bg-dark-800 border border-dark-700/30 hover:border-primary-600/30 px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
+        >
+          {c.name}
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>

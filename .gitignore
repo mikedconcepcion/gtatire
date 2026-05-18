@@ -38,3 +38,21 @@ scrapers/superspeed-fitment-recon.json
 # OS
 Thumbs.db
 .DS_Store
+
+# Local generation scripts (may contain API keys; not part of the deployed site)
+_scripts/
+
+# AI-generated video candidates (large binaries, kept locally for review)
+_video-candidates/
+
+# Wrangler / Cloudflare build cache
+webapp/.wrangler/
+
+# Tier-2 wheel rotation proof-of-concept sandbox (local only)
+_wheel-tier2-pov/
+
+# Local-only vehicle imagery (scraped from iConfigurators for internal reference;
+# do NOT ship to the public site)
+webapp/public/data/vehicle-images.json
+webapp/public/images/vehicles/
+scrapers/.fastco-profile/

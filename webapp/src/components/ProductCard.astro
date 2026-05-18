@@ -26,23 +26,17 @@ const typeColors: Record<string, string> = {
 };
 const typeClass = typeColors[type] || 'bg-dark-700/50 text-dark-300 border-dark-600';
 
-const stockNum = parseInt(stock);
-const inStock = stock === '20+' || stock.includes('In Stock') || stock === 'Available' || stockNum >= 10 || stock.includes('20+');
-const lowStock = stockNum >= 1 && stockNum < 10;
-const contactUs = stock === 'Contact us';
-const outOfStock = stock.includes('Out of Stock');
-const stockColor = inStock
-  ? 'text-green-400'
-  : lowStock
-    ? 'text-amber-400'
-    : outOfStock
-      ? 'text-red-400'
-      : 'text-dark-400';
-// Fix: "Contact us" → "Available" (friendlier)
-const stockLabel = inStock ? 'In Stock' : lowStock ? `${stockNum} left` : outOfStock ? 'Out of Stock' : contactUs ? 'Available' : stock || 'Available';
+const stockStr = String(stock || '').trim();
+const stockNum = parseInt(stockStr, 10);
+const outOfStock = /out of stock/i.test(stockStr) || /^n\/?a$/i.test(stockStr) || /discontinu/i.test(stockStr);
+const lowStock = !outOfStock && !isNaN(stockNum) && stockNum >= 1 && stockNum < 10;
+const stockLabel = outOfStock ? 'Out of Stock' : lowStock ? `${stockNum} left` : 'In Stock';
+const stockColor = outOfStock ? 'text-red-400' : lowStock ? 'text-amber-400' : 'text-green-400';
 
 const showImage = image && !noImage;
 const isTire = category === 'tire';
+const priceNum = parseFloat(String(price).replace(/[^0-9.]/g, '')) || 0;
+const inquiryName = `${brand || ''} ${model || ''}`.trim() || description;
 ---
 
 <a href={`/${category}s/${id}`} class="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all hover:shadow-lg hover:shadow-primary-900/10">
@@ -77,7 +71,7 @@ const isTire = category === 'tire';
     <h3 class="text-white font-semibold text-xs sm:text-sm mb-0.5 line-clamp-1 group-hover:text-primary-300 transition-colors">{model}</h3>
     <p class="text-dark-400 text-[11px] line-clamp-1 mb-2">{size}</p>
 
-    <div class="flex items-end justify-between">
+    <div class="flex items-end justify-between mb-2">
       <div>
         <div class="text-white font-bold text-sm sm:text-lg">{price}</div>
         {compareAt && <div class="text-dark-500 text-[10px] line-through">{compareAt}</div>}
@@ -86,5 +80,19 @@ const isTire = category === 'tire';
         {stockLabel}
       </div>
     </div>
+    <button
+      type="button"
+      class="jsdc-inquiry-trigger w-full inline-flex items-center justify-center gap-1 rounded-md font-semibold transition-colors px-2 py-1.5 text-[10px] sm:text-xs bg-primary-600/15 border border-primary-500/30 text-primary-200 hover:bg-primary-600/25 hover:text-white"
+      data-inquiry-id={id}
+      data-inquiry-name={inquiryName}
+      data-inquiry-category={category}
+      data-inquiry-image={image || ''}
+      data-inquiry-size={size}
+      data-inquiry-price={priceNum.toFixed(2)}
+    >
+      <svg class="w-3 h-3 jsdc-inquiry-plus" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      <svg class="hidden w-3 h-3 jsdc-inquiry-check" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+      <span class="jsdc-inquiry-label">Add to Inquiry</span>
+    </button>
   </div>
 </a>

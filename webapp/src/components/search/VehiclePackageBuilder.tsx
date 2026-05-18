@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import InquiryButton from '../InquiryButton';
 
 interface Product {
   id: string;
@@ -62,7 +63,7 @@ function filterTier<T extends { priceNum: number }>(items: T[], tier: TierFilter
 
 // Pick a tier + brand diverse subset so recommendations span budget/mid/premium
 // and multiple brands, instead of stacking the cheapest brand at the top.
-function diversifyMix<T extends { priceNum: number; brand: string }>(items: T[], maxCount = 20): T[] {
+function diversifyMix<T extends { priceNum: number; brand: string }>(items: T[], maxCount = 500): T[] {
   if (items.length <= maxCount) return [...items].sort((a, b) => a.priceNum - b.priceNum);
 
   const sorted = [...items].sort((a, b) => a.priceNum - b.priceNum);
@@ -145,23 +146,28 @@ function isInStock(stock: string | undefined): boolean {
 }
 
 function StockBadge({ stock }: { stock: string }) {
-  const inStock = stock.includes('In Stock') || stock === 'Available' || stock === '20+' || parseInt(stock) >= 10;
-  const low = parseInt(stock) >= 1 && parseInt(stock) < 10;
-  const color = inStock ? 'text-green-400' : low ? 'text-amber-400' : 'text-dark-500';
-  const label = inStock ? 'In Stock' : low ? `${parseInt(stock)} left` : stock === 'Contact us' ? 'Available' : stock || 'Available';
+  const s = String(stock || '').trim();
+  const n = parseInt(s, 10);
+  const out = /out of stock/i.test(s) || /^n\/?a$/i.test(s) || /discontinu/i.test(s);
+  const low = !out && !isNaN(n) && n >= 1 && n < 10;
+  const color = out ? 'text-red-400' : low ? 'text-amber-400' : 'text-green-400';
+  const label = out ? 'Out of Stock' : low ? `${n} left` : 'In Stock';
   return <span className={`text-[9px] font-medium ${color}`}>{label}</span>;
 }
 
-function ProductCard({ product, isSelected, onSelect, detailUrl }: {
+function ProductCard({ product, isSelected, onSelect, detailUrl, layout = 'grid', vehicle }: {
   product: Product;
   isSelected: boolean;
   onSelect: () => void;
   detailUrl: string;
+  layout?: 'strip' | 'grid';
+  vehicle?: string;
 }) {
+  const sizing = layout === 'strip' ? 'shrink-0 w-36 sm:w-40' : 'w-full';
   return (
     <div
       onClick={onSelect}
-      className={`shrink-0 w-36 sm:w-40 cursor-pointer rounded-xl border-2 transition-all overflow-hidden ${
+      className={`${sizing} cursor-pointer rounded-xl border-2 transition-all overflow-hidden ${
         isSelected
           ? 'border-primary-500 shadow-lg shadow-primary-900/30 bg-dark-800'
           : 'border-dark-700/30 bg-dark-900 hover:border-dark-600'
@@ -188,10 +194,21 @@ function ProductCard({ product, isSelected, onSelect, detailUrl }: {
         <p className="text-dark-400 text-[9px] line-clamp-1">
           {product.tireSize || `${product.rimDiameter}x${product.rimWidth} ${product.boltPattern}`} {product.finish}
         </p>
-        <div className="flex items-center justify-between mt-1">
+        <div className="flex items-center justify-between mt-1 mb-1.5">
           <span className="text-white font-bold text-sm">{product.price}</span>
           <StockBadge stock={product.stock} />
         </div>
+        <InquiryButton
+          item={{
+            id: product.id,
+            name: `${product.brand || ''} ${product.name || ''}`.trim() || product.description,
+            category: product.category as 'wheel' | 'tire',
+            image: product.image,
+            size: product.tireSize || (product.rimDiameter ? `${product.rimDiameter}x${product.rimWidth}` : ''),
+            priceNum: product.priceNum,
+            vehicle,
+          }}
+        />
       </div>
       <a
         href={detailUrl}
@@ -204,6 +221,8 @@ function ProductCard({ product, isSelected, onSelect, detailUrl }: {
   );
 }
 
+type BuilderMode = 'package' | 'tires-only' | 'wheels-only';
+
 export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehicleModel, vehicleYear, wheels, tires, seasonCounts }: Props) {
   const [season, setSeason] = useState<'' | 'All Season' | 'Winter' | 'All Weather'>('');
   const [wheelType, setWheelType] = useState<'' | 'alloy' | 'steel'>('');
@@ -212,6 +231,27 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
   const [selectedWheelId, setSelectedWheelId] = useState<string>('');
   const [vehicleColor, setVehicleColor] = useState('default');
   const [vehicleAngle, setVehicleAngle] = useState('01');
+  const [mode, setMode] = useState<BuilderMode>('package');
+  const includeTires = mode !== 'wheels-only';
+  const includeWheels = mode !== 'tires-only';
+  // Initial state: horizontal recommendation strip (curated top picks). Any
+  // filter interaction (season for tires, wheelType for wheels, tier on
+  // either) signals "I want to browse" — switch that section to a vertical
+  // grid of all matching items.
+  const [tiresExpanded, setTiresExpanded] = useState(false);
+  const [wheelsExpanded, setWheelsExpanded] = useState(false);
+  const RECOMMENDATION_COUNT = 12;
+
+  function changeSeason(s: '' | 'All Season' | 'Winter' | 'All Weather') {
+    setSeason(s); setSelectedTireId(''); setTiresExpanded(true);
+  }
+  function changeWheelType(wt: '' | 'alloy' | 'steel') {
+    setWheelType(wt); setSelectedWheelId(''); setWheelsExpanded(true);
+  }
+  function changeTier(t: TierFilter) {
+    setTier(t); setSelectedTireId(''); setSelectedWheelId('');
+    setTiresExpanded(true); setWheelsExpanded(true);
+  }
 
   const vehicleImgUrl = getVehicleImgUrl(vehicleMake, vehicleModel, vehicleYear, vehicleAngle, vehicleColor);
   const base = typeof import.meta !== 'undefined' ? (import.meta as any).env?.BASE_URL || '' : '';
@@ -258,17 +298,62 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
   const selectedTire = filteredTires.find(t => t.id === selectedTireId) || filteredTires[0];
   const selectedWheel = primaryWheels.find(w => w.id === selectedWheelId) || altWheels.find(w => w.id === selectedWheelId) || primaryWheels[0];
 
-  const pkgPrice = selectedTire && selectedWheel ? (selectedTire.priceNum + selectedWheel.priceNum) * 4 : 0;
+  // Price reflects the active mode: package (4+4), tires only (4), wheels only (4).
+  const pkgPrice = (() => {
+    const tirePart = includeTires && selectedTire ? selectedTire.priceNum * 4 : 0;
+    const wheelPart = includeWheels && selectedWheel ? selectedWheel.priceNum * 4 : 0;
+    return tirePart + wheelPart;
+  })();
+  const ctaReady = (includeTires ? !!selectedTire : true) && (includeWheels ? !!selectedWheel : true) && pkgPrice > 0;
+  const ctaLabel = mode === 'tires-only' ? 'Inquire — Tires Only →'
+    : mode === 'wheels-only' ? 'Inquire — Wheels Only →'
+    : 'Get This Package →';
+  const pkgLineLabel = mode === 'tires-only' ? '4 tires'
+    : mode === 'wheels-only' ? '4 wheels'
+    : '4 tires + 4 wheels';
+
+  // Build /contact URL pre-filled with the selected items. Adapts to mode:
+  // package (both), tires only, or wheels only.
+  const packageContactUrl = (() => {
+    if (!ctaReady) return '/contact';
+    const tireLabel = selectedTire ? `${selectedTire.brand || ''} ${selectedTire.name || ''} ${selectedTire.tireSize || ''}`.trim() : '';
+    const wheelLabel = selectedWheel ? `${selectedWheel.brand || ''} ${selectedWheel.name || ''} ${selectedWheel.rimDiameter || ''}x${selectedWheel.rimWidth || ''}`.trim() : '';
+    const skus: string[] = [];
+    if (includeTires && selectedTire) skus.push(selectedTire.id);
+    if (includeWheels && selectedWheel) skus.push(selectedWheel.id);
+    const heading = mode === 'tires-only' ? `Tires inquiry: ${vehicleLabel}`
+      : mode === 'wheels-only' ? `Wheels inquiry: ${vehicleLabel}`
+      : `Package: ${vehicleLabel}`;
+    const subject = `${heading} — ${skus.join(' + ')}`;
+    const lines: string[] = [];
+    if (includeTires && selectedTire) {
+      lines.push(`• Tires (×4): ${tireLabel} — SKU ${selectedTire.id} — $${(selectedTire.priceNum * 4).toFixed(2)}`);
+    }
+    if (includeWheels && selectedWheel) {
+      lines.push(`• Wheels (×4): ${wheelLabel} — SKU ${selectedWheel.id} — $${(selectedWheel.priceNum * 4).toFixed(2)}`);
+    }
+    const totalLabel = mode === 'package' ? 'Estimated total (4+4)' : 'Estimated total';
+    const intro = mode === 'tires-only' ? `Hi, I'd like to order these tires for my ${vehicleLabel}:`
+      : mode === 'wheels-only' ? `Hi, I'd like to order these wheels for my ${vehicleLabel}:`
+      : `Hi, I'd like to order this package for my ${vehicleLabel}:`;
+    const note =
+      `${intro}\n\n` +
+      lines.join('\n') +
+      `\n• ${totalLabel}: $${pkgPrice.toFixed(2)}\n\n` +
+      `Please confirm availability, total with taxes/fees, and GTA delivery timing.`;
+    const label = `${heading}: ${skus.join(' + ')}`;
+    return `/contact?subject=${encodeURIComponent(subject)}&note=${encodeURIComponent(note)}&label=${encodeURIComponent(label)}`;
+  })();
 
   return (
     <div className="space-y-0">
-      {/* ── Vehicle header + Package summary ── */}
-      <div className="bg-gradient-to-r from-primary-900/20 via-dark-900 to-primary-900/10 border border-primary-700/20 rounded-xl overflow-hidden mb-5">
+      {/* ── Vehicle header + Package summary (sticky under the site header) ── */}
+      <div className="bg-dark-950 border border-primary-700/30 rounded-xl overflow-hidden mb-5 sticky top-16 z-30 shadow-2xl shadow-black/60 backdrop-blur-md">
         <div className="flex flex-col">
           {/* Vehicle image with controls — full width */}
           {vehicleImgUrl && (
             <div className="bg-gradient-to-br from-dark-800/50 to-dark-900 relative">
-              <div className="aspect-[21/9] flex items-center justify-center p-4 max-h-[350px]">
+              <div className="flex items-center justify-center p-3 h-32 sm:h-40 lg:h-48">
                 <img src={vehicleImgUrl} alt={vehicleLabel} className="max-w-full max-h-full object-contain" loading="lazy" />
               </div>
               {/* Color swatches */}
@@ -306,13 +391,35 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
             </div>
           )}
           {/* Package summary */}
-          <div className="flex-1 p-4 md:p-5">
-            <p className="text-primary-300 text-sm font-semibold">{vehicleLabel}</p>
-            <div className="flex items-center gap-2 mt-1 mb-3">
-              <svg className="w-3.5 h-3.5 text-green-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              <span className="text-green-400 text-xs font-medium">All wheels are hub centric fit</span>
+          <div className="flex-1 p-3 sm:p-4">
+            <div className="flex items-center gap-2 flex-wrap">
+              <p className="text-primary-300 text-sm font-semibold">{vehicleLabel}</p>
+              <span className="inline-flex items-center gap-1 text-green-400 text-[10px] font-medium bg-green-500/10 border border-green-500/20 rounded-full px-2 py-0.5">
+                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                Hub centric fit
+              </span>
+            </div>
+
+            {/* Mode toggle — package / tires only / wheels only */}
+            <div className="flex items-center gap-1.5 mb-2 flex-wrap">
+              <span className="text-dark-500 text-[10px] font-medium mr-1 uppercase tracking-wide">Build</span>
+              {([
+                { id: 'package', label: 'Tires + Wheels', icon: 'pkg' },
+                { id: 'tires-only', label: 'Tires Only', icon: 'tire' },
+                { id: 'wheels-only', label: 'Wheels Only', icon: 'wheel' },
+              ] as const).map(m => (
+                <button
+                  key={m.id}
+                  onClick={() => setMode(m.id)}
+                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-semibold transition-all ${
+                    mode === m.id ? 'bg-primary-600 text-white' : 'bg-dark-800/60 text-dark-400 hover:text-white'
+                  }`}
+                >
+                  {m.label}
+                </button>
+              ))}
             </div>
 
             {/* Tier filter — affects both tires and wheels */}
@@ -326,7 +433,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
               ] as const).map(t => (
                 <button
                   key={t.id}
-                  onClick={() => { setTier(t.id); setSelectedTireId(''); setSelectedWheelId(''); }}
+                  onClick={() => changeTier(t.id)}
                   title={t.title}
                   className={`px-2.5 py-1 rounded-md text-[10px] font-medium transition-all ${
                     tier === t.id ? 'bg-primary-600 text-white' : 'bg-dark-800/60 text-dark-400 hover:text-white'
@@ -337,9 +444,9 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
               ))}
             </div>
 
-            {/* Selected items + price */}
+            {/* Selected items + price (sections adapt to mode) */}
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-              {selectedTire && (
+              {includeTires && selectedTire && (
                 <div className="flex items-center gap-2 bg-dark-800/60 rounded-lg px-2.5 py-1.5">
                   <div className="w-9 h-9 bg-white rounded flex items-center justify-center p-0.5 shrink-0">
                     {selectedTire.image && <img src={selectedTire.image} alt="" className="w-full h-full object-contain mix-blend-multiply" />}
@@ -350,8 +457,8 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
                   </div>
                 </div>
               )}
-              <span className="text-dark-500 text-lg">+</span>
-              {selectedWheel && (
+              {includeTires && includeWheels && <span className="text-dark-500 text-lg">+</span>}
+              {includeWheels && selectedWheel && (
                 <div className="flex items-center gap-2 bg-dark-800/60 rounded-lg px-2.5 py-1.5">
                   <div className="w-9 h-9 bg-white rounded flex items-center justify-center p-0.5 shrink-0">
                     {selectedWheel.image && <img src={selectedWheel.image} alt="" className="w-full h-full object-contain mix-blend-multiply" />}
@@ -365,14 +472,23 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
               <span className="text-dark-500 text-lg">=</span>
               <div className="bg-primary-600/20 border border-primary-500/30 rounded-lg px-4 py-2">
                 <p className="text-white font-bold text-xl">${pkgPrice.toFixed(2)}</p>
-                <p className="text-primary-300 text-[9px]">4 tires + 4 wheels</p>
+                <p className="text-primary-300 text-[9px]">{pkgLineLabel}</p>
               </div>
+              {ctaReady && (
+                <a
+                  href={packageContactUrl}
+                  className="hidden sm:inline-block bg-primary-600 hover:bg-primary-500 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors shadow-lg shadow-primary-900/30"
+                >
+                  {ctaLabel}
+                </a>
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* ── Tire selection ── */}
+      {/* ── Tire selection (hidden in wheels-only mode) ── */}
+      {includeTires && (
       <div className="mb-5">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-white text-sm font-semibold">Choose Your Tires</h3>
@@ -384,7 +500,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
               return (
                 <button
                   key={label}
-                  onClick={() => { setSeason(s); setSelectedTireId(''); }}
+                  onClick={() => changeSeason(s)}
                   className={`px-2 py-1 rounded-md text-[10px] font-medium transition-all ${
                     season === s
                       ? s === 'Winter' ? 'bg-blue-600 text-white' : s === 'All Weather' ? 'bg-amber-600 text-white' : s === 'All Season' ? 'bg-green-600 text-white' : 'bg-primary-600 text-white'
@@ -397,62 +513,140 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
             })}
           </div>
         </div>
-        <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-thin">
-          {filteredTires.slice(0, 20).map(t => (
-            <ProductCard
-              key={t.id}
-              product={t}
-              isSelected={t.id === (selectedTire?.id || '')}
-              onSelect={() => setSelectedTireId(t.id)}
-              detailUrl={`/tires/${t.id}`}
-            />
-          ))}
-          {filteredTires.length === 0 && (
-            <p className="text-dark-500 text-sm py-8">No tires found for this season. Try another.</p>
-          )}
-        </div>
-        {filteredTires.length > 20 && (
-          <p className="text-dark-500 text-[10px] mt-1">{filteredTires.length - 20} more available. Narrow by season above.</p>
+        {tiresExpanded ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+            {filteredTires.map(t => (
+              <ProductCard
+                key={t.id}
+                product={t}
+                isSelected={t.id === (selectedTire?.id || '')}
+                onSelect={() => setSelectedTireId(t.id)}
+                detailUrl={`/tires/${t.id}`}
+                layout="grid"
+                vehicle={vehicleLabel}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-thin">
+            {filteredTires.slice(0, RECOMMENDATION_COUNT).map(t => (
+              <ProductCard
+                key={t.id}
+                product={t}
+                isSelected={t.id === (selectedTire?.id || '')}
+                onSelect={() => setSelectedTireId(t.id)}
+                detailUrl={`/tires/${t.id}`}
+                layout="strip"
+                vehicle={vehicleLabel}
+              />
+            ))}
+          </div>
+        )}
+        {filteredTires.length === 0 && (
+          <p className="text-dark-500 text-sm py-8 text-center">No tires found for this season. Try another.</p>
+        )}
+        {filteredTires.length > 0 && (
+          <div className="flex items-center justify-between mt-2 gap-3">
+            <p className="text-dark-500 text-[10px]">
+              {tiresExpanded
+                ? `${filteredTires.length} tires in stock for this vehicle.`
+                : `Showing top ${Math.min(RECOMMENDATION_COUNT, filteredTires.length)} recommendations — ${filteredTires.length} total in stock.`}
+            </p>
+            {filteredTires.length > RECOMMENDATION_COUNT && (
+              <button
+                onClick={() => setTiresExpanded(e => !e)}
+                className="text-[10px] font-semibold text-primary-400 hover:text-primary-300 underline-offset-2 hover:underline shrink-0"
+              >
+                {tiresExpanded ? 'Show recommendations only ↑' : `View all ${filteredTires.length} tires ↓`}
+              </button>
+            )}
+          </div>
         )}
       </div>
+      )}
 
-      {/* ── Wheel selection ── */}
+      {/* ── Wheel selection (hidden in tires-only mode) ── */}
+      {includeWheels && (
       <div className="mb-5">
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
           <h3 className="text-white text-sm font-semibold">Choose Your Wheels</h3>
-          <div className="flex gap-1">
+          <div className="inline-flex bg-dark-800/60 rounded-lg p-0.5 border border-dark-700/40">
             <button
-              onClick={() => { setWheelType(''); setSelectedWheelId(''); }}
-              className={`px-2 py-1 rounded-md text-[10px] font-medium transition-all ${wheelType === '' ? 'bg-primary-600 text-white' : 'bg-dark-800/60 text-dark-400 hover:text-white'}`}
+              onClick={() => changeWheelType('')}
+              className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-semibold transition-all ${wheelType === '' ? 'bg-primary-600 text-white' : 'text-dark-400 hover:text-white'}`}
+              aria-label="Show all wheels"
+              title="All wheels"
             >
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
               All ({inStockWheelsAll.length})
             </button>
             <button
-              onClick={() => { setWheelType('alloy'); setSelectedWheelId(''); }}
-              className={`px-2 py-1 rounded-md text-[10px] font-medium transition-all ${wheelType === 'alloy' ? 'bg-primary-600 text-white' : 'bg-dark-800/60 text-dark-400 hover:text-white'}`}
+              onClick={() => changeWheelType('alloy')}
+              className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-semibold transition-all ${wheelType === 'alloy' ? 'bg-primary-600 text-white' : 'text-dark-400 hover:text-white'}`}
+              aria-label="Show alloy wheels"
+              title="Alloy wheels"
             >
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" strokeWidth={2} /><path strokeLinecap="round" strokeWidth={1.5} d="M12 2v8m0 4v8M2 12h8m4 0h8M5 5l5 5m4 4l5 5M5 19l5-5m4-4l5-5" /></svg>
               Alloy ({inStockWheelsAll.filter(w => w.wheelType !== 'Steel Wheel').length})
             </button>
             <button
-              onClick={() => { setWheelType('steel'); setSelectedWheelId(''); }}
-              className={`px-2 py-1 rounded-md text-[10px] font-medium transition-all ${wheelType === 'steel' ? 'bg-primary-600 text-white' : 'bg-dark-800/60 text-dark-400 hover:text-white'}`}
+              onClick={() => changeWheelType('steel')}
+              className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-semibold transition-all ${wheelType === 'steel' ? 'bg-primary-600 text-white' : 'text-dark-400 hover:text-white'}`}
+              aria-label="Show steel wheels"
+              title="Steel wheels"
             >
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" strokeWidth={2} /><circle cx="6" cy="12" r="1" strokeWidth={2} /><circle cx="12" cy="6" r="1" strokeWidth={2} /><circle cx="18" cy="12" r="1" strokeWidth={2} /><circle cx="12" cy="18" r="1" strokeWidth={2} /></svg>
               Steel ({inStockWheelsAll.filter(w => w.wheelType === 'Steel Wheel').length})
             </button>
           </div>
         </div>
-        <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-thin">
-          {primaryWheels.slice(0, 20).map(w => (
-            <ProductCard
-              key={w.id}
-              product={w}
-              isSelected={w.id === (selectedWheel?.id || '')}
-              onSelect={() => setSelectedWheelId(w.id)}
-              detailUrl={`/wheels/${w.id}`}
-            />
-          ))}
-        </div>
-        {/* Subtle alternative type */}
+        {wheelsExpanded ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+            {primaryWheels.map(w => (
+              <ProductCard
+                key={w.id}
+                product={w}
+                isSelected={w.id === (selectedWheel?.id || '')}
+                onSelect={() => setSelectedWheelId(w.id)}
+                detailUrl={`/wheels/${w.id}`}
+                layout="grid"
+                vehicle={vehicleLabel}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-thin">
+            {primaryWheels.slice(0, RECOMMENDATION_COUNT).map(w => (
+              <ProductCard
+                key={w.id}
+                product={w}
+                isSelected={w.id === (selectedWheel?.id || '')}
+                onSelect={() => setSelectedWheelId(w.id)}
+                detailUrl={`/wheels/${w.id}`}
+                layout="strip"
+                vehicle={vehicleLabel}
+              />
+            ))}
+          </div>
+        )}
+        {primaryWheels.length > 0 && (
+          <div className="flex items-center justify-between mt-2 gap-3">
+            <p className="text-dark-500 text-[10px]">
+              {wheelsExpanded
+                ? `${primaryWheels.length} wheels in stock for this vehicle.`
+                : `Showing top ${Math.min(RECOMMENDATION_COUNT, primaryWheels.length)} recommendations — ${primaryWheels.length} total in stock.`}
+            </p>
+            {primaryWheels.length > RECOMMENDATION_COUNT && (
+              <button
+                onClick={() => setWheelsExpanded(e => !e)}
+                className="text-[10px] font-semibold text-primary-400 hover:text-primary-300 underline-offset-2 hover:underline shrink-0"
+              >
+                {wheelsExpanded ? 'Show recommendations only ↑' : `View all ${primaryWheels.length} wheels ↓`}
+              </button>
+            )}
+          </div>
+        )}
+        {/* Subtle alternative type — always horizontal strip (it's secondary) */}
         {altWheels.length > 0 && (
           <div className="mt-3 pt-3 border-t border-dark-700/20">
             <p className="text-dark-500 text-[10px] mb-2">{altLabel} ({altWheels.length})</p>
@@ -464,23 +658,26 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
                   isSelected={w.id === (selectedWheel?.id || '')}
                   onSelect={() => setSelectedWheelId(w.id)}
                   detailUrl={`/wheels/${w.id}`}
+                  layout="strip"
+                  vehicle={vehicleLabel}
                 />
               ))}
             </div>
           </div>
         )}
       </div>
+      )}
 
-      {/* ── Sticky bottom CTA (mobile) ── */}
-      {selectedTire && selectedWheel && (
+      {/* ── Sticky bottom CTA (mobile) — adapts to mode ── */}
+      {ctaReady && (
         <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-dark-900/95 backdrop-blur border-t border-dark-700 px-4 py-3 z-50">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-white font-bold text-lg">${pkgPrice.toFixed(2)}</p>
-              <p className="text-dark-400 text-[10px]">4 tires + 4 wheels</p>
+              <p className="text-dark-400 text-[10px]">{pkgLineLabel}</p>
             </div>
-            <a href={`/contact`} className="bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">
-              Get This Package
+            <a href={packageContactUrl} className="bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">
+              {ctaLabel}
             </a>
           </div>
         </div>

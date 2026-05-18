@@ -1,0 +1,117 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: 'Wheel Bolt Patterns Explained',
+  description: 'How to read a bolt pattern (5x114.3, 5x100, 5x120), common Canadian-market patterns by manufacturer, and why bolt-pattern compatibility alone is not enough.',
+  author: { '@type': 'Organization', name: 'JSDC Wheels' },
+  publisher: { '@type': 'Organization', name: 'JSDC Wheels' },
+  about: ['bolt pattern', 'PCD', 'wheel fitment', '5x114.3', '5x100', '5x120'],
+};
+
+const patterns = [
+  { pcd: '5x114.3', notes: 'Most common Japanese/Korean — Honda, Toyota (most models), Hyundai, Kia, Nissan, Mazda, some Ford, Tesla Model 3' },
+  { pcd: '5x100', notes: 'Subaru, older Toyota Corolla, VW Golf, Audi A3, some Chrysler' },
+  { pcd: '5x112', notes: 'VW, Audi, Mercedes-Benz, BMW (newer), Tesla Model Y' },
+  { pcd: '5x120', notes: 'BMW (most), Land Rover, Tesla Model S/X' },
+  { pcd: '5x115', notes: 'GM/Chevy (most cars), Dodge Charger/Challenger' },
+  { pcd: '6x139.7 (6x5.5")', notes: 'Toyota Tacoma, Tundra, 4Runner; Nissan Frontier, Titan; Chevy Colorado' },
+  { pcd: '6x135', notes: 'Ford F-150 (2004+), Expedition' },
+  { pcd: '5x108', notes: 'Volvo, Ford Focus, some Land Rover' },
+  { pcd: '4x100', notes: 'Compact cars — Honda Fit, Toyota Yaris, older Civics, Mazda3' },
+];
+---
+
+<Layout
+  title="Bolt Pattern Guide — 5x114.3, 5x100, 5x120 | JSDC Wheels Guides"
+  description="How to read wheel bolt patterns, common Canadian-market patterns by brand, and why pattern alone doesn't guarantee fitment. Practical reference from JSDC Wheels."
+  jsonLd={articleJsonLd}
+>
+  <article class="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+    <nav class="flex items-center gap-2 text-xs text-dark-500 mb-6">
+      <a href="/" class="hover:text-dark-300">Home</a>
+      <span>/</span>
+      <a href="/guides/bolt-patterns" class="hover:text-dark-300">Guides</a>
+      <span>/</span>
+      <span class="text-dark-300">Bolt Patterns</span>
+    </nav>
+
+    <p class="text-primary-400 text-xs font-semibold uppercase tracking-[0.2em] mb-3">Wheel Fitment Guide</p>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">Bolt patterns, decoded.</h1>
+    <p class="text-dark-300 text-base sm:text-lg leading-relaxed mb-8">
+      A wheel's bolt pattern — also called <strong class="text-white">PCD</strong> (pitch circle diameter)
+      — is the first thing to match when picking new wheels. Get it wrong and the wheel literally can't bolt on.
+    </p>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mt-10 mb-3">How to read a bolt pattern</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-4">
+      A pattern like <strong class="text-white">5x114.3</strong> means:
+    </p>
+    <ul class="text-dark-300 text-sm leading-relaxed list-disc list-inside marker:text-primary-500/60 space-y-2 mb-4">
+      <li><strong class="text-white">5</strong> — the number of lug holes</li>
+      <li><strong class="text-white">114.3</strong> — the diameter (in millimetres) of the imaginary circle drawn through the centre of all five lug holes</li>
+    </ul>
+    <p class="text-dark-300 text-sm leading-relaxed mb-4">
+      The wheel's bolt pattern must match the vehicle's lug-stud pattern exactly. A 5x114.3 wheel does
+      <strong class="text-white">not</strong> fit a 5x115 hub — the 0.7 mm difference is too much for
+      the studs to line up cleanly. Some vehicles ship with adapters that allow alternate patterns; most
+      don't.
+    </p>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mt-10 mb-3">Common patterns by manufacturer</h2>
+    <p class="text-dark-400 text-sm mb-4">Reference table for the Canadian market. Specific trims may vary — always confirm against the vehicle.</p>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-left text-dark-500 text-xs uppercase border-b border-dark-700/40">
+            <th class="py-3 pr-4 font-semibold">Pattern</th>
+            <th class="py-3 font-semibold">Common vehicles</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-dark-700/20">
+          {patterns.map(p => (
+            <tr>
+              <td class="py-3 pr-4 text-white font-mono font-semibold">{p.pcd}</td>
+              <td class="py-3 text-dark-300">{p.notes}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mt-10 mb-3">Pattern alone isn't enough</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-4">
+      A matching bolt pattern means a wheel <em>can be installed</em> — not that it will fit
+      <em>well</em>. Three other measurements matter:
+    </p>
+    <ul class="text-dark-300 text-sm leading-relaxed list-disc list-inside marker:text-primary-500/60 space-y-2 mb-4">
+      <li><strong class="text-white">Centre bore</strong> — see our <a href="/guides/hub-centric-wheels" class="text-primary-400 hover:underline">hub-centric guide</a></li>
+      <li><strong class="text-white">Offset (ET)</strong> — distance from the wheel's mounting face to its centreline. Wrong offset rubs the fender or pokes outside it</li>
+      <li><strong class="text-white">Diameter and width</strong> — must be compatible with the tire size and brake clearance</li>
+    </ul>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mt-10 mb-3">The shortcut</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-4">
+      Search by your vehicle on this site and we filter out every wheel that doesn't match your
+      bolt pattern, hub bore, and OE offset range. No specs to memorise.
+    </p>
+
+    <div class="bg-dark-900/50 border border-primary-600/30 rounded-2xl p-6 mt-10">
+      <p class="text-dark-300 text-sm mb-4">Browse wheels that fit your bolt pattern:</p>
+      <a href="/" class="inline-block bg-primary-600 hover:bg-primary-500 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm">
+        Search by vehicle →
+      </a>
+    </div>
+
+    <!-- Related -->
+    <section class="mt-12 pt-8 border-t border-dark-700/40">
+      <p class="text-dark-500 text-xs font-semibold uppercase tracking-wider mb-3">Related guides</p>
+      <ul class="space-y-2">
+        <li><a href="/guides/hub-centric-wheels" class="text-primary-400 hover:text-primary-300 text-sm">Hub-centric wheels — why centre bore matters →</a></li>
+        <li><a href="/guides/tire-sizes" class="text-primary-400 hover:text-primary-300 text-sm">Reading a tire size — 225/65R17 explained →</a></li>
+      </ul>
+    </section>
+  </article>
+</Layout>

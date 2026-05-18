@@ -1,0 +1,106 @@
+---
+import Layout from '../layouts/Layout.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const statsPath = path.join(process.cwd(), 'public', 'data', 'stats.json');
+let stats: any = {};
+if (fs.existsSync(statsPath)) stats = JSON.parse(fs.readFileSync(statsPath, 'utf-8'));
+
+const productCount = Math.floor((stats.totalProducts || 6800) / 100) * 100;
+const brandCount = Object.keys(stats.byBrand || {}).length || 40;
+---
+
+<Layout
+  title="About JSDC Wheels | Tire & Wheel Distributor in the GTA"
+  description="JSDC Wheels is a Greater Toronto Area tire and wheel distributor. We supply tire shops, sub-distributors and individual customers with hub-centric wheels and premium tires from Michelin, Bridgestone, Continental and 40+ other brands."
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden border-b border-dark-700/50">
+    <div class="absolute inset-0 bg-gradient-to-b from-primary-950/30 via-dark-950 to-dark-950"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary-600/10 rounded-full blur-3xl"></div>
+
+    <div class="relative max-w-3xl mx-auto px-4 sm:px-6 pt-14 pb-10 sm:pt-20 sm:pb-14">
+      <p class="text-primary-400 text-xs font-semibold uppercase tracking-[0.2em] mb-3">About JSDC Wheels</p>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-5 tracking-tight">
+        Built for the GTA's tire shops, installers and drivers.
+      </h1>
+      <p class="text-dark-300 text-base sm:text-lg leading-relaxed">
+        JSDC Wheels is an independent tire and wheel distributor based in Scarborough, Ontario.
+        We supply both wholesale customers — tire shops, body shops, sub-distributors — and
+        individual buyers across the Greater Toronto Area. The catalogue, the fitment guarantees,
+        and the delivery promise are the same whether you're outfitting a fleet or a single car.
+      </p>
+    </div>
+  </section>
+
+  <!-- The catalogue -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-3 gap-4 mb-10">
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-2xl p-5 text-center">
+        <div class="text-primary-400 font-extrabold text-2xl sm:text-3xl">{productCount.toLocaleString()}+</div>
+        <div class="text-dark-400 text-xs mt-1">Products in stock</div>
+      </div>
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-2xl p-5 text-center">
+        <div class="text-primary-400 font-extrabold text-2xl sm:text-3xl">{brandCount}</div>
+        <div class="text-dark-400 text-xs mt-1">Brands carried</div>
+      </div>
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-2xl p-5 text-center">
+        <div class="text-primary-400 font-extrabold text-2xl sm:text-3xl">1-2</div>
+        <div class="text-dark-400 text-xs mt-1">Day GTA delivery</div>
+      </div>
+    </div>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mb-3">What we carry</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-6">
+      Our catalogue spans Michelin, Bridgestone, Continental, Pirelli, Goodyear, Hankook, Kumho,
+      Yokohama and 36 other tire brands — all sourced direct from authorized Canadian suppliers,
+      with full manufacturer warranty intact. On the wheel side we partner with Superspeed,
+      Macpek, RWC, OE+, Rocktrix, and Blackhorn for an inventory that covers steel, alloy,
+      forged and OE-replica fitments for 2,000+ Canadian-market vehicle trims.
+    </p>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mb-3 mt-10">Why hub-centric only</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-6">
+      When you search by vehicle on this site, every wheel returned has a centre bore that matches
+      the vehicle's hub diameter exactly. No spacer rings, no vibration at highway speed, no
+      "close enough" lug-centric workarounds. We built our fitment system across three supplier
+      catalogues to make that guarantee real — not a marketing line.
+    </p>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mb-3 mt-10">Who we work with</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-3">
+      We work with two kinds of customers in roughly equal measure. <strong class="text-white">Wholesale</strong>:
+      independent tire shops, auto body shops, and sub-distributors across Toronto, Mississauga, Brampton,
+      Markham, Vaughan, Richmond Hill, North York, Scarborough, Etobicoke and Oakville. <strong class="text-white">Retail</strong>:
+      individual drivers who want OE-quality fitment without going through a middleman shop.
+    </p>
+    <p class="text-dark-300 text-sm leading-relaxed">
+      Retail buyers can shop the catalogue at MSRP — no account needed. Tire shops, body shops, and
+      sub-distributors register for wholesale pricing tiers via the
+      <a href="/contact" class="text-primary-400 hover:text-primary-300 underline-offset-2 hover:underline">contact form</a> —
+      most account approvals turn around within one business day.
+    </p>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mb-3 mt-10">Our standards</h2>
+    <ul class="text-dark-300 text-sm leading-relaxed space-y-2 list-disc list-inside marker:text-primary-500/60">
+      <li>All wheels and tires sourced from authorized Canadian suppliers</li>
+      <li>Full manufacturer warranty on every product</li>
+      <li>Hub-centric fitment guaranteed for vehicle-search results</li>
+      <li>In-stock quantities surfaced live — we hide order-on-demand items by default</li>
+      <li>Discontinued products never reach the vehicle search</li>
+      <li>Wholesale pricing structured in tiers — bigger shops, sharper costs</li>
+    </ul>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 py-12 border-t border-dark-700/40">
+    <div class="bg-gradient-to-br from-primary-900/20 to-dark-900 border border-primary-600/30 rounded-2xl p-8 text-center">
+      <h2 class="text-white text-xl sm:text-2xl font-bold mb-2">Ready to see fitment for your vehicle?</h2>
+      <p class="text-dark-300 text-sm mb-6">Type your year, make and model — every wheel returned will fit hub-centric.</p>
+      <a href="/" class="inline-block bg-primary-600 hover:bg-primary-500 text-white font-semibold px-6 py-3 rounded-xl transition-colors shadow-lg shadow-primary-900/30">
+        Start a vehicle search
+      </a>
+    </div>
+  </section>
+</Layout>

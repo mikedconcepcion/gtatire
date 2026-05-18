@@ -2016,6 +2016,663 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-15T04:09:45.544Z"
+    },
+    {
+      "id": "bug-127",
+      "timestamp": "2026-05-15T06:00:04.856Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/Header.astro",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 5→12 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:00:04.857Z"
+    },
+    {
+      "id": "bug-128",
+      "timestamp": "2026-05-15T06:00:21.219Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/Footer.astro",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 4→11 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:00:21.219Z"
+    },
+    {
+      "id": "bug-129",
+      "timestamp": "2026-05-15T06:05:47.901Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/layouts/Layout.astro",
+      "root_cause": "Had 'JSDC Wheels is a wholesale tire and wheel supplie",
+      "fix": "Changed to 'JSDC Wheels is a wholesale tire and wheel supplie",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:05:47.901Z"
+    },
+    {
+      "id": "bug-130",
+      "timestamp": "2026-05-15T06:11:46.943Z",
+      "error_message": "Significant refactor of ",
+      "file": ".github/workflows/deploy.yml",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 6→6 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "yml"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:11:46.943Z"
+    },
+    {
+      "id": "bug-131",
+      "timestamp": "2026-05-15T06:21:40.939Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/astro.config.mjs",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 17→29 lines (2 removed) | Also: ssr: {; // products.json + fitment.json are large — import",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "mjs"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-15T06:25:54.597Z"
+    },
+    {
+      "id": "bug-132",
+      "timestamp": "2026-05-15T06:24:32.485Z",
+      "error_message": "Missing await",
+      "file": "webapp/src/pages/wheels/[id].astro",
+      "root_cause": "Async call without await — returned Promise instead of value",
+      "fix": "Added await to async call | Also: export const prerender = false;; // SSR mode: fetch data from public assets at request time.",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-15T06:24:59.783Z"
+    },
+    {
+      "id": "bug-133",
+      "timestamp": "2026-05-15T06:25:33.686Z",
+      "error_message": "Missing await",
+      "file": "webapp/src/pages/vehicle/[year]/[make]/[model].astro",
+      "root_cause": "Async call without await — returned Promise instead of value",
+      "fix": "Added await to async call",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:25:33.686Z"
+    },
+    {
+      "id": "bug-134",
+      "timestamp": "2026-05-15T06:28:44.732Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/pages/index.astro",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 9→4 lines (5 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:28:44.732Z"
+    },
+    {
+      "id": "bug-135",
+      "timestamp": "2026-05-15T06:29:19.077Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/pages/wheels.astro",
+      "root_cause": "8 lines replaced/restructured",
+      "fix": "Rewrote 12→6 lines (8 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:29:19.077Z"
+    },
+    {
+      "id": "bug-136",
+      "timestamp": "2026-05-15T06:29:34.089Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/pages/tires.astro",
+      "root_cause": "7 lines replaced/restructured",
+      "fix": "Rewrote 13→7 lines (7 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:29:34.089Z"
+    },
+    {
+      "id": "bug-137",
+      "timestamp": "2026-05-15T06:53:35.738Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/Header.astro",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 4→6 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:53:35.738Z"
+    },
+    {
+      "id": "bug-138",
+      "timestamp": "2026-05-15T06:53:45.716Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/Footer.astro",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 4→6 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T06:53:45.716Z"
+    },
+    {
+      "id": "bug-139",
+      "timestamp": "2026-05-15T12:17:59.053Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/build-favicon.cjs",
+      "root_cause": "45 lines replaced/restructured",
+      "fix": "Rewrote 60→34 lines (45 removed) | Also: // Crop the entire artwork from the 1280x720 banne; // bounds so the surrounding transparent margin di",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "cjs"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-15T12:20:45.694Z"
+    },
+    {
+      "id": "bug-140",
+      "timestamp": "2026-05-15T12:18:33.463Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/Header.astro",
+      "root_cause": "11 lines replaced/restructured",
+      "fix": "Rewrote 17→11 lines (11 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T12:18:33.463Z"
+    },
+    {
+      "id": "bug-141",
+      "timestamp": "2026-05-15T12:23:45.240Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/components/Footer.astro",
+      "root_cause": "11 lines replaced/restructured",
+      "fix": "Rewrote 16→10 lines (11 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T12:23:45.240Z"
+    },
+    {
+      "id": "bug-142",
+      "timestamp": "2026-05-15T13:25:26.040Z",
+      "error_message": "Vehicle search shows 0 wheels available for every vehicle (e.g. 2025 Hyundai Santa Fe) despite fitment data existing",
+      "file": "webapp/src/pages/vehicle/[year]/[make]/[model].astro, webapp/src/pages/wheels/[id].astro",
+      "root_cause": "fitment.json is keyed by internal SKU (product.id like GTA-W-0001) but the page lookup used p.productNo, which is undefined on wheel products. Every vehicle therefore returned an empty match set.",
+      "fix": "Changed matchingProductNos lookup to use p.id; same fix on wheels/[id].astro line 22 for cross-vehicle fitment.",
+      "tags": [
+        "fitment",
+        "vehicle-search",
+        "data-key-mismatch",
+        "critical"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T13:25:26.040Z"
+    },
+    {
+      "id": "bug-143",
+      "timestamp": "2026-05-15T13:26:42.532Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/Header.astro",
+      "root_cause": "Had \"h-10 sm:h-12 w-auto\"",
+      "fix": "Changed to \"h-12 sm:h-14 w-auto\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-15T13:26:42.532Z"
+    },
+    {
+      "id": "bug-144",
+      "timestamp": "2026-05-16T18:56:11.247Z",
+      "error_message": "Significant refactor of ",
+      "file": "webapp/src/pages/vehicle/[year]/[make]/[model].astro",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 8→11 lines (5 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "astro"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-16T18:56:11.247Z"
+    },
+    {
+      "id": "bug-145",
+      "timestamp": "2026-05-16T18:56:28.988Z",
+      "error_message": "Type error",
+      "file": "webapp/src/components/VehicleResults.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-16T18:56:28.988Z"
+    },
+    {
+      "id": "bug-146",
+      "timestamp": "2026-05-16T19:34:21.265Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "scrapers/recon-fastco-images.js",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-16T19:34:21.265Z"
+    },
+    {
+      "id": "bug-147",
+      "timestamp": "2026-05-16T19:43:54.893Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "scrapers/recon-fastco-images.js",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-16T19:43:54.893Z"
+    },
+    {
+      "id": "bug-148",
+      "timestamp": "2026-05-16T20:58:53.096Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/probe-fastco-api.js",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 4→3 lines (2 removed) | Also: const TESTS = [; '/api/Canada/makes/Honda/years/2024/models/Civic/s",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-16T20:59:48.359Z"
+    },
+    {
+      "id": "bug-149",
+      "timestamp": "2026-05-16T21:00:13.037Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "scrapers/probe-fastco-api.js",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-16T21:00:13.037Z"
+    },
+    {
+      "id": "bug-150",
+      "timestamp": "2026-05-16T21:12:42.724Z",
+      "error_message": "Null/undefined access in ",
+      "file": "scrapers/probe-row-icon.js",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-16T21:12:42.724Z"
+    },
+    {
+      "id": "bug-151",
+      "timestamp": "2026-05-16T21:14:30.836Z",
+      "error_message": "Missing guard clause",
+      "file": "scrapers/scrape-iconfig-vehicles.js",
+      "root_cause": "No early return/throw for edge case: !link",
+      "fix": "Added guard clause: if (!link)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-16T21:15:12.087Z"
+    },
+    {
+      "id": "bug-152",
+      "timestamp": "2026-05-16T21:15:29.475Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "scrapers/scrape-iconfig-vehicles.js",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-16T21:15:29.475Z"
+    },
+    {
+      "id": "bug-153",
+      "timestamp": "2026-05-16T21:19:29.629Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/probe-row-icon.js",
+      "root_cause": "29 lines replaced/restructured",
+      "fix": "Rewrote 42→25 lines (29 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-16T21:19:29.629Z"
+    },
+    {
+      "id": "bug-154",
+      "timestamp": "2026-05-17T03:42:55.215Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/scrape-iconfig-vehicles.js",
+      "root_cause": "8 lines replaced/restructured",
+      "fix": "Rewrote 9→3 lines (8 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T03:42:55.215Z"
+    },
+    {
+      "id": "bug-155",
+      "timestamp": "2026-05-17T03:43:25.501Z",
+      "error_message": "Missing error handling in function",
+      "file": "scrapers/scrape-iconfig-vehicles.js",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T03:43:25.501Z"
+    },
+    {
+      "id": "bug-156",
+      "timestamp": "2026-05-17T10:38:29.450Z",
+      "error_message": "Missing error handling in modelSlug",
+      "file": "scrapers/scrape-wheelsize-vehicles.js",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T10:38:29.450Z"
+    },
+    {
+      "id": "bug-157",
+      "timestamp": "2026-05-17T10:38:50.267Z",
+      "error_message": "Null/undefined access in ",
+      "file": "scrapers/scrape-wheelsize-vehicles.js",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T10:38:50.267Z"
+    },
+    {
+      "id": "bug-158",
+      "timestamp": "2026-05-17T18:23:35.057Z",
+      "error_message": "Significant refactor of ",
+      "file": "_wheel-tier2-pov/render_meshes.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 4→9 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T18:23:35.057Z"
+    },
+    {
+      "id": "bug-159",
+      "timestamp": "2026-05-17T20:32:49.249Z",
+      "error_message": "Wrong reference: 2020 should be 2012",
+      "file": "scrapers/scrape-rwc-fitment.js",
+      "root_cause": "Used \"2020\" instead of \"2012\"",
+      "fix": "Changed 2020 → 2012",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T20:32:49.249Z"
+    },
+    {
+      "id": "bug-160",
+      "timestamp": "2026-05-17T20:32:50.702Z",
+      "error_message": "Wrong reference: 2020 should be 2012",
+      "file": "scrapers/scrape-superspeed-fitment.js",
+      "root_cause": "Used \"2020\" instead of \"2012\"",
+      "fix": "Changed 2020 → 2012",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T20:32:50.702Z"
+    },
+    {
+      "id": "bug-161",
+      "timestamp": "2026-05-17T20:32:51.730Z",
+      "error_message": "Wrong reference: 2020 should be 2012",
+      "file": "scrapers/scrape-tire-fitment.js",
+      "root_cause": "Used \"2020\" instead of \"2012\"",
+      "fix": "Changed 2020 → 2012",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T20:32:51.730Z"
+    },
+    {
+      "id": "bug-162",
+      "timestamp": "2026-05-17T20:32:53.670Z",
+      "error_message": "Incorrect value in code",
+      "file": "scrapers/scrape-rwc.js",
+      "root_cause": "Had `Scraping ${recentYears.length} years (2020+)`",
+      "fix": "Changed to `Scraping ${recentYears.length} years (2012+)`",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T20:32:53.670Z"
+    },
+    {
+      "id": "bug-163",
+      "timestamp": "2026-05-17T20:34:48.715Z",
+      "error_message": "Wrong operator: && should be ===",
+      "file": "scrapers/scrape-alltire-wheels.js",
+      "root_cause": "Used \"&&\" instead of \"===\"",
+      "fix": "Changed operator && → ===",
+      "tags": [
+        "auto-detected",
+        "operator-fix",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T20:34:48.715Z"
+    },
+    {
+      "id": "bug-164",
+      "timestamp": "2026-05-17T21:42:26.355Z",
+      "error_message": "Significant refactor of ",
+      "file": "scrapers/scrape-rwc-fitment.js",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 8→13 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-17T21:42:26.355Z"
+    },
+    {
+      "id": "bug-165",
+      "timestamp": "2026-05-18T02:23:43.566Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/CompatibleProducts.tsx",
+      "root_cause": "Had `/data/cross-ref.json`",
+      "fix": "Changed to '/data/cross-ref.json'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-18T02:23:43.566Z"
+    },
+    {
+      "id": "bug-166",
+      "timestamp": "2026-05-18T02:30:59.603Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "webapp/public/_redirects",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "unknown"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-18T02:30:59.603Z"
+    },
+    {
+      "id": "bug-167",
+      "timestamp": "2026-05-18T02:32:00.870Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/package.json",
+      "root_cause": "Had \"astro build\"",
+      "fix": "Changed to \"astro build && node scripts/strip-cdn-assets.mjs\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "json"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-18T02:32:00.870Z"
     }
   ]
 }

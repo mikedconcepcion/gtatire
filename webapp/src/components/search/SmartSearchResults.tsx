@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Fuse from 'fuse.js';
 import VehiclePackageBuilder from './VehiclePackageBuilder';
+import { cdnUrl } from '../../lib/cdn';
 
 interface Product {
   id: string;
@@ -45,11 +46,12 @@ interface TireFitmentMap {
 }
 
 function StockBadge({ stock }: { stock: string }) {
-  const inStock = stock.includes('In Stock') || stock === 'Available' || stock === '20+' || parseInt(stock) >= 10;
-  const low = parseInt(stock) >= 1 && parseInt(stock) < 10;
-  const out = stock.includes('Out of Stock');
-  const color = inStock ? 'text-green-400' : low ? 'text-amber-400' : out ? 'text-red-400' : 'text-dark-400';
-  const label = inStock ? 'In Stock' : low ? `${parseInt(stock)} left` : out ? 'Out of Stock' : stock === 'Contact us' ? 'Available' : stock || 'Available';
+  const s = String(stock || '').trim();
+  const n = parseInt(s, 10);
+  const out = /out of stock/i.test(s) || /^n\/?a$/i.test(s) || /discontinu/i.test(s);
+  const low = !out && !isNaN(n) && n >= 1 && n < 10;
+  const color = out ? 'text-red-400' : low ? 'text-amber-400' : 'text-green-400';
+  const label = out ? 'Out of Stock' : low ? `${n} left` : 'In Stock';
   return <span className={`text-xs font-medium ${color}`}>{label}</span>;
 }
 
@@ -184,10 +186,10 @@ export default function SmartSearchResults() {
   // Load all data
   useEffect(() => {
     Promise.all([
-      fetch(`/data/products.json`).then(r => r.json()),
-      fetch(`/data/fitment.json`).then(r => r.json()),
-      fetch(`/data/vehicles.json`).then(r => r.json()),
-      fetch(`/data/tire-fitment.json`).then(r => r.json()).catch(() => ({})),
+      fetch(cdnUrl('/data/products.json')).then(r => r.json()),
+      fetch(cdnUrl('/data/fitment.json')).then(r => r.json()),
+      fetch(cdnUrl('/data/vehicles.json')).then(r => r.json()),
+      fetch(cdnUrl('/data/tire-fitment.json')).then(r => r.json()).catch(() => ({})),
     ])
       .then(([prods, fit, vehs, tFit]) => {
         setProducts(prods);
@@ -642,23 +644,87 @@ export default function SmartSearchResults() {
         </div>
       </form>
 
-      {/* Suggestions when no query */}
+      {/* Rich empty state when no query — addresses "feels abandoned" audit gap */}
       {!query && !loading && (
-        <div className="max-w-2xl mx-auto">
-          <p className="text-dark-500 text-xs mb-3 text-center">Try searching for:</p>
-          <div className="flex flex-wrap justify-center gap-2">
-            {suggestions.map(s => (
-              <button
-                key={s}
-                onClick={() => {
-                  window.history.replaceState({}, '', `?q=${encodeURIComponent(s)}`);
-                  setQuery(s);
-                }}
-                className="text-xs text-dark-400 hover:text-primary-400 bg-dark-800/50 hover:bg-dark-800 px-3 py-1.5 rounded-full transition-all border border-dark-700/50"
-              >
-                {s}
-              </button>
-            ))}
+        <div className="max-w-4xl mx-auto">
+          {/* Quick-start search examples */}
+          <div className="text-center mb-10">
+            <p className="text-dark-500 text-xs mb-3">Try one of these searches</p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {suggestions.map(s => (
+                <button
+                  key={s}
+                  onClick={() => {
+                    window.history.replaceState({}, '', `?q=${encodeURIComponent(s)}`);
+                    setQuery(s);
+                  }}
+                  className="text-xs text-dark-400 hover:text-primary-400 bg-dark-800/50 hover:bg-dark-800 px-3 py-1.5 rounded-full transition-all border border-dark-700/50"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Popular vehicles as cards (vehicle search shortcut) */}
+          <div className="mb-10">
+            <h2 className="text-white font-bold text-base mb-4">Popular vehicles in the GTA</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {[
+                { name: 'Honda Civic', sub: 'Compact' },
+                { name: 'Toyota RAV4', sub: 'SUV' },
+                { name: 'Hyundai Tucson', sub: 'SUV' },
+                { name: 'Tesla Model 3', sub: 'EV Sedan' },
+                { name: 'Ford F-150', sub: 'Truck' },
+                { name: 'Hyundai Elantra', sub: 'Sedan' },
+                { name: 'BMW 3 Series', sub: 'Sedan' },
+                { name: 'Toyota Corolla', sub: 'Sedan' },
+              ].map(v => (
+                <button
+                  key={v.name}
+                  onClick={() => { window.history.replaceState({}, '', `?q=${encodeURIComponent(v.name)}`); setQuery(v.name); }}
+                  className="text-left bg-dark-900/50 hover:bg-dark-900 border border-dark-700/40 hover:border-primary-600/40 rounded-xl p-4 transition-all group"
+                >
+                  <p className="text-white font-semibold text-sm group-hover:text-primary-300 transition-colors">{v.name}</p>
+                  <p className="text-dark-500 text-[11px] mt-0.5">{v.sub}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Shop by tire size */}
+          <div className="mb-10">
+            <h2 className="text-white font-bold text-base mb-4">Shop by wheel size</h2>
+            <div className="flex flex-wrap gap-2">
+              {[15, 16, 17, 18, 19, 20, 21, 22].map(d => (
+                <button
+                  key={d}
+                  onClick={() => { const q = `${d} inch`; window.history.replaceState({}, '', `?q=${encodeURIComponent(q)}`); setQuery(q); }}
+                  className="w-14 h-14 bg-dark-800/60 hover:bg-dark-800 border border-dark-700/40 hover:border-primary-600/40 text-white font-bold rounded-xl text-sm transition-all"
+                >
+                  {d}"
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Seasonal + guides band */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <a href="/winter-tires" className="bg-gradient-to-br from-blue-950/40 to-dark-900 border border-blue-500/20 hover:border-blue-500/50 rounded-xl p-5 transition-all group">
+              <p className="text-blue-400 text-[10px] uppercase tracking-wider font-semibold mb-2">Seasonal</p>
+              <p className="text-white font-semibold text-sm group-hover:text-blue-300 transition-colors">Winter tires →</p>
+              <p className="text-dark-500 text-xs mt-1">3PMSF-rated, Ontario insurance discount</p>
+            </a>
+            <a href="/all-season-tires" className="bg-dark-900/50 border border-dark-700/40 hover:border-primary-600/40 rounded-xl p-5 transition-all group">
+              <p className="text-primary-400 text-[10px] uppercase tracking-wider font-semibold mb-2">Year-Round</p>
+              <p className="text-white font-semibold text-sm group-hover:text-primary-300 transition-colors">All-season & all-weather →</p>
+              <p className="text-dark-500 text-xs mt-1">Compare the two and find your fit</p>
+            </a>
+            <a href="/guides/hub-centric-wheels" className="bg-dark-900/50 border border-dark-700/40 hover:border-primary-600/40 rounded-xl p-5 transition-all group">
+              <p className="text-primary-400 text-[10px] uppercase tracking-wider font-semibold mb-2">Guide</p>
+              <p className="text-white font-semibold text-sm group-hover:text-primary-300 transition-colors">Hub-centric explained →</p>
+              <p className="text-dark-500 text-xs mt-1">Why centre bore matters for fitment</p>
+            </a>
           </div>
         </div>
       )}
@@ -833,7 +899,7 @@ export default function SmartSearchResults() {
 
           {/* Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {sortedResults.slice(0, 60).map(p => (
+            {sortedResults.map(p => (
               <a href={`/${p.category === 'tire' ? 'tires' : 'wheels'}/${p.id}`} key={p.id} className="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all">
                 <div className="aspect-square bg-white rounded-t-xl flex items-center justify-center p-4 relative">
                   {p.image && !(p as any).noImage ? (
@@ -875,9 +941,9 @@ export default function SmartSearchResults() {
             ))}
           </div>
 
-          {sortedResults.length > 60 && (
+          {sortedResults.length > 0 && (
             <p className="text-center text-dark-500 text-xs mt-6">
-              Showing 60 of {sortedResults.length} results. Try a more specific search.
+              {sortedResults.length} results.
             </p>
           )}
         </>

@@ -4,9 +4,15 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
     <div class="flex items-center justify-between h-16 gap-4">
       <!-- Logo -->
-      <a href={`/`} class="flex flex-col shrink-0 leading-none" aria-label="JSDC Tires & Wheels home">
-        <span class="jsdc-wordmark text-3xl leading-none">JSDC</span>
-        <span class="text-dark-400 text-[8px] sm:text-[9px] uppercase tracking-[0.2em] font-semibold mt-0.5">Tires &amp; Wheels</span>
+      <a href="/" class="inline-flex shrink-0" aria-label="JSDC Wheels home">
+        <img
+          src="/brand/jsdc-logo.png"
+          srcset="/brand/jsdc-logo.png 1x, /brand/jsdc-logo@2x.png 2x"
+          alt="JSDC Wheels"
+          width="188"
+          height="56"
+          class="h-12 sm:h-14 w-auto"
+        />
       </a>
 
       <!-- Search bar (desktop) -->
@@ -25,66 +31,256 @@
       </form>
 
       <!-- Nav -->
-      <nav class="hidden md:flex items-center gap-6 shrink-0">
+      <nav class="hidden md:flex items-center gap-5 shrink-0">
         <a href="/tires" class="text-dark-300 hover:text-white transition-colors text-sm font-medium">Tires</a>
         <a href="/wheels" class="text-dark-300 hover:text-white transition-colors text-sm font-medium">Wheels</a>
         <a href="/contact" class="text-dark-300 hover:text-white transition-colors text-sm font-medium">Contact</a>
-        <a href="/login" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-          Sign In
+        <a
+          href="/inquire"
+          id="desktop-inquiry-link"
+          class="hidden text-primary-400 hover:text-primary-300 transition-colors text-sm font-semibold items-center gap-1.5"
+          aria-label="Open inquiry list"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+          Inquiry (<span data-inquiry-count>0</span>)
+        </a>
+        <a href="tel:+16476123341" class="inline-flex items-center gap-1.5 bg-primary-600 hover:bg-primary-500 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-lg shadow-primary-900/30" aria-label="Call JSDC Wheels">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.95.68l1.5 4.49a1 1 0 01-.5 1.21l-2.26 1.13a11 11 0 005.52 5.52l1.13-2.26a1 1 0 011.21-.5l4.49 1.5a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" /></svg>
+          647-612-3341
         </a>
       </nav>
 
-      <!-- Mobile: search + menu -->
-      <div class="flex items-center gap-2 md:hidden">
-        <button id="mobile-search-btn" class="text-dark-300 hover:text-white p-2" aria-label="Search">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </button>
-        <button id="mobile-menu-btn" class="text-dark-300 hover:text-white p-2" aria-label="Menu">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+      <!-- Mobile: phone (always tap-to-call) + menu -->
+      <div class="flex items-center gap-1 md:hidden">
+        <a href="tel:+16476123341" class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary-600 hover:bg-primary-500 text-white transition-colors" aria-label="Call JSDC Wheels: 647-612-3341">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.95.68l1.5 4.49a1 1 0 01-.5 1.21l-2.26 1.13a11 11 0 005.52 5.52l1.13-2.26a1 1 0 011.21-.5l4.49 1.5a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" /></svg>
+        </a>
+        <button id="mobile-menu-btn" class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-dark-700/80 hover:bg-dark-600 text-white transition-colors" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg id="mobile-menu-icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+          <svg id="mobile-menu-icon-close" class="hidden w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Mobile search bar -->
-  <div id="mobile-search" class="hidden md:hidden border-t border-dark-700/50 px-4 py-3">
-    <form action="/search/" class="relative">
-      <input
-        type="text"
-        name="q"
-        placeholder="Search vehicle, brand, size..."
-        class="w-full bg-dark-800 border border-dark-700 text-white rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 placeholder:text-dark-500"
-      />
-      <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-dark-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-      </svg>
-    </form>
-  </div>
+  <!-- Mobile menu — sectioned, large tap targets -->
+  <nav id="mobile-menu" class="hidden md:hidden border-t border-dark-700/50 bg-dark-900/95 backdrop-blur-md">
+    <!-- Quick search field at the top of the menu -->
+    <div class="px-4 py-3 border-b border-dark-700/50">
+      <form action="/search/" class="relative">
+        <input
+          type="text"
+          name="q"
+          placeholder="Search vehicle, brand, size..."
+          class="w-full bg-dark-800 border border-dark-700 text-white rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 placeholder:text-dark-500"
+          autocomplete="off"
+        />
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-dark-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+      </form>
+    </div>
 
-  <!-- Mobile menu -->
-  <nav id="mobile-menu" class="hidden md:hidden border-t border-dark-700/50">
-    <div class="px-4 py-3 space-y-2">
-      <a href="/tires" class="block text-dark-300 hover:text-white py-2 text-sm">Tires</a>
-      <a href="/wheels" class="block text-dark-300 hover:text-white py-2 text-sm">Wheels</a>
-      <a href="/contact" class="block text-dark-300 hover:text-white py-2 text-sm">Contact</a>
-      <a href="/login" class="block text-primary-400 hover:text-primary-300 py-2 text-sm font-medium">Sign In</a>
+    <!-- Browse -->
+    <div class="px-4 pt-4 pb-2">
+      <p class="text-dark-500 text-[10px] font-semibold uppercase tracking-[0.18em] mb-2">Browse</p>
+      <ul class="space-y-0.5">
+        <li><a href="/wheels" class="flex items-center gap-3 text-white hover:bg-dark-800/60 active:bg-dark-700 py-3 px-2 -mx-2 rounded-lg text-sm font-medium">
+          <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" strokeWidth="1.8"/><circle cx="12" cy="12" r="3" strokeWidth="1.8"/><path strokeWidth="1.5" d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6l2.1 2.1M5.6 18.4l2.1-2.1m8.6-8.6l2.1-2.1"/></svg>
+          Wheels <span class="text-dark-500 text-xs ml-auto">2,150</span>
+        </a></li>
+        <li><a href="/tires" class="flex items-center gap-3 text-white hover:bg-dark-800/60 active:bg-dark-700 py-3 px-2 -mx-2 rounded-lg text-sm font-medium">
+          <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" strokeWidth="1.8"/><circle cx="12" cy="12" r="5" strokeWidth="1.8"/></svg>
+          Tires <span class="text-dark-500 text-xs ml-auto">4,748</span>
+        </a></li>
+        <li><a href="/search" class="flex items-center gap-3 text-white hover:bg-dark-800/60 active:bg-dark-700 py-3 px-2 -mx-2 rounded-lg text-sm font-medium">
+          <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" strokeWidth="1.8" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          Search by Vehicle
+        </a></li>
+      </ul>
+    </div>
+
+    <!-- Seasonal & guides -->
+    <div class="px-4 pt-3 pb-2">
+      <p class="text-dark-500 text-[10px] font-semibold uppercase tracking-[0.18em] mb-2">Seasonal & guides</p>
+      <ul class="space-y-0.5">
+        <li><a href="/winter-tires" class="flex items-center gap-3 text-dark-200 hover:bg-dark-800/60 active:bg-dark-700 py-2.5 px-2 -mx-2 rounded-lg text-sm">
+          <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeWidth="1.8" strokeLinecap="round" d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M5.6 18.4L18.4 5.6"/></svg>
+          Winter Tires
+        </a></li>
+        <li><a href="/all-season-tires" class="flex items-center gap-3 text-dark-200 hover:bg-dark-800/60 active:bg-dark-700 py-2.5 px-2 -mx-2 rounded-lg text-sm">
+          <svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" strokeWidth="1.8"/><path strokeWidth="1.8" strokeLinecap="round" d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10l2 2M5 19l2-2m10-10l2-2"/></svg>
+          All-Season &amp; All-Weather
+        </a></li>
+        <li><a href="/guides/hub-centric-wheels" class="flex items-center gap-3 text-dark-200 hover:bg-dark-800/60 active:bg-dark-700 py-2.5 px-2 -mx-2 rounded-lg text-sm">
+          <svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" d="M12 6.25a.75.75 0 100-1.5.75.75 0 000 1.5zM12 9v10m-3-3h6"/></svg>
+          Hub-Centric Guide
+        </a></li>
+      </ul>
+    </div>
+
+    <!-- Company -->
+    <div class="px-4 pt-3 pb-3 border-b border-dark-700/50">
+      <p class="text-dark-500 text-[10px] font-semibold uppercase tracking-[0.18em] mb-2">Company</p>
+      <ul class="space-y-0.5">
+        <li><a href="/about" class="flex items-center gap-3 text-dark-200 hover:bg-dark-800/60 active:bg-dark-700 py-2.5 px-2 -mx-2 rounded-lg text-sm">
+          <svg class="w-4 h-4 text-dark-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" d="M12 11.25a3 3 0 100-6 3 3 0 000 6zM6.75 19.5a5.25 5.25 0 0110.5 0"/></svg>
+          About JSDC
+        </a></li>
+        <li><a href="/contact" class="flex items-center gap-3 text-dark-200 hover:bg-dark-800/60 active:bg-dark-700 py-2.5 px-2 -mx-2 rounded-lg text-sm">
+          <svg class="w-4 h-4 text-dark-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          Contact &amp; Inquiry Form
+        </a></li>
+      </ul>
+    </div>
+
+    <!-- Inquiry list (only shown when there's at least 1 item) -->
+    <a
+      href="/inquire"
+      id="mobile-inquiry-link"
+      class="hidden mx-4 mt-3 px-3 py-3 rounded-lg bg-primary-600/15 border border-primary-500/40 text-primary-200 hover:text-white hover:bg-primary-600/25 items-center justify-between text-sm font-semibold transition-colors"
+    >
+      <span class="inline-flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+        Inquiry list
+      </span>
+      <span class="inline-flex items-center gap-1.5">
+        <span data-inquiry-count class="bg-primary-600/40 text-white px-2 py-0.5 rounded text-xs">0</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+      </span>
+    </a>
+
+    <!-- Primary action: call -->
+    <div class="px-4 py-4 bg-dark-950/50">
+      <a href="tel:+16476123341" class="flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-500 active:bg-primary-700 text-white font-semibold py-3 rounded-lg text-base shadow-lg shadow-primary-900/30">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.95.68l1.5 4.49a1 1 0 01-.5 1.21l-2.26 1.13a11 11 0 005.52 5.52l1.13-2.26a1 1 0 011.21-.5l4.49 1.5a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z"/></svg>
+        Call 647-612-3341
+      </a>
+      <p class="text-dark-500 text-xs text-center mt-2">Greater Toronto Area · 1-2 day delivery</p>
     </div>
   </nav>
 </header>
 
 <script>
-  document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
-    document.getElementById('mobile-menu')?.classList.toggle('hidden');
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('mobile-menu-icon-open');
+  const iconClose = document.getElementById('mobile-menu-icon-close');
+  btn?.addEventListener('click', () => {
+    const willOpen = menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden');
+    iconOpen?.classList.toggle('hidden');
+    iconClose?.classList.toggle('hidden');
+    btn?.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
   });
-  document.getElementById('mobile-search-btn')?.addEventListener('click', () => {
-    const el = document.getElementById('mobile-search');
-    el?.classList.toggle('hidden');
-    if (!el?.classList.contains('hidden')) {
-      el?.querySelector('input')?.focus();
+  // Close on link tap so the menu doesn't linger after navigation
+  menu?.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      // Tel links: let the dialer take over, don't bother re-hiding
+      if (a.getAttribute('href')?.startsWith('tel:')) return;
+      menu?.classList.add('hidden');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+      btn?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // ─── Inquiry count sync (desktop + mobile badges) ─────────────────
+  function readInquiryCount() {
+    try {
+      const raw = localStorage.getItem('jsdc_inquiry');
+      if (!raw) return 0;
+      const items = JSON.parse(raw);
+      return Array.isArray(items) ? items.length : 0;
+    } catch (e) { return 0; }
+  }
+  function paintInquiryCount() {
+    const n = readInquiryCount();
+    document.querySelectorAll('[data-inquiry-count]').forEach((el) => {
+      (el as HTMLElement).textContent = String(n);
+    });
+    const desktopLink = document.getElementById('desktop-inquiry-link');
+    const mobileLink = document.getElementById('mobile-inquiry-link');
+    if (n > 0) {
+      desktopLink?.classList.remove('hidden');
+      desktopLink?.classList.add('inline-flex');
+      mobileLink?.classList.remove('hidden');
+      mobileLink?.classList.add('flex');
+    } else {
+      desktopLink?.classList.add('hidden');
+      desktopLink?.classList.remove('inline-flex');
+      mobileLink?.classList.add('hidden');
+      mobileLink?.classList.remove('flex');
     }
+  }
+  paintInquiryCount();
+  window.addEventListener('jsdc-inquiry-change', paintInquiryCount);
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'jsdc_inquiry') paintInquiryCount();
   });
+
+  // ─── Global inquiry-button click handler (for .astro product cards) ───
+  function readInquiry() {
+    try {
+      const raw = localStorage.getItem('jsdc_inquiry');
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) { return []; }
+  }
+  function writeInquiry(items: any[]) {
+    try { localStorage.setItem('jsdc_inquiry', JSON.stringify(items)); } catch (e) {}
+    try { window.dispatchEvent(new CustomEvent('jsdc-inquiry-change')); } catch (e) {}
+  }
+  function paintTriggerStates() {
+    const items = readInquiry();
+    const ids = new Set(items.map((i: any) => i.id));
+    document.querySelectorAll<HTMLElement>('.jsdc-inquiry-trigger').forEach((btn) => {
+      const id = btn.dataset.inquiryId;
+      if (!id) return;
+      const inList = ids.has(id);
+      const item = items.find((i: any) => i.id === id);
+      const label = btn.querySelector<HTMLElement>('.jsdc-inquiry-label');
+      const plus = btn.querySelector<HTMLElement>('.jsdc-inquiry-plus');
+      const check = btn.querySelector<HTMLElement>('.jsdc-inquiry-check');
+      if (inList) {
+        btn.classList.add('bg-green-600/20', 'border-green-500/40', 'text-green-300');
+        btn.classList.remove('bg-primary-600/15', 'border-primary-500/30', 'text-primary-200');
+        if (label) label.textContent = `Added (×${item?.qty || 4})`;
+        plus?.classList.add('hidden');
+        check?.classList.remove('hidden');
+        btn.setAttribute('aria-pressed', 'true');
+      } else {
+        btn.classList.remove('bg-green-600/20', 'border-green-500/40', 'text-green-300');
+        btn.classList.add('bg-primary-600/15', 'border-primary-500/30', 'text-primary-200');
+        if (label) label.textContent = 'Add to Inquiry';
+        plus?.classList.remove('hidden');
+        check?.classList.add('hidden');
+        btn.setAttribute('aria-pressed', 'false');
+      }
+    });
+  }
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLElement>('.jsdc-inquiry-trigger');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const id = btn.dataset.inquiryId;
+    if (!id) return;
+    let items = readInquiry();
+    const idx = items.findIndex((i: any) => i.id === id);
+    if (idx >= 0) {
+      items = items.filter((i: any) => i.id !== id);
+    } else {
+      items.push({
+        id,
+        name: btn.dataset.inquiryName || id,
+        category: btn.dataset.inquiryCategory || 'wheel',
+        image: btn.dataset.inquiryImage || undefined,
+        size: btn.dataset.inquirySize || undefined,
+        priceNum: parseFloat(btn.dataset.inquiryPrice || '0') || 0,
+        qty: 4,
+      });
+    }
+    writeInquiry(items);
+  });
+  paintTriggerStates();
+  window.addEventListener('jsdc-inquiry-change', paintTriggerStates);
 </script>

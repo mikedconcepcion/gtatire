@@ -110,58 +110,54 @@ async function main() {
     console.log('Removed favicon.svg (legacy Astro default)');
   }
 
-  // ─── Header logo: JSDC wordmark + wheel horizontal lockup ───
-  // The banner has wordmark/tagline/wheel stacked vertically, so a single
-  // rectangular crop always grabs the tagline. Extract wordmark and wheel
-  // separately (alpha-tight) and composite side-by-side.
-  async function tightExtract(crop) {
-    const rough = await sharp(BANNER).extract(crop).png().toBuffer();
-    const meta = await sharp(rough).metadata();
-    const alpha = await sharp(rough).extractChannel(3).raw().toBuffer();
-    let lx = meta.width, lX = 0, ly = meta.height, lY = 0;
-    for (let y = 0; y < meta.height; y++) {
-      for (let x = 0; x < meta.width; x++) {
-        if (alpha[y * meta.width + x] > 50) {
-          if (x < lx) lx = x; if (x > lX) lX = x;
-          if (y < ly) ly = y; if (y > lY) lY = y;
-        }
+  // ─── Header logo: the OFFICIAL JSDC Wheels lockup ───
+  // The official artwork is shipped on a solid black background (jsdc-logo-source-dark.jpg).
+  // Strip the black background by making near-black pixels transparent, keep
+  // the white car silhouette + wheel and gold JSDC + white "WHEELS" tagline,
+  // then alpha-tight crop and render at 1x / 2x.
+  const OFFICIAL_LOGO = path.join(ROOT, 'brand', 'jsdc-logo-source-dark.jpg');
+  const { data: officialRaw, info: officialInfo } = await sharp(OFFICIAL_LOGO)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  // Threshold: pixels darker than ~30 in all channels become transparent.
+  // Use a feathered band (30-55) for soft edges to avoid jagged outlines on
+  // antialiased artwork.
+  for (let i = 0; i < officialRaw.length; i += 4) {
+    const r = officialRaw[i], g = officialRaw[i + 1], b = officialRaw[i + 2];
+    const luma = Math.max(r, g, b);
+    if (luma < 30) {
+      officialRaw[i + 3] = 0;
+    } else if (luma < 55) {
+      officialRaw[i + 3] = Math.round(((luma - 30) / 25) * 255);
+    }
+  }
+  const transparentLogo = await sharp(officialRaw, {
+    raw: { width: officialInfo.width, height: officialInfo.height, channels: 4 },
+  }).png().toBuffer();
+  // Alpha-tight crop.
+  const tlMeta = await sharp(transparentLogo).metadata();
+  const tlAlpha = await sharp(transparentLogo).extractChannel(3).raw().toBuffer();
+  let tx0 = tlMeta.width, tx1 = 0, ty0 = tlMeta.height, ty1 = 0;
+  for (let y = 0; y < tlMeta.height; y++) {
+    for (let x = 0; x < tlMeta.width; x++) {
+      if (tlAlpha[y * tlMeta.width + x] > 50) {
+        if (x < tx0) tx0 = x; if (x > tx1) tx1 = x;
+        if (y < ty0) ty0 = y; if (y > ty1) ty1 = y;
       }
     }
-    return sharp(rough).extract({ left: lx, top: ly, width: lX - lx + 1, height: lY - ly + 1 }).png().toBuffer();
   }
-
-  // Wordmark only (no tagline below) — vertical range stops above tagline
-  const wordmarkBuf = await tightExtract({ left: 150, top: 330, width: 820, height: 120 });
-  const wordmarkMeta = await sharp(wordmarkBuf).metadata();
-  console.log(`Wordmark: ${wordmarkMeta.width}x${wordmarkMeta.height}`);
-
-  // Wheel — reuse the favicon's tight bounds, but replace the black artwork
-  // pixels with brand gold so the wheel reads on the dark header. Build a
-  // solid gold rectangle the same size as the wheel, then use the wheel's
-  // alpha as a "dest-in" mask: gold pixels survive only where the original
-  // wheel artwork was opaque.
-  const wheelMetaPre = await sharp(wheelBuf).metadata();
-  const goldLayer = await sharp({
-    create: {
-      width: wheelMetaPre.width,
-      height: wheelMetaPre.height,
-      channels: 4,
-      background: { r: 212, g: 147, b: 65, alpha: 1 },
-    },
-  }).png().toBuffer();
-  const wheelLogoBuf = await sharp(goldLayer)
-    .composite([{ input: wheelBuf, blend: 'dest-in' }])
+  const logoBuf = await sharp(transparentLogo)
+    .extract({ left: tx0, top: ty0, width: tx1 - tx0 + 1, height: ty1 - ty0 + 1 })
     .png()
     .toBuffer();
-  const wheelLogoMeta = await sharp(wheelLogoBuf).metadata();
-  console.log(`Wheel  : ${wheelLogoMeta.width}x${wheelLogoMeta.height} (gold-filled for dark bg)`);
+  const logoMeta = await sharp(logoBuf).metadata();
+  console.log(`Official logo (transparent): ${logoMeta.width}x${logoMeta.height}`);
 
-  // Render at 1x (40h) and 2x (80h) retina. Wordmark only — the wheel mark
-  // lives on the favicon; duplicating it next to the wordmark made the
-  // recolored outline read as a ribbon instead of a wheel.
-  for (const [renderH, suffix] of [[40, ''], [80, '@2x']]) {
-    const w = Math.round(wordmarkMeta.width * (renderH / wordmarkMeta.height));
-    const out = await sharp(wordmarkBuf)
+  // Render at 1x and 2x retina. Header uses h-12 (48px) / h-14 (56px) on desktop.
+  for (const [renderH, suffix] of [[56, ''], [112, '@2x']]) {
+    const w = Math.round(logoMeta.width * (renderH / logoMeta.height));
+    const out = await sharp(logoBuf)
       .resize(w, renderH, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
       .png()
       .toBuffer();

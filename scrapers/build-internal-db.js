@@ -18,6 +18,13 @@ const OUT_DIR = pathMod.join(__dirname, '..', 'webapp', 'public', 'data');
 const IMG_SRC_DIR = pathMod.join(__dirname, '..', 'data', 'images');
 const IMG_PUB_DIR = pathMod.join(OUT_DIR, 'images', 'wheels');
 
+// Image URLs in products.json are absolute jsDelivr CDN URLs so they load
+// from GitHub directly — no Cloudflare bandwidth, and a catalogue update
+// (re-scrape + git push) propagates without a Cloudflare rebuild.
+const CDN_BASE = process.env.CDN_BASE
+  || 'https://cdn.jsdelivr.net/gh/mikedconcepcion/gtatire@cloudflare-migration/webapp/public';
+const cdn = (p) => p ? `${CDN_BASE}${p.startsWith('/') ? p : '/' + p}` : '';
+
 if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 fs.mkdirSync(IMG_PUB_DIR, { recursive: true });
 
@@ -177,7 +184,7 @@ function buildDatabase() {
         wheelType: raw.wheelType || '',
         name: specs.name || raw.description?.split(' ')[0] || '',
         description: raw.description || '',
-        image: newImgName ? `/data/images/wheels/${newImgName}` : '',
+        image: newImgName ? cdn(`/data/images/wheels/${newImgName}`) : '',
         price: pricing.publicPrice > 0 ? `$${pricing.publicPrice.toFixed(2)}` : '',
         priceNum: pricing.publicPrice,
         distPrice: pricing.distPrice > 0 ? `$${pricing.distPrice.toFixed(2)}` : '',
@@ -234,7 +241,7 @@ function buildDatabase() {
         const extraSrc = [pathMod.join(DATA_DIR, 'images', 'superspeed', extraFileName),
                           pathMod.join(DATA_DIR, 'images', 'superspeed', faceImgs[i])].find(p => fs.existsSync(p)) || '';
         const extraImgName = copyImage(extraSrc, gtaId, i);
-        if (extraImgName) extraImages.push(`/data/images/wheels/${extraImgName}`);
+        if (extraImgName) extraImages.push(cdn(`/data/images/wheels/${extraImgName}`));
       }
 
       let stockText = '';
@@ -256,10 +263,10 @@ function buildDatabase() {
         sku: gtaId,
         category: 'wheel',
         brand: w.BRAND || 'Superspeed',
-        wheelType: 'Alloy',
+        wheelType: 'Alloy Wheel',
         name: w.MODEL || '',
         description: `${w.MODEL} ${w.DIAMETER}x${w.WIDTH} ${w.PCD} ET${w.ET} CB${w.CB} ${w.FINISH}`,
-        image: newImgName ? `/data/images/wheels/${newImgName}` : '',
+        image: newImgName ? cdn(`/data/images/wheels/${newImgName}`) : '',
         images: extraImages.length > 0 ? extraImages : undefined,
         price: pricing.publicPrice > 0 ? `$${pricing.publicPrice.toFixed(2)}` : '',
         priceNum: pricing.publicPrice,
@@ -329,10 +336,10 @@ function buildDatabase() {
         sku: gtaId,
         category: 'wheel',
         brand: 'RWC',
-        wheelType: 'Alloy',
+        wheelType: 'Alloy Wheel',
         name: w.modelCode1 || w.name || '',
         description: w.name || '',
-        image: newImgName ? `/data/images/wheels/${newImgName}` : '',
+        image: newImgName ? cdn(`/data/images/wheels/${newImgName}`) : '',
         price: pricing.publicPrice > 0 ? `$${pricing.publicPrice.toFixed(2)}` : '',
         priceNum: pricing.publicPrice,
         distPrice: pricing.distPrice > 0 ? `$${pricing.distPrice.toFixed(2)}` : '',
@@ -407,7 +414,7 @@ function buildDatabase() {
         wheelType: t.type || 'All Season',
         name: t.model || '',
         description: t.description || '',
-        image: tireImgName ? `/data/images/tires/${tireImgName}` : '',
+        image: tireImgName ? cdn(`/data/images/tires/${tireImgName}`) : '',
         price: pricing.publicPrice > 0 ? `$${pricing.publicPrice.toFixed(2)}` : '',
         priceNum: pricing.publicPrice,
         distPrice: pricing.distPrice > 0 ? `$${pricing.distPrice.toFixed(2)}` : '',
@@ -648,10 +655,15 @@ function buildDatabase() {
   saveJSON(pathMod.join(DATA_DIR, 'gta-sku-map.json'), skuMap, true);
 
   // ─── Mark placeholder images (tiny files = Alltire "no image" placeholders) ───
+  // Image URLs are now absolute CDN paths, so derive the local path by
+  // stripping the CDN_BASE prefix before checking size on disk.
   let noImageCount = 0;
   for (const p of products) {
     if (!p.image) { p.noImage = true; noImageCount++; continue; }
-    const localPath = pathMod.join(__dirname, '..', 'webapp', 'public', p.image.replace(/^\//, ''));
+    const relPath = p.image.startsWith(CDN_BASE)
+      ? p.image.slice(CDN_BASE.length)
+      : p.image;
+    const localPath = pathMod.join(__dirname, '..', 'webapp', 'public', relPath.replace(/^\//, ''));
     if (fs.existsSync(localPath)) {
       const size = fs.statSync(localPath).size;
       if (p.category === 'tire' && size < 10000) { p.noImage = true; noImageCount++; }

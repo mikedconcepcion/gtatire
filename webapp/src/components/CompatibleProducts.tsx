@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { cdnUrl } from '../lib/cdn';
 
 interface CrossRefItem {
   id: string;
@@ -31,7 +32,7 @@ export default function CompatibleProducts({ productCategory, rimDiameter, boltP
   const [activeTab, setActiveTab] = useState<'tires' | 'wheels'>(productCategory === 'wheel' ? 'tires' : 'wheels');
 
   useEffect(() => {
-    fetch(`/data/cross-ref.json`)
+    fetch(cdnUrl('/data/cross-ref.json'))
       .then(r => r.json())
       .then(data => { setCrossRef(data); setLoading(false); })
       .catch(() => setLoading(false));

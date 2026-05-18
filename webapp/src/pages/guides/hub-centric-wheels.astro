@@ -1,0 +1,122 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: 'Hub-Centric Wheels Explained',
+  description: 'What hub centric means, why it matters, how to identify hub-centric vs lug-centric wheels, and why JSDC Wheels guarantees hub-centric fitment in vehicle search.',
+  author: { '@type': 'Organization', name: 'JSDC Wheels' },
+  publisher: { '@type': 'Organization', name: 'JSDC Wheels' },
+  mainEntityOfPage: 'https://jsdcwheels.ca/guides/hub-centric-wheels',
+  about: ['hub centric wheels', 'lug centric wheels', 'wheel fitment', 'centre bore', 'hub rings'],
+};
+---
+
+<Layout
+  title="Hub-Centric Wheels Explained | JSDC Wheels Guides"
+  description="What hub centric means, how to check your vehicle's hub bore, and why a lug-centric fit can cause vibration. Plain-language guide from JSDC Wheels."
+  jsonLd={articleJsonLd}
+>
+  <article class="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-xs text-dark-500 mb-6">
+      <a href="/" class="hover:text-dark-300">Home</a>
+      <span>/</span>
+      <a href="/guides/hub-centric-wheels" class="hover:text-dark-300">Guides</a>
+      <span>/</span>
+      <span class="text-dark-300">Hub Centric</span>
+    </nav>
+
+    <p class="text-primary-400 text-xs font-semibold uppercase tracking-[0.2em] mb-3">Wheel Fitment Guide</p>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">Hub-centric wheels, explained.</h1>
+    <p class="text-dark-300 text-base sm:text-lg leading-relaxed mb-8">
+      "Hub centric" is the difference between a wheel that bolts on cleanly and one that wobbles at
+      highway speed. Every wheel returned by vehicle search on jsdcwheels.ca is hub centric — but here's
+      what that actually means in practice.
+    </p>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mt-10 mb-3">The centre bore</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-4">
+      In the middle of every wheel is a round opening called the <strong class="text-white">centre bore</strong>.
+      It slides onto a matching round projection on the vehicle's hub. When the centre bore matches the
+      hub diameter exactly — say, both are 67.1 mm — the wheel is <em>hub centric</em>. The hub itself
+      carries the wheel's weight and centres it perfectly on the axle.
+    </p>
+    <p class="text-dark-300 text-sm leading-relaxed mb-4">
+      If the centre bore is larger than the hub, the wheel sits loose on the hub and is held in position
+      only by the lug nuts. That's called <strong class="text-white">lug centric</strong> mounting — common
+      with aftermarket wheels that ship with an oversized 73.1 mm bore so they can fit many vehicles.
+    </p>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mt-10 mb-3">Why lug-centric causes vibration</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-4">
+      Tightening the lugs in a cross pattern <em>usually</em> centres a lug-centric wheel close enough
+      to balance out. But "close enough" still leaves a gap measured in tenths of a millimetre between
+      the hub and the bore — and at 100 km/h, a sub-millimetre offset becomes a steering-wheel shake you
+      can feel through your fingertips.
+    </p>
+    <p class="text-dark-300 text-sm leading-relaxed mb-4">
+      Plastic <strong class="text-white">hub rings</strong> (sometimes called "centric rings") are sold
+      to fix this — they fill the gap between an oversized aftermarket bore and a smaller hub. They work,
+      but they're an extra part to source per vehicle, and the cheap plastic versions wear over time. A
+      properly hub-centric wheel doesn't need them.
+    </p>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mt-10 mb-3">How to check your hub bore</h2>
+    <ul class="text-dark-300 text-sm leading-relaxed list-disc list-inside marker:text-primary-500/60 space-y-2 mb-4">
+      <li>Your vehicle's owner's manual usually lists the hub bore in millimetres</li>
+      <li>For common cars: Honda 64.1 mm, Toyota 60.1 mm, Hyundai/Kia 67.1 mm, Ford 63.4 mm, BMW 72.5 mm, Tesla 64.1 mm (varies by trim)</li>
+      <li>Search by your vehicle on this site — we display the OE hub bore in the wheel detail page</li>
+    </ul>
+
+    <h2 class="text-white text-xl sm:text-2xl font-bold mt-10 mb-3">Why JSDC guarantees hub-centric for vehicle search</h2>
+    <p class="text-dark-300 text-sm leading-relaxed mb-4">
+      We sell to GTA tire shops who install for paying customers — a single vibration complaint costs
+      more than a sale earns. So our vehicle-search filter only returns wheels whose centre bore matches
+      the searched vehicle's hub exactly. The catalogue contains lug-centric wheels too (for buyers who
+      know their setup and want a specific look), but the vehicle search hides them automatically.
+    </p>
+
+    <div class="bg-dark-900/50 border border-primary-600/30 rounded-2xl p-6 mt-10">
+      <p class="text-dark-300 text-sm mb-4">Search hub-centric wheels for your vehicle:</p>
+      <a href="/" class="inline-block bg-primary-600 hover:bg-primary-500 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm">
+        Start a vehicle search →
+      </a>
+    </div>
+
+    <!-- FAQ schema -->
+    <section class="mt-12" itemscope itemtype="https://schema.org/FAQPage">
+      <h2 class="text-white text-xl sm:text-2xl font-bold mb-6">FAQ</h2>
+      <div class="space-y-4">
+        <div class="bg-dark-900/50 border border-dark-700/40 rounded-xl p-5" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-white font-semibold mb-2" itemprop="name">Are OE (factory) wheels always hub centric?</h3>
+          <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+            <p class="text-dark-300 text-sm" itemprop="text">Yes. Original-equipment wheels from the manufacturer are always hub centric to that exact vehicle — that's why OE-replica wheel lines (RWC, OE+, OE+ Forged) carry over the same hub-centric fitment.</p>
+          </div>
+        </div>
+        <div class="bg-dark-900/50 border border-dark-700/40 rounded-xl p-5" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-white font-semibold mb-2" itemprop="name">Can hub rings replace a hub-centric wheel?</h3>
+          <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+            <p class="text-dark-300 text-sm" itemprop="text">Functionally yes — high-quality aluminum hub rings turn a lug-centric wheel into a hub-centric one. We prefer skipping them entirely: less to fail, less to install per swap, no rings to lose during seasonal storage.</p>
+          </div>
+        </div>
+        <div class="bg-dark-900/50 border border-dark-700/40 rounded-xl p-5" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="text-white font-semibold mb-2" itemprop="name">Will a hub-centric wheel from one car fit another with the same bolt pattern?</h3>
+          <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+            <p class="text-dark-300 text-sm" itemprop="text">Only if the hub bores also match. A 5x114.3 wheel from a Honda (64.1 mm bore) won't be hub-centric on a Mazda (67.1 mm) even though the bolt pattern is the same. Always confirm bore.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related guides -->
+    <section class="mt-12 pt-8 border-t border-dark-700/40">
+      <p class="text-dark-500 text-xs font-semibold uppercase tracking-wider mb-3">Related guides</p>
+      <ul class="space-y-2">
+        <li><a href="/guides/bolt-patterns" class="text-primary-400 hover:text-primary-300 text-sm">Bolt pattern compatibility (5x114.3, 5x100, 5x120) →</a></li>
+        <li><a href="/guides/tire-sizes" class="text-primary-400 hover:text-primary-300 text-sm">Reading a tire size — 225/65R17 explained →</a></li>
+      </ul>
+    </section>
+  </article>
+</Layout>

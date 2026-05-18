@@ -11,6 +11,7 @@
 - Wants AI-like intelligent search, not tree-based dropdowns
 - Key feature: wheel visualizer — customers see how wheels fit on their car
 - Don't expose cross-vehicle fitment data to customers — that's competitive info. Product pages should NOT show "fits these other vehicles"
+- Show ALL recommendation results, not a slice. User pushed back on `slice(0, 20)` caps in the package builder and `slice(0, 60)` in smart search — said "95 recommended but showing 20, where are the others?" / "count varies sometimes 100+". Horizontal scroll + responsive grid handle the volume; don't pre-trim.
 
 ## Key Learnings
 
@@ -28,6 +29,7 @@
 - **Image URLs:** `https://alltire.ca/Wheel/Steel/{productNo}.jpg` or `Alloy/{name}.jpg`
 - **GitHub Pages base path:** Site at `/gtatire/` — all links need prefix, `import.meta.env.BASE_URL` resolves to `/gtatire` (no trailing slash!) in client JS
 - **Astro static generation:** ~8,999 pages — 12 static .astro routes + 2,089 vehicle + 2,150 wheel detail + 4,748 tire detail (as of 2026-05-13). Was 4,246 at 2026-05-04 before tire detail pages got their own routes. Build time scales with page count — expect 3+ min for full generation.
+- **Catalog snapshot (2026-05-18, post 2012-2027 widening):** 6,885 products (400 Alltire-unique wheels + 4,748 tires + 773 Superspeed + 964 RWC). Vehicle tree: 7,541 year/make/model combos across 17 years. 1.14M total fitment entries (spec-match expansion derives most). 17,955 vehicles have OE tire-size data.
 - **Superspeed API is clean REST** — POST to `webapi/api/Product/getWheelsListByAengtId` with `pageSize:1000` returns all 803 wheels in one request. Image API: `webapi/api//Product/GetImage?imgName=FILENAME`. Login returns dealer ID (`Aid`) needed for API calls
 - **RWC (gpibtob.com) is OpenCart** — search `?route=product/search&search=RWC&limit=99999` returns all 964 products. Dealer cost is hidden in `.price-product` div (display:none), toggled by JS click. SKU in `.cart-button .pull-right` span
 - **Multi-supplier database:** build-internal-db.js merges Alltire wheels (383) + tires (4,748), Superspeed (803), RWC (964) = 6,898 total. Internal GTA SKU system (GTA-W-XXXX, GTA-T-XXXX). No supplier names in public output.
@@ -53,6 +55,13 @@
 
 - [2026-05-04] **Tech stack: Astro + React + Tailwind v4** — chosen for lightweight static output, React islands for interactive components (search, visualizer), Tailwind for mobile-first blue/black theme. Rejected WordPress/WooCommerce (too heavy, existing site already uses it).
 - [2026-05-04] **Scrape 2020-present only** — user decided older vehicles aren't needed, cuts scraping time by 75%.
+- [2026-05-18] **Widened year range to 2012-2027** — reverses the 2020-only decision. User wants a deeper vehicle catalogue. MIN_YEAR=2012 set in scrape-alltire-wheels, scrape-tire-fitment, scrape-rwc-fitment, scrape-superspeed-fitment, and scrape-rwc.js. Alltire dropdown caps at 2026 (so alltire fitment = 2012-2026), RWC has 2012-2027, Superspeed/AAIA has 2012-2027.
+- [2026-05-18] **Alltire wheel tree resume now merges** — instead of skipping rebuild if tree has >=7 years, it walks any year >= MIN_YEAR not already in the tree. Lets us widen year range without losing prior work.
+- [2026-05-18] **scrape-rwc-fitment join uses URL slug, not SKU** — products are joined to fitmentMap via the `rwc-...` slug extracted from `product.url`, since the map is keyed by slug and the encoded SKU (`RW...`) differs. Fixing this on 2026-05-18 took the match rate from 0/964 to 963/964.
+- [2026-05-18] **scrape-alltire-fast.js is 10x faster than scrape-alltire-wheels.js** — uses headless Playwright + direct `searchWheel.asp` API fetch (DELAY=200ms) instead of DOM clicks (DELAY=400ms + selectOption rendering). Use `scrape-alltire-fast.js` for Phase 2 product scraping once the tree exists; only use `scrape-alltire-wheels.js` to build/extend the tree (Phase 1).
+- [2026-05-18] **GitHub-as-CDN architecture**: webapp/public/ images and big JSON live in this repo and stream through `cdn.jsdelivr.net/gh/mikedconcepcion/gtatire@<branch>/...`. Cloudflare Pages only deploys page shells + JS/CSS (~67 files). `webapp/scripts/strip-cdn-assets.mjs` runs after `astro build` to delete dist/data/images/, dist/images/vehicles/, and the big JSON. Catalogue updates (re-scrape → git push) reach the live site without a Cloudflare rebuild after jsDelivr cache TTL (12hr s-maxage; purge via `purge.jsdelivr.net/gh/...` for instant).
+- [2026-05-18] **Detail routes are client-hydrated, listing pages are still SSG**: `/vehicle/{year}/{make}/{model}`, `/wheels/{id}`, `/tires/{id}` resolve to three shell pages (`*/detail/index.html`) via `_redirects` 200 rewrites. React hydrators in `webapp/src/components/detail/` read `window.location.pathname`, fetch from CDN, render. Listing pages (`wheels.astro`, `tires.astro`) still pre-render product cards at build — `dist/tires/index.html` is ~12.5MB because of this. Acceptable for now (under CF's 25MB per-file cap); revisit if catalogue grows much more.
+- [2026-05-18] **build-internal-db.js writes absolute CDN image URLs** into products.json so component templates don't need a CDN-prefix helper for image src. Override the URL by setting `CDN_BASE` env when running the build script.
 - [2026-05-04] **Supabase for auth/DB** — free tier sufficient, handles distributor login, wholesale pricing tiers.
 - [2026-05-04] **Dual search: classic Year/Make/Model + smart text search** — users expect the classic dropdown flow but also want intelligent search as a differentiator.
 - [2026-05-04] **Direct API scraping over DOM scraping** — calling searchWheel.asp directly via fetch (with session cookies from Playwright login) is 10x faster than clicking through the UI. Headless browser just provides the session.

@@ -1,185 +1,144 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-15T04:09:45.522Z
-> Files: 109 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-18T02:39:28.622Z
+> Files: 47 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
-- `.gitignore` — Git ignore rules (~215 tok)
-- `CLAUDE.md` — OpenWolf (~57 tok)
+- `.gitignore` — Git ignore rules (~358 tok)
 
 ## .claude/
 
-- `settings.json` (~441 tok)
 
 ## .claude/rules/
 
-- `openwolf.md` (~313 tok)
 
 ## .github/workflows/
 
-- `deploy.yml` — CI: Deploy to GitHub Pages (~399 tok)
 
 ## C:/Users/miked/.claude/projects/E--James-gtatire/memory/
 
-- `feedback_basepath.md` (~220 tok)
-- `feedback_competitive_data.md` (~189 tok)
-- `feedback_design.md` (~177 tok)
-- `feedback_hubcentric.md` (~225 tok)
-- `feedback_pricing.md` (~200 tok)
-- `MEMORY.md` — Memory Index (~218 tok)
-- `project_overview.md` (~652 tok)
-- `reference_credentials.md` (~253 tok)
-- `reference_domain.md` (~246 tok)
-- `user_james.md` (~201 tok)
+
+## _wheel-tier2-pov/
+
+- `compose.py` — autocrop_alpha, paste_wheel, composite_vehicle, main (~1470 tok)
+- `README.md` — Project documentation (~514 tok)
+- `render_meshes.py` — autocrop_alpha, paste_wheel, render_mesh, main (~1732 tok)
+- `requirements.txt` — Python dependencies (~26 tok)
+- `run_hunyuan.py` — main (~612 tok)
+- `run.py` — log, load_depth_pipe, remove_white_bg, build_pointcloud (~2611 tok)
+
+## _wheel-tier2-pov/TripoSR/tsr/models/
+
+- `isosurface.py` — Swap torchmcubes (CUDA build pain on Windows) for PyMCubes (pure-Python+C, (~681 tok)
 
 ## docs/
 
-- `DATA-DICTIONARY.md` — Full schema documentation for all JSON data files: products, fitment, vehicles, tire-fitment, cross-ref, stats, SKU map, raw scraped data formats (~3000 tok)
-- `DATA-DICTIONARY.md` — GTA Tire — Data Dictionary (~4397 tok)
-- `INTERNAL-WIKI.md` — Comprehensive internal documentation: architecture, data pipeline, scrapers, pricing, frontend, deployment, supplier access, file reference, common operations (~4200 tok)
-- `INTERNAL-WIKI.md` — GTA Tire — Internal Wiki (~6597 tok)
 
 ## pricing-analysis/
 
-- `brand-ranking.csv` (~1002 tok)
-- `margin-analysis.md` — GTA Tire Distributor -- Brand Margin Analysis (~2515 tok)
-- `pricing-strategy.md` — GTA Tire Distributor -- Pricing Strategy Recommendations (~2997 tok)
 
 ## pricing-tool/
 
-- `build-data.cjs` — Build pricing analysis dataset from raw supplier data. (~2332 tok)
-- `build-data.js` — Build pricing analysis dataset from raw supplier data. (~2524 tok)
-- `index.html` — GTA Pricing Command Center (~140 tok)
-- `package.json` — Node.js package manifest (~149 tok)
-- `postcss.config.js` (~24 tok)
-- `tailwind.config.js` (~74 tok)
-- `vite.config.js` (~61 tok)
 
 ## pricing-tool/src/
 
-- `App.jsx` — TABS (~2215 tok)
-- `index.css` — Styles: 6 rules (~399 tok)
-- `main.jsx` (~54 tok)
 
 ## pricing-tool/src/components/
 
-- `ApplyChanges.jsx` — ApplyChanges (~3801 tok)
-- `AuthGate.jsx` — ACCESS_CODE — renders form (~502 tok)
-- `BrandEditor.jsx` — EST_DC_RANGES (~4492 tok)
-- `Dashboard.jsx` — Stat (~2407 tok)
-- `FeeSettings.jsx` — FeeInput (~1170 tok)
-- `ImpactAnalysis.jsx` — ImpactAnalysis (~3731 tok)
-- `ProductTable.jsx` — PAGE_SIZE (~3288 tok)
 
 ## pricing-tool/src/lib/
 
-- `pricing.js` — === Ontario Fees & Tax === (~1290 tok)
 
 ## scrapers/
 
-- `build-database.js` — Build a normalized database from raw scraped data. (~3800 tok)
-- `build-favicon.cjs` — Crop the JSDC wheel icon out of jsdc-banner.png and generate favicons at (~2196 tok)
-- `build-internal-db.js` — Build internal GTA database from raw supplier data. (~7972 tok)
-- `config.js` — Supplier credentials and URLs (~123 tok)
-- `download-images.js` — fs: ensureDir, downloadImage, delay, downloadAllImages (~1196 tok)
-- `mobile-screenshots.js` — Declares browser (~301 tok)
-- `probe-rwc-2025-hyundai.js` — Probe RWC's portal directly for 2025 Hyundai Santa Fe. (~1122 tok)
-- `probe-rwc-fitment.js` — Probe: log in to RWC, fetch one search-by-vehicle URL, and dump SKU patterns (~1078 tok)
-- `recon-alltire.js` — Declares config (~1122 tok)
-- `recon-rwc.js` — Declares config (~1033 tok)
-- `recon-superspeed-aaia-flow.js` — Drive the Search-by-Application form: select Year → Make → Model and capture (~1692 tok)
-- `recon-superspeed-application.js` — Click "Search by Application" in Superspeed B2B and capture the full AAIA (~1332 tok)
-- `recon-superspeed-fitment.js` — Superspeed fitment recon: log in, capture every API call, sweep the UI for (~1397 tok)
-- `recon-superspeed-js-scan.js` — Load the Superspeed B2B SPA, intercept every JS bundle, and grep for AAIA (~695 tok)
-- `recon-superspeed.js` — Declares config (~921 tok)
-- `recon-superspeed2.js` — Declares config (~1155 tok)
-- `scrape-alltire-fast.js` — fs: delay, save, loadIfExists, parseWheelHtml (~2149 tok)
-- `scrape-alltire-tires.js` — fs: save, loadIfExists, getSearchSizes (~1925 tok)
-- `scrape-alltire-wheels.js` — fs: delay, save, loadIfExists, scrapeWheelTree, scrapeWheelProducts (~2902 tok)
-- `scrape-alltire.js` — fs: delay, login, scrapeWheelTree, scrapeWheelProducts, scrapeTires (~2524 tok)
-- `scrape-rwc-fitment.js` — RWC fitment scrape — fetch year/make/model tree from the LIVE portal (~1728 tok)
-- `scrape-rwc.js` — Declares config (~3039 tok)
+- `build-internal-db.js` — Build internal GTA database from raw supplier data. (~8174 tok)
+- `probe-click-diag.js` — Diagnostic: for ONE failing vehicle (2020 Acura ILX), navigate to the (~971 tok)
+- `probe-fastco-api.js` — Probe fastco's REST API endpoints with our logged-in session cookies. (~602 tok)
+- `probe-fastco-picker.js` — Probe: open fastco's vehicle picker page, dump the dropdown structure (~894 tok)
+- `probe-fastco-url-pattern.js` — Probe: try fastco URL variants WITHOUT submodel to see how the site (~789 tok)
+- `probe-row-icon.js` — Probe: after navigating to a working wheel-search URL, dump the first (~853 tok)
+- `recon-fastco-images.js` — Recon: open fastco, you log in + pick dealer + navigate to the (~774 tok)
+- `recon-fastco-xhr.js` — Recon: capture every XHR/fetch/JSON call during a configurator session. (~879 tok)
+- `scrape-alltire-wheels.js` — fs: delay, save, loadIfExists, scrapeWheelTree, scrapeWheelProducts (~3061 tok)
+- `scrape-iconfig-one.js` — Proof-of-one: auto-walk fastco for a single YMM and capture the (~1789 tok)
+- `scrape-iconfig-vehicles.js` — Bulk scraper: for each YMM in webapp/public/data/vehicles.json, fetch (~4019 tok)
+- `scrape-rwc-fitment.js` — RWC fitment scrape — fetch year/make/model tree from the LIVE portal (~1837 tok)
+- `scrape-rwc.js` — Declares config (~3049 tok)
 - `scrape-superspeed-fitment.js` — Build Superspeed wheel fitment via AAIA. Walks AAIA's tree (~2164 tok)
-- `scrape-superspeed.js` — Declares config (~1435 tok)
 - `scrape-tire-fitment.js` — config: save, loadIfExists (~1426 tok)
-- `strip-basepath.cjs` — One-shot script: strip /gtatire/ basepath and BASE_URL templates from (~730 tok)
-- `test-all-wheels.js` — config: delay (~1477 tok)
-- `test-alltire.js` — fs: delay (~2230 tok)
-- `test-api-direct.js` — config: delay (~746 tok)
-- `test-column-map.js` — config: delay (~790 tok)
-- `test-dc-price.js` — Declares config (~431 tok)
-- `test-wheel-extract.js` — config: delay (~1027 tok)
-- `tier-filter-check.js` — Declares fs (~513 tok)
+- `scrape-wheelsize-vehicles.js` — Scrape vehicle reference photos + fitment data from wheel-size.com. (~2810 tok)
 
 ## webapp/
 
-- `astro.config.mjs` — https://astro.build/config (~96 tok)
+- `package.json` — Node.js package manifest (~180 tok)
 
 ## webapp/public/
 
-- `llms.txt` — GTA Tire Distributor (~596 tok)
-- `robots.txt` (~115 tok)
+- `_redirects` — Cloudflare Pages redirects (~736 tok)
+
+## webapp/public/data/
+
+- `vehicle-images.json` (~1 tok)
+
+## webapp/scripts/
+
+- `strip-cdn-assets.mjs` — Strip GitHub-CDN-served assets from dist/ after `astro build` so Cloudflare (~475 tok)
 
 ## webapp/src/components/
 
-- `CompatibleProducts.tsx` — CompatibleProducts (~1721 tok)
-- `Footer.astro` — Astro: Footer (~714 tok)
-- `Header.astro` — Astro: Header (~1272 tok)
-- `ProductCard.astro` — Astro: ProductCard (~1044 tok)
-- `ProductDetail.tsx` — ProductDetailInner (~1994 tok)
-- `VehicleResults.tsx` — StockBadge (~2453 tok)
-- `WheelVisualizer.tsx` — COLORS (~1787 tok)
-- `WheelVisualizerModal.tsx` — COLORS (~3106 tok)
+- `CompatibleProducts.tsx` — CompatibleProducts (~1711 tok)
+- `ProductCard.astro` — Astro: ProductCard (~1302 tok)
+- `ProductCard.tsx` — TSX version of ProductCard.astro for use inside other React components (~1397 tok)
+- `VehicleResults.tsx` — isInStock (~3236 tok)
 
 ## webapp/src/components/auth/
 
-- `AuthProvider.tsx` — AuthContext (~320 tok)
-- `LoginForm.tsx` — LoginForm — renders form (~827 tok)
-- `LoginPage.tsx` — LoginPage (~58 tok)
-- `PriceDisplay.tsx` — PriceDisplay (~500 tok)
+- `PriceDisplay.tsx` — PriceDisplay (~494 tok)
+
+## webapp/src/components/detail/
+
+- `TireDetailPage.tsx` — Mirrors WheelDetailPage for /tires/{id} — see that file for the rationale (~1056 tok)
+- `VehicleDetailPage.tsx` — Hydrator for /vehicle/{year}/{make}/{model}. Replaces the previously (~1918 tok)
+- `WheelDetailPage.tsx` — Reads /wheels/{id} from window.location, fetches products + fitment from the (~1451 tok)
 
 ## webapp/src/components/search/
 
-- `HeroSearch.tsx` — POPULAR — renders form (~1917 tok)
-- `SmartSearchResults.tsx` — StockBadge (~11217 tok)
-- `VehicleDropdowns.tsx` — VehicleDropdowns (~1311 tok)
-- `VehiclePackageBuilder.tsx` — MAKE_MAP (~6443 tok)
-- `VehicleSearch.tsx` — POPULAR_VEHICLES — renders form (~1997 tok)
+- `HeroSearch.tsx` — POPULAR — renders form (~2127 tok)
+- `SmartSearchResults.tsx` — StockBadge (~12322 tok)
+- `VehicleDropdowns.tsx` — VehicleDropdowns (~1512 tok)
+- `VehiclePackageBuilder.tsx` — MAKE_MAP (~9529 tok)
+- `VehicleSearch.tsx` — POPULAR_VEHICLES — renders form (~1984 tok)
 
 ## webapp/src/data/
 
-- `products.ts` — Product types and data loading from static JSON files (~675 tok)
+- `products.ts` — Product types and data loading from static JSON files (~695 tok)
 
 ## webapp/src/layouts/
 
-- `Layout.astro` — Astro: Layout (~2694 tok)
+
+## webapp/src/lib/
+
+- `cdn.ts` — CDN base for static catalogue assets (images, large JSON). (~276 tok)
 
 ## webapp/src/pages/
 
-- `404.astro` — Astro: 404 (~237 tok)
-- `accessibility.astro` — Astro: accessibility (~2199 tok)
-- `contact.astro` — Astro: contact (~1359 tok)
-- `index.astro` — Astro: index (~2730 tok)
-- `login.astro` — Astro: login (~74 tok)
-- `privacy.astro` — Astro: privacy (~2559 tok)
-- `search.astro` — Astro: search (~79 tok)
-- `terms.astro` — Astro: terms (~2685 tok)
-- `tires.astro` — Astro: tires (~1742 tok)
-- `wheels.astro` — Astro: wheels (~1713 tok)
 
 ## webapp/src/pages/tires/
 
-- `[id].astro` — Astro: [id] (~931 tok)
+- `detail.astro` — Astro: detail (~55 tok)
+
+## webapp/src/pages/vehicle/
+
+- `detail.astro` — Astro: detail (~59 tok)
 
 ## webapp/src/pages/vehicle/[year]/[make]/
 
-- `[model].astro` — Astro: [model] (~1476 tok)
+- `[model].astro` — Astro: [model] (~2048 tok)
 
 ## webapp/src/pages/wheels/
 
-- `[id].astro` — Astro: [id] (~1259 tok)
+- `detail.astro` — Astro: detail (~56 tok)
 
 ## webapp/src/styles/
 
-- `global.css` — Styles: 5 rules, 24 vars (~577 tok)

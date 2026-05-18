@@ -126,9 +126,9 @@ const IMG_DIR = path.join(DATA_DIR, 'images', 'rwc');
   );
   console.log(`Years: ${years.length} (${years[0]} to ${years[years.length - 1]})`);
 
-  // Focus on 2020+ per project decision
-  const recentYears = years.filter(y => parseFloat(y) >= 2020);
-  console.log(`Scraping ${recentYears.length} years (2020+)`);
+  // Focus on 2012+ per project decision (widened from 2020 on 2026-05-18)
+  const recentYears = years.filter(y => parseFloat(y) >= 2012);
+  console.log(`Scraping ${recentYears.length} years (2012+)`);
 
   for (const year of recentYears) {
     try {

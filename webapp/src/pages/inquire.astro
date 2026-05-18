@@ -1,0 +1,176 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Your Inquiry — JSDC Wheels"
+  description="Review the tires and wheels you've added to your inquiry. Adjust quantities, then send a single email to JSDC Wheels for pricing and stock confirmation."
+>
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+    <p class="text-primary-400 text-xs font-semibold uppercase tracking-[0.18em] mb-2">Your inquiry</p>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-3 tracking-tight">Review &amp; send</h1>
+    <p class="text-dark-300 text-sm mb-8 max-w-xl">
+      Items you've added across the site. Adjust quantities, remove anything you've changed your mind about, then send the whole list in a single message. JSDC replies within 1 business day with pricing, stock, and delivery timing — or call <a href="tel:+16476123341" class="text-primary-400 font-semibold hover:text-primary-300">647-612-3341</a> for faster turnaround.
+    </p>
+
+    <!-- Empty state -->
+    <div id="inquiry-empty" class="hidden bg-dark-900/60 border border-dark-700/40 rounded-2xl p-8 text-center">
+      <svg class="w-12 h-12 text-dark-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+      </svg>
+      <p class="text-white font-semibold mb-1">Your inquiry list is empty.</p>
+      <p class="text-dark-400 text-sm mb-5">Browse the catalogue or search by your vehicle, then tap <em>Add to Inquiry</em> on any tire or wheel.</p>
+      <div class="flex justify-center gap-3">
+        <a href="/" class="bg-primary-600 hover:bg-primary-500 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors">Search by vehicle</a>
+        <a href="/wheels" class="bg-dark-800 hover:bg-dark-700 text-dark-300 hover:text-white border border-dark-600 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">Browse wheels</a>
+      </div>
+    </div>
+
+    <!-- Items list (rendered client-side) -->
+    <div id="inquiry-list" class="space-y-3 mb-6"></div>
+
+    <!-- Summary + CTA -->
+    <div id="inquiry-summary" class="hidden bg-dark-900/60 border border-primary-600/30 rounded-2xl p-5 sm:p-6">
+      <div class="flex items-baseline justify-between mb-4">
+        <div>
+          <p class="text-dark-400 text-xs uppercase tracking-wide">Estimated total</p>
+          <p class="text-white font-bold text-2xl mt-0.5">$<span id="inquiry-total">0.00</span></p>
+          <p class="text-dark-500 text-[11px] mt-0.5"><span id="inquiry-unit-count">0</span> items · before taxes, fees, and delivery</p>
+        </div>
+        <button id="inquiry-clear" class="text-dark-500 hover:text-red-400 text-xs underline-offset-2 hover:underline">Clear all</button>
+      </div>
+      <button
+        id="inquiry-send"
+        type="button"
+        class="w-full bg-primary-600 hover:bg-primary-500 text-white font-semibold py-3 rounded-xl text-sm transition-colors shadow-lg shadow-primary-900/30 inline-flex items-center justify-center gap-2"
+      >
+        Send inquiry to JSDC
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+      </button>
+      <p class="text-dark-500 text-xs text-center mt-3">
+        Or call <a href="tel:+16476123341" class="text-primary-400 font-semibold hover:text-primary-300">647-612-3341</a> for an immediate quote.
+      </p>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      const KEY = 'jsdc_inquiry';
+      function read() {
+        try { return JSON.parse(localStorage.getItem(KEY) || '[]'); }
+        catch (e) { return []; }
+      }
+      function write(items) {
+        try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {}
+        try { window.dispatchEvent(new CustomEvent('jsdc-inquiry-change')); } catch (e) {}
+      }
+      function fmt(n) { return n.toFixed(2); }
+      function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+      }
+
+      const listEl = document.getElementById('inquiry-list');
+      const emptyEl = document.getElementById('inquiry-empty');
+      const summaryEl = document.getElementById('inquiry-summary');
+      const totalEl = document.getElementById('inquiry-total');
+      const unitCountEl = document.getElementById('inquiry-unit-count');
+      const clearBtn = document.getElementById('inquiry-clear');
+      const sendBtn = document.getElementById('inquiry-send');
+
+      function render() {
+        const items = read();
+        if (items.length === 0) {
+          emptyEl.classList.remove('hidden');
+          summaryEl.classList.add('hidden');
+          listEl.innerHTML = '';
+          return;
+        }
+        emptyEl.classList.add('hidden');
+        summaryEl.classList.remove('hidden');
+
+        listEl.innerHTML = items.map(it => `
+          <div class="bg-dark-900/60 border border-dark-700/40 rounded-xl p-4 flex items-center gap-3 sm:gap-4">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-lg flex items-center justify-center p-1.5 shrink-0">
+              ${it.image
+                ? `<img src="${escapeHtml(it.image)}" alt="" class="w-full h-full object-contain mix-blend-multiply">`
+                : `<svg class="w-8 h-8 text-dark-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke-width="1.5"/></svg>`}
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-[10px] text-dark-500 uppercase tracking-wider">${escapeHtml(it.category || '')}</p>
+              <p class="text-white font-semibold text-sm line-clamp-1">${escapeHtml(it.name || it.id)}</p>
+              <p class="text-dark-400 text-xs line-clamp-1">SKU ${escapeHtml(it.id)}${it.size ? ' · ' + escapeHtml(it.size) : ''}</p>
+              ${it.vehicle ? `<p class="text-dark-500 text-[11px]">For: ${escapeHtml(it.vehicle)}</p>` : ''}
+              <div class="flex items-center justify-between mt-2 gap-2">
+                <div class="inline-flex items-center bg-dark-800 border border-dark-700 rounded-lg overflow-hidden">
+                  <button data-qty-dec="${escapeHtml(it.id)}" aria-label="Decrease quantity" class="w-8 h-8 text-dark-300 hover:bg-dark-700 hover:text-white font-bold">−</button>
+                  <span class="w-10 text-center text-white font-semibold text-sm" data-qty-val="${escapeHtml(it.id)}">${it.qty}</span>
+                  <button data-qty-inc="${escapeHtml(it.id)}" aria-label="Increase quantity" class="w-8 h-8 text-dark-300 hover:bg-dark-700 hover:text-white font-bold">+</button>
+                </div>
+                <p class="text-white font-bold text-sm">$${fmt(it.priceNum * it.qty)}</p>
+              </div>
+            </div>
+            <button data-remove="${escapeHtml(it.id)}" aria-label="Remove from inquiry" class="text-dark-500 hover:text-red-400 p-1 shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+        `).join('');
+
+        const totalPrice = items.reduce((s, it) => s + (it.priceNum * it.qty), 0);
+        const totalUnits = items.reduce((s, it) => s + it.qty, 0);
+        totalEl.textContent = fmt(totalPrice);
+        unitCountEl.textContent = String(totalUnits);
+      }
+
+      listEl.addEventListener('click', (e) => {
+        const target = e.target.closest('button');
+        if (!target) return;
+        const items = read();
+        if (target.dataset.qtyInc) {
+          const i = items.find(x => x.id === target.dataset.qtyInc);
+          if (i) { i.qty = Math.min(99, (i.qty || 0) + 1); write(items); render(); }
+        } else if (target.dataset.qtyDec) {
+          const i = items.find(x => x.id === target.dataset.qtyDec);
+          if (i) { i.qty = Math.max(1, (i.qty || 0) - 1); write(items); render(); }
+        } else if (target.dataset.remove) {
+          write(items.filter(x => x.id !== target.dataset.remove));
+          render();
+        }
+      });
+
+      clearBtn.addEventListener('click', () => {
+        if (confirm('Clear all items from your inquiry?')) {
+          write([]);
+          render();
+        }
+      });
+
+      sendBtn.addEventListener('click', () => {
+        const items = read();
+        if (items.length === 0) return;
+        const totalPrice = items.reduce((s, it) => s + (it.priceNum * it.qty), 0);
+        const totalUnits = items.reduce((s, it) => s + it.qty, 0);
+        const vehicles = [...new Set(items.map(it => it.vehicle).filter(Boolean))];
+        const vehicleLine = vehicles.length ? ` (${vehicles.join(' / ')})` : '';
+        const subject = 'Multi-item inquiry: ' + items.length + ' product' + (items.length === 1 ? '' : 's') + vehicleLine;
+        const lines = items.map(it =>
+          '• ' + (it.category === 'tire' ? 'Tires' : 'Wheels') + ' (×' + it.qty + '): ' +
+          (it.name || it.id) + ' — SKU ' + it.id +
+          (it.size ? ' — ' + it.size : '') +
+          ' — $' + fmt(it.priceNum * it.qty)
+        );
+        const intro = "Hi, I'd like pricing and stock confirmation on the following" +
+          (vehicles.length ? ' for ' + vehicles.join(' / ') : '') + ':';
+        const note = intro + '\n\n' + lines.join('\n') +
+          '\n\nEstimated total (' + totalUnits + ' units): $' + fmt(totalPrice) +
+          '\n\nPlease confirm availability, total with taxes/fees, and GTA delivery timing.';
+        const label = items.length + '-item inquiry' + vehicleLine;
+        const params = new URLSearchParams({ subject, note, label });
+        window.location.href = '/contact?' + params.toString();
+      });
+
+      render();
+      window.addEventListener('jsdc-inquiry-change', render);
+      window.addEventListener('storage', (e) => { if (e.key === KEY) render(); });
+    })();
+  </script>
+</Layout>

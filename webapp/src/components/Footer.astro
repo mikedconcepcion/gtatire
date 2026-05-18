@@ -1,27 +1,45 @@
 ---
+const cities = [
+  { slug: 'toronto', name: 'Toronto' },
+  { slug: 'scarborough', name: 'Scarborough' },
+  { slug: 'mississauga', name: 'Mississauga' },
+  { slug: 'brampton', name: 'Brampton' },
+  { slug: 'markham', name: 'Markham' },
+  { slug: 'vaughan', name: 'Vaughan' },
+  { slug: 'north-york', name: 'North York' },
+  { slug: 'richmond-hill', name: 'Richmond Hill' },
+  { slug: 'etobicoke', name: 'Etobicoke' },
+];
 ---
 <footer class="bg-dark-900 border-t border-primary-600/30 mt-auto">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
       <!-- Brand -->
       <div class="md:col-span-2">
-        <a href={`/`} class="inline-flex flex-col leading-none mb-4" aria-label="JSDC Tires & Wheels home">
-          <span class="jsdc-wordmark text-5xl leading-none">JSDC</span>
-          <span class="text-dark-400 text-xs uppercase tracking-[0.25em] font-semibold mt-1">Tires &amp; Wheels</span>
+        <a href="/" class="inline-flex mb-4" aria-label="JSDC Wheels home">
+          <img
+            src="/brand/jsdc-logo.png"
+            srcset="/brand/jsdc-logo.png 1x, /brand/jsdc-logo@2x.png 2x"
+            alt="JSDC Wheels"
+            width="188"
+            height="56"
+            class="h-16 w-auto"
+          />
         </a>
         <p class="text-dark-400 text-sm max-w-md">
           Premium tires and wheels for the Greater Toronto Area.
-          Top brands, competitive pricing, fast delivery.
+          Top brands, hub-centric fitment, 1-2 day delivery.
         </p>
       </div>
 
       <!-- Quick Links -->
       <div>
-        <h3 class="text-white font-semibold text-sm mb-4">Products</h3>
+        <h3 class="text-white font-semibold text-sm mb-4">Catalog</h3>
         <ul class="space-y-2">
           <li><a href="/tires" class="text-dark-400 hover:text-primary-400 text-sm transition-colors">Tires</a></li>
           <li><a href="/wheels" class="text-dark-400 hover:text-primary-400 text-sm transition-colors">Wheels</a></li>
           <li><a href="/search" class="text-dark-400 hover:text-primary-400 text-sm transition-colors">Search</a></li>
+          <li><a href="/about" class="text-dark-400 hover:text-primary-400 text-sm transition-colors">About JSDC</a></li>
         </ul>
       </div>
 
@@ -29,10 +47,35 @@
       <div>
         <h3 class="text-white font-semibold text-sm mb-4">Contact</h3>
         <ul class="space-y-2">
-          <li><a href="mailto:james@jsdcwheels.ca" class="text-dark-400 hover:text-primary-400 text-sm transition-colors">james@jsdcwheels.ca</a></li>
-          <li><a href="/contact" class="text-dark-400 hover:text-primary-400 text-sm transition-colors">Contact Us</a></li>
-          <li><a href="/login" class="text-dark-400 hover:text-primary-400 text-sm transition-colors">Distributor Login</a></li>
+          <li><a href="tel:+16476123341" class="text-primary-400 hover:text-primary-300 text-sm font-semibold transition-colors inline-flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.95.68l1.5 4.49a1 1 0 01-.5 1.21l-2.26 1.13a11 11 0 005.52 5.52l1.13-2.26a1 1 0 011.21-.5l4.49 1.5a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" /></svg>
+            647-612-3341
+          </a></li>
+          <li><a href="/contact" class="text-dark-400 hover:text-primary-400 text-sm transition-colors">Contact form</a></li>
+          <li class="text-dark-500 text-sm">Greater Toronto Area, ON</li>
         </ul>
+      </div>
+    </div>
+
+    <!-- Resources -->
+    <div class="border-t border-dark-700/40 mt-8 pt-6">
+      <h3 class="text-dark-500 text-xs font-semibold uppercase tracking-wider mb-3">Resources</h3>
+      <div class="flex flex-wrap gap-x-4 gap-y-1.5">
+        <a href="/winter-tires" class="text-dark-400 hover:text-primary-400 text-xs transition-colors">Winter tires</a>
+        <a href="/all-season-tires" class="text-dark-400 hover:text-primary-400 text-xs transition-colors">All-season & all-weather</a>
+        <a href="/guides/hub-centric-wheels" class="text-dark-400 hover:text-primary-400 text-xs transition-colors">Hub-centric guide</a>
+        <a href="/guides/bolt-patterns" class="text-dark-400 hover:text-primary-400 text-xs transition-colors">Bolt patterns</a>
+        <a href="/guides/tire-sizes" class="text-dark-400 hover:text-primary-400 text-xs transition-colors">Tire sizes explained</a>
+      </div>
+    </div>
+
+    <!-- GTA cities served -->
+    <div class="border-t border-dark-700/40 mt-6 pt-6">
+      <h3 class="text-dark-500 text-xs font-semibold uppercase tracking-wider mb-3">Serving the GTA</h3>
+      <div class="flex flex-wrap gap-x-4 gap-y-1.5">
+        {cities.map(c => (
+          <a href={`/wheels-tires-${c.slug}`} class="text-dark-400 hover:text-primary-400 text-xs transition-colors">{c.name}</a>
+        ))}
       </div>
     </div>
 

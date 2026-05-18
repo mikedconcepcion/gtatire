@@ -5,9 +5,20 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="Contact — JSDC Wheels">
   <section class="max-w-3xl mx-auto px-4 sm:px-6 py-12">
     <h1 class="text-3xl font-bold text-white mb-2">Contact Us</h1>
-    <p class="text-dark-400 mb-8">Get in touch for wholesale inquiries, orders, or support.</p>
+    <p class="text-dark-400 mb-8">Get in touch for retail orders, wholesale account registration, fitment questions or support.</p>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
+      <a href="tel:+16476123341" class="bg-dark-900 hover:bg-dark-800/80 border border-primary-600/30 hover:border-primary-500/60 rounded-xl p-6 transition-all group">
+        <div class="w-10 h-10 bg-primary-600/20 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.95.68l1.5 4.49a1 1 0 01-.5 1.21l-2.26 1.13a11 11 0 005.52 5.52l1.13-2.26a1 1 0 011.21-.5l4.49 1.5a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" />
+          </svg>
+        </div>
+        <h3 class="text-white font-semibold mb-1 group-hover:text-primary-300 transition-colors">Call</h3>
+        <p class="text-primary-400 text-sm font-semibold">647-612-3341</p>
+        <p class="text-dark-500 text-[11px] mt-1">Fastest way to ask about fitment or stock</p>
+      </a>
+
       <div class="bg-dark-900 border border-dark-700/50 rounded-xl p-6">
         <div class="w-10 h-10 bg-dark-800 rounded-lg flex items-center justify-center mb-4">
           <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -15,7 +26,8 @@ import Layout from '../layouts/Layout.astro';
           </svg>
         </div>
         <h3 class="text-white font-semibold mb-1">Email</h3>
-        <a href="mailto:james@jsdcwheels.ca" class="text-primary-400 text-sm hover:underline">james@jsdcwheels.ca</a>
+        <a href="mailto:james@jsdctiresandwheels.com" class="text-primary-400 text-sm hover:underline break-all">james@jsdctiresandwheels.com</a>
+        <p class="text-dark-500 text-[11px] mt-1">Or use the form below — replies within 1 business day</p>
       </div>
 
       <div class="bg-dark-900 border border-dark-700/50 rounded-xl p-6">
@@ -25,14 +37,19 @@ import Layout from '../layouts/Layout.astro';
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
         </div>
-        <h3 class="text-white font-semibold mb-1">Location</h3>
-        <p class="text-dark-400 text-sm">Greater Toronto Area, Ontario, Canada</p>
+        <h3 class="text-white font-semibold mb-1">Service Area</h3>
+        <p class="text-dark-400 text-sm">Greater Toronto Area, Ontario</p>
+        <p class="text-dark-500 text-[11px] mt-1">1-2 business day delivery</p>
       </div>
     </div>
 
     <!-- Contact form -->
     <div class="bg-dark-900 border border-dark-700/50 rounded-xl p-6 sm:p-8">
       <h2 class="text-xl font-bold text-white mb-6">Send a Message</h2>
+      <div id="contact-prefilled-banner" class="hidden mb-4 bg-primary-600/10 border border-primary-500/30 rounded-lg px-4 py-3">
+        <p class="text-primary-300 text-xs uppercase tracking-wider font-semibold mb-1">Pre-filled inquiry</p>
+        <p id="contact-prefilled-label" class="text-white text-sm"></p>
+      </div>
       <form id="contact-form" class="space-y-4">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
@@ -45,31 +62,163 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
         <div>
-          <label for="contact-company" class="block text-dark-300 text-sm mb-1.5">Company</label>
-          <input id="contact-company" type="text" class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="Your company name" />
+          <label for="contact-company" class="block text-dark-300 text-sm mb-1.5">Company <span class="text-dark-500">(optional — leave blank if you're an individual buyer)</span></label>
+          <input id="contact-company" type="text" class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="Tire shop name, if applicable" />
+        </div>
+        <div>
+          <label for="contact-subject" class="block text-dark-300 text-sm mb-1.5">Subject</label>
+          <input id="contact-subject" type="text" required class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="What is your inquiry about?" />
+        </div>
+        <div>
+          <label for="contact-referral" class="block text-dark-300 text-sm mb-1.5">
+            Referral Code
+            <span class="text-dark-500 font-normal">(optional — gets you 10% off if valid)</span>
+          </label>
+          <input id="contact-referral" type="text" autocapitalize="characters" class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent uppercase" placeholder="e.g. JSPR10" />
         </div>
         <div>
           <label for="contact-message" class="block text-dark-300 text-sm mb-1.5">Message</label>
-          <textarea id="contact-message" rows="4" required class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none" placeholder="How can we help you?"></textarea>
+          <textarea id="contact-message" rows="5" required class="w-full bg-dark-800 border border-dark-600 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none" placeholder="How can we help you?"></textarea>
         </div>
-        <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2.5 px-6 rounded-lg transition-colors text-sm">
-          Send Message
-        </button>
-        <div id="contact-success" class="hidden text-green-400 text-sm mt-2">Your email client will open with the message pre-filled.</div>
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3 pt-2">
+          <button id="contact-submit-btn" type="submit" class="bg-primary-600 hover:bg-primary-700 disabled:bg-dark-700 disabled:cursor-not-allowed text-white font-semibold py-2.5 px-6 rounded-lg transition-colors text-sm shadow-lg shadow-primary-900/30">
+            Send Message
+          </button>
+          <p class="text-dark-500 text-xs">
+            Prefer to call? <a href="tel:+16476123341" class="text-primary-400 hover:text-primary-300 font-semibold">647-612-3341</a>
+          </p>
+        </div>
+        <div id="contact-success" class="hidden text-green-400 text-sm mt-3 bg-green-500/10 border border-green-500/30 rounded-lg p-3">
+          Sent. We'll reply within 1 business day — or call <a href="tel:+16476123341" class="font-semibold underline">647-612-3341</a> for a faster response.
+        </div>
+        <div id="contact-error" class="hidden text-red-300 text-sm mt-3 bg-red-500/10 border border-red-500/30 rounded-lg p-3">
+          The form couldn't send right now. Please call
+          <a href="tel:+16476123341" class="font-semibold underline">647-612-3341</a>
+          or email
+          <a href="mailto:james@jsdctiresandwheels.com" class="font-semibold underline">james@jsdctiresandwheels.com</a>
+          directly.
+        </div>
       </form>
 
-      <script>
-        document.getElementById('contact-form')?.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const name = (document.getElementById('contact-name') as HTMLInputElement).value;
-          const email = (document.getElementById('contact-email') as HTMLInputElement).value;
-          const company = (document.getElementById('contact-company') as HTMLInputElement).value;
-          const message = (document.getElementById('contact-message') as HTMLTextAreaElement).value;
-          const subject = company ? `Inquiry from ${name} (${company})` : `Inquiry from ${name}`;
-          const body = `${message}\n\n---\nFrom: ${name}\nEmail: ${email}${company ? `\nCompany: ${company}` : ''}`;
-          window.location.href = `mailto:james@jsdcwheels.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-          document.getElementById('contact-success')?.classList.remove('hidden');
-        });
+      <script is:inline>
+        (function() {
+          // ─── Form backend config ─────────────────────────────────────────
+          // Web3Forms — free, no account on our end, delivers to any inbox.
+          // Setup (one-time): go to https://web3forms.com, enter the recipient
+          // email (james@jsdctiresandwheels.com), copy the access key, paste it
+          // below. Until then the form gracefully falls back to mailto:.
+          var WEB3FORMS_KEY = '162c7237-0fde-4d28-8cf8-4852c7b31239';
+          var FALLBACK_EMAIL = 'james@jsdctiresandwheels.com';
+
+          // ─── URL pre-fill (from product / package CTAs) ──────────────────
+          var params = new URLSearchParams(window.location.search);
+          var subjPrefill = params.get('subject');
+          var notePrefill = params.get('note');
+          var labelPrefill = params.get('label') || subjPrefill;
+          if (subjPrefill) {
+            var subjEl = document.getElementById('contact-subject');
+            if (subjEl) subjEl.value = subjPrefill;
+          }
+          if (notePrefill) {
+            var msgEl = document.getElementById('contact-message');
+            if (msgEl) msgEl.value = notePrefill + '\n\n';
+          }
+          if (subjPrefill || notePrefill) {
+            var banner = document.getElementById('contact-prefilled-banner');
+            var bannerLabel = document.getElementById('contact-prefilled-label');
+            if (banner && bannerLabel) {
+              banner.classList.remove('hidden');
+              bannerLabel.textContent = labelPrefill || 'Your inquiry has been pre-filled below. Add your name and email, then send.';
+            }
+            var nameEl = document.getElementById('contact-name');
+            if (nameEl) nameEl.focus();
+          }
+
+          // ─── Referral code pre-fill (URL param wins, else localStorage) ──
+          try {
+            var refFromUrl = (params.get('ref') || '').trim().toUpperCase();
+            var refStored = (localStorage.getItem('jsdc_ref_code') || '').trim().toUpperCase();
+            var refActive = refFromUrl || refStored;
+            var refEl = document.getElementById('contact-referral');
+            if (refEl && refActive) refEl.value = refActive;
+          } catch (e) { /* localStorage disabled */ }
+
+          // ─── Submit handler ──────────────────────────────────────────────
+          function gather() {
+            return {
+              name: document.getElementById('contact-name').value.trim(),
+              email: document.getElementById('contact-email').value.trim(),
+              company: document.getElementById('contact-company').value.trim(),
+              subject: document.getElementById('contact-subject').value.trim(),
+              message: document.getElementById('contact-message').value.trim(),
+              referral: (document.getElementById('contact-referral').value || '').trim().toUpperCase(),
+            };
+          }
+          function show(id) { var el = document.getElementById(id); if (el) el.classList.remove('hidden'); }
+          function hide(id) { var el = document.getElementById(id); if (el) el.classList.add('hidden'); }
+          function mailtoFallback(d) {
+            var subjPrefix = d.referral ? '[REF ' + d.referral + ' · 10%] ' : '';
+            var subject = subjPrefix + (d.subject || (d.company ? 'Inquiry from ' + d.name + ' (' + d.company + ')' : 'Inquiry from ' + d.name));
+            var body = d.message + '\n\n---\nFrom: ' + d.name + '\nEmail: ' + d.email + (d.company ? '\nCompany: ' + d.company : '') + (d.referral ? '\nReferral code: ' + d.referral + ' (apply 10% off)' : '');
+            window.location.href = 'mailto:' + FALLBACK_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+            show('contact-success');
+          }
+
+          document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            hide('contact-success');
+            hide('contact-error');
+            var d = gather();
+            var btn = document.getElementById('contact-submit-btn');
+
+            // If Web3Forms isn't configured yet, fall back to mailto so the
+            // form is never broken for visitors.
+            if (!WEB3FORMS_KEY || WEB3FORMS_KEY === 'YOUR_WEB3FORMS_KEY') {
+              mailtoFallback(d);
+              return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Sending…';
+
+            // Surface the referral code in the subject so it's visible at a
+            // glance in the inbox — easy for James to spot and apply 10% off.
+            var subjPrefix = d.referral ? '[REF ' + d.referral + ' · 10%] ' : '';
+
+            fetch('https://api.web3forms.com/submit', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify({
+                access_key: WEB3FORMS_KEY,
+                from_name: d.name || 'JSDC website',
+                replyto: d.email,
+                subject: subjPrefix + (d.subject || 'JSDC Wheels inquiry'),
+                name: d.name,
+                email: d.email,
+                company: d.company,
+                referral_code: d.referral || '(none)',
+                message: d.message + (d.referral ? '\n\n— Referral code: ' + d.referral + ' (apply 10% off)' : ''),
+              }),
+            })
+              .then(function(r) { return r.json(); })
+              .then(function(json) {
+                btn.disabled = false;
+                btn.textContent = 'Send Message';
+                if (json && json.success) {
+                  show('contact-success');
+                  document.getElementById('contact-form').reset();
+                  hide('contact-prefilled-banner');
+                } else {
+                  show('contact-error');
+                }
+              })
+              .catch(function() {
+                btn.disabled = false;
+                btn.textContent = 'Send Message';
+                show('contact-error');
+              });
+          });
+        })();
       </script>
     </div>
   </section>

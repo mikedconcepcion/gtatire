@@ -15,18 +15,60 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
 <Layout title="JSDC Wheels — Premium Tires & Wheels in the GTA">
   <!-- Hero -->
   <section class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-b from-primary-950/50 via-dark-950 to-dark-950"></div>
+    <!-- Background video: loops continuously at 30% opacity behind headline.
+         Reduced-motion users get only the poster image, never the video. -->
+    <video
+      id="hero-video"
+      class="absolute inset-0 w-full h-full object-cover opacity-30 motion-reduce:hidden"
+      src="/videos/hero.mp4"
+      poster="/videos/hero-poster.jpg"
+      muted
+      loop
+      autoplay
+      playsinline
+      preload="metadata"
+      aria-hidden="true"
+    ></video>
+    <div
+      class="absolute inset-0 bg-cover bg-center opacity-30 hidden motion-reduce:block"
+      style="background-image: url('/videos/hero-poster.jpg');"
+      aria-hidden="true"
+    ></div>
+    <script is:inline>
+      (function () {
+        var v = document.getElementById('hero-video');
+        if (!v) return;
+        var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
+
+        document.addEventListener('visibilitychange', function () {
+          if (document.hidden) {
+            v.pause();
+          } else if (v.paused) {
+            var p = v.play();
+            if (p && p.catch) p.catch(function () {});
+          }
+        });
+      })();
+    </script>
+    <!-- Layered overlays: dark vignette + warm gold glow keep the headline crisp -->
+    <div class="absolute inset-0 bg-gradient-to-b from-dark-950/70 via-dark-950/80 to-dark-950"></div>
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary-600/10 rounded-full blur-3xl"></div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-16 sm:pt-24 sm:pb-20">
       <div class="text-center mb-10">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-4 tracking-tight">
+        <p class="text-primary-400 text-xs font-semibold uppercase tracking-[0.2em] mb-4 inline-flex items-center gap-2">
+          <span class="h-px w-8 bg-primary-500/40"></span>
+          Wholesale & Retail · GTA Distributor
+          <span class="h-px w-8 bg-primary-500/40"></span>
+        </p>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-5 tracking-tight">
           Find the Perfect
           <span class="text-primary-400"> Tires & Wheels</span>
         </h1>
         <p class="text-dark-300 text-lg sm:text-xl max-w-xl mx-auto">
-          {stats.totalProducts?.toLocaleString() || '6,000+' } products from {Object.keys(stats.byBrand || {}).length || 40} brands.
-          Search by vehicle, tire size, or wheel specs.
+          {(Math.floor((stats.totalProducts || 6800) / 100) * 100).toLocaleString()}+ products from {Object.keys(stats.byBrand || {}).length || 40} brands.
+          Hub-centric fitment, 1-2 day delivery across the Greater Toronto Area.
         </p>
       </div>
 
@@ -86,8 +128,8 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
   </section>
 
   <!-- Categories -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
       <a href="/wheels" class="group relative bg-dark-900 border border-dark-700/50 rounded-2xl p-8 hover:border-primary-600/50 transition-all overflow-hidden">
         <div class="absolute top-0 right-0 w-32 h-32 bg-primary-600/5 rounded-full -translate-y-8 translate-x-8 group-hover:bg-primary-600/10 transition-all"></div>
         <div class="relative">
@@ -124,22 +166,6 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
         </div>
       </a>
 
-      <a href="/login" class="group relative bg-gradient-to-br from-primary-900/50 to-dark-900 border border-primary-700/30 rounded-2xl p-8 hover:border-primary-600/50 transition-all overflow-hidden sm:col-span-2 lg:col-span-1">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-primary-600/5 rounded-full -translate-y-8 translate-x-8 group-hover:bg-primary-600/10 transition-all"></div>
-        <div class="relative">
-          <div class="w-14 h-14 bg-primary-800/50 rounded-xl flex items-center justify-center mb-5">
-            <svg class="w-7 h-7 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-          </div>
-          <h3 class="text-white font-bold text-xl mb-2">Distributor Portal</h3>
-          <p class="text-dark-400 text-sm">Sign in for wholesale pricing and order management.</p>
-          <div class="mt-4 text-primary-400 text-sm font-medium group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-            Sign In
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-          </div>
-        </div>
-      </a>
     </div>
   </section>
 
@@ -161,8 +187,8 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <h3 class="text-white font-semibold mb-2">Best Prices</h3>
-        <p class="text-dark-400 text-sm">10% off MSRP retail. Extra savings for registered distributors.</p>
+        <h3 class="text-white font-semibold mb-2">Wholesale Pricing</h3>
+        <p class="text-dark-400 text-sm">Sharper than retail. Tiered savings for registered distributors and tire shops.</p>
       </div>
       <div class="text-center">
         <div class="w-12 h-12 bg-dark-800 rounded-xl flex items-center justify-center mx-auto mb-4">
@@ -170,8 +196,8 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <h3 class="text-white font-semibold mb-2">Quality Guaranteed</h3>
-        <p class="text-dark-400 text-sm">All products from authorized suppliers with full warranty.</p>
+        <h3 class="text-white font-semibold mb-2">Authorized Distributor</h3>
+        <p class="text-dark-400 text-sm">Sourced direct from Michelin, Bridgestone, Continental and 40+ brands — full manufacturer warranty.</p>
       </div>
     </div>
   </section>

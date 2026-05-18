@@ -1,8 +1,8 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages (disabled — site moved to Cloudflare Pages)
 
 on:
-  push:
-    branches: [main]
+  # Disabled 2026-05-15: site now hosted at https://jsdcwheels.ca via Cloudflare Pages.
+  # Kept here for reference / quick re-enable if Cloudflare ever has an outage.
   workflow_dispatch:
 
 permissions:

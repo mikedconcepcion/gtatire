@@ -1,0 +1,131 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeroSearch from '../components/search/HeroSearch';
+
+const allSeasonBrands = ['Michelin Defender', 'Bridgestone Turanza', 'Continental TrueContact', 'Pirelli Cinturato', 'Goodyear Assurance', 'Hankook Kinergy', 'Yokohama Avid', 'Kumho Solus'];
+const allWeatherBrands = ['Michelin CrossClimate2', 'Goodyear WeatherReady', 'Hankook Kinergy 4S2', 'Toyo Celsius', 'Continental CrossContact'];
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'All-Season and All-Weather Tires for the GTA',
+  description: 'Compare all-season vs all-weather tires for Ontario driving. Find tires by vehicle, hub-centric wheel fitment, GTA delivery.',
+  author: { '@type': 'Organization', name: 'JSDC Wheels' },
+  publisher: { '@type': 'Organization', name: 'JSDC Wheels' },
+};
+---
+
+<Layout
+  title="All-Season & All-Weather Tires for the GTA | JSDC Wheels"
+  description="All-season and all-weather (3PMSF-rated) tires for Ontario driving. Search by vehicle, see hub-centric wheel options, 1-2 day GTA delivery."
+  jsonLd={articleJsonLd}
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden border-b border-dark-700/50">
+    <div class="absolute inset-0 bg-gradient-to-b from-primary-950/30 via-dark-950 to-dark-950"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary-600/10 rounded-full blur-3xl"></div>
+
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-12 sm:pt-16 sm:pb-14">
+      <p class="text-primary-400 text-xs font-semibold uppercase tracking-[0.2em] mb-3 inline-flex items-center gap-2">
+        <span class="h-px w-6 bg-primary-500/40"></span>
+        Year-Round Setup
+      </p>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 tracking-tight">
+        All-Season & All-Weather Tires
+      </h1>
+      <p class="text-dark-300 text-base sm:text-lg max-w-2xl mb-6">
+        For GTA drivers who want a single tire set year-round, the choice is between all-season
+        (warm + mild winter) and all-weather (3PMSF-rated for true winter conditions). Search by
+        your vehicle to see what fits.
+      </p>
+      <HeroSearch client:load />
+    </div>
+  </section>
+
+  <!-- The difference -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+    <h2 class="text-white text-xl sm:text-2xl font-bold mb-6">All-season vs all-weather — the difference</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-2xl p-6">
+        <h3 class="text-white font-semibold text-lg mb-2">All-Season</h3>
+        <p class="text-dark-400 text-sm mb-3">Best in: spring, summer, fall, mild winter days.</p>
+        <ul class="text-dark-300 text-sm space-y-1.5 list-disc list-inside marker:text-primary-500/60">
+          <li>Longer tread life than winters or all-weathers</li>
+          <li>Better fuel economy and quieter ride</li>
+          <li>Limited grip below 7°C — not 3PMSF-rated</li>
+          <li>Insurance: no winter-tire discount</li>
+        </ul>
+      </div>
+      <div class="bg-dark-900/50 border border-primary-600/30 rounded-2xl p-6">
+        <h3 class="text-white font-semibold text-lg mb-2 inline-flex items-center gap-2">
+          All-Weather
+          <span class="text-[10px] bg-primary-600/20 text-primary-300 border border-primary-500/30 px-2 py-0.5 rounded-full font-semibold">3PMSF</span>
+        </h3>
+        <p class="text-dark-400 text-sm mb-3">Best in: year-round Canadian climates where snow is occasional.</p>
+        <ul class="text-dark-300 text-sm space-y-1.5 list-disc list-inside marker:text-primary-500/60">
+          <li>Three-Peak Mountain Snowflake certified for winter</li>
+          <li>Qualifies for Ontario winter-tire insurance discount</li>
+          <li>Shorter tread life than pure all-season</li>
+          <li>Compromise — not as good in snow as dedicated winters</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- All-season brands -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+    <h2 class="text-white text-xl sm:text-2xl font-bold mb-2">All-season brands we carry</h2>
+    <p class="text-dark-400 text-sm mb-6">Premium and value tiers, all from authorized Canadian suppliers.</p>
+    <div class="flex flex-wrap gap-2">
+      {allSeasonBrands.map(b => (
+        <a
+          href={`/search/?q=${encodeURIComponent(b)}`}
+          class="text-dark-200 hover:text-white bg-dark-800/60 hover:bg-dark-800 border border-dark-700/50 hover:border-primary-600/40 px-4 py-2 rounded-xl text-sm font-medium transition-all"
+        >
+          {b}
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- All-weather brands -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+    <h2 class="text-white text-xl sm:text-2xl font-bold mb-2">All-weather (3PMSF) brands</h2>
+    <p class="text-dark-400 text-sm mb-6">Snowflake-rated tires that can stay on year-round.</p>
+    <div class="flex flex-wrap gap-2">
+      {allWeatherBrands.map(b => (
+        <a
+          href={`/search/?q=${encodeURIComponent(b)}`}
+          class="text-dark-200 hover:text-white bg-dark-800/60 hover:bg-dark-800 border border-dark-700/50 hover:border-primary-600/40 px-4 py-2 rounded-xl text-sm font-medium transition-all"
+        >
+          {b}
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 py-12" itemscope itemtype="https://schema.org/FAQPage">
+    <h2 class="text-white text-xl sm:text-2xl font-bold mb-6">All-season vs all-weather FAQ</h2>
+    <div class="space-y-4">
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-xl p-5" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="text-white font-semibold mb-2" itemprop="name">Which is better for the GTA?</h3>
+        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+          <p class="text-dark-300 text-sm" itemprop="text">If you drive year-round and don't want a seasonal swap, an all-weather (3PMSF) is the better choice — it qualifies for the Ontario winter-tire insurance discount and handles GTA winters competently. If you'll swap to dedicated winters anyway, an all-season gets longer tread life in the warm months.</p>
+        </div>
+      </div>
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-xl p-5" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="text-white font-semibold mb-2" itemprop="name">Do all-weather tires count as winter tires for insurance?</h3>
+        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+          <p class="text-dark-300 text-sm" itemprop="text">Yes — any tire bearing the 3PMSF (Three-Peak Mountain Snowflake) symbol qualifies for the Ontario winter tire insurance discount, including all-weather tires.</p>
+        </div>
+      </div>
+      <div class="bg-dark-900/50 border border-dark-700/40 rounded-xl p-5" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <h3 class="text-white font-semibold mb-2" itemprop="name">How long do all-season tires last?</h3>
+        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+          <p class="text-dark-300 text-sm" itemprop="text">Most premium all-seasons rated for 80,000-100,000 km in Canadian conditions, depending on driving style and rotation schedule. Budget brands typically 60,000-80,000 km.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

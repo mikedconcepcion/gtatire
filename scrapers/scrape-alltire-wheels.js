@@ -5,7 +5,7 @@ const config = require('./config');
 const pathMod = require('path');
 const DATA_DIR = pathMod.join(__dirname, '..', 'data');
 const DELAY = 400;
-const MIN_YEAR = 2020; // Only scrape 2020 to present
+const MIN_YEAR = 2012; // Scrape 2012-present (widened from 2020 on 2026-05-18)
 
 async function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
@@ -25,11 +25,13 @@ async function scrapeWheelTree(page) {
   console.log('PHASE 1: WHEEL YEAR/MAKE/MODEL TREE');
   console.log('========================================');
 
-  // Check for existing progress
-  const existing = loadIfExists('alltire-wheel-tree.json');
-  if (existing && Object.keys(existing).length >= 7) {
-    console.log(`Found existing tree with ${Object.keys(existing).length} years. Resuming...`);
-    return existing;
+  // Load existing tree (if any) and merge in any missing years.
+  // The MIN_YEAR may have been widened since the last run, so we need to
+  // walk any year >= MIN_YEAR that isn't already in the tree.
+  const tree = loadIfExists('alltire-wheel-tree.json') || {};
+  const existingYears = Object.keys(tree).map(Number);
+  if (existingYears.length) {
+    console.log(`Existing tree: ${existingYears.length} years (min ${Math.min(...existingYears)}, max ${Math.max(...existingYears)})`);
   }
 
   await page.locator('text=/Wheel Search/i').first().click();
@@ -41,11 +43,16 @@ async function scrapeWheelTree(page) {
   const years = allYears.filter(y => parseInt(y) >= MIN_YEAR);
   console.log(`Years: ${years.length} (${years[0]} to ${years[years.length - 1]}) [filtered from ${allYears.length} total]`);
 
-  const tree = {};
+  const yearsToWalk = years.filter(y => !tree[y] || Object.keys(tree[y]).length === 0);
+  if (yearsToWalk.length === 0) {
+    console.log('Tree already covers all target years. Skipping rebuild.');
+    return tree;
+  }
+  console.log(`Years to walk this run: ${yearsToWalk.length} (${yearsToWalk.join(', ')})`);
 
-  for (let yi = 0; yi < years.length; yi++) {
-    const year = years[yi];
-    process.stdout.write(`\n[${yi + 1}/${years.length}] ${year}: `);
+  for (let yi = 0; yi < yearsToWalk.length; yi++) {
+    const year = yearsToWalk[yi];
+    process.stdout.write(`\n[${yi + 1}/${yearsToWalk.length}] ${year}: `);
 
     await yearSelect.selectOption(year);
     await delay(DELAY);

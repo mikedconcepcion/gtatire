@@ -1,0 +1,58 @@
+# Cloudflare Pages redirects
+# Catch common e-commerce URL patterns that don't match our Astro routes
+# and forward them to the right destination. Avoids 404s when external links
+# or audit tools assume Shopify-style URLs.
+
+# Detail-page rewrites — every /vehicle/*, /wheels/{id}, /tires/{id} URL is
+# served by the same shell page; the React hydrator reads window.location
+# to pick the right product/vehicle. Status 200 = internal rewrite (URL
+# stays unchanged in the browser). This is what lets catalogue updates
+# ship via `git push` without a Cloudflare Pages rebuild — Cloudflare only
+# ever serves 3 shells regardless of how big the catalogue grows.
+# First-match wins, so these have to live above the Shopify catch-alls.
+/vehicle/*                  /vehicle/detail    200
+/wheels/*                   /wheels/detail     200
+/tires/*                    /tires/detail      200
+
+# Shopify "collections" → our category pages or smart search
+/collections/wheels         /wheels      301
+/collections/tires          /tires       301
+/collections/winter-tires   /winter-tires  301
+/collections/all-seasons    /all-season-tires  301
+/collections/all-season     /all-season-tires  301
+/collections/all            /search      301
+/collections/*              /search/?q=:splat  301
+
+# Shopify "pages" → our top-level routes
+/pages/contact              /contact     301
+/pages/about                /about       301
+/pages/privacy              /privacy     301
+/pages/terms                /terms       301
+/pages/shipping             /terms       301
+/pages/returns              /terms       301
+/pages/accessibility        /accessibility  301
+/pages/*                    /            301
+
+# Shopify product URLs → search by the slug
+/products/*                 /search/?q=:splat  301
+
+# Cart / checkout / account — not implemented (no online checkout yet).
+# Funnel these to the contact form so visitors can still inquire.
+# NB: /login itself is preserved (kept reachable by direct URL for the
+# distributor portal even though it's unlisted in public nav).
+/cart                       /contact     301
+/checkout                   /contact     301
+/account                    /contact     301
+/account/login              /contact     301
+/account/register           /contact     301
+/signup                     /contact     301
+/register                   /contact     301
+
+# WordPress / Wix legacy paths the prior site may have used
+/shop                       /            301
+/store                      /            301
+/category/*                 /search/?q=:splat  301
+/product/*                  /search/?q=:splat  301
+/index.php                  /            301
+/wp-admin/*                 /            301
+/wp-login.php               /            301
