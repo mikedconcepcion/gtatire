@@ -9,10 +9,18 @@
 # stays unchanged in the browser). This is what lets catalogue updates
 # ship via `git push` without a Cloudflare Pages rebuild — Cloudflare only
 # ever serves 3 shells regardless of how big the catalogue grows.
-# First-match wins, so these have to live above the Shopify catch-alls.
-/vehicle/*                  /vehicle/detail    200
-/wheels/*                   /wheels/detail     200
-/tires/*                    /tires/detail      200
+#
+# Targets MUST be index.html paths (not directories) — Cloudflare Pages
+# silently downgrades a 200-rewrite to a 308 redirect if the target is a
+# directory, which then re-matches the wildcard and loops.
+#
+# Listing pages get an explicit pass-through above the wildcard so the
+# wildcard doesn't swallow them.
+/wheels/                    /wheels/index.html          200
+/tires/                     /tires/index.html           200
+/vehicle/*                  /vehicle/detail/index.html  200
+/wheels/*                   /wheels/detail/index.html   200
+/tires/*                    /tires/detail/index.html    200
 
 # Shopify "collections" → our category pages or smart search
 /collections/wheels         /wheels      301
