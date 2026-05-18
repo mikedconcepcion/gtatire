@@ -16,11 +16,9 @@
 #
 # Listing pages get an explicit pass-through above the wildcard so the
 # wildcard doesn't swallow them.
-/wheels/                    /wheels/index.html          200
-/tires/                     /tires/index.html           200
-/vehicle/*                  /vehicle/detail/index.html  200
-/wheels/*                   /wheels/detail/index.html   200
-/tires/*                    /tires/detail/index.html    200
+/vehicle/*                  /vehicle/detail/    200
+/wheels/:id                 /wheels/detail/     200
+/tires/:id                  /tires/detail/      200
 
 # Shopify "collections" → our category pages or smart search
 /collections/wheels         /wheels      301
