@@ -20,7 +20,11 @@ name: Deploy to Cloudflare Pages
 
 on:
   push:
-    branches: [main]
+    # CF Pages production branch is `cloudflare-migration` (set in the
+    # Pages dashboard). `main` also triggers, in case the production
+    # branch is ever switched. Both push to CF as the cloudflare-migration
+    # branch in the wrangler step below.
+    branches: [cloudflare-migration, main]
   # Optional: lets you re-run a deploy from the Actions tab without a push.
   workflow_dispatch:
 
@@ -57,4 +61,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy webapp/dist --project-name=${{ secrets.CF_PAGES_PROJECT }} --branch=main
+          command: pages deploy webapp/dist --project-name=${{ secrets.CF_PAGES_PROJECT }} --branch=cloudflare-migration
