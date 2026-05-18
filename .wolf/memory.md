@@ -1113,3 +1113,38 @@
 | 07:41 | autonomous scrape complete: 3 suppliers + tire-fitment for 2012-2027 | data/, webapp/public/data/ | 6885 products, 7541 vehicles, 17 years (was 2089/8) | ~800 |
 | 07:41 | Session end: 7 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 10 reads | ~5344 tok |
 | 07:41 | Session end: 7 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 10 reads | ~5344 tok |
+| 10:12 | Session end: 7 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 10 reads | ~5344 tok |
+| 10:13 | Session end: 7 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 11 reads | ~5344 tok |
+| 10:14 | Session end: 7 writes across 5 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 11 reads | ~5344 tok |
+| 10:23 | Created webapp/src/lib/cdn.ts | — | ~193 |
+| 10:23 | Edited webapp/src/components/CompatibleProducts.tsx | added 1 import(s) | ~24 |
+| 10:23 | Edited webapp/src/components/CompatibleProducts.tsx | inline fix | ~12 |
+| 10:23 | Edited webapp/src/components/search/SmartSearchResults.tsx | 4→4 lines | ~79 |
+| 10:23 | Edited webapp/src/components/search/SmartSearchResults.tsx | added 1 import(s) | ~29 |
+| 10:23 | Edited webapp/src/components/search/VehicleSearch.tsx | 4→4 lines | ~50 |
+| 10:24 | Edited webapp/src/components/search/VehicleSearch.tsx | added 1 import(s) | ~24 |
+| 10:24 | Edited webapp/src/components/search/HeroSearch.tsx | 4→4 lines | ~38 |
+| 10:24 | Edited webapp/src/components/search/VehicleDropdowns.tsx | added 1 import(s) | ~27 |
+| 10:24 | Edited webapp/src/components/search/VehicleDropdowns.tsx | 2→2 lines | ~43 |
+| 10:24 | Edited webapp/src/data/products.ts | added 1 import(s) | ~27 |
+| 10:24 | Edited webapp/src/data/products.ts | modified loadVehicles() | ~144 |
+| 10:27 | Edited scrapers/build-internal-db.js | expanded (+7 lines) | ~197 |
+| 10:28 | Edited scrapers/build-internal-db.js | modified cdn() | ~146 |
+| 10:28 | Edited scrapers/build-internal-db.js | 2→2 lines | ~42 |
+| 10:28 | Edited scrapers/build-internal-db.js | modified cdn() | ~40 |
+| 10:28 | Edited scrapers/build-internal-db.js | modified push() | ~85 |
+| 10:28 | Edited scrapers/build-internal-db.js | inline fix | ~22 |
+| 10:28 | Edited scrapers/build-internal-db.js | modified for() | ~208 |
+| 10:29 | Created webapp/src/components/ProductCard.tsx | — | ~1397 |
+| 10:29 | Created webapp/src/components/detail/WheelDetailPage.tsx | — | ~1451 |
+| 10:29 | Created webapp/src/components/detail/TireDetailPage.tsx | — | ~1056 |
+| 10:30 | Created webapp/src/components/detail/VehicleDetailPage.tsx | — | ~1918 |
+| 10:30 | Created webapp/src/pages/vehicle/detail.astro | — | ~59 |
+| 10:30 | Created webapp/src/pages/wheels/detail.astro | — | ~56 |
+| 10:30 | Created webapp/src/pages/tires/detail.astro | — | ~55 |
+| 10:30 | Edited webapp/public/_redirects | expanded (+11 lines) | ~236 |
+| 10:31 | Created webapp/scripts/strip-cdn-assets.mjs | — | ~475 |
+| 10:32 | Edited webapp/package.json | inline fix | ~19 |
+| 10:39 | Created webapp/src/lib/cdn.ts | — | ~276 |
+
+| 10:41 | CDN refactor: detail pages client-hydrated, images+JSON via jsDelivr | webapp/, scrapers/build-internal-db.js | dist/ 25k->67 files, 2 commits, pushed | ~1200 |

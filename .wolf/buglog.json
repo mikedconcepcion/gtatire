@@ -2625,6 +2625,54 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-17T21:42:26.355Z"
+    },
+    {
+      "id": "bug-165",
+      "timestamp": "2026-05-18T02:23:43.566Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/src/components/CompatibleProducts.tsx",
+      "root_cause": "Had `/data/cross-ref.json`",
+      "fix": "Changed to '/data/cross-ref.json'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-18T02:23:43.566Z"
+    },
+    {
+      "id": "bug-166",
+      "timestamp": "2026-05-18T02:30:59.603Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "webapp/public/_redirects",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "unknown"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-18T02:30:59.603Z"
+    },
+    {
+      "id": "bug-167",
+      "timestamp": "2026-05-18T02:32:00.870Z",
+      "error_message": "Incorrect value in code",
+      "file": "webapp/package.json",
+      "root_cause": "Had \"astro build\"",
+      "fix": "Changed to \"astro build && node scripts/strip-cdn-assets.mjs\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "json"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-18T02:32:00.870Z"
     }
   ]
 }

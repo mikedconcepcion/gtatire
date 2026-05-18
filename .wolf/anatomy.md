@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-17T21:42:26.333Z
-> Files: 30 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-18T02:39:28.622Z
+> Files: 47 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -52,6 +52,7 @@
 
 ## scrapers/
 
+- `build-internal-db.js` — Build internal GTA database from raw supplier data. (~8174 tok)
 - `probe-click-diag.js` — Diagnostic: for ONE failing vehicle (2020 Acura ILX), navigate to the (~971 tok)
 - `probe-fastco-api.js` — Probe fastco's REST API endpoints with our logged-in session cookies. (~602 tok)
 - `probe-fastco-picker.js` — Probe: open fastco's vehicle picker page, dump the dropdown structure (~894 tok)
@@ -70,39 +71,66 @@
 
 ## webapp/
 
+- `package.json` — Node.js package manifest (~180 tok)
 
 ## webapp/public/
 
+- `_redirects` — Cloudflare Pages redirects (~736 tok)
 
 ## webapp/public/data/
 
 - `vehicle-images.json` (~1 tok)
 
+## webapp/scripts/
+
+- `strip-cdn-assets.mjs` — Strip GitHub-CDN-served assets from dist/ after `astro build` so Cloudflare (~475 tok)
+
 ## webapp/src/components/
 
+- `CompatibleProducts.tsx` — CompatibleProducts (~1711 tok)
 - `ProductCard.astro` — Astro: ProductCard (~1302 tok)
+- `ProductCard.tsx` — TSX version of ProductCard.astro for use inside other React components (~1397 tok)
 - `VehicleResults.tsx` — isInStock (~3236 tok)
 
 ## webapp/src/components/auth/
 
 - `PriceDisplay.tsx` — PriceDisplay (~494 tok)
 
+## webapp/src/components/detail/
+
+- `TireDetailPage.tsx` — Mirrors WheelDetailPage for /tires/{id} — see that file for the rationale (~1056 tok)
+- `VehicleDetailPage.tsx` — Hydrator for /vehicle/{year}/{make}/{model}. Replaces the previously (~1918 tok)
+- `WheelDetailPage.tsx` — Reads /wheels/{id} from window.location, fetches products + fitment from the (~1451 tok)
+
 ## webapp/src/components/search/
 
-- `SmartSearchResults.tsx` — StockBadge (~12302 tok)
+- `HeroSearch.tsx` — POPULAR — renders form (~2127 tok)
+- `SmartSearchResults.tsx` — StockBadge (~12322 tok)
+- `VehicleDropdowns.tsx` — VehicleDropdowns (~1512 tok)
 - `VehiclePackageBuilder.tsx` — MAKE_MAP (~9529 tok)
+- `VehicleSearch.tsx` — POPULAR_VEHICLES — renders form (~1984 tok)
 
 ## webapp/src/data/
 
+- `products.ts` — Product types and data loading from static JSON files (~695 tok)
 
 ## webapp/src/layouts/
 
+
+## webapp/src/lib/
+
+- `cdn.ts` — CDN base for static catalogue assets (images, large JSON). (~276 tok)
 
 ## webapp/src/pages/
 
 
 ## webapp/src/pages/tires/
 
+- `detail.astro` — Astro: detail (~55 tok)
+
+## webapp/src/pages/vehicle/
+
+- `detail.astro` — Astro: detail (~59 tok)
 
 ## webapp/src/pages/vehicle/[year]/[make]/
 
@@ -110,6 +138,7 @@
 
 ## webapp/src/pages/wheels/
 
+- `detail.astro` — Astro: detail (~56 tok)
 
 ## webapp/src/styles/
 
