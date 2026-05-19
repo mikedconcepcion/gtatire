@@ -46,7 +46,7 @@ export default function TireDetailPage() {
     .slice(0, 5);
 
   const specs = [
-    { label: 'SKU', value: product.sku },
+    { label: 'SKU', value: product.productNo || product.sku },
     { label: 'Brand', value: product.brand || null },
     { label: 'Model', value: product.name || null },
     { label: 'Type', value: product.wheelType },
@@ -61,7 +61,7 @@ export default function TireDetailPage() {
         <span>/</span>
         <a href="/tires" className="hover:text-dark-300">Tires</a>
         <span>/</span>
-        <span className="text-dark-300">{product.brand} {product.name}</span>
+        <span className="text-dark-300">{product.productNo || `${product.brand} ${product.name}`}</span>
       </nav>
 
       <ProductDetail product={product} vehicles={[]} specs={specs as any} />

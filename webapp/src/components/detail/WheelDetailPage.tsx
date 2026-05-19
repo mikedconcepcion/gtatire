@@ -21,17 +21,25 @@ export default function WheelDetailPage() {
     const id = match ? decodeURIComponent(match[1]) : '';
     if (!id) { setLoading(false); return; }
 
-    Promise.all([
-      fetch(cdnUrl('/data/products.json')).then(r => r.json()),
-      fetch(cdnUrl('/data/fitment.json')).then(r => r.json()),
-    ]).then(([prods, fit]) => {
-      setAllProducts(prods);
-      setFitment(fit);
-      const p = prods.find((x: any) => x.id === id);
-      setProduct(p || null);
-      if (p) document.title = `${p.name || p.description} — JSDC Wheels`;
-      setLoading(false);
-    }).catch(() => setLoading(false));
+    // Render the page as soon as products.json is ready (~4MB). fitment.json
+    // is 24MB and only used for the distributor-only vehicle-fitment dropdown
+    // (rendered conditionally on `isDistributor` in ProductDetail.tsx). Don't
+    // block the main detail render on it.
+    fetch(cdnUrl('/data/products.json'))
+      .then(r => r.json())
+      .then((prods) => {
+        setAllProducts(prods);
+        const p = prods.find((x: any) => x.id === id);
+        setProduct(p || null);
+        if (p) document.title = `${p.name || p.description} — JSDC Wheels`;
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+
+    fetch(cdnUrl('/data/fitment.json'))
+      .then(r => r.json())
+      .then(setFitment)
+      .catch(() => {/* fitment is optional for public view */});
   }, []);
 
   if (loading) {

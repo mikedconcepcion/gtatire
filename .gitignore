@@ -62,3 +62,5 @@ _wheel-tier2-pov/
 webapp/public/data/vehicle-images.json
 webapp/public/images/vehicles/
 scrapers/.fastco-profile/
+data/rwc-msrp.json
+data/rwc-msrp-failures.json

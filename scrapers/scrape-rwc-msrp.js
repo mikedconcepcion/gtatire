@@ -1,6 +1,11 @@
 // Walk every RWC product's detail page on gpibtob.com to capture the real
-// MSRP (lives in the .show-price element above the dealer cost). The bulk
-// listing scrape only catches dealer cost; MSRP is detail-page-only.
+// MSRP (lives in the `.price-section .price-old` element, visible at the
+// top of each detail page). The bulk listing scrape only catches the
+// dealer cost.
+//
+// Strategy: log in once via Playwright (gets the auth cookies), then issue
+// raw HTTP fetches per detail URL via `page.evaluate`. ~50ms per request
+// vs ~1.5min per full page.goto navigation — about 30-100× faster.
 //
 // Saves to data/rwc-msrp.json keyed by SKU so the build script can fold it
 // in without re-scraping. Resumable — skips SKUs already captured.
@@ -15,7 +20,8 @@ const RAW_PATH = path.join(DATA_DIR, 'rwc-wheels-raw.json');
 const OUT_PATH = path.join(DATA_DIR, 'rwc-msrp.json');
 const FAIL_PATH = path.join(DATA_DIR, 'rwc-msrp-failures.json');
 
-const DELAY_MS = 250; // polite pacing between requests
+const CONCURRENCY = 8;     // simultaneous fetches per worker
+const PAUSE_BETWEEN_BATCHES_MS = 50;
 
 function loadJSON(p, fallback = null) {
   try { return JSON.parse(fs.readFileSync(p, 'utf-8')); } catch { return fallback; }
@@ -40,67 +46,68 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
   const page = await browser.newPage();
 
   try {
-    console.log('Logging in...');
+    console.log('Logging in (one-shot auth)...');
     await page.goto(config.rwc.url, { waitUntil: 'networkidle', timeout: 60000 });
     await page.fill('input[type="email"], input[name="email"], input#email, input[name="customer[email]"]', config.rwc.username);
     await page.fill('input[type="password"], input[name="password"]', config.rwc.password);
     await page.locator('button:has-text("Sign"), button:has-text("Log"), input[type="submit"]').first().click();
     await page.waitForLoadState('networkidle');
-    console.log('Logged in. Walking detail pages...');
+    console.log('Logged in. Streaming detail-page fetches...');
 
-    let i = 0;
     const t0 = Date.now();
-    for (const p of todo) {
-      i++;
-      try {
-        await page.goto(p.url, { waitUntil: 'domcontentloaded', timeout: 45000 });
-        // The price block has two $ amounts: MSRP (visible) and dealer cost
-        // (hidden behind "Click to see cost"). Both render as plain $X.XX.
-        // We want the FIRST one (the larger, retail price).
-        const prices = await page.evaluate(() => {
-          const out = [];
-          // Look for the price block container, which has both .show-price and .price-product
-          document.querySelectorAll('.price, .show-price, .price-product').forEach(el => {
-            const text = (el.textContent || '').trim();
-            const m = text.match(/\$([0-9]+(?:\.[0-9]+)?)/);
-            if (m) out.push({ amount: parseFloat(m[1]), cls: el.className });
-          });
-          return out;
-        });
+    let done = 0;
 
-        // MSRP = the visible price (not the hidden dealer cost). On gpibtob.com,
-        // the .show-price div has the visible $ amount; .price-product is hidden.
-        // Pick the maximum since MSRP > cost.
-        const amounts = prices.map(x => x.amount).filter(n => n > 0);
-        const msrp = amounts.length ? Math.max(...amounts) : 0;
+    // Process in batches of CONCURRENCY. Each batch's fetches share the same
+    // browser context (cookies + session). page.evaluate runs them in-browser
+    // so the supplier sees us as the same authenticated user.
+    for (let i = 0; i < todo.length; i += CONCURRENCY) {
+      const batch = todo.slice(i, i + CONCURRENCY);
 
-        if (msrp > 0) {
-          existing[p.sku] = msrp;
-          if (i % 25 === 0) {
-            saveJSON(OUT_PATH, existing);
-            const rate = (i / ((Date.now() - t0) / 1000)).toFixed(2);
-            const eta = ((todo.length - i) / rate).toFixed(0);
-            process.stdout.write(`\n[${i}/${todo.length}] ${rate}/s — ETA ${eta}s — last MSRP $${msrp}`);
-          } else {
-            process.stdout.write('.');
+      const results = await page.evaluate(async (urls) => {
+        async function fetchOne(u) {
+          try {
+            const r = await fetch(u, { credentials: 'include' });
+            if (!r.ok) return { ok: false, status: r.status };
+            const html = await r.text();
+            // .price-section .price-old has the MSRP. Match by class attr.
+            const m = html.match(/class=["'][^"']*\bprice-old\b[^"']*["'][^>]*>\s*\$?\s*([\d,]+(?:\.\d+)?)/);
+            if (!m) return { ok: false, status: 'no-match' };
+            const msrp = parseFloat(m[1].replace(/,/g, ''));
+            return { ok: true, msrp };
+          } catch (err) {
+            return { ok: false, status: err.message.slice(0, 80) };
           }
-        } else {
-          failures[p.sku] = { url: p.url, reason: 'no $ in price block', amounts };
-          process.stdout.write('?');
         }
-      } catch (err) {
-        failures[p.sku] = { url: p.url, reason: err.message.slice(0, 100) };
-        process.stdout.write('x');
+        return Promise.all(urls.map(fetchOne));
+      }, batch.map(p => p.url));
+
+      results.forEach((res, idx) => {
+        const sku = batch[idx].sku;
+        if (res.ok && res.msrp > 0) {
+          existing[sku] = res.msrp;
+        } else {
+          failures[sku] = { url: batch[idx].url, reason: res.status };
+        }
+      });
+      done += batch.length;
+
+      if (done % 80 === 0 || done >= todo.length) {
+        saveJSON(OUT_PATH, existing);
+        saveJSON(FAIL_PATH, failures);
+        const elapsed = (Date.now() - t0) / 1000;
+        const rate = (done / elapsed).toFixed(2);
+        const eta = ((todo.length - done) / rate).toFixed(0);
+        console.log(`[${done}/${todo.length}] ${rate}/s — ETA ${eta}s — captured ${Object.keys(existing).length}, failed ${Object.keys(failures).length}`);
       }
-      await sleep(DELAY_MS);
+      await sleep(PAUSE_BETWEEN_BATCHES_MS);
     }
 
     saveJSON(OUT_PATH, existing);
     saveJSON(FAIL_PATH, failures);
-    console.log(`\n\nDone. Captured: ${Object.keys(existing).length}, Failures: ${Object.keys(failures).length}`);
-    console.log(`Wrote ${OUT_PATH}`);
+    console.log(`\nDone. Captured: ${Object.keys(existing).length}, Failures: ${Object.keys(failures).length}`);
   } catch (err) {
-    saveJSON(OUT_PATH, existing); // partial save on crash
+    saveJSON(OUT_PATH, existing);
+    saveJSON(FAIL_PATH, failures);
     console.log('FATAL:', err.message);
   } finally {
     await browser.close();

@@ -390,8 +390,13 @@ function buildDatabase() {
 
   // ─── RWC ───
   const rwcRaw = loadJSON('rwc-wheels-raw.json');
+  // Real MSRPs from detail-page scrape (scrape-rwc-msrp.js). Keyed by sku.
+  // When present, drives both the public price calc AND the compareAt
+  // strikethrough. Without it we fall back to a cost*1.6 estimate for the
+  // pricing math but leave compareAt empty (no fake strikethrough).
+  const rwcMsrp = loadJSON('rwc-msrp.json') || {};
   if (rwcRaw && Array.isArray(rwcRaw)) {
-    console.log(`RWC: ${rwcRaw.length} raw entries`);
+    console.log(`RWC: ${rwcRaw.length} raw entries (real MSRP: ${Object.keys(rwcMsrp).length})`);
     let count = 0;
 
     for (const w of rwcRaw) {
@@ -399,14 +404,11 @@ function buildDatabase() {
       const gtaId = productIdFor('rwc', w.sku);
       count++;
 
-      // RWC supplier exposes dealer cost only — no MSRP. We use a working
-      // estMsrp to drive the publicPrice calculation (cost * 1.6 * 0.9 ≈
-      // 1.44× markup) but do NOT surface it as a compareAt strikethrough on
-      // the product card. The invented number isn't honest enough to show as
-      // a "was $X" reference.
       const dc = w.cost || 0;
+      const realMsrp = rwcMsrp[w.sku] || 0;
       const estMsrp = dc > 0 ? Math.round(dc * 1.6 * 100) / 100 : 0;
-      const pricing = calcPricing(estMsrp, dc);
+      const msrpForCalc = realMsrp > 0 ? realMsrp : estMsrp;
+      const pricing = calcPricing(msrpForCalc, dc);
 
       // Copy image
       const imgFile = w.image ? w.image.split('/').pop() : '';
@@ -456,10 +458,11 @@ function buildDatabase() {
         priceNum: pricing.publicPrice,
         distPrice: pricing.distPrice > 0 ? `$${pricing.distPrice.toFixed(2)}` : '',
         distPriceNum: pricing.distPrice,
-        // No compareAt for RWC — supplier exposes no MSRP, so we don't fake
-        // a strikethrough price.
-        compareAt: '',
-        compareAtNum: 0,
+        // compareAt shows ONLY when we have a real scraped MSRP for this
+        // product. No fake strikethroughs (cost*1.6 estimate is for pricing
+        // math only, never displayed).
+        compareAt: realMsrp > 0 ? `$${realMsrp.toFixed(2)}` : '',
+        compareAtNum: realMsrp > 0 ? realMsrp : 0,
         // Stock comes from the listing page (`.rating span`) — normalized
         // to In Stock / Out of Stock / Contact for stock. Captured by
         // update-rwc-stock.js.
