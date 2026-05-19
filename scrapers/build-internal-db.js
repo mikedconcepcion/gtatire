@@ -281,6 +281,7 @@ function buildDatabase() {
       products.push({
         id: gtaId,
         sku: gtaId,
+        productNo: supplierSku,
         category: 'wheel',
         brand: alltireBrand,
         wheelType: raw.wheelType || '',
@@ -359,6 +360,7 @@ function buildDatabase() {
       products.push({
         id: gtaId,
         sku: gtaId,
+        productNo: w.SKU,
         category: 'wheel',
         brand: normalizeBrand(w.BRAND || 'Superspeed'),
         wheelType: 'Alloy Wheel',
@@ -443,6 +445,7 @@ function buildDatabase() {
       products.push({
         id: gtaId,
         sku: gtaId,
+        productNo: w.sku,
         category: 'wheel',
         brand: normalizeBrand('RWC'),
         wheelType: 'Alloy Wheel',
@@ -524,6 +527,7 @@ function buildDatabase() {
       products.push({
         id: gtaId,
         sku: gtaId,
+        productNo: t.productNo,
         category: 'tire',
         brand: normalizeBrand(t.maker || ''),
         wheelType: t.type || 'All Season',
