@@ -148,9 +148,12 @@ function parseWheelDescription(desc) {
   return specs;
 }
 
-// Pricing: retail = MSRP - 10%, wholesale = DC+20% (capped below retail)
+// Pricing: public price = MSRP (no auto-discount). The 10% discount is
+// granted manually via referral code at the inquiry stage, so the storefront
+// shows the honest "list" price without a fake strikethrough. Distributors
+// still see their wholesale price via PriceDisplay (auth-gated).
 function calcPricing(msrp, dealerCost) {
-  const publicPrice = msrp > 0 ? Math.round(msrp * 0.90 * 100) / 100 : 0;
+  const publicPrice = msrp > 0 ? Math.round(msrp * 100) / 100 : 0;
   const dcBased = dealerCost > 0 ? Math.round(dealerCost * 1.20 * 100) / 100 : 0;
   const msrpBased = msrp > 0 ? Math.round(msrp * 0.60 * 100) / 100 : 0;
   const distPrice = dcBased > 0 && dcBased < publicPrice ? dcBased : msrpBased;
@@ -292,8 +295,8 @@ function buildDatabase() {
         priceNum: pricing.publicPrice,
         distPrice: pricing.distPrice > 0 ? `$${pricing.distPrice.toFixed(2)}` : '',
         distPriceNum: pricing.distPrice,
-        compareAt: pricing.msrp > 0 ? `$${pricing.msrp.toFixed(2)}` : '',
-        compareAtNum: pricing.msrp,
+        compareAt: '',
+        compareAtNum: 0,
         stock: raw.stock || '',
         hubCentric: raw.hubCentric || false,
         rimDiameter: specs.rimDiameter || null,
@@ -372,8 +375,8 @@ function buildDatabase() {
         priceNum: pricing.publicPrice,
         distPrice: pricing.distPrice > 0 ? `$${pricing.distPrice.toFixed(2)}` : '',
         distPriceNum: pricing.distPrice,
-        compareAt: pricing.msrp > 0 ? `$${pricing.msrp.toFixed(2)}` : '',
-        compareAtNum: pricing.msrp,
+        compareAt: '',
+        compareAtNum: 0,
         stock: stockText,
         hubCentric: false,
         rimDiameter: parseInt(w.DIAMETER) || null,
@@ -461,8 +464,8 @@ function buildDatabase() {
         // compareAt shows ONLY when we have a real scraped MSRP for this
         // product. No fake strikethroughs (cost*1.6 estimate is for pricing
         // math only, never displayed).
-        compareAt: realMsrp > 0 ? `$${realMsrp.toFixed(2)}` : '',
-        compareAtNum: realMsrp > 0 ? realMsrp : 0,
+        compareAt: '',
+        compareAtNum: 0,
         // Stock comes from the listing page (`.rating span`) — normalized
         // to In Stock / Out of Stock / Contact for stock. Captured by
         // update-rwc-stock.js.
@@ -541,8 +544,8 @@ function buildDatabase() {
         priceNum: pricing.publicPrice,
         distPrice: pricing.distPrice > 0 ? `$${pricing.distPrice.toFixed(2)}` : '',
         distPriceNum: pricing.distPrice,
-        compareAt: pricing.msrp > 0 ? `$${pricing.msrp.toFixed(2)}` : '',
-        compareAtNum: pricing.msrp,
+        compareAt: '',
+        compareAtNum: 0,
         stock: t.stock || '',
         tireSize: t.size || '',
         tireWidth,
