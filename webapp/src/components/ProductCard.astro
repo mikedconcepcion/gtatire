@@ -28,10 +28,20 @@ const typeClass = typeColors[type] || 'bg-dark-700/50 text-dark-300 border-dark-
 
 const stockStr = String(stock || '').trim();
 const stockNum = parseInt(stockStr, 10);
-const outOfStock = /out of stock/i.test(stockStr) || /^n\/?a$/i.test(stockStr) || /discontinu/i.test(stockStr);
-const lowStock = !outOfStock && !isNaN(stockNum) && stockNum >= 1 && stockNum < 10;
-const stockLabel = outOfStock ? 'Out of Stock' : lowStock ? `${stockNum} left` : 'In Stock';
-const stockColor = outOfStock ? 'text-red-400' : lowStock ? 'text-amber-400' : 'text-green-400';
+const outOfStock = /out of stock|no stock/i.test(stockStr) || /^n\/?a$/i.test(stockStr) || /discontinu/i.test(stockStr);
+const contactStock = !outOfStock && /contact|call/i.test(stockStr);
+const backorder = !outOfStock && !contactStock && /backorder|special order/i.test(stockStr);
+const lowStock = !outOfStock && !contactStock && !backorder && !isNaN(stockNum) && stockNum >= 1 && stockNum < 10;
+const stockLabel = outOfStock ? 'Out of Stock'
+  : contactStock ? 'Contact for stock'
+  : backorder ? stockStr
+  : lowStock ? `${stockNum} left`
+  : 'In Stock';
+const stockColor = outOfStock ? 'text-red-400'
+  : contactStock ? 'text-amber-400'
+  : backorder ? 'text-amber-400'
+  : lowStock ? 'text-amber-400'
+  : 'text-green-400';
 
 const showImage = image && !noImage;
 const isTire = category === 'tire';

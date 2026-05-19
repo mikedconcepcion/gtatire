@@ -72,8 +72,10 @@ const IMG_DIR = path.join(DATA_DIR, 'images', 'rwc');
         const costText = costEl?.textContent?.trim() || '';
         const cost = parseFloat(costText.replace(/[^0-9.]/g, '')) || 0;
 
-        // Stock status
-        const stockEl = thumb.querySelector('.stock');
+        // Stock status — gpibtob.com renders it as <span class="green"> /
+        // <span class="red"> inside <div class="rating">. The original
+        // `.stock` selector matched nothing (left all 964 products blank).
+        const stockEl = thumb.querySelector('.rating span');
         const stock = stockEl?.textContent?.trim() || '';
 
         // SKU — in <span class="pull-right"> inside .cart-button

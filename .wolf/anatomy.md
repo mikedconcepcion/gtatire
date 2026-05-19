@@ -1,11 +1,11 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-18T04:15:01.146Z
-> Files: 56 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-19T04:07:47.105Z
+> Files: 64 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
-- `.gitignore` — Git ignore rules (~358 tok)
+- `.gitignore` — Git ignore rules (~390 tok)
 
 ## .claude/
 
@@ -19,6 +19,8 @@
 
 ## C:/Users/miked/.claude/projects/E--James-gtatire/memory/
 
+- `feedback_no_whatsapp.md` (~234 tok)
+- `MEMORY.md` — Memory Index (~249 tok)
 
 ## _wheel-tier2-pov/
 
@@ -53,22 +55,31 @@
 
 ## scrapers/
 
-- `build-internal-db.js` — Build internal GTA database from raw supplier data. (~8480 tok)
+- `build-internal-db.js` — Build internal GTA database from raw supplier data. (~10310 tok)
+- `probe-alltire-detail.js` — Probe: log in to Alltire, navigate to a known alloy-wheel search result, (~1120 tok)
 - `probe-click-diag.js` — Diagnostic: for ONE failing vehicle (2020 Acura ILX), navigate to the (~971 tok)
 - `probe-fastco-api.js` — Probe fastco's REST API endpoints with our logged-in session cookies. (~602 tok)
 - `probe-fastco-picker.js` — Probe: open fastco's vehicle picker page, dump the dropdown structure (~894 tok)
 - `probe-fastco-url-pattern.js` — Probe: try fastco URL variants WITHOUT submodel to see how the site (~789 tok)
+- `probe-gpibtob-brands.js` — Probe: enumerate brands/manufacturers on gpibtob.com. Saves the full list (~637 tok)
+- `probe-gpibtob-catalog.js` — Probe: gpibtob.com global catalog beyond just RWC-branded items. (~1104 tok)
 - `probe-row-icon.js` — Probe: after navigating to a working wheel-search URL, dump the first (~853 tok)
+- `probe-rwc-stock.js` — Probe: log in to gpibtob.com, look at both (a) one product on the listing (~1314 tok)
 - `recon-fastco-images.js` — Recon: open fastco, you log in + pick dealer + navigate to the (~774 tok)
 - `recon-fastco-xhr.js` — Recon: capture every XHR/fetch/JSON call during a configurator session. (~879 tok)
 - `scrape-alltire-wheels.js` — fs: delay, save, loadIfExists, scrapeWheelTree, scrapeWheelProducts (~3061 tok)
 - `scrape-iconfig-one.js` — Proof-of-one: auto-walk fastco for a single YMM and capture the (~1789 tok)
 - `scrape-iconfig-vehicles.js` — Bulk scraper: for each YMM in webapp/public/data/vehicles.json, fetch (~4019 tok)
 - `scrape-rwc-fitment.js` — RWC fitment scrape — fetch year/make/model tree from the LIVE portal (~1837 tok)
-- `scrape-rwc.js` — Declares config (~3049 tok)
+- `scrape-rwc.js` — Declares config (~3107 tok)
 - `scrape-superspeed-fitment.js` — Build Superspeed wheel fitment via AAIA. Walks AAIA's tree (~2164 tok)
 - `scrape-tire-fitment.js` — config: save, loadIfExists (~1426 tok)
 - `scrape-wheelsize-vehicles.js` — Scrape vehicle reference photos + fitment data from wheel-size.com. (~2810 tok)
+- `update-rwc-stock.js` — One-shot: log in to gpibtob.com, fetch the full RWC listing once (~1098 tok)
+
+## scrapers/lib/
+
+- `db.js` — Local SQLite catalog. Source of truth for products + fitment, populated (~2483 tok)
 
 ## webapp/
 
@@ -89,8 +100,8 @@
 ## webapp/src/components/
 
 - `CompatibleProducts.tsx` — CompatibleProducts (~1711 tok)
-- `Header.astro` — Astro: Header (~5296 tok)
-- `ProductCard.astro` — Astro: ProductCard (~1302 tok)
+- `Header.astro` — Astro: Header (~4543 tok)
+- `ProductCard.astro` — Astro: ProductCard (~1393 tok)
 - `ProductCard.tsx` — TSX version of ProductCard.astro for use inside other React components (~1397 tok)
 - `VehicleResults.tsx` — isInStock (~3236 tok)
 
@@ -120,7 +131,7 @@
 
 ## webapp/src/layouts/
 
-- `Layout.astro` — Astro: Layout (~4280 tok)
+- `Layout.astro` — Astro: Layout (~3806 tok)
 
 ## webapp/src/lib/
 

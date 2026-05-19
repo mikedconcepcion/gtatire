@@ -21,6 +21,12 @@ data/aaia-chassis-cache.json
 data/images/
 data/gta-products.json
 data/gta-sku-map.json
+data/gta.sqlite
+data/gta.sqlite-shm
+data/gta.sqlite-wal
+data/probe-*.log
+data/probe-*.json
+scrapers/probe-alltire-*.png
 
 # Scraper probe/recon artifacts (transient debugging outputs)
 scrapers/rwc-probe-output.html

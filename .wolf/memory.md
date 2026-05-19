@@ -1194,3 +1194,67 @@
 | 12:15 | Edited webapp/src/pages/tires/[id].astro | 8→10 lines | ~152 |
 
 | 12:23 | Shipped P0 audit fixes: per-page SEO chrome, brand normalize, WhatsApp FAB | webapp/, scrapers/ | sitemap 28->14450, 34 tire brands, 3 wa.me surfaces | ~2000 |
+| 12:23 | Session end: 67 writes across 30 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 29 reads | ~50078 tok |
+| 14:25 | Edited webapp/src/components/Header.astro | removed 5 lines | ~66 |
+| 14:26 | Edited webapp/src/components/Header.astro | removed 6 lines | ~39 |
+| 14:26 | Edited webapp/src/layouts/Layout.astro | removed 16 lines | ~18 |
+| 14:26 | Created C:/Users/miked/.claude/projects/E--James-gtatire/memory/feedback_no_whatsapp.md | — | ~228 |
+| 14:26 | Edited C:/Users/miked/.claude/projects/E--James-gtatire/memory/MEMORY.md | 1→2 lines | ~65 |
+| 14:29 | Session end: 72 writes across 32 files (scrape-alltire-wheels.js, scrape-rwc-fitment.js, scrape-superspeed-fitment.js, scrape-tire-fitment.js, scrape-rwc.js) | 30 reads | ~50525 tok |
+
+## Session: 2026-05-19 10:51
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 11:02 | Created scrapers/probe-alltire-detail.js | — | ~1130 |
+| 11:03 | Edited scrapers/build-internal-db.js | added 1 condition(s) | ~314 |
+| 11:04 | Edited scrapers/build-internal-db.js | nextSku() → productIdFor() | ~96 |
+| 11:04 | Edited scrapers/build-internal-db.js | nextSku() → productIdFor() | ~38 |
+| 11:04 | Edited scrapers/probe-alltire-detail.js | 5→5 lines | ~88 |
+| 11:04 | Edited scrapers/build-internal-db.js | nextSku() → productIdFor() | ~35 |
+| 11:04 | Edited scrapers/build-internal-db.js | nextSku() → productIdFor() | ~45 |
+| 11:05 | Edited scrapers/build-internal-db.js | "Products: ${products.leng" → "Products: ${products.leng" | ~23 |
+| 11:06 | Edited scrapers/build-internal-db.js | modified normalizeBrand() | ~215 |
+| 11:07 | Created scrapers/lib/db.js | — | ~2483 |
+| 11:07 | Edited scrapers/build-internal-db.js | 4→5 lines | ~44 |
+| 11:08 | Edited scrapers/build-internal-db.js | added 1 condition(s) | ~405 |
+| 11:08 | Edited .gitignore | 2→6 lines | ~35 |
+| 11:14 | Edited scrapers/build-internal-db.js | modified for() | ~254 |
+| 11:14 | Edited scrapers/build-internal-db.js | modified for() | ~78 |
+| 11:17 | Edited scrapers/build-internal-db.js | modified parseWheelDescription() | ~163 |
+| 11:17 | Edited scrapers/build-internal-db.js | modified normalizeBrand() | ~230 |
+| 11:28 | Session end: 17 writes across 4 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore) | 11 reads | ~23759 tok |
+| 11:33 | Session end: 17 writes across 4 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore) | 11 reads | ~23759 tok |
+| 11:33 | Edited scrapers/build-internal-db.js | 5→1 lines | ~19 |
+| 11:34 | Edited scrapers/build-internal-db.js | added 7 condition(s) | ~367 |
+| 11:34 | Edited scrapers/build-internal-db.js | 3→8 lines | ~138 |
+| 11:34 | Edited scrapers/build-internal-db.js | modified cdn() | ~392 |
+| 11:35 | Created scrapers/probe-rwc-stock.js | — | ~1314 |
+| 11:36 | Created scrapers/probe-gpibtob-brands.js | — | ~637 |
+| 11:36 | Edited scrapers/scrape-rwc.js | 3→5 lines | ~98 |
+| 11:37 | Created scrapers/update-rwc-stock.js | — | ~1098 |
+| 11:38 | Created scrapers/probe-gpibtob-catalog.js | — | ~1104 |
+| 11:39 | Edited scrapers/build-internal-db.js | added 3 condition(s) | ~226 |
+| 11:39 | Edited scrapers/build-internal-db.js | 4→4 lines | ~62 |
+| 11:39 | Edited webapp/src/components/ProductCard.astro | expanded (+10 lines) | ~217 |
+
+## 2026-05-19 — RWC + Superspeed sweep
+
+| 11:40 | Audited RWC and Superspeed catalogs. Found: RWC has ALL 964 products as one brand (correct — supplier is RWC-exclusive); Superspeed has 6 real brand buckets (clean). Stock data for RWC was missing (wrong selector). Superspeed stock had production-batch codes leaking into customer-facing labels. | data/rwc-wheels-raw.json data/superspeed-wheels-raw.json | issues identified | ~5k |
+| 11:40 | Normalized Superspeed status labels: 20+ In Stock(386), Backorder(96), Special Order(60), small in-stock counts, Backorder (mm-dd)(35 across 2 dates), Discontinued(7). Was leaking 'Phase-Out'/'Discontinue'/'80 | 05-15 ON' batch codes. | scrapers/build-internal-db.js | clean labels | ~1k |
+| 11:40 | Dropped fake RWC compareAt MSRP (was cost*1.6 fabrication). No more misleading strikethrough on RWC cards. compareAt='' for all 964. | scrapers/build-internal-db.js | honest pricing | ~1k |
+| 11:40 | Stripped 'RWC ' prefix from RWC product names. 703 of 964 were showing 'RWC AC01 / HO01 ANTHRACITE...' as the card title. Now shows 'AC01 / HO01 ANTHRACITE...'. | scrapers/build-internal-db.js | cleaner cards | ~1k |
+| 11:40 | Re-scraped Superspeed: 773 wheels (cerebrum claimed 803, real count is 773 — supplier removed 30 SKUs since). | scrapers/scrape-superspeed.js | catalog refreshed | ~1k |
+| 11:40 | Fixed RWC stock scraper: selector was '.stock' (matched nothing), real selector is '.rating span'. Built one-shot update-rwc-stock.js to patch existing raw JSON without re-walking fitment. Result: 542 In Stock, 161 No Stock, 261 Call For Stock. | scrapers/scrape-rwc.js scrapers/update-rwc-stock.js | real stock | ~3k |
+| 11:40 | Confirmed gpibtob.com is RWC-exclusive — empty search returns the same 964 products. /product/manufacturer only lists CEMB (wheel-balancer equipment). No other wheel brands at this supplier. | scrapers/probe-gpibtob-catalog.js scrapers/probe-gpibtob-brands.js | task closed, no work needed | ~2k |
+| 11:40 | Updated ProductCard.astro to recognize 4 stock states: In Stock(green), Out of Stock/No Stock/N/A/Discontinued(red), Contact for stock/Call For Stock(amber), backorder variants(amber). Was previously a binary green/red flip with ambiguous values defaulting to green. | webapp/src/components/ProductCard.astro | better UX | ~1k |
+| 11:44 | Session end: 29 writes across 10 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore, probe-rwc-stock.js) | 12 reads | ~30421 tok |
+| 11:47 | Session end: 29 writes across 10 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore, probe-rwc-stock.js) | 12 reads | ~30421 tok |
+| 11:56 | Session end: 29 writes across 10 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore, probe-rwc-stock.js) | 12 reads | ~30421 tok |
+| 11:58 | Session end: 29 writes across 10 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore, probe-rwc-stock.js) | 13 reads | ~30601 tok |
+| 12:04 | designqc: captured 6 screenshots (209KB, ~15000 tok) | C:/Program Files/Git/, C:/Program Files/Git/wheels | ready for eval | ~0 |
+| 12:05 | designqc: captured 6 screenshots (302KB, ~15000 tok) | / | ready for eval | ~0 |
+| 12:06 | designqc: captured 6 screenshots (246KB, ~15000 tok) | / | ready for eval | ~0 |
+| 12:06 | designqc: captured 6 screenshots (246KB, ~15000 tok) | / | ready for eval | ~0 |
+| 12:06 | designqc: captured 6 screenshots (247KB, ~15000 tok) | / | ready for eval | ~0 |
+| 12:07 | Edited .gitignore | 1→3 lines | ~17 |

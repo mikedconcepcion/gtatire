@@ -12,6 +12,7 @@
 
 const fs = require('fs');
 const pathMod = require('path');
+const sqliteDb = require('./lib/db');
 
 const DATA_DIR = pathMod.join(__dirname, '..', 'data');
 const OUT_DIR = pathMod.join(__dirname, '..', 'webapp', 'public', 'data');
@@ -40,11 +41,26 @@ function saveJSON(filepath, data, pretty = false) {
   console.log(`  Saved ${pathMod.basename(filepath)} (${(str.length / 1024).toFixed(0)} KB)`);
 }
 
-// Generate GTA SKU: GTA-W-0001 (W=wheel, T=tire later)
-let skuCounter = 0;
-function nextSku(category = 'W') {
-  skuCounter++;
-  return `GTA-${category}-${String(skuCounter).padStart(4, '0')}`;
+// Build a deterministic, URL-safe product ID from the supplier name + the
+// supplier's own SKU. Each supplier has a distinct SKU format so the prefix
+// (a-/s-/r-) prevents collisions and signals provenance:
+//   alltire    -> a-{sku}           e.g. a-x47564
+//   superspeed -> s-{sku}           e.g. s-76rr18085355100mb
+//   rwc        -> r-{sku}           e.g. r-rw70170a5144564-1
+// Re-running the build produces the same IDs for the same supplier SKUs, so
+// /wheels/{id} URLs stay stable across rebuilds (unlike the old GTA-W-XXXX
+// counter which reshuffled on every run).
+const SUPPLIER_PREFIX = { alltire: 'a', superspeed: 's', rwc: 'r' };
+function productIdFor(supplier, supplierSku) {
+  const prefix = SUPPLIER_PREFIX[supplier];
+  if (!prefix) throw new Error(`Unknown supplier: ${supplier}`);
+  // Lowercase, replace anything that isn't url-safe (. / etc.) with a dash,
+  // collapse repeated dashes. Keep alphanumerics and dashes only.
+  const safe = String(supplierSku)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  return `${prefix}-${safe}`;
 }
 
 // Brand-name normalization. Alltire's tire feed sometimes ships UPPER and
@@ -67,11 +83,58 @@ function normalizeBrand(b) {
   return up.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
 }
 
+// Map gpibtob.com's RWC stock signal to a normalized customer-facing label
+// that ProductCard understands without further interpretation:
+//   "In Stock"        -> "In Stock"  (green badge)
+//   "No Stock"        -> "Out of Stock"  (red badge — ProductCard regex hit)
+//   "Call For Stock"  -> "Contact for stock"  (neutral — ambiguous state)
+//   anything else     -> "Contact for stock"
+function rwcStockLabel(raw) {
+  const s = (raw || '').trim().toLowerCase();
+  if (s === 'in stock') return 'In Stock';
+  if (s === 'no stock' || s.includes('out of stock')) return 'Out of Stock';
+  if (s === 'call for stock' || s.includes('contact')) return 'Contact for stock';
+  return raw || 'Contact for stock';
+}
+
+// Map Superspeed's raw INVENTORY+ETA pair to a customer-friendly stock label.
+// Source data variants we collapse:
+//   - "Discontinue" / "Discontinued"       -> Discontinued
+//   - "Phase-Out" / "Phase Out"            -> Discontinued
+//   - "In Production" / "NEW - In Prod..." -> Available on Backorder
+//   - "N/A" / "" (empty) with INV=0        -> Special Order
+//   - "84 | 05-15 ON" (qty | restock-date) -> Available on Backorder (mm-dd)
+// In-stock counts pass through as before so customer cards show specific
+// numbers when inventory is low.
+function superspeedStockLabel(inventory, eta) {
+  if (inventory > 20) return '20+ In Stock';
+  if (inventory > 0) return `${inventory} In Stock`;
+
+  const raw = (eta || '').trim();
+  if (!raw) return 'Special Order';
+
+  const lower = raw.toLowerCase();
+  if (lower.startsWith('discontinu') || lower.startsWith('phase')) return 'Discontinued';
+  if (lower.includes('in production')) return 'Available on Backorder';
+  if (lower === 'n/a') return 'Special Order';
+
+  // Batch-restock pattern: "QTY | MM-DD ON" — surface the restock date only.
+  const batchMatch = raw.match(/\|\s*(\d{2}-\d{2})/);
+  if (batchMatch) return `Available on Backorder (${batchMatch[1]})`;
+
+  return 'Special Order';
+}
+
 // Parse wheel description for specs
 function parseWheelDescription(desc) {
   const specs = {};
-  const nameMatch = desc.match(/^([A-Z][A-Za-z_]+)\s/);
-  if (nameMatch) specs.name = nameMatch[1].replace(/_/g, ' ');
+  // Alltire alloy descriptions follow "MODEL[_FINISH] dim x dim ...".
+  // The model token can span multiple words ("BLACK WIDOW") or include digits
+  // ("SW05", "V20"). It always terminates at the underscore that introduces
+  // the finish. So we match from start up to (but not including) the first
+  // underscore, allowing letters, digits, and inner spaces.
+  const nameMatch = desc.match(/^([A-Z][A-Za-z0-9\s]*?)_/);
+  if (nameMatch) specs.name = nameMatch[1].trim();
   const dimMatch = desc.match(/(\d{2,3})x(\d+\.?\d*)/);
   if (dimMatch) { specs.rimDiameter = parseInt(dimMatch[1]); specs.rimWidth = parseFloat(dimMatch[2]); }
   const boltMatch = desc.match(/(\d)x(\d{3,4}\.?\d*)/);
@@ -154,20 +217,25 @@ function buildDatabase() {
 
     for (const raw of rawWheels) {
       if (!raw.productNo) continue;
+      // Alltire's catalog has inconsistent casing — same SKU appears as both
+      // "X46205" and "x46205" with identical specs and image. Dedup by the
+      // case-folded ID so the two collapse into one product (the URL is
+      // lowercase anyway, so this is the canonical form).
       const supplierSku = raw.productNo;
+      const dedupKey = String(supplierSku).toLowerCase();
       const vehicleKey = normalizeVehicleKey(`${raw.vehicleYear}|${raw.vehicleMake}|${raw.vehicleModel}`);
 
       // Track fitment
       let gtaId;
-      if (seen.has(supplierSku)) {
-        gtaId = seen.get(supplierSku);
+      if (seen.has(dedupKey)) {
+        gtaId = seen.get(dedupKey);
         if (!fitmentMap[gtaId]) fitmentMap[gtaId] = new Set();
         fitmentMap[gtaId].add(vehicleKey);
         continue;
       }
 
-      gtaId = nextSku('W');
-      seen.set(supplierSku, gtaId);
+      gtaId = productIdFor('alltire', supplierSku);
+      seen.set(dedupKey, gtaId);
       if (!fitmentMap[gtaId]) fitmentMap[gtaId] = new Set();
       fitmentMap[gtaId].add(vehicleKey);
 
@@ -197,8 +265,18 @@ function buildDatabase() {
         supplierProductNo: supplierSku,
       });
 
-      // Alltire brand: Steel wheels are generic, Alloy wheels are "Macpek"
-      const alltireBrand = normalizeBrand(raw.wheelType === 'Steel Wheel' ? 'Steel' : 'Macpek');
+      // Alltire brand: Steel wheels are generic. For alloys, the supplier
+      // doesn't expose a brand field anywhere (no Maker column on wheel
+      // search, no detail page — confirmed via probe-alltire-detail.js).
+      // The model name (CONTOUR, BLACK WIDOW, SW05, etc., all distributed
+      // through Macpek) is the best brand-like label available. Falls back
+      // to "Macpek" only when description doesn't fit the MODEL_FINISH
+      // pattern. Compare to the descriptions: groups like "BLACK WIDOW",
+      // "MINI BAJA", "SW05" should land in their own buckets, not be
+      // truncated to just the first word.
+      const alltireBrand = raw.wheelType === 'Steel Wheel'
+        ? normalizeBrand('Steel')
+        : (specs.name ? normalizeBrand(specs.name) : normalizeBrand('Macpek'));
 
       products.push({
         id: gtaId,
@@ -238,7 +316,7 @@ function buildDatabase() {
 
     for (const w of ssRaw.List) {
       if (!w.SKU) continue;
-      const gtaId = nextSku('W');
+      const gtaId = productIdFor('superspeed', w.SKU);
       count++;
 
       // Attach AAIA fitment if available for this SKU (normalize Tesla / Mercedes naming)
@@ -268,11 +346,7 @@ function buildDatabase() {
         if (extraImgName) extraImages.push(cdn(`/data/images/wheels/${extraImgName}`));
       }
 
-      let stockText = '';
-      if (w.INVENTORY > 20) stockText = '20+ In Stock';
-      else if (w.INVENTORY > 0) stockText = `${w.INVENTORY} In Stock`;
-      else if (w.ETA) stockText = w.ETA;
-      else stockText = 'Out of Stock';
+      const stockText = superspeedStockLabel(w.INVENTORY, w.ETA);
 
       skuMap.push({
         gtaId,
@@ -320,9 +394,14 @@ function buildDatabase() {
 
     for (const w of rwcRaw) {
       if (!w.sku) continue;
-      const gtaId = nextSku('W');
+      const gtaId = productIdFor('rwc', w.sku);
       count++;
 
+      // RWC supplier exposes dealer cost only — no MSRP. We use a working
+      // estMsrp to drive the publicPrice calculation (cost * 1.6 * 0.9 ≈
+      // 1.44× markup) but do NOT surface it as a compareAt strikethrough on
+      // the product card. The invented number isn't honest enough to show as
+      // a "was $X" reference.
       const dc = w.cost || 0;
       const estMsrp = dc > 0 ? Math.round(dc * 1.6 * 100) / 100 : 0;
       const pricing = calcPricing(estMsrp, dc);
@@ -355,22 +434,33 @@ function buildDatabase() {
         }
       }
 
+      // Strip the leading "RWC " supplier-prefix from the public-facing name
+      // and description. 703 of 964 products didn't match the structured name
+      // regex, so they were carrying the prefix into the listing card title.
+      const cleanName = (w.modelCode1 || (w.name || '').replace(/^RWC\s+/i, '')) || '';
+      const cleanDescription = (w.name || '').replace(/^RWC\s+/i, '');
+
       products.push({
         id: gtaId,
         sku: gtaId,
         category: 'wheel',
         brand: normalizeBrand('RWC'),
         wheelType: 'Alloy Wheel',
-        name: w.modelCode1 || w.name || '',
-        description: w.name || '',
+        name: cleanName,
+        description: cleanDescription,
         image: newImgName ? cdn(`/data/images/wheels/${newImgName}`) : '',
         price: pricing.publicPrice > 0 ? `$${pricing.publicPrice.toFixed(2)}` : '',
         priceNum: pricing.publicPrice,
         distPrice: pricing.distPrice > 0 ? `$${pricing.distPrice.toFixed(2)}` : '',
         distPriceNum: pricing.distPrice,
-        compareAt: estMsrp > 0 ? `$${estMsrp.toFixed(2)}` : '',
-        compareAtNum: estMsrp,
-        stock: w.stock || 'Available',
+        // No compareAt for RWC — supplier exposes no MSRP, so we don't fake
+        // a strikethrough price.
+        compareAt: '',
+        compareAtNum: 0,
+        // Stock comes from the listing page (`.rating span`) — normalized
+        // to In Stock / Out of Stock / Contact for stock. Captured by
+        // update-rwc-stock.js.
+        stock: rwcStockLabel(w.stock),
         hubCentric: (w.customFit || '').includes('HUB CENTRIC'),
         rimDiameter: sizeMatch ? parseInt(sizeMatch[1]) : null,
         rimWidth: sizeMatch ? parseFloat(sizeMatch[2]) : null,
@@ -395,10 +485,11 @@ function buildDatabase() {
 
     for (const t of tiresRaw) {
       if (!t.productNo) continue;
-      if (seen.has(t.productNo)) continue;
-      seen.set(t.productNo, true);
+      const dedupKey = String(t.productNo).toLowerCase();
+      if (seen.has(dedupKey)) continue;
+      seen.set(dedupKey, true);
 
-      const gtaId = nextSku('T');
+      const gtaId = productIdFor('alltire', t.productNo);
       tireCount++;
 
       const msrp = parseFloat((t.msrp || '').replace(/[$,]/g, '')) || 0;
@@ -695,6 +786,32 @@ function buildDatabase() {
   }
   console.log(`  Marked ${noImageCount} products with placeholder images`);
 
+  // ─── SQLite: source-of-truth catalog ───
+  // Populate data/gta.sqlite from the in-memory products/fitment. The static
+  // site still consumes JSON snapshots (next block), but the DB is now the
+  // queryable artifact for audits (`sqlite3 data/gta.sqlite "SELECT brand,
+  // COUNT(*) FROM products GROUP BY brand ORDER BY 2 DESC"`).
+  console.log('\nWriting SQLite catalog...');
+  const db = sqliteDb.openDb();
+  try {
+    sqliteDb.createSchema(db);
+    sqliteDb.truncateAll(db);
+    sqliteDb.insertProducts(db, products, skuMap);
+    sqliteDb.insertFitment(db, fitmentMap);
+    if (Object.keys(vehicleTireSizes).length > 0) {
+      sqliteDb.insertVehicleTireSizes(db, vehicleTireSizes);
+    }
+    sqliteDb.setMeta(db, 'last_built_at', new Date().toISOString());
+    sqliteDb.setMeta(db, 'product_count', products.length);
+    const s = sqliteDb.summary(db);
+    console.log(`  → ${s.products} products, ${s.fitment} fitment rows, ${s.images} images`);
+    console.log(`  → By supplier: ${s.bySupplier.map(r => `${r.supplier}=${r.n}`).join(', ')}`);
+    console.log(`  → By category: ${s.byCategory.map(r => `${r.category}=${r.n}`).join(', ')}`);
+    console.log(`  → Top brands: ${s.byBrand.slice(0, 10).map(r => `${r.brand}(${r.n})`).join(', ')}`);
+  } finally {
+    db.close();
+  }
+
   // ─── Save public data (no supplier info) ───
   console.log('\nSaving public data...');
   const publicProducts = products.map(p => ({ ...p }));
@@ -710,7 +827,7 @@ function buildDatabase() {
 
   // ─── Summary ───
   console.log('\n=== Summary ===');
-  console.log(`Products: ${products.length} (GTA-W-0001 to GTA-W-${String(products.length).padStart(4, '0')})`);
+  console.log(`Products: ${products.length} (supplier-prefixed IDs: a-/s-/r-)`);
   console.log(`Brands: ${JSON.stringify(brands)}`);
   console.log(`Images copied to: ${IMG_PUB_DIR}`);
   console.log(`Internal DB: data/gta-products.json, data/gta-sku-map.json`);
