@@ -75,3 +75,61 @@ body {
   /* Subtle inner-glow style highlight via filter on dark backgrounds */
   filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.4));
 }
+
+/* Manufacturer-strip wordmark: subdued sporty italic, no gold gradient.
+   Kept for fallback / generic use. */
+.brand-wordmark {
+  font-family: 'Saira', system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Brand logo strip (Authorized dealer of) ──────────────────────────
+   Real brand SVGs in /public/brands/. Most tire-brand logos are designed
+   for light backgrounds (Pirelli is black-on-white, Michelin uses gray,
+   Continental's wordmark is dark). Following the convention used by every
+   professional authorized-dealer site: each logo sits inside a small
+   light "chip" with subtle rounding. Keeps each brand's true colors
+   intact — no inversion, no tinting — so the strip reads as authentic. */
+.brand-chip {
+  /* Uniform chip cells inside a CSS grid — each chip stretches to fill
+     its grid cell, so widths are identical no matter the logo's native
+     aspect ratio. Logos scale to a common x-height for visual balance. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  padding: 8px 12px;
+  background: linear-gradient(180deg, #E9ECEF 0%, #D8DEE5 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 1px 2px rgba(0, 0, 0, 0.25);
+  opacity: 0.94;
+  transition: opacity 200ms, transform 200ms;
+  color: #111;
+}
+.brand-chip:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+.brand-chip img {
+  max-height: 32px;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+@media (min-width: 640px) {
+  .brand-chip {
+    height: 64px;
+    padding: 10px 14px;
+  }
+  .brand-chip img {
+    max-height: 38px;
+  }
+}

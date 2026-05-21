@@ -15,8 +15,13 @@ export default function PriceDisplay({ price, compareAt, distPrice, stock }: Pro
   const out = /out of stock/i.test(s) || /^n\/?a$/i.test(s) || /discontinu/i.test(s);
   const low = !out && !isNaN(n) && n >= 1 && n < 10;
 
+  const priceNum = parseFloat(String(price).replace(/[^0-9.]/g, '')) || 0;
+  const availability = out ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock';
+
   return (
-    <div>
+    <div itemProp="offers" itemScope itemType="https://schema.org/Offer">
+      <meta itemProp="priceCurrency" content="CAD" />
+      <link itemProp="availability" href={availability} />
       {isDistributor && distPrice ? (
         <div className="flex items-end gap-3 justify-center md:justify-start">
           <div>
@@ -25,12 +30,12 @@ export default function PriceDisplay({ price, compareAt, distPrice, stock }: Pro
           </div>
           <div>
             <div className="text-dark-500 text-[10px] uppercase tracking-wider">Retail</div>
-            <div className="text-dark-400 text-sm line-through">{price}</div>
+            <div className="text-dark-400 text-sm line-through" itemProp="price" content={priceNum.toFixed(2)}>{price}</div>
           </div>
         </div>
       ) : (
         <div className="flex items-end gap-2 justify-center md:justify-start">
-          <div className="text-white font-bold text-xl">{price}</div>
+          <div className="text-white font-bold text-xl" itemProp="price" content={priceNum.toFixed(2)}>{price}</div>
           {compareAt && compareAt !== price && (
             <div className="text-dark-500 text-sm line-through">{compareAt}</div>
           )}

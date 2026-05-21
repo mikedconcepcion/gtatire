@@ -8,7 +8,11 @@ let stats: any = {};
 if (fs.existsSync(statsPath)) stats = JSON.parse(fs.readFileSync(statsPath, 'utf-8'));
 
 const productCount = Math.floor((stats.totalProducts || 6800) / 100) * 100;
-const brandCount = Object.keys(stats.byBrand || {}).length || 40;
+// Brand count is approximated from real DB counts (34 tire brand families +
+// 6-8 wheel brand families = ~40). The raw stats.byBrand keys include wheel
+// model names from the alltire scraper (which doesn't expose brand) so the
+// raw key count is misleading — keep static and conservative.
+const brandCount = 40;
 ---
 
 <Layout

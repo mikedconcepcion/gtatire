@@ -15,16 +15,17 @@
         />
       </a>
 
-      <!-- Search bar (desktop) -->
+      <!-- Search bar (desktop) — always visible. Lighter bg + primary-tinted
+           icon and ring so it reads as an interactive search at a glance. -->
       <form id="header-search-form" action="/search/" class="hidden md:flex flex-1 max-w-md">
         <div class="relative w-full">
           <input
             type="text"
             name="q"
             placeholder="Search vehicle, brand, size..."
-            class="w-full bg-dark-700/60 border border-dark-600 text-white rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-dark-400"
+            class="w-full bg-dark-950/60 border border-primary-600/30 hover:border-primary-500/50 text-white rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-dark-300"
           />
-          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-dark-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </div>
@@ -61,6 +62,7 @@
         </button>
       </div>
     </div>
+
   </div>
 
   <!-- Mobile menu — sectioned, large tap targets -->

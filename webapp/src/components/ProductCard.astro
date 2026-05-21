@@ -49,7 +49,11 @@ const priceNum = parseFloat(String(price).replace(/[^0-9.]/g, '')) || 0;
 const inquiryName = `${brand || ''} ${model || ''}`.trim() || description;
 ---
 
-<a href={`/${category}s/${id}`} class="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all hover:shadow-lg hover:shadow-primary-900/10">
+<a href={`/${category}s/${id}`} itemscope itemtype="https://schema.org/Product" class="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all hover:shadow-lg hover:shadow-primary-900/10">
+  <meta itemprop="sku" content={id} />
+  {brand && <meta itemprop="brand" content={brand} />}
+  <meta itemprop="category" content={category === 'tire' ? 'Tires' : 'Wheels'} />
+  <meta itemprop="name" content={`${brand || ''} ${model || ''}`.trim() || description} />
   <!-- Image -->
   <div class="aspect-square bg-white rounded-t-xl flex items-center justify-center p-4 relative overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-t from-dark-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -82,8 +86,10 @@ const inquiryName = `${brand || ''} ${model || ''}`.trim() || description;
     <p class="text-dark-400 text-[11px] line-clamp-1 mb-2">{size}</p>
 
     <div class="flex items-end justify-between mb-2">
-      <div>
-        <div class="text-white font-bold text-sm sm:text-lg">{price}</div>
+      <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+        <div class="text-white font-bold text-sm sm:text-lg" itemprop="price" content={priceNum.toFixed(2)}>{price}</div>
+        <meta itemprop="priceCurrency" content="CAD" />
+        <link itemprop="availability" href={outOfStock ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock'} />
         {compareAt && <div class="text-dark-500 text-[10px] line-through">{compareAt}</div>}
       </div>
       <div class={`text-[10px] sm:text-xs font-medium ${stockColor}`}>

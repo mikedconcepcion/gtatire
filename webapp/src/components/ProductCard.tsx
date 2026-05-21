@@ -39,7 +39,11 @@ export default function ProductCard({ id, image, brand, model, description, size
   const inquiryName = `${brand || ''} ${model || ''}`.trim() || description;
 
   return (
-    <a href={`/${category}s/${id}`} className="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all hover:shadow-lg hover:shadow-primary-900/10">
+    <a href={`/${category}s/${id}`} itemScope itemType="https://schema.org/Product" className="group bg-dark-900 border border-dark-700/50 rounded-xl overflow-hidden hover:border-primary-600/40 transition-all hover:shadow-lg hover:shadow-primary-900/10">
+      <meta itemProp="sku" content={id} />
+      {brand && <meta itemProp="brand" content={brand} />}
+      <meta itemProp="category" content={category === 'tire' ? 'Tires' : 'Wheels'} />
+      <meta itemProp="name" content={inquiryName} />
       <div className="aspect-square bg-white rounded-t-xl flex items-center justify-center p-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-dark-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         {showImage ? (
@@ -64,8 +68,10 @@ export default function ProductCard({ id, image, brand, model, description, size
         <h3 className="text-white font-semibold text-xs sm:text-sm mb-0.5 line-clamp-1 group-hover:text-primary-300 transition-colors">{model}</h3>
         <p className="text-dark-400 text-[11px] line-clamp-1 mb-2">{size}</p>
         <div className="flex items-end justify-between mb-2">
-          <div>
-            <div className="text-white font-bold text-sm sm:text-lg">{price}</div>
+          <div itemProp="offers" itemScope itemType="https://schema.org/Offer">
+            <div className="text-white font-bold text-sm sm:text-lg" itemProp="price" content={priceNum.toFixed(2)}>{price}</div>
+            <meta itemProp="priceCurrency" content="CAD" />
+            <link itemProp="availability" href={outOfStock ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock'} />
             {compareAt && <div className="text-dark-500 text-[10px] line-through">{compareAt}</div>}
           </div>
           <div className={`text-[10px] sm:text-xs font-medium ${stockColor}`}>
