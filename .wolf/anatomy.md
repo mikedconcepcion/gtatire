@@ -1,11 +1,11 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-19T04:07:47.105Z
-> Files: 64 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-22T13:56:58.550Z
+> Files: 76 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
-- `.gitignore` — Git ignore rules (~390 tok)
+- `.gitignore` — Git ignore rules (~424 tok)
 
 ## .claude/
 
@@ -20,7 +20,9 @@
 ## C:/Users/miked/.claude/projects/E--James-gtatire/memory/
 
 - `feedback_no_whatsapp.md` (~234 tok)
-- `MEMORY.md` — Memory Index (~249 tok)
+- `MEMORY.md` — Memory Index (~288 tok)
+- `project_alltire_brand.md` (~428 tok)
+- `reference_domain.md` (~259 tok)
 
 ## _wheel-tier2-pov/
 
@@ -55,7 +57,9 @@
 
 ## scrapers/
 
-- `build-internal-db.js` — Build internal GTA database from raw supplier data. (~10310 tok)
+- `audit-jsdcwheels.js` — Headless audit of jsdcwheels.ca from a customer's perspective. (~1870 tok)
+- `build-internal-db.js` — Build internal GTA database from raw supplier data. (~10492 tok)
+- `optimize-vehicle-images.js` — One-shot: shrink + recompress every file in webapp/public/images/vehicles/ (~909 tok)
 - `probe-alltire-detail.js` — Probe: log in to Alltire, navigate to a known alloy-wheel search result, (~1120 tok)
 - `probe-click-diag.js` — Diagnostic: for ONE failing vehicle (2020 Acura ILX), navigate to the (~971 tok)
 - `probe-fastco-api.js` — Probe fastco's REST API endpoints with our logged-in session cookies. (~602 tok)
@@ -64,6 +68,7 @@
 - `probe-gpibtob-brands.js` — Probe: enumerate brands/manufacturers on gpibtob.com. Saves the full list (~637 tok)
 - `probe-gpibtob-catalog.js` — Probe: gpibtob.com global catalog beyond just RWC-branded items. (~1104 tok)
 - `probe-row-icon.js` — Probe: after navigating to a working wheel-search URL, dump the first (~853 tok)
+- `probe-rwc-detail-price.js` — Probe: visit ONE RWC detail page and dump all elements that contain a $ (~888 tok)
 - `probe-rwc-stock.js` — Probe: log in to gpibtob.com, look at both (a) one product on the listing (~1314 tok)
 - `recon-fastco-images.js` — Recon: open fastco, you log in + pick dealer + navigate to the (~774 tok)
 - `recon-fastco-xhr.js` — Recon: capture every XHR/fetch/JSON call during a configurator session. (~879 tok)
@@ -71,10 +76,11 @@
 - `scrape-iconfig-one.js` — Proof-of-one: auto-walk fastco for a single YMM and capture the (~1789 tok)
 - `scrape-iconfig-vehicles.js` — Bulk scraper: for each YMM in webapp/public/data/vehicles.json, fetch (~4019 tok)
 - `scrape-rwc-fitment.js` — RWC fitment scrape — fetch year/make/model tree from the LIVE portal (~1837 tok)
+- `scrape-rwc-msrp.js` — Walk every RWC product's detail page on gpibtob.com to capture the real (~1391 tok)
 - `scrape-rwc.js` — Declares config (~3107 tok)
 - `scrape-superspeed-fitment.js` — Build Superspeed wheel fitment via AAIA. Walks AAIA's tree (~2164 tok)
 - `scrape-tire-fitment.js` — config: save, loadIfExists (~1426 tok)
-- `scrape-wheelsize-vehicles.js` — Scrape vehicle reference photos + fitment data from wheel-size.com. (~2810 tok)
+- `scrape-wheelsize-vehicles.js` — Scrape vehicle reference photos + fitment data from wheel-size.com. (~3311 tok)
 - `update-rwc-stock.js` — One-shot: log in to gpibtob.com, fetch the full RWC listing once (~1098 tok)
 
 ## scrapers/lib/
@@ -88,10 +94,17 @@
 ## webapp/public/
 
 - `_redirects` — Cloudflare Pages redirects (~641 tok)
+- `llms.txt` — JSDC Wheels (~584 tok)
 
 ## webapp/public/data/
 
 - `vehicle-images.json` (~1 tok)
+
+## webapp/public/videos/
+
+- `hero.mp4` — 720x1280 portrait Corvette drift clip, H.264 (~1.5 MB), used by `index.astro` bg
+- `hero-mobile.mp4` — 540x960 mobile variant served via `media="(max-width: 640px)"` (~780 KB)
+- `hero-poster.jpg` — poster frame at 2s, also fallback for prefers-reduced-motion (~55 KB)
 
 ## webapp/scripts/
 
@@ -100,21 +113,22 @@
 ## webapp/src/components/
 
 - `CompatibleProducts.tsx` — CompatibleProducts (~1711 tok)
-- `Header.astro` — Astro: Header (~4543 tok)
-- `ProductCard.astro` — Astro: ProductCard (~1393 tok)
-- `ProductCard.tsx` — TSX version of ProductCard.astro for use inside other React components (~1397 tok)
+- `Footer.astro` — Astro: Footer (~1365 tok)
+- `Header.astro` — Astro: Header (~4585 tok)
+- `ProductCard.astro` — Astro: ProductCard (~1555 tok)
+- `ProductCard.tsx` — TSX version of ProductCard.astro for use inside other React components (~1565 tok)
 - `VehicleResults.tsx` — isInStock (~3236 tok)
 
 ## webapp/src/components/auth/
 
-- `PriceDisplay.tsx` — PriceDisplay (~494 tok)
+- `PriceDisplay.tsx` — PriceDisplay (~620 tok)
 
 ## webapp/src/components/detail/
 
-- `TireDetailPage.tsx` — Mirrors WheelDetailPage for /tires/{id} — see that file for the rationale (~1056 tok)
+- `TireDetailPage.tsx` — Mirrors WheelDetailPage for /tires/{id} — see that file for the rationale (~1070 tok)
 - `TiresListingPage.tsx` — PAGE_SIZE (~1695 tok)
-- `VehicleDetailPage.tsx` — Hydrator for /vehicle/{year}/{make}/{model}. Replaces the previously (~1918 tok)
-- `WheelDetailPage.tsx` — Reads /wheels/{id} from window.location, fetches products + fitment from the (~1451 tok)
+- `VehicleDetailPage.tsx` — Hydrator for /vehicle/{year}/{make}/{model}. Replaces the previously (~3333 tok)
+- `WheelDetailPage.tsx` — Reads /wheels/{id} from window.location, fetches products + fitment from the (~1550 tok)
 - `WheelsListingPage.tsx` — PAGE_SIZE (~1612 tok)
 
 ## webapp/src/components/search/
@@ -131,7 +145,7 @@
 
 ## webapp/src/layouts/
 
-- `Layout.astro` — Astro: Layout (~3806 tok)
+- `Layout.astro` — Astro: Layout (~3968 tok)
 
 ## webapp/src/lib/
 
@@ -139,8 +153,11 @@
 
 ## webapp/src/pages/
 
-- `tires.astro` — Astro: tires (~55 tok)
-- `wheels.astro` — Astro: wheels (~56 tok)
+- `about.astro` — Astro: about (~1784 tok)
+- `index.astro` — Astro: index (~3320 tok)
+- `tires.astro` — Server-render an ItemList JSON-LD with the top 24 in-stock tires so (~459 tok)
+- `wheels-tires-[city].astro` — GTA municipalities JSDC serves. Each entry tunes the page content so (~3593 tok)
+- `wheels.astro` — Server-render an ItemList JSON-LD with the top 24 in-stock wheels for (~491 tok)
 
 ## webapp/src/pages/tires/
 
@@ -162,3 +179,4 @@
 
 ## webapp/src/styles/
 
+- `global.css` — Styles: 10 rules, 24 vars (~1074 tok)

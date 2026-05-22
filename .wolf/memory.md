@@ -1258,3 +1258,146 @@
 | 12:06 | designqc: captured 6 screenshots (246KB, ~15000 tok) | / | ready for eval | ~0 |
 | 12:06 | designqc: captured 6 screenshots (247KB, ~15000 tok) | / | ready for eval | ~0 |
 | 12:07 | Edited .gitignore | 1→3 lines | ~17 |
+| 12:10 | Session end: 30 writes across 10 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore, probe-rwc-stock.js) | 13 reads | ~30619 tok |
+| 12:12 | Session end: 30 writes across 10 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore, probe-rwc-stock.js) | 13 reads | ~30619 tok |
+| 12:21 | designqc: captured 6 screenshots (258KB, ~15000 tok) | / | ready for eval | ~0 |
+| 12:21 | designqc: captured 6 screenshots (461KB, ~15000 tok) | / | ready for eval | ~0 |
+| 12:22 | designqc: captured 6 screenshots (270KB, ~15000 tok) | / | ready for eval | ~0 |
+| 12:22 | designqc: captured 6 screenshots (266KB, ~15000 tok) | / | ready for eval | ~0 |
+| 12:22 | designqc: captured 6 screenshots (277KB, ~15000 tok) | / | ready for eval | ~0 |
+| 12:22 | designqc: captured 6 screenshots (261KB, ~15000 tok) | / | ready for eval | ~0 |
+| 12:24 | designqc: captured 6 screenshots (476KB, ~15000 tok) | / | ready for eval | ~0 |
+| 12:25 | designqc: captured 6 screenshots (277KB, ~15000 tok) | / | ready for eval | ~0 |
+| 12:27 | designqc: captured 6 screenshots (262KB, ~15000 tok) | / | ready for eval | ~0 |
+| 12:28 | Session end: 30 writes across 10 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore, probe-rwc-stock.js) | 18 reads | ~33342 tok |
+| 12:45 | Session end: 30 writes across 10 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore, probe-rwc-stock.js) | 18 reads | ~33342 tok |
+| 13:27 | Edited scrapers/build-internal-db.js | 6→7 lines | ~54 |
+| 13:27 | Edited scrapers/build-internal-db.js | 5→6 lines | ~49 |
+| 13:27 | Edited scrapers/build-internal-db.js | 5→6 lines | ~44 |
+| 13:28 | Edited scrapers/build-internal-db.js | 5→6 lines | ~47 |
+| 13:28 | Created scrapers/scrape-rwc-msrp.js | — | ~1316 |
+| 13:30 | Created scrapers/probe-rwc-detail-price.js | — | ~888 |
+| 13:31 | Edited scrapers/scrape-rwc-msrp.js | added optional chaining | ~141 |
+| 13:32 | Session end: 37 writes across 12 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore, probe-rwc-stock.js) | 18 reads | ~36381 tok |
+| 13:33 | designqc: captured 6 screenshots (208KB, ~15000 tok) | / | ready for eval | ~0 |
+| 13:34 | Session end: 37 writes across 12 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore, probe-rwc-stock.js) | 18 reads | ~36381 tok |
+| 14:08 | Edited webapp/src/components/detail/WheelDetailPage.tsx | expanded (+8 lines) | ~228 |
+| 14:08 | Edited webapp/src/components/detail/TireDetailPage.tsx | 3→3 lines | ~39 |
+| 14:08 | Edited webapp/src/components/detail/TireDetailPage.tsx | inline fix | ~30 |
+| 14:08 | Created scrapers/scrape-rwc-msrp.js | — | ~1391 |
+| 14:12 | Session end: 41 writes across 14 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore, probe-rwc-stock.js) | 20 reads | ~41043 tok |
+| 14:20 | Edited scrapers/build-internal-db.js | modified for() | ~270 |
+| 14:20 | Edited scrapers/build-internal-db.js | 4→5 lines | ~88 |
+| 14:22 | Session end: 43 writes across 14 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore, probe-rwc-stock.js) | 20 reads | ~41401 tok |
+| 14:23 | Session end: 43 writes across 14 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore, probe-rwc-stock.js) | 20 reads | ~41401 tok |
+| 14:24 | Session end: 43 writes across 14 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore, probe-rwc-stock.js) | 20 reads | ~41401 tok |
+| 14:25 | Edited scrapers/build-internal-db.js | modified calcPricing() | ~194 |
+| 14:27 | Session end: 44 writes across 14 files (probe-alltire-detail.js, build-internal-db.js, db.js, .gitignore, probe-rwc-stock.js) | 20 reads | ~41753 tok |
+
+## Session: 2026-05-20 12:38
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-21 20:12
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 23:24 | Created scrapers/audit-jsdcwheels.js | — | ~1863 |
+| 23:26 | Created C:/Users/miked/.claude/projects/E--James-gtatire/memory/reference_domain.md | — | ~260 |
+| 23:26 | jsdcwheels.ca user audit (desktop+mobile, screenshots, json+md) | scrapers/audit-jsdcwheels.js, .wolf/audits/jsdcwheels/ | site is live, 98 vs 44 brand-count mismatch, no email link surfaced | ~6k |
+| 23:27 | Session end: 2 writes across 2 files (audit-jsdcwheels.js, reference_domain.md) | 3 reads | ~2142 tok |
+| 23:35 | Edited webapp/src/pages/index.astro | 4→4 lines | ~74 |
+| 23:35 | Edited webapp/src/pages/about.astro | keys() → value() | ~82 |
+| 23:35 | Edited webapp/src/pages/index.astro | expanded (+14 lines) | ~681 |
+| 23:39 | Edited webapp/src/pages/index.astro | 4→4 lines | ~74 |
+| 23:39 | Edited webapp/src/pages/about.astro | 5→6 lines | ~105 |
+| 23:39 | Edited webapp/src/layouts/Layout.astro | "JSDC Wheels is a Greater " → "JSDC Wheels is a Greater " | ~97 |
+| 23:39 | Edited webapp/src/layouts/Layout.astro | inline fix | ~72 |
+| 23:39 | Edited webapp/src/layouts/Layout.astro | inline fix | ~45 |
+| 23:39 | Edited webapp/src/layouts/Layout.astro | inline fix | ~131 |
+| 23:40 | Edited webapp/src/pages/wheels-tires-[city].astro | "Wholesale tires and wheel" → "Wholesale tires and wheel" | ~56 |
+| 23:40 | Edited webapp/public/llms.txt | 5→5 lines | ~222 |
+| 23:41 | Edited webapp/src/styles/global.css | expanded (+9 lines) | ~116 |
+| 23:41 | Edited webapp/src/pages/index.astro | 3→3 lines | ~64 |
+| 23:41 | Edited webapp/src/pages/index.astro | 2→2 lines | ~83 |
+| 23:41 | Edited webapp/src/components/ProductCard.astro | 1→5 lines | ~137 |
+| 23:41 | Edited webapp/src/components/ProductCard.astro | 9→11 lines | ~175 |
+| 23:42 | Edited webapp/src/components/ProductCard.tsx | CSS: https | ~142 |
+| 23:42 | Edited webapp/src/components/ProductCard.tsx | CSS: https, https, https | ~204 |
+| 23:42 | Edited webapp/src/components/auth/PriceDisplay.tsx | CSS: https, https, https | ~382 |
+| 23:42 | Created webapp/src/pages/tires.astro | — | ~459 |
+| 23:42 | Created webapp/src/pages/wheels.astro | — | ~491 |
+| 23:43 | Edited webapp/src/components/Header.astro | expanded (+16 lines) | ~486 |
+| 23:43 | Edited webapp/src/components/Header.astro | added optional chaining | ~424 |
+| 23:43 | Edited webapp/src/layouts/Layout.astro | 3→3 lines | ~135 |
+| 23:43 | Edited webapp/src/components/Footer.astro | 9→13 lines | ~193 |
+| 23:49 | applied 6 home audit fixes (brand count, trust strip, semantic price+ItemList JSON-LD, header search icon, banner X dismiss, footer city sentence) | webapp/src/* | building | ~12k |
+| 23:49 | Edited C:/Users/miked/.claude/projects/E--James-gtatire/memory/MEMORY.md | 1→2 lines | ~74 |
+| 23:50 | Created C:/Users/miked/.claude/projects/E--James-gtatire/memory/project_alltire_brand.md | — | ~435 |
+| 23:53 | Edited scrapers/audit-jsdcwheels.js | 4→4 lines | ~51 |
+| 23:54 | Session end: 30 writes across 17 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 22 reads | ~36751 tok |
+| 23:55 | Edited webapp/src/pages/index.astro | expanded (+8 lines) | ~422 |
+| 23:56 | Edited webapp/src/styles/global.css | expanded (+66 lines) | ~663 |
+| 23:58 | Edited webapp/src/styles/global.css | expanded (+34 lines) | ~1016 |
+| 00:02 | Edited webapp/src/pages/index.astro | expanded (+10 lines) | ~210 |
+| 00:02 | Edited webapp/src/styles/global.css | removed 99 lines | ~140 |
+| 00:03 | Edited webapp/src/pages/index.astro | 20→21 lines | ~206 |
+| 00:03 | Edited webapp/src/styles/global.css | modified media() | ~342 |
+| 00:04 | Edited webapp/src/components/Header.astro | reduced (-16 lines) | ~250 |
+| 00:04 | Edited webapp/src/components/Header.astro | removed 32 lines | ~18 |
+| 00:04 | Edited webapp/src/styles/global.css | CSS: border | ~170 |
+| 00:05 | Edited webapp/src/styles/global.css | CSS: color | ~309 |
+| 00:08 | Session end: 41 writes across 17 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 22 reads | ~40575 tok |
+| 00:11 | Edited webapp/src/styles/global.css | CSS: 7, 7 | ~361 |
+| 00:11 | Edited webapp/src/pages/index.astro | 21→21 lines | ~208 |
+| 00:12 | Edited webapp/src/styles/global.css | modified media() | ~280 |
+| 00:12 | Session end: 44 writes across 17 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 22 reads | ~41438 tok |
+| 00:12 | Session end: 44 writes across 17 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 22 reads | ~41438 tok |
+| 00:14 | Edited webapp/src/components/Header.astro | 14→15 lines | ~266 |
+| 00:14 | Session end: 45 writes across 17 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 22 reads | ~41726 tok |
+| 00:17 | Edited webapp/src/layouts/Layout.astro | 5→8 lines | ~178 |
+| 00:17 | Edited webapp/src/layouts/Layout.astro | added 1 condition(s) | ~415 |
+| 00:17 | Session end: 47 writes across 17 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 22 reads | ~42476 tok |
+| 00:19 | Edited webapp/src/components/Header.astro | expanded (+18 lines) | ~641 |
+| 00:20 | Session end: 48 writes across 17 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 22 reads | ~43162 tok |
+| 00:32 | Edited webapp/src/components/Header.astro | 18→23 lines | ~422 |
+| 00:35 | Edited webapp/src/components/Header.astro | removed 23 lines | ~3 |
+| 00:35 | Edited webapp/src/pages/index.astro | 2→2 lines | ~36 |
+| 00:53 | Session end: 51 writes across 17 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 24 reads | ~49545 tok |
+| 01:01 | Session end: 51 writes across 17 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 24 reads | ~49545 tok |
+| 01:03 | Session end: 51 writes across 17 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 24 reads | ~49545 tok |
+| 01:04 | Session end: 51 writes across 17 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 24 reads | ~49545 tok |
+| 01:10 | Session end: 51 writes across 17 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 24 reads | ~49545 tok |
+| 01:15 | Edited scrapers/scrape-wheelsize-vehicles.js | added 1 condition(s) | ~262 |
+| 01:15 | Edited scrapers/scrape-wheelsize-vehicles.js | added 3 condition(s) | ~432 |
+| 01:15 | Edited scrapers/scrape-wheelsize-vehicles.js | getJson() → apiGetJson() | ~60 |
+| 01:15 | Edited scrapers/scrape-wheelsize-vehicles.js | getJson() → apiGetJson() | ~115 |
+| 01:20 | Session end: 55 writes across 18 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 25 reads | ~53224 tok |
+| 01:21 | Session end: 55 writes across 18 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 25 reads | ~53224 tok |
+| 01:22 | Session end: 55 writes across 18 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 25 reads | ~53224 tok |
+| 01:25 | Session end: 55 writes across 18 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 25 reads | ~53224 tok |
+| 01:37 | Session end: 55 writes across 18 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 25 reads | ~53224 tok |
+| 01:41 | Session end: 55 writes across 18 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 25 reads | ~53224 tok |
+| 01:46 | Session end: 55 writes across 18 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 25 reads | ~53224 tok |
+| 01:49 | Edited webapp/src/components/detail/VehicleDetailPage.tsx | added 1 condition(s) | ~1055 |
+| 01:50 | Edited webapp/src/components/detail/VehicleDetailPage.tsx | added optional chaining | ~1333 |
+| 01:54 | Edited webapp/src/components/detail/VehicleDetailPage.tsx | 23→24 lines | ~438 |
+| 01:55 | Edited webapp/src/components/detail/VehicleDetailPage.tsx | 5→5 lines | ~142 |
+| 01:56 | Session end: 59 writes across 19 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 26 reads | ~58110 tok |
+| 02:17 | Edited .gitignore | 5→6 lines | ~78 |
+| 02:17 | Edited webapp/src/components/detail/VehicleDetailPage.tsx | modified setVehicleImage() | ~105 |
+| 02:25 | Created scrapers/optimize-vehicle-images.js | — | ~909 |
+| 02:36 | Session end: 62 writes across 21 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 28 reads | ~60103 tok |
+| 02:39 | Session end: 62 writes across 21 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 28 reads | ~60103 tok |
+| 02:50 | Session end: 62 writes across 21 files (audit-jsdcwheels.js, reference_domain.md, index.astro, about.astro, Layout.astro) | 28 reads | ~60103 tok |
+
+## Session: 2026-05-21 06:36
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 21:56 | Edited webapp/src/pages/index.astro | expanded (+6 lines) | ~247 |
+| 21:56 | Edited webapp/src/pages/index.astro | 20→17 lines | ~183 |
+| 22:02 | Session end: 2 writes across 1 files (index.astro) | 1 reads | ~3722 tok |
+| 22:05 | Hero video swap: encoded Corvette_Drift.mp4 (36MB) to 540x960 mobile MP4 (779KB) + 720x1280 desktop MP4 (1.54MB) + poster (55KB); media-conditioned <source> tags in index.astro | webapp/public/videos/hero*.mp4, webapp/public/videos/hero-poster.jpg, webapp/src/pages/index.astro | Build pass (444s, 14450 pages) | ~700 |
+| 22:05 | Session end: 2 writes across 1 files (index.astro) | 1 reads | ~3722 tok |

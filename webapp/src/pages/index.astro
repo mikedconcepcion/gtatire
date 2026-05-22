@@ -16,11 +16,11 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
   <!-- Hero -->
   <section class="relative overflow-hidden">
     <!-- Background video: loops continuously at 30% opacity behind headline.
-         Reduced-motion users get only the poster image, never the video. -->
+         Reduced-motion users get only the poster image, never the video.
+         Mobile gets the 540p source via media-conditioned <source>; desktop gets 720p. -->
     <video
       id="hero-video"
       class="absolute inset-0 w-full h-full object-cover opacity-30 motion-reduce:hidden"
-      src="/videos/hero.mp4"
       poster="/videos/hero-poster.jpg"
       muted
       loop
@@ -28,7 +28,10 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
       playsinline
       preload="metadata"
       aria-hidden="true"
-    ></video>
+    >
+      <source src="/videos/hero-mobile.mp4" type="video/mp4" media="(max-width: 640px)" />
+      <source src="/videos/hero.mp4"        type="video/mp4" />
+    </video>
     <div
       class="absolute inset-0 bg-cover bg-center opacity-30 hidden motion-reduce:block"
       style="background-image: url('/videos/hero-poster.jpg');"
