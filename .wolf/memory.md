@@ -1407,3 +1407,11 @@
 | 22:44 | Edited webapp/src/pages/index.astro | expanded (+30 lines) | ~236 |
 | 22:44 | Session end: 4 writes across 1 files (index.astro) | 2 reads | ~5795 tok |
 | 22:50 | Hero cinematic intro: video starts at 85% opacity with light overlay, settles to calm 30% on first scroll/touch/click/focus or after 7s; text-shadow during intro for readability | webapp/src/pages/index.astro | Build pass | ~600 |
+| 22:52 | Session end: 4 writes across 1 files (index.astro) | 2 reads | ~5795 tok |
+| 22:54 | Session end: 4 writes across 1 files (index.astro) | 2 reads | ~5795 tok |
+| 23:00 | Session end: 4 writes across 1 files (index.astro) | 2 reads | ~5795 tok |
+| 23:02 | Edited webapp/src/pages/index.astro | modified function() | ~1244 |
+| 23:02 | Edited webapp/src/pages/index.astro | 4→4 lines | ~82 |
+| 23:02 | Edited webapp/src/pages/index.astro | reduced (-8 lines) | ~190 |
+| 23:02 | Session end: 7 writes across 1 files (index.astro) | 2 reads | ~7929 tok |
+| 23:05 | Hero full-bleed showcase: 90svh mobile / 85vh desktop, video at 85% static, content anchored at bottom on mobile, scroll-cue chip fades in at 2s + out on first scroll, scroll target #authorized-brands | webapp/src/pages/index.astro | Build pass | ~700 |

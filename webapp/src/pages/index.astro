@@ -14,12 +14,11 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
 
 <Layout title="JSDC Wheels — Premium Tires & Wheels in the GTA">
   <!-- Hero -->
-  <section id="hero-section" class="hero-section hero-intro relative overflow-hidden">
-    <!-- Background video plays cinematically at high opacity on load, then
-         "settles" to a calm 30% on first scroll / tap / search-focus so the
-         text becomes the focal point. Reduced-motion users skip the intro
-         and get only the poster image.
-         Mobile gets the 540p source via media-conditioned <source>. -->
+  <!-- Full-bleed showcase: video fills the viewport on mobile (90svh keeps the
+       phone's browser chrome in mind). Headline + search sit at the bottom of
+       the section over a thin gradient. A scroll-cue chip fades in after 2s
+       and out on first scroll. Reduced-motion users get the poster only. -->
+  <section id="hero-section" class="hero-section relative overflow-hidden min-h-[90svh] sm:min-h-[85vh] flex flex-col">
     <video
       id="hero-video"
       class="hero-video absolute inset-0 w-full h-full object-cover motion-reduce:hidden"
@@ -35,20 +34,19 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
       <source src="/videos/hero.mp4"        type="video/mp4" />
     </video>
     <div
-      class="absolute inset-0 bg-cover bg-center opacity-30 hidden motion-reduce:block"
+      class="absolute inset-0 bg-cover bg-center hidden motion-reduce:block"
       style="background-image: url('/videos/hero-poster.jpg');"
       aria-hidden="true"
     ></div>
-    <!-- Layered overlays: dark vignette + warm gold glow keep the headline crisp -->
-    <div class="hero-overlay absolute inset-0 bg-gradient-to-b from-dark-950/70 via-dark-950/80 to-dark-950"></div>
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary-600/10 rounded-full blur-3xl"></div>
+    <!-- Thin bottom gradient — leaves the upper half of the video uncovered so
+         the drift sequence reads first; only the headline strip is darkened. -->
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-dark-950/30 via-50% to-dark-950 pointer-events-none"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary-600/10 rounded-full blur-3xl pointer-events-none"></div>
     <script is:inline>
       (function () {
         var v = document.getElementById('hero-video');
-        var s = document.getElementById('hero-section');
-        if (!v || !s) return;
-        var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
+        var cue = document.getElementById('hero-scroll-cue');
+        if (!v) return;
         document.addEventListener('visibilitychange', function () {
           if (document.hidden) {
             v.pause();
@@ -57,39 +55,32 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
             if (p && p.catch) p.catch(function () {});
           }
         });
-
-        if (prefersReducedMotion) {
-          s.classList.remove('hero-intro');
-          return;
-        }
-
-        var settled = false;
-        function settle() {
-          if (settled) return;
-          settled = true;
-          s.classList.remove('hero-intro');
-        }
-        ['scroll', 'wheel', 'touchstart', 'pointerdown', 'keydown'].forEach(function (ev) {
-          window.addEventListener(ev, settle, { once: true, passive: true });
-        });
-        s.addEventListener('focusin', settle, { once: true });
-        // Auto-settle after 7s so a passive viewer eventually sees the calm state.
-        setTimeout(settle, 7000);
+        if (!cue) return;
+        var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
+        // Fade the cue in after 2s
+        setTimeout(function () { cue.classList.add('is-visible'); }, 2000);
+        // Fade it out on first scroll / tap
+        var hideCue = function () { cue.classList.remove('is-visible'); cue.classList.add('is-hidden'); };
+        window.addEventListener('scroll', hideCue, { once: true, passive: true });
+        window.addEventListener('touchstart', hideCue, { once: true, passive: true });
       })();
     </script>
 
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 pt-8 pb-10 sm:pt-20 sm:pb-20">
+    <!-- Content anchored to the bottom of the hero on mobile, vertically
+         centered on desktop. Pushes the search above the scroll cue. -->
+    <div class="relative z-10 flex-1 flex flex-col justify-end sm:justify-center max-w-7xl w-full mx-auto px-4 sm:px-6 pt-10 pb-16 sm:pt-20 sm:pb-20">
       <div class="text-center mb-6 sm:mb-10">
         <p class="text-primary-400 text-xs font-semibold uppercase tracking-[0.2em] mb-4 inline-flex items-center gap-2">
           <span class="h-px w-8 bg-primary-500/40"></span>
           Wholesale & Retail · GTA Distributor
           <span class="h-px w-8 bg-primary-500/40"></span>
         </p>
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-5 tracking-tight">
+        <h1 class="hero-headline text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-5 tracking-tight">
           Find the Perfect
           <span class="text-primary-400"> Tires & Wheels</span>
         </h1>
-        <p class="text-dark-300 text-lg sm:text-xl max-w-xl mx-auto">
+        <p class="hero-subhead text-dark-200 text-lg sm:text-xl max-w-xl mx-auto">
           {(Math.floor((stats.totalProducts || 6800) / 100) * 100).toLocaleString()}+ products from 40+ brands.
           Hub-centric fitment, 1-2 day delivery across the Greater Toronto Area.
         </p>
@@ -97,13 +88,27 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
 
       <HeroSearch client:load />
     </div>
+
+    <!-- Scroll-to-shop cue — small pill at the bottom of the hero with an
+         animated chevron. Fades in 2s after load, hides on first scroll/tap. -->
+    <a
+      id="hero-scroll-cue"
+      href="#authorized-brands"
+      class="hero-scroll-cue absolute bottom-4 left-1/2 -translate-x-1/2 z-20 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-dark-950/40 backdrop-blur-sm border border-white/10 text-white/80 text-[11px] font-semibold uppercase tracking-[0.18em] opacity-0 transition-opacity duration-700"
+      aria-label="Scroll to browse brands"
+    >
+      Scroll to shop
+      <svg class="w-3.5 h-3.5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+      </svg>
+    </a>
   </section>
 
   <!-- Authorized brands trust strip — wordmarks tinted with each brand's
        signature color and weight/italic treatment. We approximate the visual
        personality with Inter/Saira (the loaded fonts) rather than ship 8
        licensed brand fonts. -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-2">
+  <section id="authorized-brands" class="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-2 scroll-mt-20">
     <p class="text-center text-dark-500 text-[11px] font-semibold uppercase tracking-[0.22em] mb-5">
       <span class="inline-block w-6 h-px bg-dark-600 align-middle mr-3"></span>
       Authorized dealer of
@@ -260,31 +265,23 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
 </Layout>
 
 <style>
-  /* Default ("settled") state — calm, text-forward. Matches the prior design. */
+  /* Full-bleed showcase: video is the focal point at ~85% opacity. The
+     bottom gradient on the section handles legibility for the search band. */
   .hero-video {
-    opacity: 0.30;
-    transition: opacity 500ms ease;
-  }
-  .hero-overlay {
-    opacity: 1;
-    transition: opacity 500ms ease;
-  }
-  /* Cinematic intro — fires on first paint, lifts on first user intent. */
-  .hero-section.hero-intro .hero-video {
     opacity: 0.85;
   }
-  .hero-section.hero-intro .hero-overlay {
-    opacity: 0.35;
+  /* Text-shadow keeps headline + subhead legible against any video frame —
+     the bottom gradient only kicks in for the lower half of the section. */
+  .hero-section .hero-headline,
+  .hero-section .hero-subhead {
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.80), 0 1px 3px rgba(0, 0, 0, 0.50);
   }
-  /* Text-shadow only during the bright intro so the headline survives any
-     frame of the video. Removed once the dark overlay returns. */
-  .hero-section.hero-intro h1,
-  .hero-section.hero-intro p {
-    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.75);
-    transition: text-shadow 500ms ease;
+  /* Scroll-cue visibility states. JS toggles is-visible / is-hidden. */
+  .hero-scroll-cue.is-visible {
+    opacity: 1;
   }
-  .hero-section h1,
-  .hero-section p {
-    transition: text-shadow 500ms ease;
+  .hero-scroll-cue.is-hidden {
+    opacity: 0;
+    pointer-events: none;
   }
 </style>
