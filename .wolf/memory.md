@@ -1401,3 +1401,9 @@
 | 22:02 | Session end: 2 writes across 1 files (index.astro) | 1 reads | ~3722 tok |
 | 22:05 | Hero video swap: encoded Corvette_Drift.mp4 (36MB) to 540x960 mobile MP4 (779KB) + 720x1280 desktop MP4 (1.54MB) + poster (55KB); media-conditioned <source> tags in index.astro | webapp/public/videos/hero*.mp4, webapp/public/videos/hero-poster.jpg, webapp/src/pages/index.astro | Build pass (444s, 14450 pages) | ~700 |
 | 22:05 | Session end: 2 writes across 1 files (index.astro) | 1 reads | ~3722 tok |
+| 22:37 | Session end: 2 writes across 1 files (index.astro) | 2 reads | ~4504 tok |
+| 22:39 | Session end: 2 writes across 1 files (index.astro) | 2 reads | ~4504 tok |
+| 22:44 | Edited webapp/src/pages/index.astro | added 1 condition(s) | ~707 |
+| 22:44 | Edited webapp/src/pages/index.astro | expanded (+30 lines) | ~236 |
+| 22:44 | Session end: 4 writes across 1 files (index.astro) | 2 reads | ~5795 tok |
+| 22:50 | Hero cinematic intro: video starts at 85% opacity with light overlay, settles to calm 30% on first scroll/touch/click/focus or after 7s; text-shadow during intro for readability | webapp/src/pages/index.astro | Build pass | ~600 |
