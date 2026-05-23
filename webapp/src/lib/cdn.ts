@@ -4,6 +4,11 @@
 // catalogue updates (re-scrape -> git push) reach the live site without a
 // Cloudflare Pages rebuild. Only code/template changes trigger a rebuild.
 //
+// Touching this file is also the documented escape hatch when Cloudflare's
+// edge cache pins a bad response for a hydration bundle: a new commit
+// changes the content hash of every chunk that imports this module, which
+// forces a fresh asset URL the browser has never requested before.
+//
 // In dev (when PROD=false) the base is empty, so paths resolve to
 // webapp/public/ via the local dev server. In prod it points at jsDelivr
 // pinned to a branch. Override either by setting PUBLIC_CDN_BASE.
