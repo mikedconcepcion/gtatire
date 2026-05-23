@@ -231,7 +231,15 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
   const [selectedWheelId, setSelectedWheelId] = useState<string>('');
   const [vehicleColor, setVehicleColor] = useState('default');
   const [vehicleAngle, setVehicleAngle] = useState('01');
-  const [mode, setMode] = useState<BuilderMode>('package');
+  // Default mode reflects what's available. If only one category fits the
+  // vehicle (common when tire-fitment data lags wheel-fitment by a model
+  // year), start in that mode so the user sees relevant products immediately.
+  const hasWheelsData = wheels.length > 0;
+  const hasTiresData = tires.length > 0;
+  const initialMode: BuilderMode = hasWheelsData && hasTiresData
+    ? 'package'
+    : hasTiresData ? 'tires-only' : 'wheels-only';
+  const [mode, setMode] = useState<BuilderMode>(initialMode);
   const includeTires = mode !== 'wheels-only';
   const includeWheels = mode !== 'tires-only';
   // Initial state: horizontal recommendation strip (curated top picks). Any
@@ -402,25 +410,29 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
               </span>
             </div>
 
-            {/* Mode toggle — package / tires only / wheels only */}
-            <div className="flex items-center gap-1.5 mb-2 flex-wrap">
-              <span className="text-dark-500 text-[10px] font-medium mr-1 uppercase tracking-wide">Build</span>
-              {([
-                { id: 'package', label: 'Tires + Wheels', icon: 'pkg' },
-                { id: 'tires-only', label: 'Tires Only', icon: 'tire' },
-                { id: 'wheels-only', label: 'Wheels Only', icon: 'wheel' },
-              ] as const).map(m => (
-                <button
-                  key={m.id}
-                  onClick={() => setMode(m.id)}
-                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-semibold transition-all ${
-                    mode === m.id ? 'bg-primary-600 text-white' : 'bg-dark-800/60 text-dark-400 hover:text-white'
-                  }`}
-                >
-                  {m.label}
-                </button>
-              ))}
-            </div>
+            {/* Mode toggle — only render when the user has a real choice.
+                If only wheels OR only tires fit the vehicle, mode is forced
+                and the toggle would be a single-option no-op. */}
+            {hasWheelsData && hasTiresData && (
+              <div className="flex items-center gap-1.5 mb-2 flex-wrap">
+                <span className="text-dark-500 text-[10px] font-medium mr-1 uppercase tracking-wide">Build</span>
+                {([
+                  { id: 'package', label: 'Tires + Wheels', icon: 'pkg' },
+                  { id: 'tires-only', label: 'Tires Only', icon: 'tire' },
+                  { id: 'wheels-only', label: 'Wheels Only', icon: 'wheel' },
+                ] as const).map(m => (
+                  <button
+                    key={m.id}
+                    onClick={() => setMode(m.id)}
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-semibold transition-all ${
+                      mode === m.id ? 'bg-primary-600 text-white' : 'bg-dark-800/60 text-dark-400 hover:text-white'
+                    }`}
+                  >
+                    {m.label}
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* Tier filter — affects both tires and wheels */}
             <div className="flex items-center gap-1.5 mb-3 flex-wrap">

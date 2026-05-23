@@ -752,7 +752,11 @@ export default function SmartSearchResults() {
             ))}
           </div>
         </div>
-      ) : query && searchType === 'vehicle' && hasBothCategories ? (
+      ) : query && searchType === 'vehicle' ? (
+        // Vehicle searches always get the rich card with car image + OE
+        // fitment + recommendations, even when only wheels OR only tires
+        // happen to match (e.g. tire-fitment data hasn't caught up to a
+        // recently-added model year). VPB auto-selects its mode internally.
         <VehiclePackageBuilder
           vehicleLabel={searchLabel?.replace('Fits ', '') || ''}
           vehicleMake={detectedMake}
