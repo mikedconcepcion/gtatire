@@ -336,16 +336,13 @@ export default function WeatherChip({ variant = 'both' }: { variant?: Variant } 
       <button
         type="button"
         onClick={() => setOpen(o => !o)}
-        className={`relative inline-flex items-center justify-center w-10 h-10 rounded-lg border text-white shadow-md transition-colors ${mobileStyle}`}
+        className={`inline-flex flex-col items-center justify-center w-12 h-10 rounded-lg border text-white shadow-md transition-colors leading-none gap-0.5 ${mobileStyle}`}
         aria-label={`Weather in ${snap?.cityName}: ${snap?.conditionText || 'unknown'}`}
         aria-expanded={open}
       >
-        <WeatherGlyph code={snap?.iconCode ?? null} className="w-5 h-5" />
-        {/* Temp badge */}
+        <WeatherGlyph code={snap?.iconCode ?? null} className="w-3.5 h-3.5 opacity-90" />
         {snap?.tempC != null && (
-          <span className="absolute -bottom-1 -right-1 bg-white text-dark-900 text-[10px] font-bold rounded-md px-1 leading-tight border border-dark-900/10 shadow-sm">
-            {Math.round(snap.tempC)}°
-          </span>
+          <span className="text-sm font-extrabold tracking-tight">{Math.round(snap.tempC)}°</span>
         )}
       </button>
       )}
