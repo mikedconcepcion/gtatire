@@ -29,19 +29,12 @@ function formatMake(make: string): string {
   return map[make] || make.charAt(0) + make.slice(1).toLowerCase();
 }
 
-function formatModel(model: string): string {
-  return model.split(' ').map(w =>
-    w.length <= 3 ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
-  ).join(' ');
-}
+import { getVehicleImgUrl } from '../lib/vehicle-img';
 
-function getCarUrl(make: string, model: string, year: string, angle: string, paintId?: string): string {
-  const params = new URLSearchParams({
-    customer: 'img', make: formatMake(make), modelFamily: formatModel(model),
-    modelYear: year, angle, width: '800', fileType: 'png',
-  });
-  if (paintId && paintId !== 'default') params.set('paintId', paintId);
-  return `https://cdn.imagin.studio/getImage?${params.toString()}`;
+// Local templates have a single 3/4-front angle, no color variants. Picker
+// args are kept for signature compatibility but unused.
+function getCarUrl(make: string, model: string, year: string, _angle?: string, _paintId?: string): string {
+  return getVehicleImgUrl(make, model, year);
 }
 
 // Get unique makes from vehicles for the vehicle picker

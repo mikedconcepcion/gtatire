@@ -37,26 +37,12 @@ function formatMake(make: string): string {
   return make.charAt(0) + make.slice(1).toLowerCase();
 }
 
-// Map model names to IMAGIN.studio modelFamily format
-function formatModel(model: string): string {
-  // IMAGIN uses modelFamily like "Civic", "RAV4", "F-150"
-  return model.split(' ').map(w =>
-    w.length <= 3 ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
-  ).join(' ');
-}
+import { getVehicleImgUrl } from '../lib/vehicle-img';
 
-function getCarImageUrl(make: string, model: string, year: string, angle: string, paintId?: string): string {
-  const params = new URLSearchParams({
-    customer: 'img',
-    make: formatMake(make),
-    modelFamily: formatModel(model),
-    modelYear: year,
-    angle,
-    width: '800',
-    fileType: 'png',
-  });
-  if (paintId && paintId !== 'default') params.set('paintId', paintId);
-  return `https://cdn.imagin.studio/getImage?${params.toString()}`;
+// Local templates have a single 3/4-front angle, no color variants. Picker
+// args are kept for signature compatibility but not used.
+function getCarImageUrl(make: string, model: string, year: string, _angle?: string, _paintId?: string): string {
+  return getVehicleImgUrl(make, model, year);
 }
 
 export default function WheelVisualizer({ vehicleMake, vehicleModel, vehicleYear, wheelImage, wheelName }: Props) {

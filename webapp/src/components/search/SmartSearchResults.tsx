@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import Fuse from 'fuse.js';
 import VehiclePackageBuilder from './VehiclePackageBuilder';
 import { cdnUrl } from '../../lib/cdn';
+import { getVehicleImgUrl } from '../../lib/vehicle-img';
 
 interface Product {
   id: string;
@@ -827,18 +828,13 @@ export default function SmartSearchResults() {
             if (!cheapWheel || !cheapTire) return null;
             const pkgPrice = (cheapWheel.priceNum + cheapTire.priceNum) * 4;
 
-            // Build vehicle image URL if we have make/model
-            const makeMap: Record<string, string> = {
-              'MERCEDES': 'Mercedes-Benz', 'LAND ROVER': 'Land Rover',
-              'ALFA ROMEO': 'Alfa Romeo',
-            };
-            const fmtMake = makeMap[detectedMake] || (detectedMake ? detectedMake.charAt(0) + detectedMake.slice(1).toLowerCase() : '');
+            // Build vehicle image URL (local template, no IMAGIN). Display labels
+            // stay capitalised for the alt text; URL uses UPPER-HYPHEN format.
+            const fmtMake = detectedMake ? detectedMake.charAt(0) + detectedMake.slice(1).toLowerCase() : '';
             const fmtModel = detectedModel ? detectedModel.split(' ').map((w: string) =>
               w.length <= 3 ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
             ).join(' ') : '';
-            const vehicleImgUrl = fmtMake && fmtModel
-              ? `https://cdn.imagin.studio/getImage?customer=img&make=${encodeURIComponent(fmtMake)}&modelFamily=${encodeURIComponent(fmtModel)}&modelYear=${detectedYear || '2025'}&angle=01&width=600&fileType=png`
-              : '';
+            const vehicleImgUrl = getVehicleImgUrl(detectedMake, detectedModel, detectedYear || '2025');
 
             return (
               <div className="bg-gradient-to-r from-primary-900/30 via-dark-900 to-primary-900/20 border border-primary-700/30 rounded-xl overflow-hidden mb-6">

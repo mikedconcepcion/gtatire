@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import InquiryButton from '../InquiryButton';
+import { getVehicleImgUrl } from '../../lib/vehicle-img';
 
 interface Product {
   id: string;
@@ -30,23 +31,6 @@ interface Props {
   wheels: Product[];
   tires: Product[];
   seasonCounts: Record<string, number>;
-}
-
-const MAKE_MAP: Record<string, string> = {
-  'MERCEDES': 'Mercedes-Benz', 'LAND ROVER': 'Land Rover', 'ALFA ROMEO': 'Alfa Romeo',
-};
-
-const VEHICLE_COLORS = [
-  { id: 'default', label: 'Silver', swatch: '#C0C0C0' },
-  { id: 'pspc0014', label: 'Black', swatch: '#1a1a1a' },
-  { id: 'pspc0087', label: 'Red', swatch: '#cc2a36' },
-  { id: 'pspc0071', label: 'Blue', swatch: '#2a5cc7' },
-  { id: 'pspc0066', label: 'White', swatch: '#f0f0f0' },
-  { id: 'pspc0074', label: 'Grey', swatch: '#6b6b6b' },
-];
-
-function fmtMake(make: string) {
-  return MAKE_MAP[make] || (make ? make.charAt(0) + make.slice(1).toLowerCase() : '');
 }
 
 type TierFilter = 'all' | 'budget' | 'performance' | 'premium';
@@ -109,24 +93,6 @@ function diversifyMix<T extends { priceNum: number; brand: string }>(items: T[],
   }
 
   return picked.sort((a, b) => a.priceNum - b.priceNum);
-}
-
-function fmtModel(model: string) {
-  return model ? model.split(' ').map(w =>
-    w.length <= 3 ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
-  ).join(' ') : '';
-}
-
-function getVehicleImgUrl(make: string, model: string, year: string, angle = '01', paintId = 'default') {
-  const mk = fmtMake(make);
-  const md = fmtModel(model);
-  if (!mk || !md) return '';
-  const params = new URLSearchParams({
-    customer: 'img', make: mk, modelFamily: md,
-    modelYear: year || '2025', angle, width: '1200', fileType: 'png',
-  });
-  if (paintId && paintId !== 'default') params.set('paintId', paintId);
-  return `https://cdn.imagin.studio/getImage?${params.toString()}`;
 }
 
 // Strict "in stock" — physical inventory only. "Available" and "Contact us"
@@ -229,8 +195,6 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
   const [tier, setTier] = useState<TierFilter>('all');
   const [selectedTireId, setSelectedTireId] = useState<string>('');
   const [selectedWheelId, setSelectedWheelId] = useState<string>('');
-  const [vehicleColor, setVehicleColor] = useState('default');
-  const [vehicleAngle, setVehicleAngle] = useState('01');
   // Default mode reflects what's available. If only one category fits the
   // vehicle (common when tire-fitment data lags wheel-fitment by a model
   // year), start in that mode so the user sees relevant products immediately.
@@ -261,7 +225,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
     setTiresExpanded(true); setWheelsExpanded(true);
   }
 
-  const vehicleImgUrl = getVehicleImgUrl(vehicleMake, vehicleModel, vehicleYear, vehicleAngle, vehicleColor);
+  const vehicleImgUrl = getVehicleImgUrl(vehicleMake, vehicleModel, vehicleYear);
   const base = typeof import.meta !== 'undefined' ? (import.meta as any).env?.BASE_URL || '' : '';
 
   // In-stock universe for counts + filters
@@ -358,43 +322,17 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
       {/* ── Vehicle header + Package summary (sticky under the site header) ── */}
       <div className="bg-dark-950 border border-primary-700/30 rounded-xl overflow-hidden mb-5 sticky top-16 z-30 shadow-2xl shadow-black/60 backdrop-blur-md">
         <div className="flex flex-col">
-          {/* Vehicle image with controls — full width */}
+          {/* Vehicle image — local template, no color/angle controls yet */}
           {vehicleImgUrl && (
-            <div className="bg-gradient-to-br from-dark-800/50 to-dark-900 relative">
+            <div className="bg-gradient-to-br from-dark-800/50 to-dark-900">
               <div className="flex items-center justify-center p-3 h-32 sm:h-40 lg:h-48">
-                <img src={vehicleImgUrl} alt={vehicleLabel} className="max-w-full max-h-full object-contain" loading="lazy" />
-              </div>
-              {/* Color swatches */}
-              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 bg-dark-900/80 backdrop-blur rounded-full px-2.5 py-1.5">
-                {VEHICLE_COLORS.map(c => (
-                  <button
-                    key={c.id}
-                    onClick={() => setVehicleColor(c.id)}
-                    title={c.label}
-                    className={`w-5 h-5 rounded-full border-2 transition-all ${
-                      vehicleColor === c.id ? 'border-primary-400 scale-110' : 'border-dark-600 hover:border-dark-400'
-                    }`}
-                    style={{ backgroundColor: c.swatch }}
-                  />
-                ))}
-              </div>
-              {/* Angle toggle */}
-              <div className="absolute top-2 right-2 flex gap-1 bg-dark-900/80 backdrop-blur rounded-lg p-0.5">
-                {[
-                  { id: '01', label: '3/4' },
-                  { id: '05', label: 'Side' },
-                  { id: '09', label: 'Rear' },
-                ].map(a => (
-                  <button
-                    key={a.id}
-                    onClick={() => setVehicleAngle(a.id)}
-                    className={`px-2 py-0.5 rounded text-[9px] font-medium transition-all ${
-                      vehicleAngle === a.id ? 'bg-primary-600 text-white' : 'text-dark-400 hover:text-white'
-                    }`}
-                  >
-                    {a.label}
-                  </button>
-                ))}
+                <img
+                  src={vehicleImgUrl}
+                  alt={vehicleLabel}
+                  className="max-w-full max-h-full object-contain"
+                  loading="lazy"
+                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                />
               </div>
             </div>
           )}
