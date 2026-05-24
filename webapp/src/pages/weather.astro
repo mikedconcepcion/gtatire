@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WeatherPage from '../components/WeatherPage.tsx';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'GTA Weather & Drive-Safe Conditions',
+  description:
+    'Live Greater Toronto Area weather, multi-day forecasts, and active weather alerts. Drive-safe guidance for cold weather, snow, and freezing rain — sourced from Environment Canada.',
+  url: 'https://jsdcwheels.ca/weather',
+  about: {
+    '@type': 'Thing',
+    name: 'Weather and road conditions in the Greater Toronto Area',
+  },
+  publisher: {
+    '@type': 'AutoPartsStore',
+    name: 'JSDC Wheels',
+    url: 'https://jsdcwheels.ca/',
+  },
+  citation: {
+    '@type': 'Dataset',
+    name: 'Environment and Climate Change Canada — MSC GeoMet',
+    url: 'https://eccc-msc.github.io/open-data/',
+    license: 'https://open.canada.ca/en/open-government-licence-canada',
+  },
+};
+---
+
+<Layout
+  title="GTA Weather & Drive-Safe Conditions | JSDC Wheels"
+  description="Live Greater Toronto Area weather, forecasts, and active alerts — plus drive-safe guidance on tire performance in cold, snow, and freezing rain. Public service from JSDC Wheels using Environment Canada data."
+  keywords="Toronto weather, GTA weather, weather alerts Toronto, winter driving Ontario, snow forecast GTA, freezing rain Toronto, winter tires, tire pressure cold weather, 7 degree rule"
+  jsonLd={jsonLd}
+>
+  <WeatherPage client:load />
+</Layout>
