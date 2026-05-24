@@ -841,7 +841,7 @@ export default function SmartSearchResults() {
                 <div className="flex flex-col sm:flex-row">
                   {/* Vehicle image */}
                   {vehicleImgUrl && (
-                    <div className="sm:w-64 h-36 sm:h-auto bg-gradient-to-br from-dark-800 to-dark-900 flex items-center justify-center p-2 shrink-0">
+                    <div className="sm:w-80 h-44 sm:h-auto bg-white flex items-center justify-center p-3 shrink-0">
                       <img src={vehicleImgUrl} alt={`${fmtMake} ${fmtModel}`} className="max-w-full max-h-full object-contain" loading="lazy" />
                     </div>
                   )}

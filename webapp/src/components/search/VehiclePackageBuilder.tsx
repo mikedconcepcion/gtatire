@@ -322,10 +322,11 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
       {/* ── Vehicle header + Package summary (sticky under the site header) ── */}
       <div className="bg-dark-950 border border-primary-700/30 rounded-xl overflow-hidden mb-5 sticky top-16 z-30 shadow-2xl shadow-black/60 backdrop-blur-md">
         <div className="flex flex-col">
-          {/* Vehicle image — local template, no color/angle controls yet */}
+          {/* Vehicle image — local template. White background matches the
+              templates' white BG so the seam doesn't show. Taller image. */}
           {vehicleImgUrl && (
-            <div className="bg-gradient-to-br from-dark-800/50 to-dark-900">
-              <div className="flex items-center justify-center p-3 h-32 sm:h-40 lg:h-48">
+            <div className="bg-white">
+              <div className="flex items-center justify-center p-4 h-48 sm:h-64 lg:h-80">
                 <img
                   src={vehicleImgUrl}
                   alt={vehicleLabel}
