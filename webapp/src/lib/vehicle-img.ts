@@ -12,6 +12,12 @@ function normalize(s: string | undefined): string {
   return s.trim().toUpperCase().replace(/\s+/g, '-');
 }
 
+// Catalogue covers 2012–2025; default to the most recent year with full
+// coverage when the caller has no year (e.g. "Toyota RAV4" search without
+// a year token). The image's onError handler in the consumer hides it
+// silently if no template exists for that year.
+const DEFAULT_YEAR = '2025';
+
 export function getVehicleImgUrl(
   make: string | undefined,
   model: string | undefined,
@@ -19,7 +25,7 @@ export function getVehicleImgUrl(
 ): string {
   const mk = normalize(make);
   const md = normalize(model);
-  const yr = String(year ?? '').trim();
-  if (!mk || !md || !yr) return '';
+  const yr = String(year ?? '').trim() || DEFAULT_YEAR;
+  if (!mk || !md) return '';
   return cdnUrl(`/images/vehicles/${yr}-${mk}-${md}.jpg`);
 }
