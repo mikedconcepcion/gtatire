@@ -14,7 +14,13 @@ import { useEffect, useRef, useState } from 'react';
 const BASE = import.meta.env.BASE_URL?.replace(/\/$/, '') || '';
 const API = 'https://api.weather.gc.ca/collections';
 const CACHE_KEY = 'jsdc_weather_v1';
-const CACHE_MS = 15 * 60 * 1000;
+// Cache used purely for instant paint via stale-while-revalidate — every
+// page load also kicks off a background refetch. After this window, cache
+// is treated as fully stale and skipped entirely on cold paint.
+const CACHE_MS = 30 * 60 * 1000;
+// On tab focus, refetch if cache is older than this. Keeps the chip in
+// sync with the /weather page even if the user leaves the tab open all day.
+const REFETCH_ON_FOCUS_MS = 2 * 60 * 1000;
 const GEO_KEY = 'jsdc_weather_city';
 // Below this temp (Celsius), winter tire compounds outperform all-seasons.
 // Industry standard cited by Kal Tire, Tire Rack, Michelin.
@@ -213,11 +219,22 @@ export default function WeatherChip({ variant = 'both' }: { variant?: Variant } 
   const [failed, setFailed] = useState(false);
   const popRef = useRef<HTMLDivElement | null>(null);
 
+  // Stale-while-revalidate: cache is for instant paint only, every load()
+  // call also kicks off a background refetch so the chip stays in sync with
+  // /weather (which has no cache and always fetches fresh).
   async function load(cityId: string, cityFallbackName: string) {
     const cached = readCache(cityId);
-    if (cached) { setSnap(cached); setLoading(false); return; }
+    if (cached) {
+      setSnap(cached);
+      setLoading(false);
+      // fall through — also refetch in background
+    }
     const [city, alert] = await Promise.all([fetchCity(cityId), fetchGtaAlert()]);
-    if (!city) { setFailed(true); setLoading(false); return; }
+    if (!city) {
+      if (!cached) setFailed(true);
+      setLoading(false);
+      return;
+    }
     const next: Snapshot = {
       cityId,
       cityName: city.cityName || cityFallbackName,
@@ -247,6 +264,18 @@ export default function WeatherChip({ variant = 'both' }: { variant?: Variant } 
       }
     } catch {}
     load(initialId, initialName);
+
+    // Refetch when user returns to the tab (catches the "left it open all
+    // day, came back, why is the temp from this morning?" case).
+    function onVisible() {
+      if (document.visibilityState !== 'visible') return;
+      const cached = readCache(initialId);
+      if (!cached || Date.now() - cached.fetchedAt > REFETCH_ON_FOCUS_MS) {
+        load(initialId, initialName);
+      }
+    }
+    document.addEventListener('visibilitychange', onVisible);
+    return () => document.removeEventListener('visibilitychange', onVisible);
   }, []);
 
   // Close popover on outside click / Escape

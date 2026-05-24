@@ -170,12 +170,48 @@ function isWinterTire(p: Product) {
   const t = (p.wheelType || '').toLowerCase();
   return t.includes('winter') || t.includes('snow');
 }
+function isAllSeasonTire(p: Product) {
+  const t = (p.wheelType || '').toLowerCase();
+  return t.includes('all season') || t.includes('all-season') || t.includes('all weather');
+}
+
+// Pick 6 tires diversified by brand from the supplied list.
+function pickDiverse(list: Product[], n: number): Product[] {
+  const byBrand: Record<string, Product[]> = {};
+  for (const p of list) {
+    const b = p.brand || 'Other';
+    if (!byBrand[b]) byBrand[b] = [];
+    byBrand[b].push(p);
+  }
+  const picks: Product[] = [];
+  const brands = Object.keys(byBrand).sort((a, b) => byBrand[b].length - byBrand[a].length);
+  while (picks.length < n && brands.length > 0) {
+    for (const b of brands) {
+      if (byBrand[b].length === 0) continue;
+      byBrand[b].sort((x, y) => x.priceNum - y.priceNum);
+      picks.push(byBrand[b].shift()!);
+      if (picks.length >= n) break;
+    }
+    for (let i = brands.length - 1; i >= 0; i--) if (byBrand[brands[i]].length === 0) brands.splice(i, 1);
+  }
+  return picks;
+}
+
+// A few popular GTA vehicles for quick-pick chips on the search section.
+// Picked from common-sales models — gives users a 1-tap path without typing.
+const POPULAR_VEHICLES = [
+  { label: '2024 Honda Civic',     q: '2024 Honda Civic' },
+  { label: '2023 Toyota RAV4',     q: '2023 Toyota RAV4' },
+  { label: '2024 Tesla Model Y',   q: '2024 Tesla Model Y' },
+  { label: '2023 Ford F-150',      q: '2023 Ford F-150' },
+];
 
 export default function WeatherPage() {
   const [cities, setCities] = useState<Record<string, CityWeather | null>>({});
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [activeCity, setActiveCity] = useState<string>('on-143');
   const [winterTires, setWinterTires] = useState<Product[]>([]);
+  const [allSeasonTires, setAllSeasonTires] = useState<Product[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -190,37 +226,18 @@ export default function WeatherPage() {
       setCities(map);
       setAlerts(alertList);
 
-      // Fetch a small slice of winter tires to surface contextually.
+      // Fetch winter + all-season picks to surface contextually based on
+      // current conditions (page is never a dead end).
       try {
         const res = await fetch(cdnUrl('/data/products.json'));
         if (res.ok) {
           const all: Product[] = await res.json();
-          const inStockWinter = all.filter(p =>
+          const inStock = (p: Product) =>
             p.category === 'tire' &&
-            isWinterTire(p) &&
             /in stock|^\d+/i.test(p.stock || '') &&
-            p.priceNum > 0
-          );
-          // Diversify by brand and price: shuffle by brand bucket, sort by price asc, take 6
-          const byBrand: Record<string, Product[]> = {};
-          for (const p of inStockWinter) {
-            const b = p.brand || 'Other';
-            if (!byBrand[b]) byBrand[b] = [];
-            byBrand[b].push(p);
-          }
-          const picks: Product[] = [];
-          const brands = Object.keys(byBrand).sort((a, b) => byBrand[b].length - byBrand[a].length);
-          while (picks.length < 6 && brands.length > 0) {
-            for (const b of brands) {
-              if (byBrand[b].length === 0) continue;
-              byBrand[b].sort((x, y) => x.priceNum - y.priceNum);
-              picks.push(byBrand[b].shift()!);
-              if (picks.length >= 6) break;
-            }
-            // Drop empty brand buckets so the loop terminates
-            for (let i = brands.length - 1; i >= 0; i--) if (byBrand[brands[i]].length === 0) brands.splice(i, 1);
-          }
-          setWinterTires(picks);
+            p.priceNum > 0;
+          setWinterTires(pickDiverse(all.filter(p => inStock(p) && isWinterTire(p)), 6));
+          setAllSeasonTires(pickDiverse(all.filter(p => inStock(p) && isAllSeasonTire(p)), 6));
         }
       } catch { /* product strip silently absent */ }
 
@@ -461,6 +478,59 @@ export default function WeatherPage() {
         </div>
       </section>
 
+      {/* FIND-MY-TIRES TOOL ====================================== */}
+      {/* Not a CTA — just a tool. Sits here as the natural bridge from
+          "you've seen the weather" to "here's what fits your car". */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-8 sm:pb-12">
+        <div className="rounded-xl bg-gradient-to-br from-primary-900/30 via-dark-800/60 to-dark-800/60 border border-primary-600/30 p-6 sm:p-8">
+          <div className="flex flex-col md:flex-row md:items-end gap-4 md:gap-8">
+            <div className="md:flex-1">
+              <div className="text-primary-400 text-xs font-semibold uppercase tracking-[0.2em] mb-2">Find what fits</div>
+              <h2 className="text-xl sm:text-2xl font-bold text-white">Tires for your vehicle</h2>
+              <p className="text-dark-300 text-sm mt-1.5 max-w-lg">
+                Type your year, make, and model — or a tire size, brand, or part number. We'll show what fits and what's in stock.
+              </p>
+            </div>
+            <form action={`${BASE}/search/`} method="get" className="md:w-2/5 flex gap-2">
+              <div className="relative flex-1">
+                <input
+                  type="text"
+                  name="q"
+                  required
+                  placeholder="2024 Toyota Camry · 235/65R17 · Michelin"
+                  className="w-full bg-dark-950/70 border border-primary-600/40 hover:border-primary-500/60 focus:border-primary-400 text-white rounded-lg pl-10 pr-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/50 placeholder:text-dark-500"
+                />
+                <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <button type="submit" className="bg-primary-600 hover:bg-primary-500 active:bg-primary-700 text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition-colors">
+                Search
+              </button>
+            </form>
+          </div>
+
+          {/* Popular vehicle quick-picks — zero-typing path */}
+          <div className="mt-5 pt-5 border-t border-dark-700/40">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-dark-500 text-xs font-semibold uppercase tracking-wider mr-1">Popular:</span>
+              {POPULAR_VEHICLES.map(v => (
+                <a
+                  key={v.q}
+                  href={`${BASE}/search/?q=${encodeURIComponent(v.q)}`}
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-dark-800/80 hover:bg-primary-600/20 border border-dark-700/60 hover:border-primary-500/50 text-dark-200 hover:text-white text-xs font-medium transition-colors"
+                >
+                  {v.label}
+                </a>
+              ))}
+              <a href={`${BASE}/wheels`} className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-dark-800/80 hover:bg-primary-600/20 border border-dark-700/60 hover:border-primary-500/50 text-dark-200 hover:text-white text-xs font-medium transition-colors">
+                Browse wheels →
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* DRIVE-SAFE EDUCATIONAL =================================== */}
       <section className="bg-dark-900/60 border-y border-dark-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
@@ -471,69 +541,102 @@ export default function WeatherPage() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-            <article className="rounded-xl bg-dark-800/60 border border-dark-700/50 p-5">
+            <article className="rounded-xl bg-dark-800/60 border border-dark-700/50 p-5 flex flex-col">
               <div className="text-sky-400 text-3xl font-bold">7°C</div>
               <h3 className="text-white font-semibold mt-2">The temperature rule</h3>
-              <p className="text-dark-300 text-sm mt-2 leading-relaxed">
+              <p className="text-dark-300 text-sm mt-2 leading-relaxed flex-1">
                 Below 7°C, all-season rubber stiffens. Winter compounds stay flexible — so they grip cold, dry pavement <em>and</em> snow. Industry standard cited by Michelin, Bridgestone, and Tire Rack.
               </p>
+              <a href={`${BASE}/winter-tires`} className="inline-flex items-center gap-1 text-sky-300 hover:text-sky-200 text-xs font-semibold mt-3">
+                Browse winter tires
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.4}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+              </a>
             </article>
 
-            <article className="rounded-xl bg-dark-800/60 border border-dark-700/50 p-5">
+            <article className="rounded-xl bg-dark-800/60 border border-dark-700/50 p-5 flex flex-col">
               <div className="text-amber-400 text-3xl font-bold">−1 PSI</div>
               <h3 className="text-white font-semibold mt-2">Per 5°C drop</h3>
-              <p className="text-dark-300 text-sm mt-2 leading-relaxed">
+              <p className="text-dark-300 text-sm mt-2 leading-relaxed flex-1">
                 Tire pressure falls about 1 PSI for every 5°C the temperature drops. Cold mornings = soft tires = more wear and worse handling. Check pressure when the season turns.
               </p>
+              <a href={`${BASE}/search`} className="inline-flex items-center gap-1 text-amber-300 hover:text-amber-200 text-xs font-semibold mt-3">
+                Find tires for your vehicle
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.4}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+              </a>
             </article>
 
-            <article className="rounded-xl bg-dark-800/60 border border-dark-700/50 p-5">
+            <article className="rounded-xl bg-dark-800/60 border border-dark-700/50 p-5 flex flex-col">
               <div className="text-emerald-400 text-3xl font-bold">~5%</div>
               <h3 className="text-white font-semibold mt-2">Ontario insurance discount</h3>
-              <p className="text-dark-300 text-sm mt-2 leading-relaxed">
+              <p className="text-dark-300 text-sm mt-2 leading-relaxed flex-1">
                 Ontario insurers offer a discount (typically ~5%) for vehicles fitted with winter tires from approximately Oct 1 to Apr 30. Ask your provider for specifics — JSDC supplies the tires.
               </p>
+              <a href={`${BASE}/winter-tires`} className="inline-flex items-center gap-1 text-emerald-300 hover:text-emerald-200 text-xs font-semibold mt-3">
+                See eligible winter tires
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.4}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+              </a>
             </article>
           </div>
         </div>
       </section>
 
-      {/* CONTEXTUAL PRODUCT STRIP — only when relevant ============ */}
-      {(isCold || hasWinterAlert) && winterTires.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-          <div className="flex items-end justify-between gap-4 mb-5">
-            <div>
-              <div className="text-primary-400 text-xs font-semibold uppercase tracking-[0.2em] mb-1">
-                {hasWinterAlert ? 'Recommended for current alert' : 'Cold weather picks'}
+      {/* ALWAYS-ON CONTEXTUAL PRODUCT STRIP =======================
+          Adapts to conditions so the page is never a dead-end:
+            - cold or active winter alert → winter tire picks
+            - everything else            → all-season picks
+          Tone stays informational — picks are diversified by brand and
+          sorted cheapest-first so it reads as "here's what's available",
+          not a sales pitch. */}
+      {((isCold || hasWinterAlert) ? winterTires : allSeasonTires).length > 0 && (() => {
+        const showWinter = isCold || hasWinterAlert;
+        const picks = showWinter ? winterTires : allSeasonTires;
+        const kicker = hasWinterAlert
+          ? 'Recommended for the current alert'
+          : showWinter
+            ? 'Cold weather picks'
+            : 'Year-round picks';
+        const heading = showWinter ? 'Winter tires in stock now' : 'All-season tires in stock now';
+        const allLink = showWinter ? '/winter-tires' : '/all-season-tires';
+        const allLabel = showWinter ? 'See all winter tires' : 'See all all-season tires';
+        return (
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+            <div className="flex items-end justify-between gap-4 mb-5">
+              <div>
+                <div className="text-primary-400 text-xs font-semibold uppercase tracking-[0.2em] mb-1">{kicker}</div>
+                <h2 className="text-xl sm:text-2xl font-bold text-white">{heading}</h2>
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-white">Winter tires in stock now</h2>
+              <a href={`${BASE}${allLink}`} className="text-primary-400 hover:text-primary-300 text-sm font-semibold hidden sm:inline-flex items-center gap-1">
+                {allLabel}
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.4}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+              </a>
             </div>
-            <a href={`${BASE}/winter-tires`} className="text-primary-400 hover:text-primary-300 text-sm font-semibold hidden sm:inline-flex items-center gap-1">
-              See all winter tires
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+              {picks.map(p => (
+                <a
+                  key={p.id}
+                  href={`${BASE}/tires/${p.id}`}
+                  className="block rounded-lg border border-dark-700/50 bg-dark-800/50 hover:border-primary-500/40 hover:bg-dark-800 transition-colors overflow-hidden"
+                >
+                  <div className="aspect-square bg-white/95 p-2">
+                    <img src={p.image} alt={p.name} loading="lazy" className="w-full h-full object-contain" />
+                  </div>
+                  <div className="p-2.5">
+                    <div className="text-dark-400 text-[10px] uppercase tracking-wider truncate">{p.brand}</div>
+                    <div className="text-white text-xs font-semibold mt-0.5 line-clamp-2 min-h-[2.25rem]">{p.name}</div>
+                    {p.tireSize && <div className="text-dark-500 text-[10px] mt-1">{p.tireSize}</div>}
+                    <div className="text-primary-400 text-sm font-bold mt-1.5">{p.price}</div>
+                  </div>
+                </a>
+              ))}
+            </div>
+            {/* Mobile "see all" link */}
+            <a href={`${BASE}${allLink}`} className="sm:hidden mt-4 inline-flex items-center gap-1 text-primary-400 hover:text-primary-300 text-sm font-semibold">
+              {allLabel}
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.4}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
             </a>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            {winterTires.map(p => (
-              <a
-                key={p.id}
-                href={`${BASE}/tires/${p.id}`}
-                className="block rounded-lg border border-dark-700/50 bg-dark-800/50 hover:border-primary-500/40 hover:bg-dark-800 transition-colors overflow-hidden"
-              >
-                <div className="aspect-square bg-white/95 p-2">
-                  <img src={p.image} alt={p.name} loading="lazy" className="w-full h-full object-contain" />
-                </div>
-                <div className="p-2.5">
-                  <div className="text-dark-400 text-[10px] uppercase tracking-wider truncate">{p.brand}</div>
-                  <div className="text-white text-xs font-semibold mt-0.5 line-clamp-2 min-h-[2.25rem]">{p.name}</div>
-                  {p.tireSize && <div className="text-dark-500 text-[10px] mt-1">{p.tireSize}</div>}
-                  <div className="text-primary-400 text-sm font-bold mt-1.5">{p.price}</div>
-                </div>
-              </a>
-            ))}
-          </div>
-        </section>
-      )}
+          </section>
+        );
+      })()}
 
       {/* FOOTER NOTE ============================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-10 pt-6 border-t border-dark-700/30">
