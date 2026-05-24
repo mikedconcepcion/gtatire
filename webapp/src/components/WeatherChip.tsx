@@ -204,7 +204,9 @@ function tone(snap: Snapshot | null): Tone {
   return 'mild';
 }
 
-export default function WeatherChip() {
+type Variant = 'both' | 'desktop' | 'mobile';
+
+export default function WeatherChip({ variant = 'both' }: { variant?: Variant } = {}) {
   const [snap, setSnap] = useState<Snapshot | null>(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -277,25 +279,79 @@ export default function WeatherChip() {
     );
   }
 
+  const showMobile = variant === 'both' || variant === 'mobile';
+  const showDesktop = variant === 'both' || variant === 'desktop';
+
   if (failed) return null;
   if (loading) {
     return (
-      <div className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-dark-700/40 border border-dark-700/40 text-dark-500 text-xs">
-        <span className="w-3 h-3 rounded-full bg-dark-600 animate-pulse" />
-        <span className="w-8 h-3 bg-dark-600 rounded animate-pulse" />
-      </div>
+      <>
+        {showMobile && (
+          <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-sky-500/10 border border-sky-400/30">
+            <span className="w-5 h-5 rounded-full bg-sky-400/30 animate-pulse" />
+          </div>
+        )}
+        {showDesktop && (
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-sky-500/10 border border-sky-400/30 text-sky-300 text-sm shadow-sm">
+            <span className="w-4 h-4 rounded-full bg-sky-400/30 animate-pulse" />
+            <span className="w-16 h-3 bg-sky-400/20 rounded animate-pulse" />
+          </div>
+        )}
+      </>
     );
   }
 
   const t = tone(snap);
-  const chipBase = 'hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border text-xs font-medium transition-colors';
+  // High-contrast chip — always reads as "weather widget" at a glance.
+  // Background is colored even in mild state so it stands apart from the
+  // dark header strip; escalates to deeper sky / red as conditions worsen.
+  const chipBase =
+    'hidden md:inline-flex items-center gap-2 pl-1.5 pr-2.5 py-1 rounded-lg border text-sm font-semibold transition-all shadow-sm';
   const chipStyle =
-    t === 'alert' ? 'bg-amber-500/15 border-amber-400/50 text-amber-200 hover:bg-amber-500/25' :
-    t === 'cold'  ? 'bg-sky-500/10 border-sky-400/40 text-sky-200 hover:bg-sky-500/20' :
-                    'bg-dark-700/40 border-primary-600/30 text-dark-200 hover:bg-dark-700/60';
+    t === 'alert'
+      ? 'bg-gradient-to-r from-red-600 to-amber-600 border-amber-300/60 text-white shadow-amber-500/30 hover:from-red-500 hover:to-amber-500'
+      : t === 'cold'
+        ? 'bg-gradient-to-r from-sky-600 to-sky-500 border-sky-300/60 text-white shadow-sky-500/30 hover:from-sky-500 hover:to-sky-400'
+        : 'bg-gradient-to-r from-sky-700/80 to-sky-600/80 border-sky-400/50 text-white shadow-sky-700/30 hover:from-sky-600 hover:to-sky-500';
+
+  const iconBubble =
+    t === 'alert' ? 'bg-white/25'
+    : t === 'cold' ? 'bg-white/20'
+    : 'bg-white/15';
+
+  // Compact 40×40 button for mobile — matches phone/menu button sizing,
+  // background colour escalates with conditions, alert state pulses to draw
+  // attention. Tapping opens the same popover the desktop chip uses.
+  const mobileStyle =
+    t === 'alert'
+      ? 'bg-gradient-to-br from-red-600 to-amber-600 border-amber-300/60 text-white shadow-amber-500/40 animate-pulse'
+      : t === 'cold'
+        ? 'bg-gradient-to-br from-sky-600 to-sky-500 border-sky-300/60 text-white shadow-sky-500/30'
+        : 'bg-gradient-to-br from-sky-700 to-sky-600 border-sky-400/50 text-white shadow-sky-700/30';
 
   return (
     <div className="relative">
+      {/* MOBILE: 40×40 button beside phone/menu */}
+      {showMobile && (
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        className={`relative inline-flex items-center justify-center w-10 h-10 rounded-lg border text-white shadow-md transition-colors ${mobileStyle}`}
+        aria-label={`Weather in ${snap?.cityName}: ${snap?.conditionText || 'unknown'}`}
+        aria-expanded={open}
+      >
+        <WeatherGlyph code={snap?.iconCode ?? null} className="w-5 h-5" />
+        {/* Temp badge */}
+        {snap?.tempC != null && (
+          <span className="absolute -bottom-1 -right-1 bg-white text-dark-900 text-[10px] font-bold rounded-md px-1 leading-tight border border-dark-900/10 shadow-sm">
+            {Math.round(snap.tempC)}°
+          </span>
+        )}
+      </button>
+      )}
+
+      {/* DESKTOP: full chip */}
+      {showDesktop && (
       <button
         type="button"
         onClick={() => setOpen(o => !o)}
@@ -303,19 +359,44 @@ export default function WeatherChip() {
         aria-label={`Weather in ${snap?.cityName}: ${snap?.conditionText || 'unknown'}`}
         aria-expanded={open}
       >
-        <WeatherGlyph code={snap?.iconCode ?? null} className="w-3.5 h-3.5" />
-        {snap?.tempC != null && <span>{Math.round(snap.tempC)}°C</span>}
-        {t === 'alert' && (
-          <span className="ml-0.5 max-w-[10rem] truncate capitalize">
-            ⚠ {snap?.alert?.name}
+        {/* Icon in its own colored bubble — reads as a weather button */}
+        <span className={`inline-flex items-center justify-center w-7 h-7 rounded-md ${iconBubble}`}>
+          <WeatherGlyph code={snap?.iconCode ?? null} className="w-4 h-4" />
+        </span>
+
+        {/* Label: city + temp, always visible */}
+        <span className="flex flex-col leading-tight items-start">
+          <span className="text-[9px] font-bold uppercase tracking-wider opacity-80 inline-flex items-center gap-1">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse" />
+            {t === 'alert' ? 'Alert' : 'Live'}
+          </span>
+          <span className="inline-flex items-baseline gap-1">
+            <span className="truncate max-w-[5rem]">{snap?.cityName || 'Toronto'}</span>
+            {snap?.tempC != null && <span className="text-base font-bold">{Math.round(snap.tempC)}°</span>}
+          </span>
+        </span>
+
+        {/* Alert name (only when active) */}
+        {t === 'alert' && snap?.alert && (
+          <span className="hidden lg:inline-block max-w-[9rem] truncate capitalize text-xs font-medium border-l border-white/30 pl-2">
+            ⚠ {snap.alert.name}
           </span>
         )}
+
+        {/* Chevron — signals expandability */}
+        <svg
+          className={`w-3 h-3 opacity-80 transition-transform ${open ? 'rotate-180' : ''}`}
+          fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
       </button>
+      )}
 
       {open && snap && (
         <div
           ref={popRef}
-          className="absolute right-0 mt-2 w-80 rounded-lg border border-primary-600/30 bg-dark-900/98 backdrop-blur-md shadow-2xl shadow-black/60 p-4 z-50"
+          className="fixed left-2 right-2 top-16 md:absolute md:left-auto md:right-0 md:top-auto md:mt-2 md:w-80 rounded-lg border border-primary-600/30 bg-dark-900/98 backdrop-blur-md shadow-2xl shadow-black/60 p-4 z-50"
           role="dialog"
           aria-label="Weather details"
         >

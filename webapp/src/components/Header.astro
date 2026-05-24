@@ -32,9 +32,9 @@ import WeatherChip from './WeatherChip.tsx';
         </div>
       </form>
 
-      <!-- Nav -->
+      <!-- Nav (desktop) — includes the prominent weather chip -->
       <nav class="hidden md:flex items-center gap-5 shrink-0">
-        <WeatherChip client:idle />
+        <WeatherChip variant="desktop" client:idle />
         <a href="/tires" class="text-dark-300 hover:text-white transition-colors text-sm font-medium">Tires</a>
         <a href="/wheels" class="text-dark-300 hover:text-white transition-colors text-sm font-medium">Wheels</a>
         <a href="/contact" class="text-dark-300 hover:text-white transition-colors text-sm font-medium">Contact</a>
@@ -53,8 +53,9 @@ import WeatherChip from './WeatherChip.tsx';
         </a>
       </nav>
 
-      <!-- Mobile: phone (always tap-to-call) + menu -->
-      <div class="flex items-center gap-1 md:hidden">
+      <!-- Mobile: weather chip + phone (always tap-to-call) + menu -->
+      <div class="flex items-center gap-1.5 md:hidden">
+        <WeatherChip variant="mobile" client:idle />
         <a href="tel:+14373261308" class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary-600 hover:bg-primary-500 text-white transition-colors" aria-label="Call JSDC Wheels: 437-326-1308">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.95.68l1.5 4.49a1 1 0 01-.5 1.21l-2.26 1.13a11 11 0 005.52 5.52l1.13-2.26a1 1 0 011.21-.5l4.49 1.5a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" /></svg>
         </a>
