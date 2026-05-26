@@ -618,9 +618,151 @@ function buildDatabase() {
   }
   console.log(`  From existing fitment: ${derivedFromExisting} spec entries derived (${vehicleSpecs.size} unique vehicles total)`);
 
-  // Match every catalog wheel to vehicle specs
+  // ─── Per-vehicle OE hub bore — authoritative source of truth ───
+  // James's rule (2026-05-26): vehicles have specific bore fitment, so
+  // recommendations are mm-specific. Prevent contamination where one
+  // vehicle ends up linked to wheels of 5+ different bores by deriving
+  // ONE OE bore per vehicle from layered authority, then post-filtering.
+  //
+  // Authority order:
+  //   1. Alltire raw entries with hubCentric=true matching exact YMM
+  //   2. RWC per-vehicle fitment (search results are inherently OE-bore matched)
+  //   3. AAIA mode (chassis IDs span generations — mode dampens outliers)
+  console.log('\n=== Per-vehicle OE bore derivation ===');
+  const modeOf = (arr) => {
+    const c = new Map();
+    for (const v of arr) {
+      if (v == null || isNaN(v) || v <= 0) continue;
+      c.set(v, (c.get(v) || 0) + 1);
+    }
+    return Array.from(c.entries()).sort((a, b) => b[1] - a[1])[0]?.[0];
+  };
+  const vehicleOeSpec = {}; // "Y|MK|MD" -> {hubBore, boltPattern, source}
+
+  // Source 1: Alltire hubCentric=true raw entries
+  const alltireRaw = loadJSON('alltire-wheels.json') || [];
+  const alltireBores = new Map();
+  const alltirePcds = new Map();
+  for (const w of alltireRaw) {
+    if (!w.hubCentric) continue;
+    if (!w.vehicleYear || !w.vehicleMake || !w.vehicleModel) continue;
+    const v = normalizeVehicleKey(`${w.vehicleYear}|${w.vehicleMake}|${w.vehicleModel}`);
+    const m = String(w.description || '').match(/CB(\d+(?:\.\d+)?)/i);
+    const cb = m ? parseFloat(m[1]) : null;
+    const pcdM = String(w.description || '').match(/(\d+x[\d.]+)/);
+    if (cb) {
+      if (!alltireBores.has(v)) alltireBores.set(v, []);
+      alltireBores.get(v).push(cb);
+    }
+    if (pcdM) {
+      if (!alltirePcds.has(v)) alltirePcds.set(v, []);
+      alltirePcds.get(v).push(pcdM[1]);
+    }
+  }
+  let viaAlltire = 0;
+  for (const [v, bores] of alltireBores) {
+    const b = modeOf(bores);
+    if (b) {
+      vehicleOeSpec[v] = { hubBore: b, boltPattern: modeOf(alltirePcds.get(v) || []), source: 'alltire' };
+      viaAlltire++;
+    }
+  }
+  console.log(`  Source 1 (Alltire hubCentric): ${viaAlltire} vehicles`);
+
+  // Source 2: RWC per-vehicle fitment
+  const rwcFitMap = loadJSON('rwc-fitment-map.json') || {};
+  const rwcRaw2 = loadJSON('rwc-wheels-raw.json') || [];
+  const rwcBoreBySku = new Map();
+  const rwcPcdBySku = new Map();
+  for (const w of rwcRaw2) {
+    const cb = parseFloat(String(w.centerBore || '').replace(/[^0-9.]/g, ''));
+    if (cb > 0) rwcBoreBySku.set(w.sku, cb);
+    if (w.boltPattern) rwcPcdBySku.set(w.sku, String(w.boltPattern).replace(/\s/g, ''));
+  }
+  const rwcBores = new Map();
+  const rwcPcds2 = new Map();
+  for (const [sku, vehicleList] of Object.entries(rwcFitMap)) {
+    const cb = rwcBoreBySku.get(sku);
+    const pcd = rwcPcdBySku.get(sku);
+    if (!cb || !Array.isArray(vehicleList)) continue;
+    for (const veh of vehicleList) {
+      const v = normalizeVehicleKey(`${veh.year}|${String(veh.make).toUpperCase()}|${String(veh.model).toUpperCase()}`);
+      if (!rwcBores.has(v)) rwcBores.set(v, []);
+      rwcBores.get(v).push(cb);
+      if (pcd) {
+        if (!rwcPcds2.has(v)) rwcPcds2.set(v, []);
+        rwcPcds2.get(v).push(pcd);
+      }
+    }
+  }
+  let viaRwc = 0;
+  for (const [v, bores] of rwcBores) {
+    if (vehicleOeSpec[v]) continue; // Alltire already decided
+    const b = modeOf(bores);
+    if (b) {
+      vehicleOeSpec[v] = { hubBore: b, boltPattern: modeOf(rwcPcds2.get(v) || []), source: 'rwc' };
+      viaRwc++;
+    }
+  }
+  console.log(`  Source 2 (RWC per-vehicle): ${viaRwc} vehicles`);
+
+  // Source 3: AAIA mode per vehicle (single mode per vehicle, not per wheel)
+  if (aaia && aaia.chassisToVehicles && aaia.wheelsByChassis) {
+    const aaiaBores = new Map();
+    const aaiaPcds = new Map();
+    for (const [chassisId, vehicleList] of Object.entries(aaia.chassisToVehicles)) {
+      const wheels = aaia.wheelsByChassis[chassisId] || [];
+      for (const veh of vehicleList) {
+        const v = normalizeVehicleKey(veh);
+        for (const w of wheels) {
+          const cb = parseFloat(w.BoreMax);
+          if (cb > 0) {
+            if (!aaiaBores.has(v)) aaiaBores.set(v, []);
+            aaiaBores.get(v).push(cb);
+          }
+          const pcd = String(w.Pcd1 || '').replace(/\s/g, '');
+          if (pcd) {
+            if (!aaiaPcds.has(v)) aaiaPcds.set(v, []);
+            aaiaPcds.get(v).push(pcd);
+          }
+        }
+      }
+    }
+    let viaAaia = 0;
+    for (const [v, bores] of aaiaBores) {
+      if (vehicleOeSpec[v]) continue;
+      const b = modeOf(bores);
+      if (b) {
+        vehicleOeSpec[v] = { hubBore: b, boltPattern: modeOf(aaiaPcds.get(v) || []), source: 'aaia' };
+        viaAaia++;
+      }
+    }
+    console.log(`  Source 3 (AAIA mode): ${viaAaia} vehicles`);
+  }
+  console.log(`  → ${Object.keys(vehicleOeSpec).length} vehicles have OE bore`);
+
+  // ─── Strip contamination from existing fitmentMap ───
+  // Drop vehicle ↔ wheel links whose hubBore doesn't match the vehicle's OE bore.
+  let stripped = 0;
+  for (const [gtaId, vehicleSet] of Object.entries(fitmentMap)) {
+    const p = productsById.get(gtaId);
+    if (!p || p.category !== 'wheel') continue;
+    const wb = parseFloat(p.hubBore);
+    if (!wb) continue;
+    for (const v of [...vehicleSet]) {
+      const oe = vehicleOeSpec[v]?.hubBore;
+      if (oe && Math.abs(wb - oe) > 0.5) {
+        vehicleSet.delete(v);
+        stripped++;
+      }
+    }
+  }
+  console.log(`  Stripped ${stripped} non-OE-bore fitment links from existing supplier data`);
+
+  // Match every catalog wheel to vehicle specs (now bore-gated by OE)
   let addedFitments = 0;
   let productsExpanded = 0;
+  let blockedByOeBore = 0;
   for (const p of products) {
     if (p.category !== 'wheel') continue;
     const pcd = (p.boltPattern || '').replace(/\s/g, '');
@@ -628,13 +770,17 @@ function buildDatabase() {
     const dia = String(p.rimDiameter || '');
     if (!pcd || !cb || !dia || cb === 'null' || cb === '0') continue;
     const spec = `${pcd}|${cb}|${dia}`;
+    const wheelBore = parseFloat(p.hubBore);
 
     const before = fitmentMap[p.id]?.size || 0;
     for (const [vehicleKey, specs] of vehicleSpecs) {
-      if (specs.has(spec)) {
-        if (!fitmentMap[p.id]) fitmentMap[p.id] = new Set();
-        fitmentMap[p.id].add(vehicleKey);
-      }
+      if (!specs.has(spec)) continue;
+      // OE-bore gate: reject if the vehicle's known OE bore differs.
+      const oe = vehicleOeSpec[vehicleKey]?.hubBore;
+      if (oe && Math.abs(wheelBore - oe) > 0.5) { blockedByOeBore++; continue; }
+
+      if (!fitmentMap[p.id]) fitmentMap[p.id] = new Set();
+      fitmentMap[p.id].add(vehicleKey);
     }
     const after = fitmentMap[p.id]?.size || 0;
     if (after > before) {
@@ -643,6 +789,7 @@ function buildDatabase() {
     }
   }
   console.log(`  Spec match added ${addedFitments} fitment entries to ${productsExpanded} products`);
+  console.log(`  Blocked by OE bore: ${blockedByOeBore} would-be matches`);
   console.log(`  Total products with fitment: ${Object.keys(fitmentMap).length}`);
 
   // ─── Build fitment (convert Sets to arrays) ───
@@ -811,8 +958,10 @@ function buildDatabase() {
     if (Object.keys(vehicleTireSizes).length > 0) {
       sqliteDb.insertVehicleTireSizes(db, vehicleTireSizes);
     }
+    sqliteDb.insertVehicleSpecs(db, vehicleOeSpec);
     sqliteDb.setMeta(db, 'last_built_at', new Date().toISOString());
     sqliteDb.setMeta(db, 'product_count', products.length);
+    sqliteDb.setMeta(db, 'vehicle_specs_count', Object.keys(vehicleOeSpec).length);
     const s = sqliteDb.summary(db);
     console.log(`  → ${s.products} products, ${s.fitment} fitment rows, ${s.images} images`);
     console.log(`  → By supplier: ${s.bySupplier.map(r => `${r.supplier}=${r.n}`).join(', ')}`);
@@ -834,6 +983,13 @@ function buildDatabase() {
   if (Object.keys(vehicleTireSizes).length > 0) {
     saveJSON(pathMod.join(OUT_DIR, 'tire-fitment.json'), vehicleTireSizes);
   }
+  // Per-vehicle OE specs for the webapp's strict bore filter — see
+  // webapp/src/lib/oe-bore.ts. Compact (no whitespace) since this is
+  // ~7,500 entries: ~150KB minified.
+  fs.writeFileSync(
+    pathMod.join(OUT_DIR, 'vehicle-bores.json'),
+    JSON.stringify(vehicleOeSpec),
+  );
 
   // ─── Summary ───
   console.log('\n=== Summary ===');

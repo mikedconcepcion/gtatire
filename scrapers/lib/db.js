@@ -93,6 +93,21 @@ function createSchema(db) {
       PRIMARY KEY (year, make, model, tire_size)
     );
 
+    -- Vehicle OE hub spec — authoritative per-vehicle source of truth so the
+    -- spec-match in build-internal-db.js doesn't accumulate every bore any
+    -- supplier source happened to see for the YMM. Populated from layered
+    -- authority (Alltire hubCentric → RWC per-vehicle fitment → AAIA mode).
+    -- source column records which layer decided the value (debuggability).
+    CREATE TABLE IF NOT EXISTS vehicle_specs (
+      year INTEGER NOT NULL,
+      make TEXT NOT NULL,
+      model TEXT NOT NULL,
+      hub_bore REAL,
+      bolt_pattern TEXT,
+      source TEXT,
+      PRIMARY KEY (year, make, model)
+    );
+
     CREATE TABLE IF NOT EXISTS build_meta (
       key TEXT PRIMARY KEY,
       value TEXT
@@ -117,6 +132,7 @@ function truncateAll(db) {
     DELETE FROM product_images;
     DELETE FROM products;
     DELETE FROM vehicle_tire_sizes;
+    DELETE FROM vehicle_specs;
   `);
 }
 
@@ -229,6 +245,25 @@ function insertVehicleTireSizes(db, vehicleTireSizes) {
   tx();
 }
 
+/**
+ * Insert per-vehicle OE specs: { "YYYY|MAKE|MODEL" -> {hubBore, boltPattern, source} }
+ */
+function insertVehicleSpecs(db, vehicleSpecsMap) {
+  const insert = db.prepare(
+    `INSERT OR REPLACE INTO vehicle_specs (year, make, model, hub_bore, bolt_pattern, source)
+     VALUES (?, ?, ?, ?, ?, ?)`
+  );
+  const tx = db.transaction(() => {
+    for (const [key, spec] of Object.entries(vehicleSpecsMap)) {
+      const [y, mk, md] = key.split('|');
+      const year = parseInt(y, 10);
+      if (!year || !mk || !md) continue;
+      insert.run(year, mk, md, spec.hubBore || null, spec.boltPattern || null, spec.source || null);
+    }
+  });
+  tx();
+}
+
 function setMeta(db, key, value) {
   db.prepare(
     `INSERT INTO build_meta (key, value) VALUES (?, ?)
@@ -258,6 +293,7 @@ module.exports = {
   insertProducts,
   insertFitment,
   insertVehicleTireSizes,
+  insertVehicleSpecs,
   setMeta,
   summary,
 };

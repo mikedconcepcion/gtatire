@@ -3,7 +3,7 @@ import Fuse from 'fuse.js';
 import VehiclePackageBuilder from './VehiclePackageBuilder';
 import { cdnUrl } from '../../lib/cdn';
 import { getVehicleImgUrl } from '../../lib/vehicle-img';
-import { deriveOeHubBore, filterByOeBore } from '../../lib/oe-bore';
+import { deriveOeHubBore, filterByOeBore, lookupOeHubBore, type VehicleBoreMap } from '../../lib/oe-bore';
 
 interface Product {
   id: string;
@@ -174,6 +174,7 @@ export default function SmartSearchResults() {
   const [fitment, setFitment] = useState<FitmentMap>({});
   const [tireFitment, setTireFitment] = useState<TireFitmentMap>({});
   const [vehicleTree, setVehicleTree] = useState<VehicleTree>({});
+  const [vehicleBores, setVehicleBores] = useState<VehicleBoreMap | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [sortBy, setSortBy] = useState<'relevance' | 'price-asc' | 'price-desc'>('relevance');
@@ -192,12 +193,14 @@ export default function SmartSearchResults() {
       fetch(cdnUrl('/data/fitment.json')).then(r => r.json()),
       fetch(cdnUrl('/data/vehicles.json')).then(r => r.json()),
       fetch(cdnUrl('/data/tire-fitment.json')).then(r => r.json()).catch(() => ({})),
+      fetch(cdnUrl('/data/vehicle-bores.json')).then(r => r.ok ? r.json() : null).catch(() => null),
     ])
-      .then(([prods, fit, vehs, tFit]) => {
+      .then(([prods, fit, vehs, tFit, bores]) => {
         setProducts(prods);
         setFitment(fit);
         setVehicleTree(vehs);
         setTireFitment(tFit);
+        setVehicleBores(bores);
         setLoading(false);
       })
       .catch(() => { setLoading(false); setError(true); });
@@ -759,11 +762,12 @@ export default function SmartSearchResults() {
         // fitment + recommendations, even when only wheels OR only tires
         // happen to match (e.g. tire-fitment data hasn't caught up to a
         // recently-added model year). VPB auto-selects its mode internally.
-        // Hub-centric strict filter applied here: a 66.1mm vehicle gets
-        // 66.1mm wheels only (no 73.1 contamination from loose spec match).
+        // Hub-centric strict filter: authoritative lookup first
+        // (vehicle-bores.json), inference fallback. James's rule: a 64.1mm
+        // vehicle gets 64.1mm wheels only — no 73.1 contamination.
         (() => {
           const allMatched = results;
-          const oeHub = deriveOeHubBore(allMatched);
+          const oeHub = lookupOeHubBore(vehicleBores, detectedYear || '', detectedMake || '', detectedModel || '') ?? deriveOeHubBore(allMatched);
           const filtered = filterByOeBore(allMatched, oeHub);
           return (
             <VehiclePackageBuilder

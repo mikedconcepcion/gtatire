@@ -12,7 +12,7 @@ const CRED = 'username=SuperSpeed&securityToken=c30c25a493d0433e987d9d9c78b5492c
 const BASE = 'https://api.driverightdata.com/eu/api';
 const DIST = 'Wheel%20Tech%20Group';
 const REGION = '2';
-const MIN_YEAR = 2012;
+const MIN_YEAR = 2010; // widened from 2012 on 2026-05-26
 
 async function fetchJson(url) {
   try {

@@ -1,13 +1,14 @@
-// Shared OE hub-bore derivation + strict filter for vehicle-scoped wheel lists.
+// Shared OE hub-bore lookup + strict filter for vehicle-scoped wheel lists.
 //
-// Why: build-internal-db.js maps wheels to vehicles via (PCD, CB, diameter)
-// spec match, but a vehicle's allowed-bore set can accumulate contamination
-// from multiple supplier sources. Result: a 66.1mm vehicle ends up linked to
-// 73.1mm wheels too. James's rule (2026-05-26): "bore should be same to be
-// hub centric — 66.1 only, not 73.1."
+// Authoritative source: webapp/public/data/vehicle-bores.json — a map keyed
+// by "Y|MAKE|MODEL" → {bore, source}, populated by build-internal-db.js from
+// layered authority (Alltire hubCentric → RWC per-vehicle fitment → AAIA
+// mode). When the vehicle is in the map, use that. Inference from the
+// matched wheel set is only a fallback for vehicles not yet in the map.
 //
-// Until we tighten the data layer, this utility enforces the rule at the
-// display layer everywhere a vehicle-scoped wheel list is rendered.
+// James's rule (2026-05-26): vehicles have specific bore fitment, so we
+// only show mm-specific recommendations. A 64.1mm Civic gets 64.1mm wheels
+// only, never 73.1.
 
 type WheelLike = {
   category?: string;
@@ -16,7 +17,21 @@ type WheelLike = {
   hubBore?: number | null;
 };
 
+export type VehicleBoreMap = Record<string, { hubBore?: number; bore?: number; boltPattern?: string; source?: string }>;
+
 const REPLICA_BRANDS = new Set(['RWC', 'OE+', 'OE+ Forged']);
+
+// Look up the vehicle's OE bore from the authoritative map. Returns
+// undefined when the vehicle isn't covered — caller should fall back to
+// inference (deriveOeHubBore) or skip filtering entirely.
+export function lookupOeHubBore(map: VehicleBoreMap | null | undefined, year: string | number, make: string, model: string): number | undefined {
+  if (!map) return undefined;
+  const k = `${String(year).split('.')[0]}|${String(make).toUpperCase()}|${String(model).toUpperCase()}`;
+  const v = map[k];
+  if (!v) return undefined;
+  // Schema: hubBore is canonical; bore is older shorthand.
+  return v.hubBore ?? v.bore;
+}
 
 function modeOf(arr: (number | null | undefined)[]): number | undefined {
   const c = new Map<number, number>();

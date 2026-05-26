@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import VehicleResults from '../VehicleResults';
 import VehicleSearch from '../search/VehicleSearch';
 import { cdnUrl } from '../../lib/cdn';
-import { deriveOeHubBore, filterByOeBore } from '../../lib/oe-bore';
+import { deriveOeHubBore, filterByOeBore, lookupOeHubBore } from '../../lib/oe-bore';
 
 // Hydrator for /vehicle/{year}/{make}/{model}. Replaces the previously
 // pre-rendered route so catalogue updates (~7,500 vehicle slugs) ship via
@@ -43,7 +43,10 @@ export default function VehicleDetailPage() {
       // Vehicle photo manifest — keyed "YYYY|MAKE|MODEL". Returns null
       // gracefully for vehicles we haven't scraped a photo for yet.
       fetch(cdnUrl('/data/vehicle-images.json')).then(r => r.ok ? r.json() : {}).catch(() => ({})),
-    ]).then(([allProducts, fitment, vehicles, vehicleImages]) => {
+      // Per-vehicle OE bore map (authoritative). Missing values are fine —
+      // the bore filter falls back to inference from the matched set.
+      fetch(cdnUrl('/data/vehicle-bores.json')).then(r => r.ok ? r.json() : null).catch(() => null),
+    ]).then(([allProducts, fitment, vehicles, vehicleImages, vehicleBores]) => {
       const vkey = `${year}|${make}|${model}`;
       const matchingIds = new Set<string>();
       for (const [sku, vehicleList] of Object.entries(fitment as Record<string, string[]>)) {
@@ -53,10 +56,11 @@ export default function VehicleDetailPage() {
         matchingIds.has(p.id) && !/discontinu/i.test(String(p.stock || ''))
       );
 
-      // Derive OE hub-bore via shared helper (Alltire OE-marked → replica
-      // brands → smallest bore fallback). Then apply strict ±0.5mm filter.
-      // James's rule: a 66.1mm vehicle gets 66.1mm wheels only, never 73.1.
-      const oeHub = deriveOeHubBore(matched);
+      // OE bore lookup: prefer the authoritative vehicle-bores.json map.
+      // Fall back to inference from matched wheels only when the vehicle
+      // isn't yet in the map (long tail / new years). James's rule: a
+      // 64.1mm vehicle gets 64.1mm wheels only, never 73.1.
+      const oeHub = lookupOeHubBore(vehicleBores, year, make, model) ?? deriveOeHubBore(matched);
       const replicas = matched.filter((p: any) =>
         p.category === 'wheel' && ['RWC', 'OE+', 'OE+ Forged'].includes(p.brand)
       );
