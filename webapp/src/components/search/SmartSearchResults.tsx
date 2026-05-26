@@ -3,6 +3,7 @@ import Fuse from 'fuse.js';
 import VehiclePackageBuilder from './VehiclePackageBuilder';
 import { cdnUrl } from '../../lib/cdn';
 import { getVehicleImgUrl } from '../../lib/vehicle-img';
+import { deriveOeHubBore, filterByOeBore } from '../../lib/oe-bore';
 
 interface Product {
   id: string;
@@ -758,15 +759,24 @@ export default function SmartSearchResults() {
         // fitment + recommendations, even when only wheels OR only tires
         // happen to match (e.g. tire-fitment data hasn't caught up to a
         // recently-added model year). VPB auto-selects its mode internally.
-        <VehiclePackageBuilder
-          vehicleLabel={searchLabel?.replace('Fits ', '') || ''}
-          vehicleMake={detectedMake}
-          vehicleModel={detectedModel}
-          vehicleYear={detectedYear}
-          wheels={results.filter(p => p.category === 'wheel')}
-          tires={results.filter(p => p.category === 'tire')}
-          seasonCounts={seasonCounts}
-        />
+        // Hub-centric strict filter applied here: a 66.1mm vehicle gets
+        // 66.1mm wheels only (no 73.1 contamination from loose spec match).
+        (() => {
+          const allMatched = results;
+          const oeHub = deriveOeHubBore(allMatched);
+          const filtered = filterByOeBore(allMatched, oeHub);
+          return (
+            <VehiclePackageBuilder
+              vehicleLabel={searchLabel?.replace('Fits ', '') || ''}
+              vehicleMake={detectedMake}
+              vehicleModel={detectedModel}
+              vehicleYear={detectedYear}
+              wheels={filtered.filter(p => p.category === 'wheel')}
+              tires={filtered.filter(p => p.category === 'tire')}
+              seasonCounts={seasonCounts}
+            />
+          );
+        })()
       ) : query ? (
         <>
           {/* Results header */}

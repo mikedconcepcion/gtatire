@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import VehicleResults from '../VehicleResults';
 import VehicleSearch from '../search/VehicleSearch';
 import { cdnUrl } from '../../lib/cdn';
+import { deriveOeHubBore, filterByOeBore } from '../../lib/oe-bore';
 
 // Hydrator for /vehicle/{year}/{make}/{model}. Replaces the previously
 // pre-rendered route so catalogue updates (~7,500 vehicle slugs) ship via
@@ -52,10 +53,10 @@ export default function VehicleDetailPage() {
         matchingIds.has(p.id) && !/discontinu/i.test(String(p.stock || ''))
       );
 
-      // Derive the OE bolt-pattern + hub-bore from RWC + OE+ supplier-asserted
-      // wheels — they're OE-replica brands so the modal values in their fits
-      // ARE the OE spec. We then filter the displayed wheel set to bore-match,
-      // honoring the strict hub-centric policy site-wide.
+      // Derive OE hub-bore via shared helper (Alltire OE-marked → replica
+      // brands → smallest bore fallback). Then apply strict ±0.5mm filter.
+      // James's rule: a 66.1mm vehicle gets 66.1mm wheels only, never 73.1.
+      const oeHub = deriveOeHubBore(matched);
       const replicas = matched.filter((p: any) =>
         p.category === 'wheel' && ['RWC', 'OE+', 'OE+ Forged'].includes(p.brand)
       );
@@ -65,19 +66,11 @@ export default function VehicleDetailPage() {
         return Array.from(c.entries()).sort((a, b) => b[1] - a[1])[0]?.[0];
       };
       const oeBolt = modeOf(replicas.map((p: any) => p.boltPattern));
-      const oeHub = modeOf(replicas.map((p: any) => p.hubBore));
 
-      // Hub-centric strict filter: only show wheels whose hub bore matches
-      // the OE spec. If we couldn't derive OE hub (sparse replica coverage),
-      // fall back to the unfiltered set rather than show zero wheels.
-      const sellable = oeHub != null
-        ? matched.filter((p: any) =>
-            p.category !== 'wheel' || Math.abs((p.hubBore || 0) - oeHub) < 0.5
-          )
-        : matched;
+      const sellable = filterByOeBore(matched, oeHub);
 
       setProducts(sellable);
-      setOeSpec({ boltPattern: oeBolt as string | undefined, hubBore: oeHub as number | undefined });
+      setOeSpec({ boltPattern: oeBolt as string | undefined, hubBore: oeHub });
       setAvailableDiameters(vehicles?.[year]?.[make]?.[model] || []);
 
       // Vehicle JPGs are stripped from dist/ at build time (per strip-cdn-assets)
