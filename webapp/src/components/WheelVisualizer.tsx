@@ -37,7 +37,7 @@ function formatMake(make: string): string {
   return make.charAt(0) + make.slice(1).toLowerCase();
 }
 
-import { getVehicleImgUrl } from '../lib/vehicle-img';
+import { getVehicleImgUrl, imaginErrorHandler } from '../lib/vehicle-img';
 
 // Local templates have a single 3/4-front angle, no color variants. Picker
 // args are kept for signature compatibility but not used.
@@ -73,7 +73,17 @@ export default function WheelVisualizer({ vehicleMake, vehicleModel, vehicleYear
                 alt={`${vehicleYear} ${vehicleMake} ${vehicleModel}`}
                 className="w-full h-auto max-h-[200px] object-contain"
                 loading="lazy"
-                onError={() => setImageError(true)}
+                onError={(e) => {
+                  // First failure → IMAGIN fallback; if that also fails the
+                  // image error state shows the textual placeholder.
+                  const img = e.currentTarget;
+                  if (img.dataset.fallbackTried !== '1') {
+                    img.dataset.fallbackTried = '1';
+                    imaginErrorHandler(vehicleMake, vehicleModel, vehicleYear)(e);
+                  } else {
+                    setImageError(true);
+                  }
+                }}
               />
             ) : (
               <div className="text-center text-[var(--color-dark-500)] text-xs">

@@ -3,6 +3,7 @@ import VehicleResults from '../VehicleResults';
 import VehicleSearch from '../search/VehicleSearch';
 import { cdnUrl } from '../../lib/cdn';
 import { deriveOeHubBore, filterByOeBore, lookupOeHubBore } from '../../lib/oe-bore';
+import { getImaginFallbackUrl, imaginErrorHandler } from '../../lib/vehicle-img';
 
 // Hydrator for /vehicle/{year}/{make}/{model}. Replaces the previously
 // pre-rendered route so catalogue updates (~7,500 vehicle slugs) ship via
@@ -80,8 +81,12 @@ export default function VehicleDetailPage() {
       // Vehicle JPGs are stripped from dist/ at build time (per strip-cdn-assets)
       // and served from jsDelivr in production. Wrap in cdnUrl() so the path
       // resolves correctly in both dev (same-origin) and prod (CDN).
+      // Prefer the locally-scraped reference photo. If this vehicle isn't in
+      // the manifest yet (e.g. mid-rescrape from wheel-size.com), fall back
+      // to an on-demand IMAGIN.studio render so the page never shows an
+      // empty image slot.
       const imgPath = (vehicleImages as Record<string, string>)[vkey] || null;
-      setVehicleImage(imgPath ? cdnUrl(imgPath) : null);
+      setVehicleImage(imgPath ? cdnUrl(imgPath) : getImaginFallbackUrl(make, model, year) || null);
 
       const displayMake = make.charAt(0) + make.slice(1).toLowerCase();
       document.title = `${year} ${displayMake} ${model} — Wheels & Tires`;
@@ -128,6 +133,7 @@ export default function VehicleDetailPage() {
                   className="w-full h-full object-contain p-2"
                   loading="eager"
                   decoding="async"
+                  onError={imaginErrorHandler(make, model, year)}
                 />
               ) : (
                 <div className="text-center px-6">

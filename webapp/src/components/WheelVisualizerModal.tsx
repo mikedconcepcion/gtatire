@@ -29,7 +29,7 @@ function formatMake(make: string): string {
   return map[make] || make.charAt(0) + make.slice(1).toLowerCase();
 }
 
-import { getVehicleImgUrl } from '../lib/vehicle-img';
+import { getVehicleImgUrl, imaginErrorHandler } from '../lib/vehicle-img';
 
 // Local templates have a single 3/4-front angle, no color variants. Picker
 // args are kept for signature compatibility but unused.
@@ -156,7 +156,15 @@ export default function WheelVisualizerModal({ wheelImage, wheelName, vehicles }
                       src={carUrl}
                       alt={`${selYear} ${selMake} ${selModel}`}
                       className="w-full h-auto max-h-[280px] object-contain"
-                      onError={() => setImageError(true)}
+                      onError={(e) => {
+                        const img = e.currentTarget;
+                        if (img.dataset.fallbackTried !== '1') {
+                          img.dataset.fallbackTried = '1';
+                          imaginErrorHandler(selMake, selModel, selYear)(e);
+                        } else {
+                          setImageError(true);
+                        }
+                      }}
                     />
                   ) : (
                     <div className="text-center text-[var(--color-dark-500)] text-xs">

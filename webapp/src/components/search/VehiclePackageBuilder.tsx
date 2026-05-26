@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import InquiryButton from '../InquiryButton';
-import { getVehicleImgUrl } from '../../lib/vehicle-img';
+import { getVehicleImgUrl, imaginErrorHandler } from '../../lib/vehicle-img';
 
 interface Product {
   id: string;
@@ -332,7 +332,7 @@ export default function VehiclePackageBuilder({ vehicleLabel, vehicleMake, vehic
                   alt={vehicleLabel}
                   className="max-w-full max-h-full object-contain"
                   loading="lazy"
-                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                  onError={imaginErrorHandler(vehicleMake, vehicleModel, vehicleYear)}
                 />
               </div>
             </div>

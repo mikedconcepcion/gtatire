@@ -229,9 +229,25 @@ async function scrapeOne(year, make, model) {
   const manifest = load(OUT_MANIFEST, {});
   const fitments = load(OUT_FITMENT, {});
   const fails = load(FAIL_LOG, {});
+
+  // Optional TARGET_FILE — path to a text file listing image filenames (one per
+  // line, paths or basenames OK). Only YMMs matching those filenames are
+  // processed. Used to scope re-scrapes (e.g. just the 966 silver-fill vehicles).
+  let targetSet = null;
+  if (process.env.TARGET_FILE && fs.existsSync(process.env.TARGET_FILE)) {
+    const lines = fs.readFileSync(process.env.TARGET_FILE, 'utf-8').trim().split('\n');
+    targetSet = new Set(lines.map(l => path.basename(l.trim()).replace(/\.(jpg|jpeg|png|webp)$/i, '')));
+    console.log(`TARGET_FILE: ${targetSet.size} target filenames loaded`);
+  }
+
   // Skip if already done (manifest has entry AND image file exists)
   const todo = all.filter(v => {
     const key = `${v.year}|${v.make}|${v.model}`;
+    if (targetSet) {
+      // Filename-based filter — match the safeFilename() output without ext
+      const fn = safeFilename(v.year, v.make, v.model, 'jpg').replace(/\.jpg$/i, '');
+      if (!targetSet.has(fn)) return false;
+    }
     if (manifest[key]) {
       const p = path.join(__dirname, '..', 'webapp', 'public', manifest[key].replace(/^\//, ''));
       if (fs.existsSync(p)) return false;

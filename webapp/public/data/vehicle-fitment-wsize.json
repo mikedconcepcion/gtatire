@@ -6600,5 +6600,5802 @@
         "levels": []
       }
     ]
+  },
+  "2010|ACURA|CSX": {
+    "generation": "FD",
+    "generation_start": 2005,
+    "generation_end": 2011,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/acura-csx-2005-2011-1756459868.3197162.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 156
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i TypeS",
+        "name": "2.0i TypeS",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 197
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|ACURA|RDX": {
+    "generation": "TB1/TB2 Facelift",
+    "generation_start": 2010,
+    "generation_end": 2012,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/acura-rdx-2010-2012-1756460450.9646666.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.3i Turbo",
+        "name": "2.3i Turbo",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 240
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|ACURA|TSX": {
+    "generation": "CU2",
+    "generation_start": 2009,
+    "generation_end": 2014,
+    "bodies": [
+      {
+        "name": "Estate, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/acura-tsx-2009-2014-1756461429.6318352.jpg"
+      },
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/acura-tsx-2009-2014-1756461430.1478224.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 201
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 282
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|ACURA|RL": {
+    "generation": "KB2",
+    "generation_start": 2009,
+    "generation_end": 2013,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/acura-rl-2009-2013-1756460583.4182248.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.7i",
+        "name": "3.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 300
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|ACURA|TL": {
+    "generation": "UA8/UA9",
+    "generation_start": 2009,
+    "generation_end": 2011,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/acura-tl-2009-2011-1756461175.3676646.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.7i",
+        "name": "3.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 304
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 280
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|ACURA|ZDX": {
+    "generation": "I (YB1)",
+    "generation_start": 2009,
+    "generation_end": 2013,
+    "bodies": [
+      {
+        "name": "Closed Off-Road Vehicle, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/acura-zdx-2009-2013-1756461482.6391442.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.7i",
+        "name": "3.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 295
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|ACURA|MDX": {
+    "generation": "YD2 Facelift",
+    "generation_start": 2010,
+    "generation_end": 2013,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/acura-mdx-2010-2013-1678100776.8694954.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.7i",
+        "name": "3.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 300
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|HONDA|ACCORD": {
+    "generation": "VIII (CU/CW)",
+    "generation_start": 2008,
+    "generation_end": 2011,
+    "bodies": [
+      {
+        "name": "Estate, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-accord-2008-2011-1756199683.857439.jpg"
+      },
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-accord-2008-2011-1756199684.597693.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 154
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i (DBA-CU2)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 202
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 198
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.2 i-DTEC",
+        "name": "2.2 i-DTEC",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 148
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i (DBA-CW2)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 202
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 190
+        },
+        "levels": [
+          "EX",
+          "EX-L"
+        ]
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 177
+        },
+        "levels": [
+          "LX",
+          "LX-P",
+          "SE"
+        ]
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 177
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 271
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 271
+        },
+        "levels": [
+          "EX",
+          "EX-L"
+        ]
+      }
+    ]
+  },
+  "2010|HONDA|CIVIC": {
+    "generation": "VIII (FD)",
+    "generation_start": 2005,
+    "generation_end": 2012,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-civic-2005-2012-1658057067.242464.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "1.8i",
+        "name": "1.8i (DBA-FD1)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 138
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.8i",
+        "name": "1.8i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 139
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.8i",
+        "name": "1.8i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 138
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 153
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.4i",
+        "name": "1.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 99
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.8i",
+        "name": "1.8i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 140
+        },
+        "levels": [
+          "DX",
+          "EX",
+          "LX",
+          "EX-L",
+          "LX-S"
+        ]
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 197
+        },
+        "levels": [
+          "Si"
+        ]
+      },
+      {
+        "trim": "1.6i",
+        "name": "1.6i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 123
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3 H",
+        "name": "1.3 H",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 110
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3H",
+        "name": "1.3H",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 114
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.8 CNG",
+        "name": "1.8 CNG",
+        "engine": {
+          "fuel": "Natural gas",
+          "power_hp": 113
+        },
+        "levels": [
+          "GX"
+        ]
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i (DBA-FD2)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 153
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3H",
+        "name": "1.3H (DAA-FD3)",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 93
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|HONDA|CR-V": {
+    "generation": "RE1/RE2/RE3/RE4/RE5/RE7",
+    "generation_start": 2006,
+    "generation_end": 2010,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-cr-v-2006-2010-1663064638.5275118.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 164
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 148
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4",
+        "name": "2.4 (DBA-RE3)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 168
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4",
+        "name": "2.4 (DBA-RE4)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 168
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 180
+        },
+        "levels": [
+          "EX",
+          "EX-L",
+          "LX"
+        ]
+      },
+      {
+        "trim": "2.2 i-DTEC",
+        "name": "2.2 i-DTEC",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 148
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 148
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 164
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|HONDA|ELEMENT": {
+    "generation": "YH Facelift",
+    "generation_start": 2009,
+    "generation_end": 2011,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-element-2009-2011-1518940076.77.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 166
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|HONDA|ACCORD CROSSTOUR": {
+    "generation": "",
+    "generation_start": 2010,
+    "generation_end": 2014,
+    "bodies": [
+      {
+        "name": "Hatchback, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-accord-crosstour-2010-2014-1636610365.0278676.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 271
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|HONDA|RIDGELINE": {
+    "generation": "I Facelift",
+    "generation_start": 2009,
+    "generation_end": 2011,
+    "bodies": [
+      {
+        "name": "Pickup Crew Cab",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-ridgeline-2009-2011-1777352996.718185.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 250
+        },
+        "levels": [
+          "RT",
+          "RTS",
+          "RTL"
+        ]
+      }
+    ]
+  },
+  "2010|HONDA|ODYSSEY": {
+    "generation": "RL3/RL4 Facelift",
+    "generation_start": 2008,
+    "generation_end": 2010,
+    "bodies": [
+      {
+        "name": "MPV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-odyssey-2008-2010-1756225397.5932431.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 244
+        },
+        "levels": [
+          "EX",
+          "EX-L",
+          "LX",
+          "Touring"
+        ]
+      },
+      {
+        "trim": "2.4i ",
+        "name": "2.4i  (DBA-RB3)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 170
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i ",
+        "name": "2.4i  (DBA-RB4)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 170
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i (DBA-RB3)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 202
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i (DBA-RB4)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 201
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 177
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 178
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|HONDA|PILOT": {
+    "generation": "II",
+    "generation_start": 2008,
+    "generation_end": 2011,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-pilot-2008-2011-1756226008.8654218.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 253
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 250
+        },
+        "levels": [
+          "EX",
+          "EX-L",
+          "LX",
+          "Touring"
+        ]
+      }
+    ]
+  },
+  "2010|HONDA|FIT": {
+    "generation": "GE/GP",
+    "generation_start": 2007,
+    "generation_end": 2014,
+    "bodies": [
+      {
+        "name": "Hatchback, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-fit-2007-2014-1771239606.4711528.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "1.3i",
+        "name": "1.3i (DBA-GE7)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 98
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i (DBA-GE6)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 98
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5i",
+        "name": "1.5i (DBA-GE8)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 118
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5i",
+        "name": "1.5i (DBA-GE9)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 118
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.2i",
+        "name": "1.2i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 74
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 98
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 89
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5i",
+        "name": "1.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 118
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5i Sport",
+        "name": "1.5i Sport",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 117
+        },
+        "levels": [
+          "Sport"
+        ]
+      },
+      {
+        "trim": "1.5i",
+        "name": "1.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 117
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5i",
+        "name": "1.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 117
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3",
+        "name": "1.3 (DAA-GP1)",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 87
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|SUZUKI|SX4": {
+    "generation": "I (GY/EY/RW) Facelift",
+    "generation_start": 2010,
+    "generation_end": 2015,
+    "bodies": [
+      {
+        "name": "Hatchback, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/suzuki-sx4-2010-2015-1626422626.676209.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "1.5i",
+        "name": "1.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 98
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 150
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0D",
+        "name": "2.0D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 123
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.6i",
+        "name": "1.6i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 118
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.6i",
+        "name": "1.6i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 111
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5i",
+        "name": "1.5i (DBA-YA11S)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 110
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5i",
+        "name": "1.5i (DBA-YB11S)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 110
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 143
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|SUZUKI|SWIFT+": {
+    "generation": "II RS (ZC/ZD)",
+    "generation_start": 2004,
+    "generation_end": 2011,
+    "bodies": [
+      {
+        "name": "Hatchback, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/suzuki-swift-2004-2011-1668683621.3619459.jpg"
+      },
+      {
+        "name": "Hatchback, 3d",
+        "image": "https://cdn.wheel-size.com/automobile/body/suzuki-swift-2004-2011-1668683622.0948606.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "1.3i",
+        "name": "1.3i (DBA-ZD11S)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 90
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i (DBA-ZC11S)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 90
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5i",
+        "name": "1.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 101
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 91
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3D",
+        "name": "1.3D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 74
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.6i",
+        "name": "1.6i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 123
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5i",
+        "name": "1.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 101
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5i",
+        "name": "1.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 101
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 91
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.2i",
+        "name": "1.2i (DBA-ZC71S)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 89
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.2i",
+        "name": "1.2i (DBA-ZC72S)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 90
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.2i",
+        "name": "1.2i (DBA-ZD72S)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 90
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.6i",
+        "name": "1.6i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 134
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.2i",
+        "name": "1.2i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 93
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3D",
+        "name": "1.3D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 74
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.4i",
+        "name": "1.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 94
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.2i",
+        "name": "1.2i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 93
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|SUZUKI|GRAND VITARA": {
+    "generation": "II (JT)",
+    "generation_start": 2005,
+    "generation_end": 2012,
+    "bodies": [
+      {
+        "name": "Closed Off-Road Vehicle, 3d",
+        "image": "https://cdn.wheel-size.com/automobile/body/suzuki-grand-vitara-2005-2012-1625043919.4430268.jpg"
+      },
+      {
+        "name": "Closed Off-Road Vehicle, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/suzuki-grand-vitara-2005-2012-1625043920.2692947.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 138
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.9DDiS",
+        "name": "1.9DDiS",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 127
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.6i",
+        "name": "1.6i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 105
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.2i",
+        "name": "3.2i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 229
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 166
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 166
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.2i",
+        "name": "3.2i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 229
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.2i",
+        "name": "3.2i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 221
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|MITSUBISHI|GALANT": {
+    "generation": "IX Facelift",
+    "generation_start": 2009,
+    "generation_end": 2014,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/mitsubishi-galant-2009-2014-1681129210.5846102.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 160
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 160
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.8i",
+        "name": "3.8i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 230
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|MITSUBISHI|ECLIPSE": {
+    "generation": "GS Facelift",
+    "generation_start": 2009,
+    "generation_end": 2012,
+    "bodies": [
+      {
+        "name": "Coupe",
+        "image": "https://cdn.wheel-size.com/automobile/body/mitsubishi-eclipse-2009-2012-1681098210.9094963.jpg"
+      },
+      {
+        "name": "Spyder",
+        "image": "https://cdn.wheel-size.com/automobile/body/mitsubishi-eclipse-2009-2012-1681098211.7047338.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.8i",
+        "name": "3.8i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 265
+        },
+        "levels": [
+          "GT"
+        ]
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 162
+        },
+        "levels": [
+          "GS"
+        ]
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 162
+        },
+        "levels": [
+          "GS",
+          "GS Sport"
+        ]
+      }
+    ]
+  },
+  "2010|MITSUBISHI|LANCER": {
+    "generation": "IX (CS) Facelift",
+    "generation_start": 2003,
+    "generation_end": 2010,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/mitsubishi-lancer-2003-2010-1773466639.6157937.jpg"
+      },
+      {
+        "name": "Estate, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/mitsubishi-lancer-2003-2010-1773466639.8926015.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 133
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 80
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.6i",
+        "name": "1.6i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 97
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 145
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0D",
+        "name": "2.0D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 138
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5i",
+        "name": "1.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 107
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.8i",
+        "name": "1.8i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 141
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 148
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0T",
+        "name": "2.0T",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 237
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 152
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.6i Classic",
+        "name": "1.6i Classic",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 97
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3i Classic",
+        "name": "1.3i Classic",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 80
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 168
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0T",
+        "name": "2.0T",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 237
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.8D",
+        "name": "1.8D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 114
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|MITSUBISHI|ENDEAVOR": {
+    "generation": "PS Facelift",
+    "generation_start": 2009,
+    "generation_end": 2011,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/mitsubishi-endeavor-2009-2011-1681101412.181176.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.8i",
+        "name": "3.8i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 225
+        },
+        "levels": [
+          "LS",
+          "SE"
+        ]
+      }
+    ]
+  },
+  "2010|MITSUBISHI|OUTLANDER INCLUDING V6": {
+    "generation": "II (CW)",
+    "generation_start": 2005,
+    "generation_end": 2012,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/mitsubishi-outlander-2005-2012-1636442321.506517.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.4i",
+        "name": "2.4i (DBA-CW5W)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 168
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i (DBA-CW4W)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 146
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.0i",
+        "name": "3.0i (DBA-CW6W)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 217
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0Di",
+        "name": "2.0Di",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 138
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.2Di",
+        "name": "2.2Di",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 174
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 145
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 168
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.0i",
+        "name": "3.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 220
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 168
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.0i",
+        "name": "3.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 230
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|MITSUBISHI|OUTLANDER": {
+    "generation": "II (CW)",
+    "generation_start": 2005,
+    "generation_end": 2012,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/mitsubishi-outlander-2005-2012-1636442321.506517.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.4i",
+        "name": "2.4i (DBA-CW5W)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 168
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i (DBA-CW4W)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 146
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.0i",
+        "name": "3.0i (DBA-CW6W)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 217
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0Di",
+        "name": "2.0Di",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 138
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.2Di",
+        "name": "2.2Di",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 174
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 145
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 168
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.0i",
+        "name": "3.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 220
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 168
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.0i",
+        "name": "3.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 230
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|JEEP|COMPASS": {
+    "generation": "I (MK)",
+    "generation_start": 2006,
+    "generation_end": 2010,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/jeep-compass-2006-2010-1775464260.3841803.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 168
+        },
+        "levels": [
+          "Sport",
+          "Limited"
+        ]
+      },
+      {
+        "trim": "2.0 CRD",
+        "name": "2.0 CRD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 138
+        },
+        "levels": [
+          "Sport",
+          "Limited"
+        ]
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 158
+        },
+        "levels": [
+          "Sport"
+        ]
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 172
+        },
+        "levels": [
+          "Sport",
+          "Limited"
+        ]
+      }
+    ]
+  },
+  "2010|JEEP|PATRIOT": {
+    "generation": "MK",
+    "generation_start": 2007,
+    "generation_end": 2010,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/jeep-patriot-2007-2010-1667293693.213391.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 158
+        },
+        "levels": [
+          "Sport"
+        ]
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 172
+        },
+        "levels": [
+          "Limited",
+          "Sport"
+        ]
+      },
+      {
+        "trim": "2.0 CRD",
+        "name": "2.0 CRD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 138
+        },
+        "levels": [
+          "Sport",
+          "Limited"
+        ]
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 168
+        },
+        "levels": [
+          "Sport",
+          "Limited"
+        ]
+      },
+      {
+        "trim": "2.2 CRD",
+        "name": "2.2 CRD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 161
+        },
+        "levels": [
+          "Sport",
+          "Limited"
+        ]
+      }
+    ]
+  },
+  "2010|JEEP|LIBERTY": {
+    "generation": "I (MK)",
+    "generation_start": 2007,
+    "generation_end": 2014,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/jeep-liberty-2007-2014-1667030020.1723723.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.0 CRD",
+        "name": "2.0 CRD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 138
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 168
+        },
+        "levels": [
+          "Limited"
+        ]
+      },
+      {
+        "trim": "3.7i",
+        "name": "3.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 210
+        },
+        "levels": [
+          "Sport",
+          "Limited",
+          "Renegade",
+          "Limited Jet",
+          "Arctic"
+        ]
+      }
+    ]
+  },
+  "2010|JEEP|CHEROKEE": {
+    "generation": "IV (KK)",
+    "generation_start": 2008,
+    "generation_end": 2013,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/jeep-cherokee-2008-2013-1666923292.4743187.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.8 CRD",
+        "name": "2.8 CRD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 174
+        },
+        "levels": [
+          "Sport",
+          "Limited",
+          "Limited Exclusive"
+        ]
+      },
+      {
+        "trim": "2.8 CRD",
+        "name": "2.8 CRD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 197
+        },
+        "levels": [
+          "Limited",
+          "Jet",
+          "Overland"
+        ]
+      },
+      {
+        "trim": "3.7i",
+        "name": "3.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 202
+        },
+        "levels": [
+          "Limited"
+        ]
+      },
+      {
+        "trim": "3.7i",
+        "name": "3.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 210
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|JEEP|GRAND CHEROKEE": {
+    "generation": "III (WK/WH)",
+    "generation_start": 2005,
+    "generation_end": 2010,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/jeep-grand-cherokee-2005-2010-1775043064.2263665.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.7i",
+        "name": "3.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 210
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.0 CRD",
+        "name": "3.0 CRD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 215
+        },
+        "levels": []
+      },
+      {
+        "trim": "5.7i",
+        "name": "5.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 322
+        },
+        "levels": []
+      },
+      {
+        "trim": "6.1i",
+        "name": "6.1i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 420
+        },
+        "levels": [
+          "SRT8"
+        ]
+      },
+      {
+        "trim": "3.7i",
+        "name": "3.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 198
+        },
+        "levels": []
+      },
+      {
+        "trim": "4.7i",
+        "name": "4.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 299
+        },
+        "levels": []
+      },
+      {
+        "trim": "5.7i",
+        "name": "5.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 347
+        },
+        "levels": []
+      },
+      {
+        "trim": "5.7i",
+        "name": "5.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 357
+        },
+        "levels": [
+          "Limited",
+          "Overland",
+          "Laredo"
+        ]
+      },
+      {
+        "trim": "3.6i",
+        "name": "3.6i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 282
+        },
+        "levels": [
+          "Limited",
+          "Laredo",
+          "Overland"
+        ]
+      },
+      {
+        "trim": "5.7i",
+        "name": "5.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 347
+        },
+        "levels": [
+          "Overland",
+          "Overland Summit"
+        ]
+      },
+      {
+        "trim": "3.0 CRD",
+        "name": "3.0 CRD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 237
+        },
+        "levels": [
+          "Limited",
+          "S-Limited",
+          "Overland",
+          "Overland Summit"
+        ]
+      }
+    ]
+  },
+  "2010|JEEP|WRANGLER": {
+    "generation": "III (JK)",
+    "generation_start": 2007,
+    "generation_end": 2018,
+    "bodies": [
+      {
+        "name": "SUV, 2d",
+        "image": "https://cdn.wheel-size.com/automobile/body/jeep-wrangler-2007-2018-1775034569.5402153.jpg"
+      },
+      {
+        "name": "SUV",
+        "image": "https://cdn.wheel-size.com/automobile/body/jeep-wrangler-2007-2018-1775034569.8163514.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.8 CRD",
+        "name": "2.8 CRD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 174
+        },
+        "levels": [
+          "Sport",
+          "Rubicon",
+          "Sahara"
+        ]
+      },
+      {
+        "trim": "3.8i",
+        "name": "3.8i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 202
+        },
+        "levels": [
+          "X",
+          "Sahara",
+          "Rubicon",
+          "Sport"
+        ]
+      },
+      {
+        "trim": "3.8i",
+        "name": "3.8i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 196
+        },
+        "levels": [
+          "Sport",
+          "Rubicon",
+          "Sahara"
+        ]
+      },
+      {
+        "trim": "2.8 CRD",
+        "name": "2.8 CRD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 197
+        },
+        "levels": [
+          "Sport",
+          "Sahara",
+          "Rubicon"
+        ]
+      }
+    ]
+  },
+  "2010|JEEP|COMMANDER": {
+    "generation": "I (XK/XH)",
+    "generation_start": 2005,
+    "generation_end": 2010,
+    "bodies": [
+      {
+        "name": "Closed Off-Road Vehicle, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/jeep-commander-2005-2010-1775031339.6274412.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.7i",
+        "name": "3.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 211
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.0 CRD",
+        "name": "3.0 CRD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 215
+        },
+        "levels": []
+      },
+      {
+        "trim": "4.7i",
+        "name": "4.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 305
+        },
+        "levels": []
+      },
+      {
+        "trim": "4.7i",
+        "name": "4.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 299
+        },
+        "levels": []
+      },
+      {
+        "trim": "5.7i",
+        "name": "5.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 357
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|MAZDA|3": {
+    "generation": "II (BL)",
+    "generation_start": 2009,
+    "generation_end": 2011,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/mazda-mazda3-2009-2011-1679924447.0618489.jpg"
+      },
+      {
+        "name": "Hatchback, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/mazda-mazda3-2009-2011-1679924447.8968487.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "1.6D",
+        "name": "1.6D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 107
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 148
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.6i",
+        "name": "1.6i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 103
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 145
+        },
+        "levels": [
+          "Neo",
+          "Maxx",
+          "Maxx Sport"
+        ]
+      },
+      {
+        "trim": "2.5i",
+        "name": "2.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 164
+        },
+        "levels": [
+          "SP25"
+        ]
+      },
+      {
+        "trim": "2.2D",
+        "name": "2.2D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 148
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.2D",
+        "name": "2.2D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 182
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 148
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.5i",
+        "name": "2.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 167
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.6D",
+        "name": "1.6D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 114
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|MAZDA|5": {
+    "generation": "I (J97M)",
+    "generation_start": 2006,
+    "generation_end": 2011,
+    "bodies": [
+      {
+        "name": "Pickup",
+        "image": "https://cdn.wheel-size.com/automobile/body/mazda-bt-50-2006-2011-1698307738.5453749.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.5TD",
+        "name": "2.5TD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 141
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.0TD",
+        "name": "3.0TD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 154
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.2D",
+        "name": "2.2D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 102
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.5D",
+        "name": "2.5D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 117
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.6i",
+        "name": "2.6i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 127
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.5TD",
+        "name": "2.5TD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 141
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.5TD",
+        "name": "2.5TD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 141
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|MAZDA|6": {
+    "generation": "II (GH)",
+    "generation_start": 2007,
+    "generation_end": 2010,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/mazda-mazda6-2007-2010-1648129902.2271807.jpg"
+      },
+      {
+        "name": "Liftback, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/mazda-mazda6-2007-2010-1648129902.9598632.jpg"
+      },
+      {
+        "name": "Estate, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/mazda-mazda6-2007-2010-1648129903.1409771.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.5i",
+        "name": "2.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 168
+        },
+        "levels": [
+          "Luxury",
+          "Sport"
+        ]
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 145
+        },
+        "levels": [
+          "Sport",
+          "Touring"
+        ]
+      },
+      {
+        "trim": "1.8i",
+        "name": "1.8i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 118
+        },
+        "levels": [
+          "Direct",
+          "Touring"
+        ]
+      },
+      {
+        "trim": "2.2D",
+        "name": "2.2D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 138
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.2TD",
+        "name": "2.2TD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 182
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.5i",
+        "name": "2.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 170
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.7i",
+        "name": "3.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 272
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.8i",
+        "name": "1.8i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 118
+        },
+        "levels": [
+          "Direct",
+          "Touring",
+          "Touring Plus"
+        ]
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 153
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.2TD",
+        "name": "2.2TD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 177
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.5i",
+        "name": "2.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 168
+        },
+        "levels": [
+          "Sport"
+        ]
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 155
+        },
+        "levels": [
+          "Impulse Line",
+          "Sport",
+          "Touring Plus"
+        ]
+      },
+      {
+        "trim": "2.2TD",
+        "name": "2.2TD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 161
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.2D",
+        "name": "2.2D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 127
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|MAZDA|MX-5 MIATA": {
+    "generation": "III (NC) Facelift",
+    "generation_start": 2009,
+    "generation_end": 2012,
+    "bodies": [
+      {
+        "name": "Roadster, 2d",
+        "image": "https://cdn.wheel-size.com/automobile/body/mazda-mx-5-miata-2009-2012-1680090507.701577.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 166
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 158
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|MAZDA|CX-7": {
+    "generation": "ER Facelift",
+    "generation_start": 2009,
+    "generation_end": 2016,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/mazda-cx-7-2009-2016-1761309201.6325412.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.2TD",
+        "name": "2.2TD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 170
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.3T",
+        "name": "2.3T (CBA-ER3P)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 235
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.3T",
+        "name": "2.3T",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 256
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.5i",
+        "name": "2.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 161
+        },
+        "levels": [
+          "i SV",
+          "i Sport",
+          "i Touring"
+        ]
+      },
+      {
+        "trim": "2.3T",
+        "name": "2.3T",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 244
+        },
+        "levels": [
+          "s Touring",
+          "s Grand Touring"
+        ]
+      },
+      {
+        "trim": "2.3T",
+        "name": "2.3T",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 235
+        },
+        "levels": [
+          "Sport",
+          "Touring"
+        ]
+      }
+    ]
+  },
+  "2010|MAZDA|RX-8": {
+    "generation": "SE Facelift",
+    "generation_start": 2008,
+    "generation_end": 2012,
+    "bodies": [
+      {
+        "name": "Coupe, 2d",
+        "image": "https://cdn.wheel-size.com/automobile/body/mazda-rx-8-2008-2012-1680107541.4490972.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "1.3i",
+        "name": "1.3i (ABA-SE3P)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 232
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i (ABA-SE3P)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 207
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i (ABA-SE3P)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 247
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 228
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 212
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 232
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|MAZDA|CX-9": {
+    "generation": "TB.II",
+    "generation_start": 2010,
+    "generation_end": 2012,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/mazda-cx-9-2010-2012-1683717593.448763.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.7i",
+        "name": "3.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 274
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.7i",
+        "name": "3.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 274
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.7i",
+        "name": "3.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 274
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|MAZDA|TRIBUTE": {
+    "generation": "CD2",
+    "generation_start": 2008,
+    "generation_end": 2011,
+    "bodies": [
+      {
+        "name": "Closed Off-Road Vehicle, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/mazda-tribute-2008-2011-1683883456.5419738.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.0i",
+        "name": "3.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 240
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.5i",
+        "name": "2.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 171
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|MAZDA|MAZDA 3": {
+    "generation": "II (BL)",
+    "generation_start": 2009,
+    "generation_end": 2011,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/mazda-mazda3-2009-2011-1679924447.0618489.jpg"
+      },
+      {
+        "name": "Hatchback, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/mazda-mazda3-2009-2011-1679924447.8968487.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "1.6D",
+        "name": "1.6D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 107
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 148
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.6i",
+        "name": "1.6i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 103
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 145
+        },
+        "levels": [
+          "Neo",
+          "Maxx",
+          "Maxx Sport"
+        ]
+      },
+      {
+        "trim": "2.5i",
+        "name": "2.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 164
+        },
+        "levels": [
+          "SP25"
+        ]
+      },
+      {
+        "trim": "2.2D",
+        "name": "2.2D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 148
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.2D",
+        "name": "2.2D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 182
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 148
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.5i",
+        "name": "2.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 167
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.6D",
+        "name": "1.6D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 114
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|MAZDA|MAZDA 5": {
+    "generation": "CR Facelift",
+    "generation_start": 2008,
+    "generation_end": 2010,
+    "bodies": [
+      {
+        "name": "MPV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/mazda-mazda5-2008-2010-1683806020.5762472.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.3i",
+        "name": "2.3i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 153
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.8i",
+        "name": "1.8i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 114
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 143
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0D",
+        "name": "2.0D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 141
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.5i",
+        "name": "2.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 157
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.8i",
+        "name": "1.8i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 114
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 148
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.6D",
+        "name": "1.6D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 114
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 142
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|MAZDA|MX-5": {
+    "generation": "III (NC)",
+    "generation_start": 2006,
+    "generation_end": 2015,
+    "bodies": [
+      {
+        "name": "Roadster",
+        "image": "https://cdn.wheel-size.com/automobile/body/mazda-mx-5-2006-2015-1648188724.0265992.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "1.8i",
+        "name": "1.8i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 125
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 166
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 158
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 158
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 168
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|DODGE|CALIBER": {
+    "generation": "PM",
+    "generation_start": 2006,
+    "generation_end": 2012,
+    "bodies": [
+      {
+        "name": "Hatchback, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/dodge-caliber-2006-2012-1615266288.1756687.webp"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 172
+        },
+        "levels": [
+          "R/T",
+          "UPTOWN",
+          "RUSH"
+        ]
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 154
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 158
+        },
+        "levels": [
+          "SE",
+          "SXT",
+          "SXT SPORT",
+          "SXT PLUS",
+          "EXPRESS",
+          "MAINSTREET",
+          "HEAT",
+          "UPTOWN"
+        ]
+      },
+      {
+        "trim": "2.0CRD",
+        "name": "2.0CRD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 168
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2010|DODGE|AVENGER": {
+    "generation": "II (JS)",
+    "generation_start": 2007,
+    "generation_end": 2010,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/dodge-avenger-2007-2010-1756463144.7950892.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.0CRD",
+        "name": "2.0CRD",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 138
+        },
+        "levels": []
+      },
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 235
+        },
+        "levels": [
+          "R/T"
+        ]
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 154
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 173
+        },
+        "levels": [
+          "SE",
+          "SXT",
+          "Express",
+          "R/T"
+        ]
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 168
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.7i",
+        "name": "2.7i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 184
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2020|ACURA|ILX": {
+    "generation": "DE Facelift",
+    "generation_start": 2019,
+    "generation_end": 2022,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/acura-ilx-2019-2021-1605777427.8764064.webp"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 201
+        },
+        "levels": [
+          "Standard",
+          "Premium",
+          "Technology",
+          "A-Spec"
+        ]
+      }
+    ]
+  },
+  "2020|ACURA|RDX": {
+    "generation": "TC1/TC2",
+    "generation_start": 2018,
+    "generation_end": 2022,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/acura-rdx-2018-2022-1684474547.8512824.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.0T",
+        "name": "2.0T",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 261
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0T",
+        "name": "2.0T",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 272
+        },
+        "levels": [
+          "Standard",
+          "Technology",
+          "A-Spec",
+          "Advance"
+        ]
+      }
+    ]
+  },
+  "2020|ACURA|TLX": {
+    "generation": "I (UB1/UB2/UB3/UB4) Facelift",
+    "generation_start": 2018,
+    "generation_end": 2020,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/acura-tlx-2018-2020-1605782739.729904.webp"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.5i SH-AWD",
+        "name": "3.5i SH-AWD",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 290
+        },
+        "levels": [
+          "Standard",
+          "Technology",
+          "A-Spec",
+          "Advance"
+        ]
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 206
+        },
+        "levels": [
+          "Standard",
+          "Technology",
+          "A-Spec"
+        ]
+      },
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 290
+        },
+        "levels": [
+          "Standard",
+          "Technology",
+          "A-Spec",
+          "Advance"
+        ]
+      }
+    ]
+  },
+  "2020|ACURA|MDX": {
+    "generation": "YD3 Facelift",
+    "generation_start": 2017,
+    "generation_end": 2021,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/acura-mdx-2017-2021-1605778294.5305774.webp"
+      },
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/acura-mdx-2017-2021-1605778295.3763828.webp"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.0H",
+        "name": "3.0H",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 321
+        },
+        "levels": [
+          "Technology",
+          "Advance"
+        ]
+      },
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 290
+        },
+        "levels": [
+          "Standard",
+          "Technology",
+          "A-Spec",
+          "Advance",
+          "Entertainment"
+        ]
+      }
+    ]
+  },
+  "2020|ACURA|RLX": {
+    "generation": "Facelift",
+    "generation_start": 2018,
+    "generation_end": 2021,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/acura-rlx-2018-2021-1605781428.3063352.webp"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 310
+        },
+        "levels": [
+          "Technology",
+          "Advance"
+        ]
+      },
+      {
+        "trim": "3.5i SH-AWD",
+        "name": "3.5i SH-AWD",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 377
+        },
+        "levels": [
+          "Advance"
+        ]
+      }
+    ]
+  },
+  "2020|HONDA|CIVIC": {
+    "generation": "X (FC) Facelift",
+    "generation_start": 2019,
+    "generation_end": 2022,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-civic-2019-2022-1684384835.4558437.jpg"
+      },
+      {
+        "name": "Coupe",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-civic-2019-2022-1684384835.8930032.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "1.6 i-DTEC",
+        "name": "1.6 i-DTEC",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 118
+        },
+        "levels": [
+          "EX",
+          "Comfort",
+          "Elegance",
+          "Executive"
+        ]
+      },
+      {
+        "trim": "1.0 VTEC",
+        "name": "1.0 VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 126
+        },
+        "levels": [
+          "EX",
+          "SR"
+        ]
+      },
+      {
+        "trim": "1.5 VTEC",
+        "name": "1.5 VTEC (DBA-FC1)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 170
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.0 VTEC",
+        "name": "1.0 VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 123
+        },
+        "levels": [
+          "180Turbo"
+        ]
+      },
+      {
+        "trim": "1.5 VTEC",
+        "name": "1.5 VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 174
+        },
+        "levels": [
+          "220Tutbo"
+        ]
+      },
+      {
+        "trim": "2.0 i-VTEC",
+        "name": "2.0 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 158
+        },
+        "levels": [
+          "EX",
+          "i-Style",
+          "LX",
+          "Sport"
+        ]
+      },
+      {
+        "trim": "1.5 VTEC",
+        "name": "1.5 VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 174
+        },
+        "levels": [
+          "Turbo Plus",
+          "Touring",
+          "Sport Plus"
+        ]
+      },
+      {
+        "trim": "2.0 i-VTEC",
+        "name": "2.0 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 158
+        },
+        "levels": [
+          "LXI",
+          "EXI"
+        ]
+      },
+      {
+        "trim": "1.5 VTEC",
+        "name": "1.5 VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 170
+        },
+        "levels": [
+          "EX-T",
+          "EXT-L"
+        ]
+      },
+      {
+        "trim": "1.5 VTEC",
+        "name": "1.5 VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 174
+        },
+        "levels": [
+          "EX",
+          "EX-L",
+          "Touring",
+          "LX"
+        ]
+      },
+      {
+        "trim": "1.5 VTEC",
+        "name": "1.5 VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 205
+        },
+        "levels": [
+          "Si"
+        ]
+      },
+      {
+        "trim": "2.0 i-VTEC",
+        "name": "2.0 i-VTEC",
+        "engine": {
+          "fuel": "Flex-Fuel",
+          "power_hp": 153
+        },
+        "levels": [
+          "EX"
+        ]
+      },
+      {
+        "trim": "1.5 VTEC",
+        "name": "1.5 VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 205
+        },
+        "levels": [
+          "Si"
+        ]
+      },
+      {
+        "trim": "1.6 i-VTEC",
+        "name": "1.6 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 123
+        },
+        "levels": [
+          "DX",
+          "LX",
+          "LX Sport"
+        ]
+      },
+      {
+        "trim": "1.5 VTEC",
+        "name": "1.5 VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 180
+        },
+        "levels": [
+          "RS"
+        ]
+      },
+      {
+        "trim": "1.5 VTEC",
+        "name": "1.5 VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 170
+        },
+        "levels": [
+          "RS",
+          "EX-T",
+          "EXT-L",
+          "Touring"
+        ]
+      },
+      {
+        "trim": "1.8 i-VTEC",
+        "name": "1.8 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 139
+        },
+        "levels": [
+          "E"
+        ]
+      },
+      {
+        "trim": "2.0 i-VTEC",
+        "name": "2.0 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 151
+        },
+        "levels": [
+          "EX"
+        ]
+      }
+    ]
+  },
+  "2020|HONDA|CLARITY": {
+    "generation": "",
+    "generation_start": 2016,
+    "generation_end": 2021,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-clarity-2016-2021-1663046671.6561122.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "Fuel Cell",
+        "name": "Fuel Cell (ZBA-ZC4)",
+        "engine": {
+          "fuel": "Hydrogen",
+          "power_hp": 174
+        },
+        "levels": []
+      },
+      {
+        "trim": "Fuel Cell",
+        "name": "Fuel Cell",
+        "engine": {
+          "fuel": "Hydrogen",
+          "power_hp": 174
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5",
+        "name": "1.5",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 212
+        },
+        "levels": [
+          "Touring"
+        ]
+      },
+      {
+        "trim": "1.5",
+        "name": "1.5 (6LA-ZC5)",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 181
+        },
+        "levels": [
+          "EX"
+        ]
+      }
+    ]
+  },
+  "2020|HONDA|CR-V": {
+    "generation": "RW/RT",
+    "generation_start": 2017,
+    "generation_end": 2024,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-cr-v-2017-2024-1770634808.933288.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 184
+        },
+        "levels": [
+          "Executive",
+          "Lifestyle",
+          "Prestige"
+        ]
+      },
+      {
+        "trim": "2.0 i-VTEC",
+        "name": "2.0 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 152
+        },
+        "levels": [
+          "S"
+        ]
+      },
+      {
+        "trim": "1.6 i-DTEC",
+        "name": "1.6 i-DTEC",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 118
+        },
+        "levels": [
+          "S",
+          "SX",
+          "V"
+        ]
+      },
+      {
+        "trim": "2.0",
+        "name": "2.0",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 212
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5T",
+        "name": "1.5T",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 190
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 184
+        },
+        "levels": [
+          "DX",
+          "LX",
+          "EX",
+          "Touring"
+        ]
+      },
+      {
+        "trim": "2.0i",
+        "name": "2.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 148
+        },
+        "levels": [
+          "Executive",
+          "Lifestyle",
+          "Elegance"
+        ]
+      },
+      {
+        "trim": "1.5T",
+        "name": "1.5T (DBA-RW1)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 188
+        },
+        "levels": [
+          "EX"
+        ]
+      },
+      {
+        "trim": "1.5T",
+        "name": "1.5T (DBA-RW2)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 188
+        },
+        "levels": [
+          "EX"
+        ]
+      },
+      {
+        "trim": "1.5T",
+        "name": "1.5T",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 188
+        },
+        "levels": [
+          "Prestige"
+        ]
+      },
+      {
+        "trim": "2.4 i-VTEC",
+        "name": "2.4 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 170
+        },
+        "levels": [
+          "S",
+          "ES",
+          "E",
+          "EL"
+        ]
+      },
+      {
+        "trim": "1.6 i-DTEC",
+        "name": "1.6 i-DTEC",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 158
+        },
+        "levels": [
+          "E",
+          "EL"
+        ]
+      },
+      {
+        "trim": "1.5T",
+        "name": "1.5T",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 170
+        },
+        "levels": [
+          "S",
+          "SE",
+          "SR",
+          "EX",
+          "Comfort",
+          "Elegance",
+          "Lifestyle",
+          "Executive"
+        ]
+      },
+      {
+        "trim": "1.5T CVT",
+        "name": "1.5T CVT",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 190
+        },
+        "levels": [
+          "SE",
+          "SR",
+          "EX",
+          "Elegance",
+          "Lifestyle",
+          "Executive"
+        ]
+      },
+      {
+        "trim": "2.0",
+        "name": "2.0 (6AA-RT6)",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 181
+        },
+        "levels": [
+          "EX"
+        ]
+      },
+      {
+        "trim": "2.0",
+        "name": "2.0 (6AA-RT5)",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 181
+        },
+        "levels": [
+          "EX"
+        ]
+      },
+      {
+        "trim": "2.0 i-MMD",
+        "name": "2.0 i-MMD",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 181
+        },
+        "levels": [
+          "S",
+          "SE",
+          "SR",
+          "EX",
+          "Comfort",
+          "Elegance",
+          "Lifestyle",
+          "Executive"
+        ]
+      },
+      {
+        "trim": "1.5T",
+        "name": "1.5T",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 188
+        },
+        "levels": [
+          "Turbo Plus",
+          "Touring"
+        ]
+      },
+      {
+        "trim": "1.5T",
+        "name": "1.5T",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 188
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.6 i-DTEC",
+        "name": "1.6 i-DTEC",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 158
+        },
+        "levels": [
+          "E",
+          "EL"
+        ]
+      },
+      {
+        "trim": "2.4 i-VTEC",
+        "name": "2.4 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 184
+        },
+        "levels": [
+          "Lifestyle",
+          "Prestige",
+          "Executive"
+        ]
+      },
+      {
+        "trim": "1.5T",
+        "name": "1.5T",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 190
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0 i-VTEC",
+        "name": "2.0 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 152
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4 i-VTEC",
+        "name": "2.4 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 170
+        },
+        "levels": [
+          "S",
+          "ES",
+          "E",
+          "EL"
+        ]
+      },
+      {
+        "trim": "2.0 H",
+        "name": "2.0 H",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 212
+        },
+        "levels": [
+          "EX",
+          "EX-L",
+          "Touring"
+        ]
+      },
+      {
+        "trim": "1.5T",
+        "name": "1.5T (6BA-RW2)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 188
+        },
+        "levels": [
+          "EX"
+        ]
+      },
+      {
+        "trim": "1.5T",
+        "name": "1.5T (6BA-RW1)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 188
+        },
+        "levels": [
+          "EX"
+        ]
+      },
+      {
+        "trim": "1.5T",
+        "name": "1.5T",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 190
+        },
+        "levels": [
+          "EX",
+          "EX-L",
+          "Touring"
+        ]
+      },
+      {
+        "trim": "2.0 i-VTEC",
+        "name": "2.0 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 148
+        },
+        "levels": [
+          "Elegance",
+          "Lifestyle",
+          "Executive"
+        ]
+      },
+      {
+        "trim": "1.6 i-DTEC",
+        "name": "1.6 i-DTEC",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 118
+        },
+        "levels": [
+          "S",
+          "SX",
+          "V"
+        ]
+      },
+      {
+        "trim": "2.0 H",
+        "name": "2.0 H",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 212
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5T",
+        "name": "1.5T",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 190
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.4i",
+        "name": "2.4i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 184
+        },
+        "levels": [
+          "DX",
+          "LX",
+          "EX",
+          "Touring"
+        ]
+      }
+    ]
+  },
+  "2020|HONDA|HR-V": {
+    "generation": "RU Facelift",
+    "generation_start": 2018,
+    "generation_end": 2023,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-hr-v-2018-2023-1712037366.5069058.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "1.6 i-DTEC",
+        "name": "1.6 i-DTEC",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 118
+        },
+        "levels": [
+          "S",
+          "SE",
+          "EX"
+        ]
+      },
+      {
+        "trim": "1.5 Turbo",
+        "name": "1.5 Turbo",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 180
+        },
+        "levels": [
+          "Sport"
+        ]
+      },
+      {
+        "trim": "1.5 i-VTEC",
+        "name": "1.5 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 129
+        },
+        "levels": [
+          "S",
+          "SE",
+          "EX",
+          "Comfort",
+          "Elegance",
+          "Executive"
+        ]
+      },
+      {
+        "trim": "1.8 i-VTEC",
+        "name": "1.8 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 141
+        },
+        "levels": [
+          "VTi",
+          "VTi-S",
+          "VTi-LX",
+          "RS"
+        ]
+      },
+      {
+        "trim": "1.8 i-VTEC",
+        "name": "1.8 i-VTEC",
+        "engine": {
+          "fuel": "Flex-Fuel",
+          "power_hp": 137
+        },
+        "levels": [
+          "LX",
+          "EX",
+          "EXL"
+        ]
+      },
+      {
+        "trim": "1.8 i-VTEC",
+        "name": "1.8 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 138
+        },
+        "levels": [
+          "LX",
+          "EX",
+          "EXL"
+        ]
+      },
+      {
+        "trim": "1.8 i-VTEC",
+        "name": "1.8 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 141
+        },
+        "levels": [
+          "Uniq",
+          "Prime",
+          "Touring"
+        ]
+      },
+      {
+        "trim": "1.8 i-VTEC",
+        "name": "1.8 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 139
+        },
+        "levels": [
+          "E",
+          "EL",
+          "RS"
+        ]
+      },
+      {
+        "trim": "1.8 i-VTEC",
+        "name": "1.8 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 141
+        },
+        "levels": [
+          "LX",
+          "Sport",
+          "EX",
+          "EX-L",
+          "Touring"
+        ]
+      },
+      {
+        "trim": "1.8 i-VTEC",
+        "name": "1.8 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 140
+        },
+        "levels": [
+          "E",
+          "EL",
+          "RS"
+        ]
+      }
+    ]
+  },
+  "2020|HONDA|INSIGHT": {
+    "generation": "ZE4",
+    "generation_start": 2018,
+    "generation_end": 2022,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-insight-2018-2022-1684385895.6261299.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "1.5",
+        "name": "1.5 (6AA-ZE4)",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 152
+        },
+        "levels": [
+          "EX",
+          "LX",
+          "EX Black Style"
+        ]
+      },
+      {
+        "trim": "1.5",
+        "name": "1.5",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 151
+        },
+        "levels": [
+          "LX",
+          "EX",
+          "Touring"
+        ]
+      }
+    ]
+  },
+  "2020|HONDA|PASSPORT": {
+    "generation": "III",
+    "generation_start": 2019,
+    "generation_end": 2021,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-passport-2019-2021-1663343807.5591164.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 280
+        },
+        "levels": [
+          "Sport",
+          "EX-L",
+          "Touring",
+          "Elite"
+        ]
+      }
+    ]
+  },
+  "2020|HONDA|PILOT": {
+    "generation": "III (YF) Facelift",
+    "generation_start": 2019,
+    "generation_end": 2023,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-pilot-2019-2023-1756226049.0194952.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 280
+        },
+        "levels": [
+          "LX",
+          "EX",
+          "EX-L",
+          "Touring",
+          "Elite"
+        ]
+      },
+      {
+        "trim": "3.0i",
+        "name": "3.0i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 245
+        },
+        "levels": [
+          "Executive",
+          "Lifestyle",
+          "Premium"
+        ]
+      },
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 280
+        },
+        "levels": [
+          "Prime",
+          "Touring"
+        ]
+      },
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 280
+        },
+        "levels": [
+          "LX",
+          "EX",
+          "EX-L",
+          "Touring"
+        ]
+      },
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 280
+        },
+        "levels": [
+          "EX",
+          "Touring",
+          "Elite"
+        ]
+      }
+    ]
+  },
+  "2020|HONDA|RIDGELINE": {
+    "generation": "II",
+    "generation_start": 2016,
+    "generation_end": 2020,
+    "bodies": [
+      {
+        "name": "Pickup Crew Cab",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-ridgeline-2016-2020-1663496593.6171546.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 280
+        },
+        "levels": [
+          "RT",
+          "Sport",
+          "RTL",
+          "RTL-T",
+          "RTL-E",
+          "Black Edition"
+        ]
+      },
+      {
+        "trim": "3.5i",
+        "name": "3.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 280
+        },
+        "levels": [
+          "RTL"
+        ]
+      }
+    ]
+  },
+  "2020|HONDA|FIT": {
+    "generation": "GP/GK Facelift",
+    "generation_start": 2017,
+    "generation_end": 2021,
+    "bodies": [
+      {
+        "name": "Hatchback, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/honda-fit-2017-2021-1663144307.9267673.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "1.3i",
+        "name": "1.3i (DBA-GK4)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 98
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5i",
+        "name": "1.5i (DBA-GK5)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 130
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5i",
+        "name": "1.5i (DBA-GK6)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 130
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5H",
+        "name": "1.5H (DAA-GP5)",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 109
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5H",
+        "name": "1.5H (DAA-GP6)",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 109
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i (DBA-GK3)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 98
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5 i-VTEC",
+        "name": "1.5 i-VTEC",
+        "engine": {
+          "fuel": "Flex-Fuel",
+          "power_hp": 114
+        },
+        "levels": [
+          "EXL",
+          "EX",
+          "LX",
+          "Personal",
+          "DX"
+        ]
+      },
+      {
+        "trim": "1.5i MT",
+        "name": "1.5i MT",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 130
+        },
+        "levels": [
+          "LX",
+          "Sport",
+          "EX"
+        ]
+      },
+      {
+        "trim": "1.5i CVT",
+        "name": "1.5i CVT",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 128
+        },
+        "levels": [
+          "LX",
+          "Sport",
+          "EX",
+          "EX-L"
+        ]
+      },
+      {
+        "trim": "1.5i",
+        "name": "1.5i",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 130
+        },
+        "levels": [
+          "Fun",
+          "Hit"
+        ]
+      },
+      {
+        "trim": "1.5 i-VTEC",
+        "name": "1.5 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 118
+        },
+        "levels": [
+          "EXL"
+        ]
+      },
+      {
+        "trim": "1.5H",
+        "name": "1.5H (6AA-GR3)",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 97
+        },
+        "levels": [
+          "Basic",
+          "Home",
+          "Ness",
+          "Luxe"
+        ]
+      },
+      {
+        "trim": "1.5 i-VTEC",
+        "name": "1.5 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 129
+        },
+        "levels": [
+          "Max Crosstar"
+        ]
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i (6BA-GR7)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 97
+        },
+        "levels": [
+          "Crosstar"
+        ]
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i (6BA-GR5)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 97
+        },
+        "levels": [
+          "Crosstar"
+        ]
+      },
+      {
+        "trim": "1.5H",
+        "name": "1.5H (6AA-GR8)",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 97
+        },
+        "levels": [
+          "Crosstar"
+        ]
+      },
+      {
+        "trim": "1.5 i-VTEC",
+        "name": "1.5 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 129
+        },
+        "levels": [
+          "Pro Sport"
+        ]
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i (6BA-GR2)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 97
+        },
+        "levels": [
+          "Basic",
+          "Home",
+          "Ness",
+          "Luxe"
+        ]
+      },
+      {
+        "trim": "1.3i",
+        "name": "1.3i (6BA-GR1)",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 97
+        },
+        "levels": [
+          "Basic",
+          "Home",
+          "Ness",
+          "Luxe"
+        ]
+      },
+      {
+        "trim": "1.5H",
+        "name": "1.5H (6AA-GR4)",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 97
+        },
+        "levels": [
+          "Basic",
+          "Home",
+          "Ness",
+          "Luxe"
+        ]
+      },
+      {
+        "trim": "1.5 e:HEV",
+        "name": "1.5 e:HEV",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 107
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5 i-VTEC",
+        "name": "1.5 i-VTEC",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 119
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2020|FORD|EXPEDITION": {
+    "generation": "IV (U553)",
+    "generation_start": 2018,
+    "generation_end": 2021,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-expedition-2018-2021-1755929097.33252.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "3.5 EcoBoost",
+        "name": "3.5 EcoBoost",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 375
+        },
+        "levels": [
+          "XLT",
+          "XLT Max",
+          "Limited",
+          "Limited Max",
+          "King Ranch",
+          "King Ranch MAX"
+        ]
+      },
+      {
+        "trim": "3.5 EcoBoost",
+        "name": "3.5 EcoBoost",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 400
+        },
+        "levels": [
+          "Platinum",
+          "Platinum Max"
+        ]
+      }
+    ]
+  },
+  "2020|FORD|EDGE": {
+    "generation": "II Facelift",
+    "generation_start": 2018,
+    "generation_end": 2024,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-edge-2018-2024-1754651628.610583.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.0 EcoBlue",
+        "name": "2.0 EcoBlue",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 148
+        },
+        "levels": [
+          "Titanium"
+        ]
+      },
+      {
+        "trim": "2.0 EcoBlue",
+        "name": "2.0 EcoBlue",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 235
+        },
+        "levels": [
+          "Titanium",
+          "ST-Line",
+          "Vignale"
+        ]
+      },
+      {
+        "trim": "2.0 EcoBlue",
+        "name": "2.0 EcoBlue",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 188
+        },
+        "levels": [
+          "Trend",
+          "Titanium",
+          "ST-Line",
+          "Vignale"
+        ]
+      },
+      {
+        "trim": "2.0 EcoBoost",
+        "name": "2.0 EcoBoost",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 250
+        },
+        "levels": [
+          "SE",
+          "SEL",
+          "ST-Line",
+          "Titanium"
+        ]
+      },
+      {
+        "trim": "2.7 EcoBoost",
+        "name": "2.7 EcoBoost",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 335
+        },
+        "levels": [
+          "ST"
+        ]
+      }
+    ]
+  },
+  "2020|FORD|FUSION": {
+    "generation": "II Facelift",
+    "generation_start": 2019,
+    "generation_end": 2021,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-fusion-2019-2021-1673589583.0816476.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.7 EcoBoost",
+        "name": "2.7 EcoBoost",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 325
+        },
+        "levels": [
+          "Sport"
+        ]
+      },
+      {
+        "trim": "2.0 EcoBoost",
+        "name": "2.0 EcoBoost",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 245
+        },
+        "levels": [
+          "SEL",
+          "Titanium"
+        ]
+      },
+      {
+        "trim": "2.0 iVCT",
+        "name": "2.0 iVCT",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 188
+        },
+        "levels": [
+          "Titanium"
+        ]
+      },
+      {
+        "trim": "2.5 iVCT",
+        "name": "2.5 iVCT",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 175
+        },
+        "levels": [
+          "S"
+        ]
+      },
+      {
+        "trim": "1.5 EcoBoost",
+        "name": "1.5 EcoBoost",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 181
+        },
+        "levels": [
+          "SE",
+          "SEL",
+          "I KNOW"
+        ]
+      },
+      {
+        "trim": "2.0 EcoBoost",
+        "name": "2.0 EcoBoost",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 245
+        },
+        "levels": [
+          "Titanium"
+        ]
+      },
+      {
+        "trim": "2.0 iVCT",
+        "name": "2.0 iVCT",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 188
+        },
+        "levels": [
+          "SE",
+          "SEL",
+          "Titanium"
+        ]
+      },
+      {
+        "trim": "2.0 PHEV",
+        "name": "2.0 PHEV",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 195
+        },
+        "levels": [
+          "Energi Titanium"
+        ]
+      }
+    ]
+  },
+  "2020|FORD|ESCAPE": {
+    "generation": "IV (CX482)",
+    "generation_start": 2020,
+    "generation_end": 2024,
+    "bodies": [
+      {
+        "name": "SUV, 5d",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-escape-2020-2024-1718865726.9750907.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "1.5 EcoBoost",
+        "name": "1.5 EcoBoost",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 181
+        },
+        "levels": [
+          "S",
+          "SE",
+          "SEL"
+        ]
+      },
+      {
+        "trim": "2.0 EcoBoost",
+        "name": "2.0 EcoBoost",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 250
+        },
+        "levels": [
+          "SEL",
+          "Titanium"
+        ]
+      },
+      {
+        "trim": "2.5 PHEV",
+        "name": "2.5 PHEV",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 200
+        },
+        "levels": [
+          "SE",
+          "SE Sport",
+          "SEL",
+          "Titanium"
+        ]
+      },
+      {
+        "trim": "2.0 EcoBoost",
+        "name": "2.0 EcoBoost",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 245
+        },
+        "levels": [
+          "ST-Line",
+          "Vignale"
+        ]
+      },
+      {
+        "trim": "2.5 PHEV",
+        "name": "2.5 PHEV",
+        "engine": {
+          "fuel": "Hybrid",
+          "power_hp": 224
+        },
+        "levels": [
+          "ST-Line"
+        ]
+      },
+      {
+        "trim": "2.0 EcoBoost",
+        "name": "2.0 EcoBoost",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 244
+        },
+        "levels": []
+      }
+    ]
+  },
+  "2020|FORD|TRANSIT CONNECT": {
+    "generation": "II Facelift",
+    "generation_start": 2018,
+    "generation_end": 2023,
+    "bodies": [
+      {
+        "name": "MPV",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-transit-connect-2018-2023-1719488539.1045947.jpg"
+      },
+      {
+        "name": "MCV",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-transit-connect-2018-2023-1719488539.8860586.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "1.0 EcoBoost",
+        "name": "1.0 EcoBoost",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 99
+        },
+        "levels": [
+          "Leader",
+          "Basis",
+          "Ambiente",
+          "Trend"
+        ]
+      },
+      {
+        "trim": "1.5 EcoBlue",
+        "name": "1.5 EcoBlue",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 74
+        },
+        "levels": [
+          "Leader",
+          "Basis",
+          "Ambiente",
+          "Trend"
+        ]
+      },
+      {
+        "trim": "1.5 EcoBlue",
+        "name": "1.5 EcoBlue",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 99
+        },
+        "levels": [
+          "Leader",
+          "Basis",
+          "Ambiente",
+          "Trend"
+        ]
+      },
+      {
+        "trim": "1.5 EcoBlue",
+        "name": "1.5 EcoBlue",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 118
+        },
+        "levels": [
+          "Leader",
+          "Basis",
+          "Ambiente",
+          "Trend",
+          "Limited",
+          "Sport"
+        ]
+      },
+      {
+        "trim": "2.5 iVCT",
+        "name": "2.5 iVCT",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 169
+        },
+        "levels": [
+          "XL",
+          "XLT"
+        ]
+      },
+      {
+        "trim": "1.5 EcoBlue",
+        "name": "1.5 EcoBlue",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 120
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Titanium"
+        ]
+      },
+      {
+        "trim": "2.0 GDi",
+        "name": "2.0 GDi",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 162
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Titanium"
+        ]
+      }
+    ]
+  },
+  "2020|FORD|F-250 SUPER DUTY": {
+    "generation": "IV (P558) Super Duty",
+    "generation_start": 2017,
+    "generation_end": 2020,
+    "bodies": [
+      {
+        "name": "Pickup Truck Regular Cab, 2d",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-f-250-2017-2020-1755930871.808096.jpg"
+      },
+      {
+        "name": "Pickup Truck SuperCab",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-f-250-2017-2020-1755930872.3762906.jpg"
+      },
+      {
+        "name": "Pickup Truck Crew Cab",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-f-250-2017-2020-1755930872.6004727.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "6.2",
+        "name": "6.2",
+        "engine": {
+          "fuel": "Flex-Fuel",
+          "power_hp": 385
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch",
+          "Platinum"
+        ]
+      },
+      {
+        "trim": "6.2",
+        "name": "6.2",
+        "engine": {
+          "fuel": "Flex-Fuel",
+          "power_hp": 385
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch"
+        ]
+      },
+      {
+        "trim": "6.7D",
+        "name": "6.7D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 475
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch",
+          "Platinum",
+          "Limited"
+        ]
+      },
+      {
+        "trim": "7.3",
+        "name": "7.3",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 430
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch",
+          "Platinum",
+          "Limited"
+        ]
+      },
+      {
+        "trim": "6.7D",
+        "name": "6.7D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 475
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch"
+        ]
+      },
+      {
+        "trim": "7.3",
+        "name": "7.3",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 430
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch"
+        ]
+      },
+      {
+        "trim": "6.7D",
+        "name": "6.7D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 475
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch",
+          "Platinum",
+          "Limited"
+        ]
+      },
+      {
+        "trim": "6.2",
+        "name": "6.2",
+        "engine": {
+          "fuel": "Flex-Fuel",
+          "power_hp": 385
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch"
+        ]
+      },
+      {
+        "trim": "6.2",
+        "name": "6.2",
+        "engine": {
+          "fuel": "Flex-Fuel",
+          "power_hp": 385
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch",
+          "Platinum"
+        ]
+      },
+      {
+        "trim": "6.7D",
+        "name": "6.7D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 475
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch"
+        ]
+      },
+      {
+        "trim": "7.3",
+        "name": "7.3",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 430
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch"
+        ]
+      },
+      {
+        "trim": "7.3",
+        "name": "7.3",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 430
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch",
+          "Platinum",
+          "Limited"
+        ]
+      }
+    ]
+  },
+  "2020|FORD|F-350 SUPER DUTY": {
+    "generation": "IV (P558) Super Duty Facelift",
+    "generation_start": 2020,
+    "generation_end": 2023,
+    "bodies": [
+      {
+        "name": "Pickup Truck Regular Cab, 2d",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-f-350-2020-2023-1755931356.6808805.jpg"
+      },
+      {
+        "name": "Pickup Truck Crew Cab",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-f-350-2020-2023-1755931357.2397454.jpg"
+      },
+      {
+        "name": "Pickup Truck SuperCab",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-f-350-2020-2023-1755931357.4802537.jpg"
+      },
+      {
+        "name": "Pickup Truck Crew Cab DRW",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-f-350-2020-2023-1755931357.72325.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "6.7D",
+        "name": "6.7D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 475
+        },
+        "levels": [
+          "XL"
+        ]
+      },
+      {
+        "trim": "6.7D",
+        "name": "6.7D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 475
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch",
+          "Platinum",
+          "Limited"
+        ]
+      },
+      {
+        "trim": "6.7D",
+        "name": "6.7D",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 475
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch",
+          "Platinum",
+          "Limited"
+        ]
+      },
+      {
+        "trim": "7.3",
+        "name": "7.3",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 430
+        },
+        "levels": [
+          "XLT",
+          "Lariat",
+          "King Ranch",
+          "Platinum"
+        ]
+      },
+      {
+        "trim": "7.3",
+        "name": "7.3",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 430
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch",
+          "Platinum"
+        ]
+      },
+      {
+        "trim": "6.2",
+        "name": "6.2",
+        "engine": {
+          "fuel": "Flex-Fuel",
+          "power_hp": 385
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch",
+          "Platinum"
+        ]
+      },
+      {
+        "trim": "6.2",
+        "name": "6.2",
+        "engine": {
+          "fuel": "Flex-Fuel",
+          "power_hp": 385
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat",
+          "King Ranch",
+          "Platinum"
+        ]
+      },
+      {
+        "trim": "6.2",
+        "name": "6.2",
+        "engine": {
+          "fuel": "Flex-Fuel",
+          "power_hp": 385
+        },
+        "levels": [
+          "XL"
+        ]
+      }
+    ]
+  },
+  "2020|FORD|RANGER": {
+    "generation": "III (P375) Facelift",
+    "generation_start": 2015,
+    "generation_end": 2023,
+    "bodies": [
+      {
+        "name": "Pickup Double Cab",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-ranger-2015-2023-1738742903.4889011.jpg"
+      },
+      {
+        "name": "Pickup Regular Cab, 2d",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-ranger-2015-2023-1738742904.2484827.jpg"
+      },
+      {
+        "name": "Pickup Chassis Cab, 2d",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-ranger-2015-2023-1738742904.4620564.jpg"
+      },
+      {
+        "name": "Pickup Super Cab, 2d",
+        "image": "https://cdn.wheel-size.com/automobile/body/ford-ranger-2015-2023-1738742904.6737676.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.5 Ti-VCT",
+        "name": "2.5 Ti-VCT",
+        "engine": {
+          "fuel": "Flex-Fuel",
+          "power_hp": 170
+        },
+        "levels": [
+          "XLS",
+          "XLT",
+          "Limited"
+        ]
+      },
+      {
+        "trim": "2.5 Ti-VCT",
+        "name": "2.5 Ti-VCT",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 164
+        },
+        "levels": [
+          "Base",
+          "XL",
+          "XLS",
+          "XLT"
+        ]
+      },
+      {
+        "trim": "3.2 TDCi",
+        "name": "3.2 TDCi",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 197
+        },
+        "levels": [
+          "Storm",
+          "XLT",
+          "Wildtrak",
+          "FX4",
+          "Limited"
+        ]
+      },
+      {
+        "trim": "2.2 TDCi",
+        "name": "2.2 TDCi",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 148
+        },
+        "levels": [
+          "Base"
+        ]
+      },
+      {
+        "trim": "2.2 TDCi",
+        "name": "2.2 TDCi",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 158
+        },
+        "levels": [
+          "XL",
+          "XLS",
+          "XLT"
+        ]
+      },
+      {
+        "trim": "2.2 TDCi",
+        "name": "2.2 TDCi",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 150
+        },
+        "levels": [
+          "XL"
+        ]
+      },
+      {
+        "trim": "3.2 Duratorq",
+        "name": "3.2 Duratorq",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 197
+        },
+        "levels": [
+          "Wildtrak"
+        ]
+      },
+      {
+        "trim": "2.0 EcoBlue",
+        "name": "2.0 EcoBlue",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 129
+        },
+        "levels": [
+          "XL"
+        ]
+      },
+      {
+        "trim": "2.0 Turbo",
+        "name": "2.0 Turbo",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 177
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0 Bi-Turbo",
+        "name": "2.0 Bi-Turbo",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 210
+        },
+        "levels": [
+          "Raptor"
+        ]
+      },
+      {
+        "trim": "2.0 Bi-Turbo",
+        "name": "2.0 Bi-Turbo",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 211
+        },
+        "levels": [
+          "Raptor"
+        ]
+      },
+      {
+        "trim": "2.0 Bi-Turbo",
+        "name": "2.0 Bi-Turbo",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 211
+        },
+        "levels": [
+          "XLT",
+          "Wildtrak"
+        ]
+      },
+      {
+        "trim": "2.0 EcuBlue",
+        "name": "2.0 EcuBlue",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 210
+        },
+        "levels": [
+          "Raptor"
+        ]
+      },
+      {
+        "trim": "2.0 EcoBlue",
+        "name": "2.0 EcoBlue",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 210
+        },
+        "levels": [
+          "Limited",
+          "Wildtrak",
+          "Thunder",
+          "Stormtrak"
+        ]
+      },
+      {
+        "trim": "2.0 EcoBlue",
+        "name": "2.0 EcoBlue",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 168
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Limited",
+          "Wildtrak",
+          "Wolftrak"
+        ]
+      },
+      {
+        "trim": "2.3 EcoBoost",
+        "name": "2.3 EcoBoost",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 270
+        },
+        "levels": [
+          "XL",
+          "XLT",
+          "Lariat"
+        ]
+      },
+      {
+        "trim": "2.3 Ti-VCT",
+        "name": "2.3 Ti-VCT",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 270
+        },
+        "levels": [
+          "XLT",
+          "Wildtrak"
+        ]
+      }
+    ]
+  },
+  "2020|HYUNDAI|ELANTRA": {
+    "generation": "VI (AD) Facelift",
+    "generation_start": 2019,
+    "generation_end": 2022,
+    "bodies": [
+      {
+        "name": "Saloon",
+        "image": "https://cdn.wheel-size.com/automobile/body/hyundai-elantra-2019-2022-1680755233.326429.jpg"
+      }
+    ],
+    "trims": [
+      {
+        "trim": "2.0 MPi",
+        "name": "2.0 MPi",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 147
+        },
+        "levels": [
+          "SE",
+          "SEL",
+          "Value Edition",
+          "Limited",
+          "Active",
+          "Elegance"
+        ]
+      },
+      {
+        "trim": "1.4 T-GDi",
+        "name": "1.4 T-GDi",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 129
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.6 T-GDi",
+        "name": "1.6 T-GDi",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 201
+        },
+        "levels": [
+          "Sport"
+        ]
+      },
+      {
+        "trim": "1.6 MPi",
+        "name": "1.6 MPi",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 126
+        },
+        "levels": [
+          "Base",
+          "Active",
+          "Start"
+        ]
+      },
+      {
+        "trim": "2.0 MPi",
+        "name": "2.0 MPi",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 150
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.6 CRDi",
+        "name": "1.6 CRDi",
+        "engine": {
+          "fuel": "Diesel",
+          "power_hp": 114
+        },
+        "levels": []
+      },
+      {
+        "trim": "2.0 MPi",
+        "name": "2.0 MPi",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 147
+        },
+        "levels": [
+          "SE",
+          "SEL",
+          "Limited",
+          "Essential",
+          "Preferred",
+          "Luxury",
+          "GLS Premium",
+          "Limited Tech"
+        ]
+      },
+      {
+        "trim": "1.6 T-GDi",
+        "name": "1.6 T-GDi",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 201
+        },
+        "levels": [
+          "N Line",
+          "N Line Ultimate"
+        ]
+      },
+      {
+        "trim": "1.6 MPi",
+        "name": "1.6 MPi",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 121
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.5 MPi",
+        "name": "1.5 MPi",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 113
+        },
+        "levels": [
+          "GLS",
+          "GLX",
+          "LUX",
+          "TOP"
+        ]
+      },
+      {
+        "trim": "1.4 T-GDi",
+        "name": "1.4 T-GDi",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 138
+        },
+        "levels": [
+          "240T"
+        ]
+      },
+      {
+        "trim": "2.0 MPi",
+        "name": "2.0 MPi",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 157
+        },
+        "levels": []
+      },
+      {
+        "trim": "1.6 MPi",
+        "name": "1.6 MPi",
+        "engine": {
+          "fuel": "Petrol",
+          "power_hp": 126
+        },
+        "levels": []
+      }
+    ]
   }
 }

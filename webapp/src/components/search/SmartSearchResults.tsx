@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import Fuse from 'fuse.js';
 import VehiclePackageBuilder from './VehiclePackageBuilder';
 import { cdnUrl } from '../../lib/cdn';
-import { getVehicleImgUrl } from '../../lib/vehicle-img';
+import { getVehicleImgUrl, imaginErrorHandler } from '../../lib/vehicle-img';
 import { deriveOeHubBore, filterByOeBore, lookupOeHubBore, type VehicleBoreMap } from '../../lib/oe-bore';
 
 interface Product {
@@ -856,7 +856,7 @@ export default function SmartSearchResults() {
                   {/* Vehicle image */}
                   {vehicleImgUrl && (
                     <div className="sm:w-80 h-44 sm:h-auto bg-white flex items-center justify-center p-3 shrink-0">
-                      <img src={vehicleImgUrl} alt={`${fmtMake} ${fmtModel}`} className="max-w-full max-h-full object-contain" loading="lazy" />
+                      <img src={vehicleImgUrl} alt={`${fmtMake} ${fmtModel}`} className="max-w-full max-h-full object-contain" loading="lazy" onError={imaginErrorHandler(detectedMake, detectedModel, detectedYear || '2025')} />
                     </div>
                   )}
                   {/* Package info */}
