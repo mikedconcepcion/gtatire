@@ -133,7 +133,36 @@ function modelSlug(m) {
 }
 // Strip drivetrain / variant suffixes we add but wheel-size doesn't carry.
 function stripVariantSuffix(m) {
-  return m.replace(/\s+(AWD|FWD|RWD|4WD|2WD|4MATIC|QUATTRO|XDRIVE|x-?Drive|sDrive)\s*$/i, '').trim();
+  return m.replace(/\s+(AWD|FWD|RWD|4WD|2WD|4MATIC|QUATTRO|XDRIVE|x-?Drive|sDrive|SPORTBACK)\s*$/i, '').trim();
+}
+
+// Per-make slug rewrites for catalogues where our model names diverge from
+// wheel-size's. BMW: trim codes (230i, 330e, M340i) → series (2-series,
+// 3-series). Lexus: model+displacement (ES350, NX300H) → family (es, nx).
+// Returns a slug candidate or null.
+function customSlugOverride(make, model) {
+  const m = String(model || '').toUpperCase();
+  if (make === 'BMW') {
+    // Pull the first digit after any optional "M" prefix. 230i → 2, M340i → 3.
+    const series = m.match(/^M?(\d)\d\d/);
+    if (series) return `${series[1]}-series`;
+    // i3, i4, i7, i8, iX, X1-X7, Z4 already match wheel-size directly.
+  }
+  if (make === 'LEXUS') {
+    // ES350 → es, NX300H → nx, IS300 → is, RX450HL → rx
+    const family = m.match(/^([A-Z]{2})\d/);
+    if (family) return family[1].toLowerCase();
+  }
+  if (make === 'PORSCHE') {
+    // "718 BOXSTER" / "718 CAYMAN" — wheel-size lists the body separately.
+    if (m.startsWith('718 ')) return m.slice(4).toLowerCase().replace(/\s+/g, '-');
+  }
+  if (make === 'MAZDA') {
+    // "3 SPORT" → "3", "MX-5" already direct. Strip trailing word.
+    if (m === '3 SPORT' || m === '3-SPORT') return '3';
+  }
+  if (make === 'TOYOTA' && m === 'GR SUPRA') return 'supra';
+  return null;
 }
 // Cache the per-make/year model list so we don't re-fetch.
 const modelListCache = {};
@@ -171,7 +200,7 @@ async function scrapeOne(year, make, model) {
   let mods = await tryModifications(year, make, modelSlug(model));
   let usedSlug = modelSlug(model);
 
-  // 2. Strip drivetrain suffix (EQUINOX AWD -> EQUINOX)
+  // 2. Strip drivetrain suffix (EQUINOX AWD -> EQUINOX, A4 QUATTRO -> A4)
   if (!mods) {
     const stripped = stripVariantSuffix(model);
     if (stripped !== model) {
@@ -181,7 +210,18 @@ async function scrapeOne(year, make, model) {
     }
   }
 
-  // 3. Fuzzy match against wheel-size's actual model list
+  // 3. Per-make slug override — known catalogue divergences (BMW trim codes
+  // → series, Lexus model+displacement → family, etc.). Try before the
+  // fuzzy fallback so we don't burn an extra API call on listModels().
+  if (!mods) {
+    const override = customSlugOverride(make, model);
+    if (override && override !== modelSlug(model)) {
+      mods = await tryModifications(year, make, override);
+      if (mods) usedSlug = override;
+    }
+  }
+
+  // 4. Fuzzy match against wheel-size's actual model list
   if (!mods) {
     const list = await listModels(make, year);
     const candidate = fuzzyMatchModel(stripVariantSuffix(model), list);
