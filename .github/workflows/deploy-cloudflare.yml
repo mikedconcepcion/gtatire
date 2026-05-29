@@ -1,0 +1,69 @@
+name: Deploy to Cloudflare Pages
+
+# Auto-deploys jsdcwheels.ca on every push to main. Replaces the manual
+# Wrangler-from-laptop workflow + the dead CF-Pages-GitHub-integration.
+#
+# One-time setup needed in GitHub (Repo → Settings → Secrets and variables → Actions):
+#   - CLOUDFLARE_API_TOKEN     create in Cloudflare dashboard → My Profile →
+#                              API Tokens → "Create Token" → use the
+#                              "Edit Cloudflare Workers" template (or a
+#                              custom token with Account.Cloudflare Pages
+#                              = Edit permission)
+#   - CLOUDFLARE_ACCOUNT_ID    Cloudflare dashboard → right sidebar of any
+#                              page (also visible in the Pages project URL)
+#   - CF_PAGES_PROJECT         the Pages project slug (the one in the
+#                              CF dashboard URL: /pages/view/<this slug>).
+#                              Likely "jsdcwheels" or "gtatire".
+#
+# Once those three secrets exist, every push to main triggers a build +
+# deploy. No manual action required.
+
+on:
+  push:
+    # CF Pages production branch is `cloudflare-migration` (set in the
+    # Pages dashboard). `main` also triggers, in case the production
+    # branch is ever switched. Both push to CF as the cloudflare-migration
+    # branch in the wrangler step below.
+    branches: [cloudflare-migration, main]
+  # Optional: lets you re-run a deploy from the Actions tab without a push.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: cf-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: webapp/package-lock.json
+
+      - name: Install webapp deps
+        working-directory: webapp
+        run: npm ci
+
+      - name: Build (also strips CDN assets from dist/)
+        working-directory: webapp
+        # Pin the CDN base to this commit's SHA so every deploy gets
+        # immutable URLs. Means clients always see the matching catalogue
+        # data for the code they downloaded, with no jsDelivr cache lag.
+        env:
+          PUBLIC_CDN_BASE: https://cdn.jsdelivr.net/gh/mikedconcepcion/gtatire@${{ github.sha }}/webapp/public
+        run: npm run build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy webapp/dist --project-name=${{ secrets.CF_PAGES_PROJECT }} --branch=cloudflare-migration

@@ -2,6 +2,8 @@ import { useState, useEffect, useMemo } from 'react';
 import Fuse from 'fuse.js';
 import VehiclePackageBuilder from './VehiclePackageBuilder';
 import { cdnUrl } from '../../lib/cdn';
+import { getVehicleImgUrl, imaginErrorHandler } from '../../lib/vehicle-img';
+import { deriveOeHubBore, filterByOeBore, lookupOeHubBore, type VehicleBoreMap } from '../../lib/oe-bore';
 
 interface Product {
   id: string;
@@ -172,6 +174,7 @@ export default function SmartSearchResults() {
   const [fitment, setFitment] = useState<FitmentMap>({});
   const [tireFitment, setTireFitment] = useState<TireFitmentMap>({});
   const [vehicleTree, setVehicleTree] = useState<VehicleTree>({});
+  const [vehicleBores, setVehicleBores] = useState<VehicleBoreMap | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [sortBy, setSortBy] = useState<'relevance' | 'price-asc' | 'price-desc'>('relevance');
@@ -190,12 +193,14 @@ export default function SmartSearchResults() {
       fetch(cdnUrl('/data/fitment.json')).then(r => r.json()),
       fetch(cdnUrl('/data/vehicles.json')).then(r => r.json()),
       fetch(cdnUrl('/data/tire-fitment.json')).then(r => r.json()).catch(() => ({})),
+      fetch(cdnUrl('/data/vehicle-bores.json')).then(r => r.ok ? r.json() : null).catch(() => null),
     ])
-      .then(([prods, fit, vehs, tFit]) => {
+      .then(([prods, fit, vehs, tFit, bores]) => {
         setProducts(prods);
         setFitment(fit);
         setVehicleTree(vehs);
         setTireFitment(tFit);
+        setVehicleBores(bores);
         setLoading(false);
       })
       .catch(() => { setLoading(false); setError(true); });
@@ -752,16 +757,30 @@ export default function SmartSearchResults() {
             ))}
           </div>
         </div>
-      ) : query && searchType === 'vehicle' && hasBothCategories ? (
-        <VehiclePackageBuilder
-          vehicleLabel={searchLabel?.replace('Fits ', '') || ''}
-          vehicleMake={detectedMake}
-          vehicleModel={detectedModel}
-          vehicleYear={detectedYear}
-          wheels={results.filter(p => p.category === 'wheel')}
-          tires={results.filter(p => p.category === 'tire')}
-          seasonCounts={seasonCounts}
-        />
+      ) : query && searchType === 'vehicle' ? (
+        // Vehicle searches always get the rich card with car image + OE
+        // fitment + recommendations, even when only wheels OR only tires
+        // happen to match (e.g. tire-fitment data hasn't caught up to a
+        // recently-added model year). VPB auto-selects its mode internally.
+        // Hub-centric strict filter: authoritative lookup first
+        // (vehicle-bores.json), inference fallback. James's rule: a 64.1mm
+        // vehicle gets 64.1mm wheels only — no 73.1 contamination.
+        (() => {
+          const allMatched = results;
+          const oeHub = lookupOeHubBore(vehicleBores, detectedYear || '', detectedMake || '', detectedModel || '') ?? deriveOeHubBore(allMatched);
+          const filtered = filterByOeBore(allMatched, oeHub);
+          return (
+            <VehiclePackageBuilder
+              vehicleLabel={searchLabel?.replace('Fits ', '') || ''}
+              vehicleMake={detectedMake}
+              vehicleModel={detectedModel}
+              vehicleYear={detectedYear}
+              wheels={filtered.filter(p => p.category === 'wheel')}
+              tires={filtered.filter(p => p.category === 'tire')}
+              seasonCounts={seasonCounts}
+            />
+          );
+        })()
       ) : query ? (
         <>
           {/* Results header */}
@@ -823,26 +842,21 @@ export default function SmartSearchResults() {
             if (!cheapWheel || !cheapTire) return null;
             const pkgPrice = (cheapWheel.priceNum + cheapTire.priceNum) * 4;
 
-            // Build vehicle image URL if we have make/model
-            const makeMap: Record<string, string> = {
-              'MERCEDES': 'Mercedes-Benz', 'LAND ROVER': 'Land Rover',
-              'ALFA ROMEO': 'Alfa Romeo',
-            };
-            const fmtMake = makeMap[detectedMake] || (detectedMake ? detectedMake.charAt(0) + detectedMake.slice(1).toLowerCase() : '');
+            // Build vehicle image URL (local template, no IMAGIN). Display labels
+            // stay capitalised for the alt text; URL uses UPPER-HYPHEN format.
+            const fmtMake = detectedMake ? detectedMake.charAt(0) + detectedMake.slice(1).toLowerCase() : '';
             const fmtModel = detectedModel ? detectedModel.split(' ').map((w: string) =>
               w.length <= 3 ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
             ).join(' ') : '';
-            const vehicleImgUrl = fmtMake && fmtModel
-              ? `https://cdn.imagin.studio/getImage?customer=img&make=${encodeURIComponent(fmtMake)}&modelFamily=${encodeURIComponent(fmtModel)}&modelYear=${detectedYear || '2025'}&angle=01&width=600&fileType=png`
-              : '';
+            const vehicleImgUrl = getVehicleImgUrl(detectedMake, detectedModel, detectedYear || '2025');
 
             return (
               <div className="bg-gradient-to-r from-primary-900/30 via-dark-900 to-primary-900/20 border border-primary-700/30 rounded-xl overflow-hidden mb-6">
                 <div className="flex flex-col sm:flex-row">
                   {/* Vehicle image */}
                   {vehicleImgUrl && (
-                    <div className="sm:w-64 h-36 sm:h-auto bg-gradient-to-br from-dark-800 to-dark-900 flex items-center justify-center p-2 shrink-0">
-                      <img src={vehicleImgUrl} alt={`${fmtMake} ${fmtModel}`} className="max-w-full max-h-full object-contain" loading="lazy" />
+                    <div className="sm:w-80 h-44 sm:h-auto bg-white flex items-center justify-center p-3 shrink-0">
+                      <img src={vehicleImgUrl} alt={`${fmtMake} ${fmtModel}`} className="max-w-full max-h-full object-contain" loading="lazy" onError={imaginErrorHandler(detectedMake, detectedModel, detectedYear || '2025')} />
                     </div>
                   )}
                   {/* Package info */}

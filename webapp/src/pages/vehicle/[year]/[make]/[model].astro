@@ -1,0 +1,61 @@
+---
+// Parametric SSG route for every vehicle in the catalogue (~7,540 pages).
+// Each page emits unique <title>, <meta>, <link rel="canonical">, JSON-LD
+// and a server-rendered <h1> so search engines and social previews see real
+// content for every YMM URL. The dynamic product grid still hydrates from
+// the CDN at runtime — that lets catalogue refreshes ship via git push
+// without a Cloudflare rebuild, while SEO chrome stays accurate per page.
+import Layout from '../../../../layouts/Layout.astro';
+import VehicleDetailPage from '../../../../components/detail/VehicleDetailPage';
+import fs from 'node:fs';
+import path from 'node:path';
+
+export async function getStaticPaths() {
+  const vPath = path.join(process.cwd(), 'public', 'data', 'vehicles.json');
+  if (!fs.existsSync(vPath)) return [];
+  const vehicles = JSON.parse(fs.readFileSync(vPath, 'utf-8'));
+  const paths: any[] = [];
+  for (const yr of Object.keys(vehicles)) {
+    for (const mk of Object.keys(vehicles[yr])) {
+      for (const md of Object.keys(vehicles[yr][mk])) {
+        paths.push({ params: { year: yr, make: mk, model: md } });
+      }
+    }
+  }
+  return paths;
+}
+
+const { year, make, model } = Astro.params;
+const titleCase = (s: string) => s.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
+const displayMake = titleCase(make || '');
+const displayModel = titleCase(model || '');
+const title = `${year} ${displayMake} ${displayModel} — Wheels & Tires | JSDC Wheels`;
+const description = `Shop hub-centric wheels and OE tire sizes for the ${year} ${displayMake} ${displayModel} in the Greater Toronto Area. Live stock, distributor pricing, 1-2 day GTA delivery.`;
+
+// JSON-LD: a Vehicle entity plus an Offer pointer to the store. Helps both
+// rich-results parsers and AI engines understand the page subject.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Vehicle',
+      'name': `${year} ${displayMake} ${displayModel}`,
+      'manufacturer': displayMake,
+      'model': displayModel,
+      'modelDate': year,
+    },
+    {
+      '@type': 'WebPage',
+      'name': title,
+      'description': description,
+      'url': `https://jsdcwheels.ca/vehicle/${year}/${make}/${model}`,
+      'isPartOf': { '@type': 'WebSite', 'name': 'JSDC Wheels', 'url': 'https://jsdcwheels.ca/' },
+      'about': { '@type': 'Vehicle', 'name': `${year} ${displayMake} ${displayModel}` },
+    },
+  ],
+};
+---
+
+<Layout title={title} description={description} jsonLd={jsonLd}>
+  <VehicleDetailPage client:load />
+</Layout>

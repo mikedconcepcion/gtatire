@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import VehicleResults from '../VehicleResults';
 import VehicleSearch from '../search/VehicleSearch';
 import { cdnUrl } from '../../lib/cdn';
+import { deriveOeHubBore, filterByOeBore, lookupOeHubBore } from '../../lib/oe-bore';
+import { getImaginFallbackUrl, imaginErrorHandler } from '../../lib/vehicle-img';
 
 // Hydrator for /vehicle/{year}/{make}/{model}. Replaces the previously
 // pre-rendered route so catalogue updates (~7,500 vehicle slugs) ship via
@@ -19,6 +21,8 @@ export default function VehicleDetailPage() {
   const [products, setProducts] = useState<any[]>([]);
   const [vehicleKey, setVehicleKey] = useState<{ year: string; make: string; model: string } | null>(null);
   const [availableDiameters, setAvailableDiameters] = useState<string[]>([]);
+  const [vehicleImage, setVehicleImage] = useState<string | null>(null);
+  const [oeSpec, setOeSpec] = useState<{ boltPattern?: string; hubBore?: number } | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -37,17 +41,52 @@ export default function VehicleDetailPage() {
       fetch(cdnUrl('/data/products.json')).then(r => r.json()),
       fetch(cdnUrl('/data/fitment.json')).then(r => r.json()),
       fetch(cdnUrl('/data/vehicles.json')).then(r => r.json()),
-    ]).then(([allProducts, fitment, vehicles]) => {
+      // Vehicle photo manifest — keyed "YYYY|MAKE|MODEL". Returns null
+      // gracefully for vehicles we haven't scraped a photo for yet.
+      fetch(cdnUrl('/data/vehicle-images.json')).then(r => r.ok ? r.json() : {}).catch(() => ({})),
+      // Per-vehicle OE bore map (authoritative). Missing values are fine —
+      // the bore filter falls back to inference from the matched set.
+      fetch(cdnUrl('/data/vehicle-bores.json')).then(r => r.ok ? r.json() : null).catch(() => null),
+    ]).then(([allProducts, fitment, vehicles, vehicleImages, vehicleBores]) => {
       const vkey = `${year}|${make}|${model}`;
       const matchingIds = new Set<string>();
       for (const [sku, vehicleList] of Object.entries(fitment as Record<string, string[]>)) {
         if ((vehicleList || []).includes(vkey)) matchingIds.add(sku);
       }
-      const sellable = allProducts.filter((p: any) =>
+      const matched = allProducts.filter((p: any) =>
         matchingIds.has(p.id) && !/discontinu/i.test(String(p.stock || ''))
       );
+
+      // OE bore lookup: prefer the authoritative vehicle-bores.json map.
+      // Fall back to inference from matched wheels only when the vehicle
+      // isn't yet in the map (long tail / new years). James's rule: a
+      // 64.1mm vehicle gets 64.1mm wheels only, never 73.1.
+      const oeHub = lookupOeHubBore(vehicleBores, year, make, model) ?? deriveOeHubBore(matched);
+      const replicas = matched.filter((p: any) =>
+        p.category === 'wheel' && ['RWC', 'OE+', 'OE+ Forged'].includes(p.brand)
+      );
+      const modeOf = <T,>(arr: T[]): T | undefined => {
+        const c = new Map<T, number>();
+        for (const v of arr) if (v != null) c.set(v, (c.get(v) || 0) + 1);
+        return Array.from(c.entries()).sort((a, b) => b[1] - a[1])[0]?.[0];
+      };
+      const oeBolt = modeOf(replicas.map((p: any) => p.boltPattern));
+
+      const sellable = filterByOeBore(matched, oeHub);
+
       setProducts(sellable);
+      setOeSpec({ boltPattern: oeBolt as string | undefined, hubBore: oeHub });
       setAvailableDiameters(vehicles?.[year]?.[make]?.[model] || []);
+
+      // Vehicle JPGs are stripped from dist/ at build time (per strip-cdn-assets)
+      // and served from jsDelivr in production. Wrap in cdnUrl() so the path
+      // resolves correctly in both dev (same-origin) and prod (CDN).
+      // Prefer the locally-scraped reference photo. If this vehicle isn't in
+      // the manifest yet (e.g. mid-rescrape from wheel-size.com), fall back
+      // to an on-demand IMAGIN.studio render so the page never shows an
+      // empty image slot.
+      const imgPath = (vehicleImages as Record<string, string>)[vkey] || null;
+      setVehicleImage(imgPath ? cdnUrl(imgPath) : getImaginFallbackUrl(make, model, year) || null);
 
       const displayMake = make.charAt(0) + make.slice(1).toLowerCase();
       document.title = `${year} ${displayMake} ${model} — Wheels & Tires`;
@@ -77,33 +116,83 @@ export default function VehicleDetailPage() {
     <>
       <section className="bg-dark-900 border-b border-dark-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-          <a href="/" className="text-dark-500 hover:text-dark-300 text-sm transition-colors inline-flex items-center gap-1 mb-2">
+          <a href="/" className="text-dark-500 hover:text-dark-300 text-sm transition-colors inline-flex items-center gap-1 mb-3">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             Back to Search
           </a>
-          <h1 className="text-3xl sm:text-4xl font-bold text-white">
-            {year} {make} <span className="text-primary-400">{model}</span>
-          </h1>
-          <p className="text-dark-400 mt-1">
-            {inStockProducts.length} in stock
-            {availableDiameters.length > 0 && (
-              <span> · Fits {availableDiameters.map(d => `${d}"`).join(', ')} rims</span>
-            )}
-          </p>
-          <p className="text-green-400 text-xs mt-2 inline-flex items-center gap-1.5">
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-            </svg>
-            All wheels are hub-centric — guaranteed vibration-free fit
-          </p>
-          <div className="flex gap-3 text-sm mt-4">
-            <div className="bg-dark-800 border border-dark-700/50 rounded-lg px-4 py-2 text-center">
-              <div className="text-white font-bold text-lg">{steelCount}</div>
-              <div className="text-dark-500 text-xs">Steel</div>
+
+          <div className="grid grid-cols-1 md:grid-cols-[minmax(0,420px)_minmax(0,1fr)] gap-5 md:gap-8 items-center">
+            {/* Vehicle photo — falls back to a generic silhouette if we
+                haven't scraped a reference image for this YMM yet. Capped
+                size on desktop so it doesn't dominate the fold. */}
+            <div className="relative w-full bg-dark-950/40 border border-dark-700/50 rounded-xl overflow-hidden aspect-[16/9] flex items-center justify-center">
+              {vehicleImage ? (
+                <img
+                  src={vehicleImage}
+                  alt={`${year} ${make} ${model} reference photo`}
+                  className="w-full h-full object-contain p-2"
+                  loading="eager"
+                  decoding="async"
+                  onError={imaginErrorHandler(make, model, year)}
+                />
+              ) : (
+                <div className="text-center px-6">
+                  <svg className="w-12 h-12 mx-auto text-dark-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.4} d="M3 13l2-6h14l2 6M5 13h14M5 13v5a1 1 0 001 1h2a1 1 0 001-1v-1M15 18v1a1 1 0 001 1h2a1 1 0 001-1v-5" />
+                    <circle cx="7.5" cy="16.5" r="1.5" strokeWidth={1.4} />
+                    <circle cx="16.5" cy="16.5" r="1.5" strokeWidth={1.4} />
+                  </svg>
+                  <p className="text-dark-500 text-xs">Reference photo coming soon</p>
+                </div>
+              )}
             </div>
-            <div className="bg-dark-800 border border-dark-700/50 rounded-lg px-4 py-2 text-center">
-              <div className="text-primary-400 font-bold text-lg">{alloyCount}</div>
-              <div className="text-dark-500 text-xs">Alloy</div>
+
+            {/* YMM headline + fit-spec block */}
+            <div>
+              <h1 className="text-3xl sm:text-4xl font-bold text-white">
+                {year} {make} <span className="text-primary-400">{model}</span>
+              </h1>
+              <p className="text-dark-400 mt-1.5">
+                {inStockProducts.length} hub-centric wheel{inStockProducts.length === 1 ? '' : 's'} in stock
+                {availableDiameters.length > 0 && (
+                  <span> · {availableDiameters.map(d => `${d}"`).join(', ')}</span>
+                )}
+              </p>
+              <p className="text-green-400 text-xs mt-2 inline-flex items-center gap-1.5">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                </svg>
+                All wheels are hub-centric — guaranteed vibration-free fit
+              </p>
+
+              {/* OE spec strip — only shown when consensus gave us something */}
+              {(oeSpec?.boltPattern || oeSpec?.hubBore) && (
+                <div className="mt-4 flex flex-wrap gap-2 text-xs">
+                  {oeSpec.boltPattern && (
+                    <span className="inline-flex items-center gap-1.5 bg-dark-800 border border-dark-700/60 rounded-md px-2.5 py-1">
+                      <span className="text-dark-500">Bolt</span>
+                      <span className="text-white font-mono font-semibold">{oeSpec.boltPattern}</span>
+                    </span>
+                  )}
+                  {oeSpec.hubBore != null && (
+                    <span className="inline-flex items-center gap-1.5 bg-dark-800 border border-dark-700/60 rounded-md px-2.5 py-1">
+                      <span className="text-dark-500">Hub</span>
+                      <span className="text-white font-mono font-semibold">{oeSpec.hubBore}mm</span>
+                    </span>
+                  )}
+                </div>
+              )}
+
+              <div className="flex gap-3 text-sm mt-4">
+                <div className="bg-dark-800 border border-dark-700/50 rounded-lg px-4 py-2 text-center">
+                  <div className="text-white font-bold text-lg">{steelCount}</div>
+                  <div className="text-dark-500 text-xs">Steel</div>
+                </div>
+                <div className="bg-dark-800 border border-dark-700/50 rounded-lg px-4 py-2 text-center">
+                  <div className="text-primary-400 font-bold text-lg">{alloyCount}</div>
+                  <div className="text-dark-500 text-xs">Alloy</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

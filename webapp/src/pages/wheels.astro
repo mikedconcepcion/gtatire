@@ -1,7 +1,52 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WheelsListingPage from '../components/detail/WheelsListingPage';
+import fs from 'node:fs';
+import path from 'node:path';
+
+// Server-render an ItemList JSON-LD with the top 24 in-stock wheels for
+// AI/SEO crawlers. Mirrors /tires.astro.
+const pPath = path.join(process.cwd(), 'public', 'data', 'products.json');
+let topWheels: any[] = [];
+if (fs.existsSync(pPath)) {
+  const products = JSON.parse(fs.readFileSync(pPath, 'utf-8'));
+  topWheels = products
+    .filter((p: any) => p.category === 'wheel' && p.priceNum > 0 && !/out of stock/i.test(String(p.stock || '')))
+    .sort((a: any, b: any) => a.priceNum - b.priceNum)
+    .slice(0, 24);
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  'name': 'Wheels — JSDC Wheels',
+  'numberOfItems': topWheels.length,
+  'itemListElement': topWheels.map((p: any, i: number) => {
+    const sizeShort = p.rimDiameter && p.rimWidth ? `${p.rimDiameter}x${p.rimWidth}` : '';
+    const name = [p.brand, p.name, sizeShort, p.boltPattern].filter(Boolean).join(' ').trim() || p.description;
+    return {
+      '@type': 'ListItem',
+      'position': i + 1,
+      'item': {
+        '@type': 'Product',
+        'name': name,
+        'sku': p.id,
+        'brand': { '@type': 'Brand', 'name': p.brand || 'JSDC Wheels' },
+        'category': 'Wheels',
+        ...(p.image ? { 'image': p.image } : {}),
+        'url': `https://jsdcwheels.ca/wheels/${p.id}`,
+        'offers': {
+          '@type': 'Offer',
+          'price': p.priceNum,
+          'priceCurrency': 'CAD',
+          'availability': 'https://schema.org/InStock',
+          'url': `https://jsdcwheels.ca/wheels/${p.id}`,
+        },
+      },
+    };
+  }),
+};
 ---
-<Layout title="Wheels — JSDC Wheels">
+<Layout title="Wheels — JSDC Wheels" jsonLd={jsonLd}>
   <WheelsListingPage client:load />
 </Layout>

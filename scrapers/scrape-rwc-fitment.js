@@ -11,7 +11,7 @@ const path = require('path');
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const WHEELS_PATH = path.join(DATA_DIR, 'rwc-wheels-raw.json');
 
-const MIN_YEAR = 2012;
+const MIN_YEAR = 2010; // widened from 2012 on 2026-05-26
 
 (async () => {
   console.log('=== RWC FITMENT SCRAPE (live portal) ===\n');

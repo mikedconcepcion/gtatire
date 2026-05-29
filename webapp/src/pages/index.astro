@@ -14,13 +14,14 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
 
 <Layout title="JSDC Wheels — Premium Tires & Wheels in the GTA">
   <!-- Hero -->
-  <section class="relative overflow-hidden">
-    <!-- Background video: loops continuously at 30% opacity behind headline.
-         Reduced-motion users get only the poster image, never the video. -->
+  <!-- Full-bleed showcase: video fills the viewport on mobile (90svh keeps the
+       phone's browser chrome in mind). Headline + search sit at the bottom of
+       the section over a thin gradient. A scroll-cue chip fades in after 2s
+       and out on first scroll. Reduced-motion users get the poster only. -->
+  <section id="hero-section" class="hero-section relative overflow-hidden min-h-[90svh] sm:min-h-[85vh] flex flex-col">
     <video
       id="hero-video"
-      class="absolute inset-0 w-full h-full object-cover opacity-30 motion-reduce:hidden"
-      src="/videos/hero.mp4"
+      class="hero-video absolute inset-0 w-full h-full object-cover motion-reduce:hidden"
       poster="/videos/hero-poster.jpg"
       muted
       loop
@@ -28,19 +29,24 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
       playsinline
       preload="metadata"
       aria-hidden="true"
-    ></video>
+    >
+      <source src="/videos/hero-mobile.mp4" type="video/mp4" media="(max-width: 640px)" />
+      <source src="/videos/hero.mp4"        type="video/mp4" />
+    </video>
     <div
-      class="absolute inset-0 bg-cover bg-center opacity-30 hidden motion-reduce:block"
+      class="absolute inset-0 bg-cover bg-center hidden motion-reduce:block"
       style="background-image: url('/videos/hero-poster.jpg');"
       aria-hidden="true"
     ></div>
+    <!-- Thin bottom gradient — leaves the upper half of the video uncovered so
+         the drift sequence reads first; only the headline strip is darkened. -->
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-dark-950/30 via-50% to-dark-950 pointer-events-none"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary-600/10 rounded-full blur-3xl pointer-events-none"></div>
     <script is:inline>
       (function () {
         var v = document.getElementById('hero-video');
+        var cue = document.getElementById('hero-scroll-cue');
         if (!v) return;
-        var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReducedMotion) return;
-
         document.addEventListener('visibilitychange', function () {
           if (document.hidden) {
             v.pause();
@@ -49,36 +55,91 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
             if (p && p.catch) p.catch(function () {});
           }
         });
+        if (!cue) return;
+        var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
+        // Fade the cue in after 2s
+        setTimeout(function () { cue.classList.add('is-visible'); }, 2000);
+        // Fade it out on first scroll / tap
+        var hideCue = function () { cue.classList.remove('is-visible'); cue.classList.add('is-hidden'); };
+        window.addEventListener('scroll', hideCue, { once: true, passive: true });
+        window.addEventListener('touchstart', hideCue, { once: true, passive: true });
       })();
     </script>
-    <!-- Layered overlays: dark vignette + warm gold glow keep the headline crisp -->
-    <div class="absolute inset-0 bg-gradient-to-b from-dark-950/70 via-dark-950/80 to-dark-950"></div>
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary-600/10 rounded-full blur-3xl"></div>
 
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-16 sm:pt-24 sm:pb-20">
-      <div class="text-center mb-10">
+    <!-- Content anchored to the bottom of the hero on mobile, vertically
+         centered on desktop. Pushes the search above the scroll cue. -->
+    <div class="relative z-10 flex-1 flex flex-col justify-end sm:justify-center max-w-7xl w-full mx-auto px-4 sm:px-6 pt-10 pb-16 sm:pt-20 sm:pb-20">
+      <div class="text-center mb-6 sm:mb-10">
         <p class="text-primary-400 text-xs font-semibold uppercase tracking-[0.2em] mb-4 inline-flex items-center gap-2">
           <span class="h-px w-8 bg-primary-500/40"></span>
           Wholesale & Retail · GTA Distributor
           <span class="h-px w-8 bg-primary-500/40"></span>
         </p>
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-5 tracking-tight">
+        <h1 class="hero-headline text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-5 tracking-tight">
           Find the Perfect
           <span class="text-primary-400"> Tires & Wheels</span>
         </h1>
-        <p class="text-dark-300 text-lg sm:text-xl max-w-xl mx-auto">
-          {(Math.floor((stats.totalProducts || 6800) / 100) * 100).toLocaleString()}+ products from {Object.keys(stats.byBrand || {}).length || 40} brands.
+        <p class="hero-subhead text-dark-200 text-lg sm:text-xl max-w-xl mx-auto">
+          {(Math.floor((stats.totalProducts || 6800) / 100) * 100).toLocaleString()}+ products from 40+ brands.
           Hub-centric fitment, 1-2 day delivery across the Greater Toronto Area.
         </p>
       </div>
 
       <HeroSearch client:load />
     </div>
+
+    <!-- Scroll-to-shop cue — small pill at the bottom of the hero with an
+         animated chevron. Fades in 2s after load, hides on first scroll/tap. -->
+    <a
+      id="hero-scroll-cue"
+      href="#authorized-brands"
+      class="hero-scroll-cue absolute bottom-4 left-1/2 -translate-x-1/2 z-20 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-dark-950/40 backdrop-blur-sm border border-white/10 text-white/80 text-[11px] font-semibold uppercase tracking-[0.18em] opacity-0 transition-opacity duration-700"
+      aria-label="Scroll to browse brands"
+    >
+      Scroll to shop
+      <svg class="w-3.5 h-3.5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+      </svg>
+    </a>
+  </section>
+
+  <!-- Authorized brands trust strip — wordmarks tinted with each brand's
+       signature color and weight/italic treatment. We approximate the visual
+       personality with Inter/Saira (the loaded fonts) rather than ship 8
+       licensed brand fonts. -->
+  <section id="authorized-brands" class="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-2 scroll-mt-20">
+    <p class="text-center text-dark-500 text-[11px] font-semibold uppercase tracking-[0.22em] mb-5">
+      <span class="inline-block w-6 h-px bg-dark-600 align-middle mr-3"></span>
+      Authorized dealer of
+      <span class="inline-block w-6 h-px bg-dark-600 align-middle ml-3"></span>
+    </p>
+    <div class="grid grid-cols-4 sm:grid-cols-8 gap-2 sm:gap-3 max-w-5xl mx-auto">
+      {[
+        { name: 'Michelin',    file: 'michelin.svg' },
+        { name: 'Bridgestone', file: 'bridgestone.svg' },
+        { name: 'Continental', file: 'continental.svg' },
+        { name: 'Hankook',     file: 'hankook.svg' },
+        { name: 'Pirelli',     file: 'pirelli.svg' },
+        { name: 'Goodyear',    file: 'goodyear.svg' },
+        { name: 'Yokohama',    file: 'yokohama.svg' },
+        { name: 'Kumho',       file: 'kumho.svg' },
+      ].map(b => (
+        <div class="brand-chip">
+          <img
+            src={`/brands/${b.file}`}
+            alt={`${b.name} logo`}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      ))}
+    </div>
   </section>
 
   <!-- Wheel brands -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-6">
-    <h2 class="text-center text-dark-500 text-sm font-medium uppercase tracking-wider mb-5">Wheel Brands</h2>
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-6">
+    <h2 class="text-center text-dark-500 text-sm font-medium uppercase tracking-wider mb-5">Authorized Wheel Brands</h2>
     <div class="flex flex-wrap justify-center gap-2">
       {wheelBrands.map(brand => (
         <a
@@ -96,7 +157,7 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
 
   <!-- Tire brands -->
   <section class="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
-    <h2 class="text-center text-dark-500 text-sm font-medium uppercase tracking-wider mb-5">Tire Brands</h2>
+    <h2 class="text-center text-dark-500 text-sm font-medium uppercase tracking-wider mb-5">Authorized Tire Brands</h2>
     <div class="flex flex-wrap justify-center gap-2">
       {tireBrands.map(brand => (
         <a
@@ -197,8 +258,30 @@ const tireBrands = ['Michelin', 'Bridgestone', 'Continental', 'Pirelli', 'Goodye
           </svg>
         </div>
         <h3 class="text-white font-semibold mb-2">Authorized Distributor</h3>
-        <p class="text-dark-400 text-sm">Sourced direct from Michelin, Bridgestone, Continental and 40+ brands — full manufacturer warranty.</p>
+        <p class="text-dark-400 text-sm">Sourced direct from 40+ brands — full manufacturer warranty. <a href="/about#brands" class="text-primary-400 hover:text-primary-300 underline-offset-2 hover:underline">See brand list →</a></p>
       </div>
     </div>
   </section>
 </Layout>
+
+<style>
+  /* Full-bleed showcase: video is the focal point at ~85% opacity. The
+     bottom gradient on the section handles legibility for the search band. */
+  .hero-video {
+    opacity: 0.85;
+  }
+  /* Text-shadow keeps headline + subhead legible against any video frame —
+     the bottom gradient only kicks in for the lower half of the section. */
+  .hero-section .hero-headline,
+  .hero-section .hero-subhead {
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.80), 0 1px 3px rgba(0, 0, 0, 0.50);
+  }
+  /* Scroll-cue visibility states. JS toggles is-visible / is-hidden. */
+  .hero-scroll-cue.is-visible {
+    opacity: 1;
+  }
+  .hero-scroll-cue.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>

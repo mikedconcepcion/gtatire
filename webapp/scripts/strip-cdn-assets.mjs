@@ -17,7 +17,8 @@ const dirsToStrip = [
 
 const filesToStrip = [
   'data/products.json',
-  'data/fitment.json',
+  // fitment.json stays in dist/ — at 24MB it exceeds jsDelivr's 20MB limit
+  // (kept in sync with webapp/src/lib/cdn.ts LOCAL_ONLY).
   'data/vehicles.json',
   'data/stats.json',
   'data/cross-ref.json',

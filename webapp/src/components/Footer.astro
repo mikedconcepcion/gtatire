@@ -47,9 +47,9 @@ const cities = [
       <div>
         <h3 class="text-white font-semibold text-sm mb-4">Contact</h3>
         <ul class="space-y-2">
-          <li><a href="tel:+16476123341" class="text-primary-400 hover:text-primary-300 text-sm font-semibold transition-colors inline-flex items-center gap-1.5">
+          <li><a href="tel:+14373261308" class="text-primary-400 hover:text-primary-300 text-sm font-semibold transition-colors inline-flex items-center gap-1.5">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.95.68l1.5 4.49a1 1 0 01-.5 1.21l-2.26 1.13a11 11 0 005.52 5.52l1.13-2.26a1 1 0 011.21-.5l4.49 1.5a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" /></svg>
-            647-612-3341
+            437-326-1308
           </a></li>
           <li><a href="/contact" class="text-dark-400 hover:text-primary-400 text-sm transition-colors">Contact form</a></li>
           <li class="text-dark-500 text-sm">Greater Toronto Area, ON</li>
@@ -69,14 +69,18 @@ const cities = [
       </div>
     </div>
 
-    <!-- GTA cities served -->
+    <!-- GTA cities served — written as a natural sentence rather than a
+         pill-list so it reads less like keyword stuffing while keeping the
+         city landing pages crawlable. -->
     <div class="border-t border-dark-700/40 mt-6 pt-6">
-      <h3 class="text-dark-500 text-xs font-semibold uppercase tracking-wider mb-3">Serving the GTA</h3>
-      <div class="flex flex-wrap gap-x-4 gap-y-1.5">
-        {cities.map(c => (
-          <a href={`/wheels-tires-${c.slug}`} class="text-dark-400 hover:text-primary-400 text-xs transition-colors">{c.name}</a>
+      <p class="text-dark-400 text-xs leading-relaxed">
+        <span class="text-dark-500 font-semibold">Serving the GTA: </span>
+        We deliver across the Greater Toronto Area, including {cities.map((c, i) => (
+          <>
+            <a href={`/wheels-tires-${c.slug}`} class="text-dark-300 hover:text-primary-400 transition-colors">{c.name}</a>{i < cities.length - 2 ? ', ' : i === cities.length - 2 ? ', and ' : '.'}
+          </>
         ))}
-      </div>
+      </p>
     </div>
 
     <div class="border-t border-dark-700/50 mt-8 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -87,5 +91,10 @@ const cities = [
         <li><a href="/accessibility" class="text-dark-500 hover:text-dark-300 text-xs transition-colors">Accessibility</a></li>
       </ul>
     </div>
+
+    <p class="text-dark-600 text-[10px] mt-4 leading-relaxed">
+      Weather data &copy; <a href="https://eccc-msc.github.io/open-data/" rel="noopener" class="hover:text-dark-400 transition-colors">Environment and Climate Change Canada</a>,
+      provided under the <a href="https://open.canada.ca/en/open-government-licence-canada" rel="noopener" class="hover:text-dark-400 transition-colors">Open Government Licence — Canada</a>.
+    </p>
   </div>
 </footer>

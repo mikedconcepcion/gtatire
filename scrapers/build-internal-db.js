@@ -12,6 +12,7 @@
 
 const fs = require('fs');
 const pathMod = require('path');
+const sqliteDb = require('./lib/db');
 
 const DATA_DIR = pathMod.join(__dirname, '..', 'data');
 const OUT_DIR = pathMod.join(__dirname, '..', 'webapp', 'public', 'data');
@@ -40,18 +41,100 @@ function saveJSON(filepath, data, pretty = false) {
   console.log(`  Saved ${pathMod.basename(filepath)} (${(str.length / 1024).toFixed(0)} KB)`);
 }
 
-// Generate GTA SKU: GTA-W-0001 (W=wheel, T=tire later)
-let skuCounter = 0;
-function nextSku(category = 'W') {
-  skuCounter++;
-  return `GTA-${category}-${String(skuCounter).padStart(4, '0')}`;
+// Build a deterministic, URL-safe product ID from the supplier name + the
+// supplier's own SKU. Each supplier has a distinct SKU format so the prefix
+// (a-/s-/r-) prevents collisions and signals provenance:
+//   alltire    -> a-{sku}           e.g. a-x47564
+//   superspeed -> s-{sku}           e.g. s-76rr18085355100mb
+//   rwc        -> r-{sku}           e.g. r-rw70170a5144564-1
+// Re-running the build produces the same IDs for the same supplier SKUs, so
+// /wheels/{id} URLs stay stable across rebuilds (unlike the old GTA-W-XXXX
+// counter which reshuffled on every run).
+const SUPPLIER_PREFIX = { alltire: 'a', superspeed: 's', rwc: 'r' };
+function productIdFor(supplier, supplierSku) {
+  const prefix = SUPPLIER_PREFIX[supplier];
+  if (!prefix) throw new Error(`Unknown supplier: ${supplier}`);
+  // Lowercase, replace anything that isn't url-safe (. / etc.) with a dash,
+  // collapse repeated dashes. Keep alphanumerics and dashes only.
+  const safe = String(supplierSku)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  return `${prefix}-${safe}`;
+}
+
+// Brand-name normalization. Alltire's tire feed sometimes ships UPPER and
+// sometimes "Hankook" / "HANKOOk" / "Hankook " — fold to a single canonical
+// Title Case form so filters don't show duplicates.
+function normalizeBrand(b) {
+  if (!b) return '';
+  const trimmed = String(b).trim();
+  if (!trimmed) return '';
+  // Preserve known stylized names; otherwise Title Case
+  const PRESERVE = {
+    'OE+': 'OE+', 'OE+ FORGED': 'OE+ Forged',
+    'BFGOODRICH': 'BFGoodrich',
+    'RWC': 'RWC',
+    'SUPERSPEED FORGED': 'Superspeed Forged',
+  };
+  const up = trimmed.toUpperCase();
+  if (PRESERVE[up]) return PRESERVE[up];
+  // Title Case: first letter upper, rest lower, per whitespace-separated word
+  return up.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
+}
+
+// Map gpibtob.com's RWC stock signal to a normalized customer-facing label
+// that ProductCard understands without further interpretation:
+//   "In Stock"        -> "In Stock"  (green badge)
+//   "No Stock"        -> "Out of Stock"  (red badge — ProductCard regex hit)
+//   "Call For Stock"  -> "Contact for stock"  (neutral — ambiguous state)
+//   anything else     -> "Contact for stock"
+function rwcStockLabel(raw) {
+  const s = (raw || '').trim().toLowerCase();
+  if (s === 'in stock') return 'In Stock';
+  if (s === 'no stock' || s.includes('out of stock')) return 'Out of Stock';
+  if (s === 'call for stock' || s.includes('contact')) return 'Contact for stock';
+  return raw || 'Contact for stock';
+}
+
+// Map Superspeed's raw INVENTORY+ETA pair to a customer-friendly stock label.
+// Source data variants we collapse:
+//   - "Discontinue" / "Discontinued"       -> Discontinued
+//   - "Phase-Out" / "Phase Out"            -> Discontinued
+//   - "In Production" / "NEW - In Prod..." -> Available on Backorder
+//   - "N/A" / "" (empty) with INV=0        -> Special Order
+//   - "84 | 05-15 ON" (qty | restock-date) -> Available on Backorder (mm-dd)
+// In-stock counts pass through as before so customer cards show specific
+// numbers when inventory is low.
+function superspeedStockLabel(inventory, eta) {
+  if (inventory > 20) return '20+ In Stock';
+  if (inventory > 0) return `${inventory} In Stock`;
+
+  const raw = (eta || '').trim();
+  if (!raw) return 'Special Order';
+
+  const lower = raw.toLowerCase();
+  if (lower.startsWith('discontinu') || lower.startsWith('phase')) return 'Discontinued';
+  if (lower.includes('in production')) return 'Available on Backorder';
+  if (lower === 'n/a') return 'Special Order';
+
+  // Batch-restock pattern: "QTY | MM-DD ON" — surface the restock date only.
+  const batchMatch = raw.match(/\|\s*(\d{2}-\d{2})/);
+  if (batchMatch) return `Available on Backorder (${batchMatch[1]})`;
+
+  return 'Special Order';
 }
 
 // Parse wheel description for specs
 function parseWheelDescription(desc) {
   const specs = {};
-  const nameMatch = desc.match(/^([A-Z][A-Za-z_]+)\s/);
-  if (nameMatch) specs.name = nameMatch[1].replace(/_/g, ' ');
+  // Alltire alloy descriptions follow "MODEL[_FINISH] dim x dim ...".
+  // The model token can span multiple words ("BLACK WIDOW") or include digits
+  // ("SW05", "V20"). It always terminates at the underscore that introduces
+  // the finish. So we match from start up to (but not including) the first
+  // underscore, allowing letters, digits, and inner spaces.
+  const nameMatch = desc.match(/^([A-Z][A-Za-z0-9\s]*?)_/);
+  if (nameMatch) specs.name = nameMatch[1].trim();
   const dimMatch = desc.match(/(\d{2,3})x(\d+\.?\d*)/);
   if (dimMatch) { specs.rimDiameter = parseInt(dimMatch[1]); specs.rimWidth = parseFloat(dimMatch[2]); }
   const boltMatch = desc.match(/(\d)x(\d{3,4}\.?\d*)/);
@@ -65,9 +148,12 @@ function parseWheelDescription(desc) {
   return specs;
 }
 
-// Pricing: retail = MSRP - 10%, wholesale = DC+20% (capped below retail)
+// Pricing: public price = MSRP (no auto-discount). The 10% discount is
+// granted manually via referral code at the inquiry stage, so the storefront
+// shows the honest "list" price without a fake strikethrough. Distributors
+// still see their wholesale price via PriceDisplay (auth-gated).
 function calcPricing(msrp, dealerCost) {
-  const publicPrice = msrp > 0 ? Math.round(msrp * 0.90 * 100) / 100 : 0;
+  const publicPrice = msrp > 0 ? Math.round(msrp * 100) / 100 : 0;
   const dcBased = dealerCost > 0 ? Math.round(dealerCost * 1.20 * 100) / 100 : 0;
   const msrpBased = msrp > 0 ? Math.round(msrp * 0.60 * 100) / 100 : 0;
   const distPrice = dcBased > 0 && dcBased < publicPrice ? dcBased : msrpBased;
@@ -103,6 +189,10 @@ function normalizeVehicleKey(key) {
   const parts = key.split('|');
   if (parts.length !== 3) return key;
   let [year, make, model] = parts;
+  // RWC's portal exposes mid-cycle refresh years like "2017.5" (Jeep Compass
+  // redesign). One vehicle isn't worth its own dropdown bucket, so fold it
+  // into the integer year.
+  if (/\.\d+$/.test(year)) year = year.split('.')[0];
   if (make === 'MERCEDES-BENZ') make = 'MERCEDES';
   if (make === 'TESLA' && /^[A-Z0-9]{1,2}$/.test(model)) model = `MODEL ${model}`;
   // Strip parenthetical suffixes, replace any remaining route-breaking chars
@@ -130,20 +220,25 @@ function buildDatabase() {
 
     for (const raw of rawWheels) {
       if (!raw.productNo) continue;
+      // Alltire's catalog has inconsistent casing — same SKU appears as both
+      // "X46205" and "x46205" with identical specs and image. Dedup by the
+      // case-folded ID so the two collapse into one product (the URL is
+      // lowercase anyway, so this is the canonical form).
       const supplierSku = raw.productNo;
+      const dedupKey = String(supplierSku).toLowerCase();
       const vehicleKey = normalizeVehicleKey(`${raw.vehicleYear}|${raw.vehicleMake}|${raw.vehicleModel}`);
 
       // Track fitment
       let gtaId;
-      if (seen.has(supplierSku)) {
-        gtaId = seen.get(supplierSku);
+      if (seen.has(dedupKey)) {
+        gtaId = seen.get(dedupKey);
         if (!fitmentMap[gtaId]) fitmentMap[gtaId] = new Set();
         fitmentMap[gtaId].add(vehicleKey);
         continue;
       }
 
-      gtaId = nextSku('W');
-      seen.set(supplierSku, gtaId);
+      gtaId = productIdFor('alltire', supplierSku);
+      seen.set(dedupKey, gtaId);
       if (!fitmentMap[gtaId]) fitmentMap[gtaId] = new Set();
       fitmentMap[gtaId].add(vehicleKey);
 
@@ -173,12 +268,23 @@ function buildDatabase() {
         supplierProductNo: supplierSku,
       });
 
-      // Alltire brand: Steel wheels are generic, Alloy wheels are "Macpek"
-      const alltireBrand = raw.wheelType === 'Steel Wheel' ? 'Steel' : 'Macpek';
+      // Alltire brand: Steel wheels are generic. For alloys, the supplier
+      // doesn't expose a brand field anywhere (no Maker column on wheel
+      // search, no detail page — confirmed via probe-alltire-detail.js).
+      // The model name (CONTOUR, BLACK WIDOW, SW05, etc., all distributed
+      // through Macpek) is the best brand-like label available. Falls back
+      // to "Macpek" only when description doesn't fit the MODEL_FINISH
+      // pattern. Compare to the descriptions: groups like "BLACK WIDOW",
+      // "MINI BAJA", "SW05" should land in their own buckets, not be
+      // truncated to just the first word.
+      const alltireBrand = raw.wheelType === 'Steel Wheel'
+        ? normalizeBrand('Steel')
+        : (specs.name ? normalizeBrand(specs.name) : normalizeBrand('Macpek'));
 
       products.push({
         id: gtaId,
         sku: gtaId,
+        productNo: supplierSku,
         category: 'wheel',
         brand: alltireBrand,
         wheelType: raw.wheelType || '',
@@ -189,8 +295,8 @@ function buildDatabase() {
         priceNum: pricing.publicPrice,
         distPrice: pricing.distPrice > 0 ? `$${pricing.distPrice.toFixed(2)}` : '',
         distPriceNum: pricing.distPrice,
-        compareAt: pricing.msrp > 0 ? `$${pricing.msrp.toFixed(2)}` : '',
-        compareAtNum: pricing.msrp,
+        compareAt: '',
+        compareAtNum: 0,
         stock: raw.stock || '',
         hubCentric: raw.hubCentric || false,
         rimDiameter: specs.rimDiameter || null,
@@ -214,7 +320,7 @@ function buildDatabase() {
 
     for (const w of ssRaw.List) {
       if (!w.SKU) continue;
-      const gtaId = nextSku('W');
+      const gtaId = productIdFor('superspeed', w.SKU);
       count++;
 
       // Attach AAIA fitment if available for this SKU (normalize Tesla / Mercedes naming)
@@ -244,11 +350,7 @@ function buildDatabase() {
         if (extraImgName) extraImages.push(cdn(`/data/images/wheels/${extraImgName}`));
       }
 
-      let stockText = '';
-      if (w.INVENTORY > 20) stockText = '20+ In Stock';
-      else if (w.INVENTORY > 0) stockText = `${w.INVENTORY} In Stock`;
-      else if (w.ETA) stockText = w.ETA;
-      else stockText = 'Out of Stock';
+      const stockText = superspeedStockLabel(w.INVENTORY, w.ETA);
 
       skuMap.push({
         gtaId,
@@ -261,8 +363,9 @@ function buildDatabase() {
       products.push({
         id: gtaId,
         sku: gtaId,
+        productNo: w.SKU,
         category: 'wheel',
-        brand: w.BRAND || 'Superspeed',
+        brand: normalizeBrand(w.BRAND || 'Superspeed'),
         wheelType: 'Alloy Wheel',
         name: w.MODEL || '',
         description: `${w.MODEL} ${w.DIAMETER}x${w.WIDTH} ${w.PCD} ET${w.ET} CB${w.CB} ${w.FINISH}`,
@@ -272,8 +375,8 @@ function buildDatabase() {
         priceNum: pricing.publicPrice,
         distPrice: pricing.distPrice > 0 ? `$${pricing.distPrice.toFixed(2)}` : '',
         distPriceNum: pricing.distPrice,
-        compareAt: pricing.msrp > 0 ? `$${pricing.msrp.toFixed(2)}` : '',
-        compareAtNum: pricing.msrp,
+        compareAt: '',
+        compareAtNum: 0,
         stock: stockText,
         hubCentric: false,
         rimDiameter: parseInt(w.DIAMETER) || null,
@@ -290,18 +393,25 @@ function buildDatabase() {
 
   // ─── RWC ───
   const rwcRaw = loadJSON('rwc-wheels-raw.json');
+  // Real MSRPs from detail-page scrape (scrape-rwc-msrp.js). Keyed by sku.
+  // When present, drives both the public price calc AND the compareAt
+  // strikethrough. Without it we fall back to a cost*1.6 estimate for the
+  // pricing math but leave compareAt empty (no fake strikethrough).
+  const rwcMsrp = loadJSON('rwc-msrp.json') || {};
   if (rwcRaw && Array.isArray(rwcRaw)) {
-    console.log(`RWC: ${rwcRaw.length} raw entries`);
+    console.log(`RWC: ${rwcRaw.length} raw entries (real MSRP: ${Object.keys(rwcMsrp).length})`);
     let count = 0;
 
     for (const w of rwcRaw) {
       if (!w.sku) continue;
-      const gtaId = nextSku('W');
+      const gtaId = productIdFor('rwc', w.sku);
       count++;
 
       const dc = w.cost || 0;
+      const realMsrp = rwcMsrp[w.sku] || 0;
       const estMsrp = dc > 0 ? Math.round(dc * 1.6 * 100) / 100 : 0;
-      const pricing = calcPricing(estMsrp, dc);
+      const msrpForCalc = realMsrp > 0 ? realMsrp : estMsrp;
+      const pricing = calcPricing(msrpForCalc, dc);
 
       // Copy image
       const imgFile = w.image ? w.image.split('/').pop() : '';
@@ -331,22 +441,35 @@ function buildDatabase() {
         }
       }
 
+      // Strip the leading "RWC " supplier-prefix from the public-facing name
+      // and description. 703 of 964 products didn't match the structured name
+      // regex, so they were carrying the prefix into the listing card title.
+      const cleanName = (w.modelCode1 || (w.name || '').replace(/^RWC\s+/i, '')) || '';
+      const cleanDescription = (w.name || '').replace(/^RWC\s+/i, '');
+
       products.push({
         id: gtaId,
         sku: gtaId,
+        productNo: w.sku,
         category: 'wheel',
-        brand: 'RWC',
+        brand: normalizeBrand('RWC'),
         wheelType: 'Alloy Wheel',
-        name: w.modelCode1 || w.name || '',
-        description: w.name || '',
+        name: cleanName,
+        description: cleanDescription,
         image: newImgName ? cdn(`/data/images/wheels/${newImgName}`) : '',
         price: pricing.publicPrice > 0 ? `$${pricing.publicPrice.toFixed(2)}` : '',
         priceNum: pricing.publicPrice,
         distPrice: pricing.distPrice > 0 ? `$${pricing.distPrice.toFixed(2)}` : '',
         distPriceNum: pricing.distPrice,
-        compareAt: estMsrp > 0 ? `$${estMsrp.toFixed(2)}` : '',
-        compareAtNum: estMsrp,
-        stock: w.stock || 'Available',
+        // compareAt shows ONLY when we have a real scraped MSRP for this
+        // product. No fake strikethroughs (cost*1.6 estimate is for pricing
+        // math only, never displayed).
+        compareAt: '',
+        compareAtNum: 0,
+        // Stock comes from the listing page (`.rating span`) — normalized
+        // to In Stock / Out of Stock / Contact for stock. Captured by
+        // update-rwc-stock.js.
+        stock: rwcStockLabel(w.stock),
         hubCentric: (w.customFit || '').includes('HUB CENTRIC'),
         rimDiameter: sizeMatch ? parseInt(sizeMatch[1]) : null,
         rimWidth: sizeMatch ? parseFloat(sizeMatch[2]) : null,
@@ -371,10 +494,11 @@ function buildDatabase() {
 
     for (const t of tiresRaw) {
       if (!t.productNo) continue;
-      if (seen.has(t.productNo)) continue;
-      seen.set(t.productNo, true);
+      const dedupKey = String(t.productNo).toLowerCase();
+      if (seen.has(dedupKey)) continue;
+      seen.set(dedupKey, true);
 
-      const gtaId = nextSku('T');
+      const gtaId = productIdFor('alltire', t.productNo);
       tireCount++;
 
       const msrp = parseFloat((t.msrp || '').replace(/[$,]/g, '')) || 0;
@@ -409,8 +533,9 @@ function buildDatabase() {
       products.push({
         id: gtaId,
         sku: gtaId,
+        productNo: t.productNo,
         category: 'tire',
-        brand: t.maker || '',
+        brand: normalizeBrand(t.maker || ''),
         wheelType: t.type || 'All Season',
         name: t.model || '',
         description: t.description || '',
@@ -419,8 +544,8 @@ function buildDatabase() {
         priceNum: pricing.publicPrice,
         distPrice: pricing.distPrice > 0 ? `$${pricing.distPrice.toFixed(2)}` : '',
         distPriceNum: pricing.distPrice,
-        compareAt: pricing.msrp > 0 ? `$${pricing.msrp.toFixed(2)}` : '',
-        compareAtNum: pricing.msrp,
+        compareAt: '',
+        compareAtNum: 0,
         stock: t.stock || '',
         tireSize: t.size || '',
         tireWidth,
@@ -493,9 +618,151 @@ function buildDatabase() {
   }
   console.log(`  From existing fitment: ${derivedFromExisting} spec entries derived (${vehicleSpecs.size} unique vehicles total)`);
 
-  // Match every catalog wheel to vehicle specs
+  // ─── Per-vehicle OE hub bore — authoritative source of truth ───
+  // James's rule (2026-05-26): vehicles have specific bore fitment, so
+  // recommendations are mm-specific. Prevent contamination where one
+  // vehicle ends up linked to wheels of 5+ different bores by deriving
+  // ONE OE bore per vehicle from layered authority, then post-filtering.
+  //
+  // Authority order:
+  //   1. Alltire raw entries with hubCentric=true matching exact YMM
+  //   2. RWC per-vehicle fitment (search results are inherently OE-bore matched)
+  //   3. AAIA mode (chassis IDs span generations — mode dampens outliers)
+  console.log('\n=== Per-vehicle OE bore derivation ===');
+  const modeOf = (arr) => {
+    const c = new Map();
+    for (const v of arr) {
+      if (v == null || isNaN(v) || v <= 0) continue;
+      c.set(v, (c.get(v) || 0) + 1);
+    }
+    return Array.from(c.entries()).sort((a, b) => b[1] - a[1])[0]?.[0];
+  };
+  const vehicleOeSpec = {}; // "Y|MK|MD" -> {hubBore, boltPattern, source}
+
+  // Source 1: Alltire hubCentric=true raw entries
+  const alltireRaw = loadJSON('alltire-wheels.json') || [];
+  const alltireBores = new Map();
+  const alltirePcds = new Map();
+  for (const w of alltireRaw) {
+    if (!w.hubCentric) continue;
+    if (!w.vehicleYear || !w.vehicleMake || !w.vehicleModel) continue;
+    const v = normalizeVehicleKey(`${w.vehicleYear}|${w.vehicleMake}|${w.vehicleModel}`);
+    const m = String(w.description || '').match(/CB(\d+(?:\.\d+)?)/i);
+    const cb = m ? parseFloat(m[1]) : null;
+    const pcdM = String(w.description || '').match(/(\d+x[\d.]+)/);
+    if (cb) {
+      if (!alltireBores.has(v)) alltireBores.set(v, []);
+      alltireBores.get(v).push(cb);
+    }
+    if (pcdM) {
+      if (!alltirePcds.has(v)) alltirePcds.set(v, []);
+      alltirePcds.get(v).push(pcdM[1]);
+    }
+  }
+  let viaAlltire = 0;
+  for (const [v, bores] of alltireBores) {
+    const b = modeOf(bores);
+    if (b) {
+      vehicleOeSpec[v] = { hubBore: b, boltPattern: modeOf(alltirePcds.get(v) || []), source: 'alltire' };
+      viaAlltire++;
+    }
+  }
+  console.log(`  Source 1 (Alltire hubCentric): ${viaAlltire} vehicles`);
+
+  // Source 2: RWC per-vehicle fitment
+  const rwcFitMap = loadJSON('rwc-fitment-map.json') || {};
+  const rwcRaw2 = loadJSON('rwc-wheels-raw.json') || [];
+  const rwcBoreBySku = new Map();
+  const rwcPcdBySku = new Map();
+  for (const w of rwcRaw2) {
+    const cb = parseFloat(String(w.centerBore || '').replace(/[^0-9.]/g, ''));
+    if (cb > 0) rwcBoreBySku.set(w.sku, cb);
+    if (w.boltPattern) rwcPcdBySku.set(w.sku, String(w.boltPattern).replace(/\s/g, ''));
+  }
+  const rwcBores = new Map();
+  const rwcPcds2 = new Map();
+  for (const [sku, vehicleList] of Object.entries(rwcFitMap)) {
+    const cb = rwcBoreBySku.get(sku);
+    const pcd = rwcPcdBySku.get(sku);
+    if (!cb || !Array.isArray(vehicleList)) continue;
+    for (const veh of vehicleList) {
+      const v = normalizeVehicleKey(`${veh.year}|${String(veh.make).toUpperCase()}|${String(veh.model).toUpperCase()}`);
+      if (!rwcBores.has(v)) rwcBores.set(v, []);
+      rwcBores.get(v).push(cb);
+      if (pcd) {
+        if (!rwcPcds2.has(v)) rwcPcds2.set(v, []);
+        rwcPcds2.get(v).push(pcd);
+      }
+    }
+  }
+  let viaRwc = 0;
+  for (const [v, bores] of rwcBores) {
+    if (vehicleOeSpec[v]) continue; // Alltire already decided
+    const b = modeOf(bores);
+    if (b) {
+      vehicleOeSpec[v] = { hubBore: b, boltPattern: modeOf(rwcPcds2.get(v) || []), source: 'rwc' };
+      viaRwc++;
+    }
+  }
+  console.log(`  Source 2 (RWC per-vehicle): ${viaRwc} vehicles`);
+
+  // Source 3: AAIA mode per vehicle (single mode per vehicle, not per wheel)
+  if (aaia && aaia.chassisToVehicles && aaia.wheelsByChassis) {
+    const aaiaBores = new Map();
+    const aaiaPcds = new Map();
+    for (const [chassisId, vehicleList] of Object.entries(aaia.chassisToVehicles)) {
+      const wheels = aaia.wheelsByChassis[chassisId] || [];
+      for (const veh of vehicleList) {
+        const v = normalizeVehicleKey(veh);
+        for (const w of wheels) {
+          const cb = parseFloat(w.BoreMax);
+          if (cb > 0) {
+            if (!aaiaBores.has(v)) aaiaBores.set(v, []);
+            aaiaBores.get(v).push(cb);
+          }
+          const pcd = String(w.Pcd1 || '').replace(/\s/g, '');
+          if (pcd) {
+            if (!aaiaPcds.has(v)) aaiaPcds.set(v, []);
+            aaiaPcds.get(v).push(pcd);
+          }
+        }
+      }
+    }
+    let viaAaia = 0;
+    for (const [v, bores] of aaiaBores) {
+      if (vehicleOeSpec[v]) continue;
+      const b = modeOf(bores);
+      if (b) {
+        vehicleOeSpec[v] = { hubBore: b, boltPattern: modeOf(aaiaPcds.get(v) || []), source: 'aaia' };
+        viaAaia++;
+      }
+    }
+    console.log(`  Source 3 (AAIA mode): ${viaAaia} vehicles`);
+  }
+  console.log(`  → ${Object.keys(vehicleOeSpec).length} vehicles have OE bore`);
+
+  // ─── Strip contamination from existing fitmentMap ───
+  // Drop vehicle ↔ wheel links whose hubBore doesn't match the vehicle's OE bore.
+  let stripped = 0;
+  for (const [gtaId, vehicleSet] of Object.entries(fitmentMap)) {
+    const p = productsById.get(gtaId);
+    if (!p || p.category !== 'wheel') continue;
+    const wb = parseFloat(p.hubBore);
+    if (!wb) continue;
+    for (const v of [...vehicleSet]) {
+      const oe = vehicleOeSpec[v]?.hubBore;
+      if (oe && Math.abs(wb - oe) > 0.5) {
+        vehicleSet.delete(v);
+        stripped++;
+      }
+    }
+  }
+  console.log(`  Stripped ${stripped} non-OE-bore fitment links from existing supplier data`);
+
+  // Match every catalog wheel to vehicle specs (now bore-gated by OE)
   let addedFitments = 0;
   let productsExpanded = 0;
+  let blockedByOeBore = 0;
   for (const p of products) {
     if (p.category !== 'wheel') continue;
     const pcd = (p.boltPattern || '').replace(/\s/g, '');
@@ -503,13 +770,17 @@ function buildDatabase() {
     const dia = String(p.rimDiameter || '');
     if (!pcd || !cb || !dia || cb === 'null' || cb === '0') continue;
     const spec = `${pcd}|${cb}|${dia}`;
+    const wheelBore = parseFloat(p.hubBore);
 
     const before = fitmentMap[p.id]?.size || 0;
     for (const [vehicleKey, specs] of vehicleSpecs) {
-      if (specs.has(spec)) {
-        if (!fitmentMap[p.id]) fitmentMap[p.id] = new Set();
-        fitmentMap[p.id].add(vehicleKey);
-      }
+      if (!specs.has(spec)) continue;
+      // OE-bore gate: reject if the vehicle's known OE bore differs.
+      const oe = vehicleOeSpec[vehicleKey]?.hubBore;
+      if (oe && Math.abs(wheelBore - oe) > 0.5) { blockedByOeBore++; continue; }
+
+      if (!fitmentMap[p.id]) fitmentMap[p.id] = new Set();
+      fitmentMap[p.id].add(vehicleKey);
     }
     const after = fitmentMap[p.id]?.size || 0;
     if (after > before) {
@@ -518,6 +789,7 @@ function buildDatabase() {
     }
   }
   console.log(`  Spec match added ${addedFitments} fitment entries to ${productsExpanded} products`);
+  console.log(`  Blocked by OE bore: ${blockedByOeBore} would-be matches`);
   console.log(`  Total products with fitment: ${Object.keys(fitmentMap).length}`);
 
   // ─── Build fitment (convert Sets to arrays) ───
@@ -671,6 +943,34 @@ function buildDatabase() {
   }
   console.log(`  Marked ${noImageCount} products with placeholder images`);
 
+  // ─── SQLite: source-of-truth catalog ───
+  // Populate data/gta.sqlite from the in-memory products/fitment. The static
+  // site still consumes JSON snapshots (next block), but the DB is now the
+  // queryable artifact for audits (`sqlite3 data/gta.sqlite "SELECT brand,
+  // COUNT(*) FROM products GROUP BY brand ORDER BY 2 DESC"`).
+  console.log('\nWriting SQLite catalog...');
+  const db = sqliteDb.openDb();
+  try {
+    sqliteDb.createSchema(db);
+    sqliteDb.truncateAll(db);
+    sqliteDb.insertProducts(db, products, skuMap);
+    sqliteDb.insertFitment(db, fitmentMap);
+    if (Object.keys(vehicleTireSizes).length > 0) {
+      sqliteDb.insertVehicleTireSizes(db, vehicleTireSizes);
+    }
+    sqliteDb.insertVehicleSpecs(db, vehicleOeSpec);
+    sqliteDb.setMeta(db, 'last_built_at', new Date().toISOString());
+    sqliteDb.setMeta(db, 'product_count', products.length);
+    sqliteDb.setMeta(db, 'vehicle_specs_count', Object.keys(vehicleOeSpec).length);
+    const s = sqliteDb.summary(db);
+    console.log(`  → ${s.products} products, ${s.fitment} fitment rows, ${s.images} images`);
+    console.log(`  → By supplier: ${s.bySupplier.map(r => `${r.supplier}=${r.n}`).join(', ')}`);
+    console.log(`  → By category: ${s.byCategory.map(r => `${r.category}=${r.n}`).join(', ')}`);
+    console.log(`  → Top brands: ${s.byBrand.slice(0, 10).map(r => `${r.brand}(${r.n})`).join(', ')}`);
+  } finally {
+    db.close();
+  }
+
   // ─── Save public data (no supplier info) ───
   console.log('\nSaving public data...');
   const publicProducts = products.map(p => ({ ...p }));
@@ -683,10 +983,17 @@ function buildDatabase() {
   if (Object.keys(vehicleTireSizes).length > 0) {
     saveJSON(pathMod.join(OUT_DIR, 'tire-fitment.json'), vehicleTireSizes);
   }
+  // Per-vehicle OE specs for the webapp's strict bore filter — see
+  // webapp/src/lib/oe-bore.ts. Compact (no whitespace) since this is
+  // ~7,500 entries: ~150KB minified.
+  fs.writeFileSync(
+    pathMod.join(OUT_DIR, 'vehicle-bores.json'),
+    JSON.stringify(vehicleOeSpec),
+  );
 
   // ─── Summary ───
   console.log('\n=== Summary ===');
-  console.log(`Products: ${products.length} (GTA-W-0001 to GTA-W-${String(products.length).padStart(4, '0')})`);
+  console.log(`Products: ${products.length} (supplier-prefixed IDs: a-/s-/r-)`);
   console.log(`Brands: ${JSON.stringify(brands)}`);
   console.log(`Images copied to: ${IMG_PUB_DIR}`);
   console.log(`Internal DB: data/gta-products.json, data/gta-sku-map.json`);

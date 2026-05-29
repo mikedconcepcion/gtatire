@@ -111,6 +111,7 @@ function getSearchSizes() {
           if (cells.length < 10) continue;
 
           const getText = (i) => cells[i]?.textContent?.trim() || '';
+          const getAttr = (i, a) => cells[i]?.getAttribute(a) || '';
           const rowNum = getText(0);
           if (!rowNum.match(/^\d+$/)) continue;
 
@@ -121,6 +122,15 @@ function getSearchSizes() {
           const img = cells[2]?.querySelector('img');
           const image = img ? img.getAttribute('src') || '' : '';
 
+          // Dealer cost is hidden behind a placeholder ("DC"/"Special"/"…") but the
+          // real number is embedded in cell[8] as id='$NNN.NN' and name='NNN.NN'.
+          // Confirmed by scrapers/probe-alltire-tire-cost.js (2026-05-25).
+          const costIdAttr = getAttr(8, 'id');
+          const costNameAttr = getAttr(8, 'name');
+          const costFromId = costIdAttr.startsWith('$') ? costIdAttr.slice(1) : '';
+          const dealerPriceNum = costFromId || costNameAttr || '';
+          const dealerPriceLabel = getText(8); // "DC", "Special", "...", actual $, etc.
+
           items.push({
             productNo,
             image: image ? `https://alltire.ca/${image}` : '',
@@ -129,7 +139,8 @@ function getSearchSizes() {
             maker: getText(5),
             model: getText(6),
             size: getText(7),
-            dealerPrice: getText(8),
+            dealerPrice: dealerPriceNum ? `$${dealerPriceNum}` : dealerPriceLabel,
+            dealerPriceLabel,
             msrp: getText(9),
             stock: getText(10),
             type: getText(12),

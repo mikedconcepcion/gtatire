@@ -5,7 +5,7 @@ const config = require('./config');
 const pathMod = require('path');
 const DATA_DIR = pathMod.join(__dirname, '..', 'data');
 const DELAY = 400;
-const MIN_YEAR = 2012; // Scrape 2012-present (widened from 2020 on 2026-05-18)
+const MIN_YEAR = 2010; // Scrape 2010-present (widened from 2012 on 2026-05-26)
 
 async function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 

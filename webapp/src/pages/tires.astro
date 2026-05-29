@@ -1,7 +1,49 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import TiresListingPage from '../components/detail/TiresListingPage';
+import fs from 'node:fs';
+import path from 'node:path';
+
+// Server-render an ItemList JSON-LD with the top 24 in-stock tires so
+// search/AI crawlers see a structured slice of the catalog without having
+// to execute the client-side React hydrator.
+const pPath = path.join(process.cwd(), 'public', 'data', 'products.json');
+let topTires: any[] = [];
+if (fs.existsSync(pPath)) {
+  const products = JSON.parse(fs.readFileSync(pPath, 'utf-8'));
+  topTires = products
+    .filter((p: any) => p.category === 'tire' && p.priceNum > 0 && !/out of stock/i.test(String(p.stock || '')))
+    .sort((a: any, b: any) => a.priceNum - b.priceNum)
+    .slice(0, 24);
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  'name': 'Tires — JSDC Wheels',
+  'numberOfItems': topTires.length,
+  'itemListElement': topTires.map((p: any, i: number) => ({
+    '@type': 'ListItem',
+    'position': i + 1,
+    'item': {
+      '@type': 'Product',
+      'name': [p.brand, p.name, p.tireSize].filter(Boolean).join(' ').trim() || p.description,
+      'sku': p.id,
+      'brand': { '@type': 'Brand', 'name': p.brand || 'JSDC Wheels' },
+      'category': 'Tires',
+      ...(p.image ? { 'image': p.image } : {}),
+      'url': `https://jsdcwheels.ca/tires/${p.id}`,
+      'offers': {
+        '@type': 'Offer',
+        'price': p.priceNum,
+        'priceCurrency': 'CAD',
+        'availability': 'https://schema.org/InStock',
+        'url': `https://jsdcwheels.ca/tires/${p.id}`,
+      },
+    },
+  })),
+};
 ---
-<Layout title="Tires — JSDC Wheels">
+<Layout title="Tires — JSDC Wheels" jsonLd={jsonLd}>
   <TiresListingPage client:load />
 </Layout>

@@ -1,0 +1,58 @@
+---
+// Parametric SSG for every tire detail page (~4,748). Mirrors the wheel
+// route — see that file for the rationale.
+import Layout from '../../layouts/Layout.astro';
+import TireDetailPage from '../../components/detail/TireDetailPage';
+import fs from 'node:fs';
+import path from 'node:path';
+
+export async function getStaticPaths() {
+  const pPath = path.join(process.cwd(), 'public', 'data', 'products.json');
+  if (!fs.existsSync(pPath)) return [];
+  const products = JSON.parse(fs.readFileSync(pPath, 'utf-8'));
+  return products
+    .filter((p: any) => p.category === 'tire')
+    .map((p: any) => ({ params: { id: p.id }, props: { product: p } }));
+}
+
+const { product } = Astro.props as { product: any };
+const { id } = Astro.params;
+
+// Tire `.name` is usually the model line (e.g. "Pilot Sport 4") and tireSize
+// is "P225/45R17" — they don't overlap, so just join them.
+const headline = [product.brand, product.name, product.tireSize].filter(Boolean).join(' ').trim() || product.description || id;
+const title = `${headline} — Tire | JSDC Wheels`;
+const description = [
+  product.wheelType || 'Tire',
+  product.tireSize ? `· ${product.tireSize}` : '',
+  product.price ? `· from ${product.price}` : '',
+  '· ships from the GTA, 1-2 day delivery',
+].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  'name': headline,
+  'sku': product.id,
+  'brand': { '@type': 'Brand', 'name': product.brand || 'JSDC Wheels' },
+  'category': 'Tires',
+  ...(product.image ? { 'image': product.image } : {}),
+  'description': product.description || description,
+  ...(product.priceNum > 0 ? {
+    'offers': {
+      '@type': 'Offer',
+      'price': product.priceNum,
+      'priceCurrency': 'CAD',
+      'availability': /out of stock/i.test(String(product.stock || ''))
+        ? 'https://schema.org/OutOfStock'
+        : 'https://schema.org/InStock',
+      'url': `https://jsdcwheels.ca/tires/${id}`,
+      'seller': { '@type': 'AutoPartsStore', 'name': 'JSDC Wheels' },
+    },
+  } : {}),
+};
+---
+
+<Layout title={title} description={description} ogImage={product.image} jsonLd={jsonLd}>
+  <TireDetailPage client:load />
+</Layout>

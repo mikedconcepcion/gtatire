@@ -72,8 +72,10 @@ const IMG_DIR = path.join(DATA_DIR, 'images', 'rwc');
         const costText = costEl?.textContent?.trim() || '';
         const cost = parseFloat(costText.replace(/[^0-9.]/g, '')) || 0;
 
-        // Stock status
-        const stockEl = thumb.querySelector('.stock');
+        // Stock status — gpibtob.com renders it as <span class="green"> /
+        // <span class="red"> inside <div class="rating">. The original
+        // `.stock` selector matched nothing (left all 964 products blank).
+        const stockEl = thumb.querySelector('.rating span');
         const stock = stockEl?.textContent?.trim() || '';
 
         // SKU — in <span class="pull-right"> inside .cart-button
@@ -126,9 +128,9 @@ const IMG_DIR = path.join(DATA_DIR, 'images', 'rwc');
   );
   console.log(`Years: ${years.length} (${years[0]} to ${years[years.length - 1]})`);
 
-  // Focus on 2012+ per project decision (widened from 2020 on 2026-05-18)
-  const recentYears = years.filter(y => parseFloat(y) >= 2012);
-  console.log(`Scraping ${recentYears.length} years (2012+)`);
+  // Focus on 2010+ per project decision (widened from 2012 on 2026-05-26)
+  const recentYears = years.filter(y => parseFloat(y) >= 2010);
+  console.log(`Scraping ${recentYears.length} years (2010+)`);
 
   for (const year of recentYears) {
     try {

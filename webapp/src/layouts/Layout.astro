@@ -13,7 +13,7 @@ interface Props {
 
 const {
   title = 'JSDC Wheels — Tires & Wheels for the GTA (Wholesale & Retail)',
-  description = 'JSDC Wheels is a Greater Toronto Area tire and wheel distributor serving both wholesale customers (tire shops, sub-distributors) and individual buyers. Browse 6,800+ products from 44 brands including Michelin, Bridgestone, Continental, Superspeed, and RWC. Hub centric wheels with guaranteed vehicle fitment. 1-2 day delivery across the GTA.',
+  description = 'JSDC Wheels is a Greater Toronto Area tire and wheel distributor serving both wholesale customers (tire shops, sub-distributors) and individual buyers. Browse 6,800+ products from 40+ brands including Michelin, Bridgestone, Continental, Superspeed, and RWC. Hub centric wheels with guaranteed vehicle fitment. 1-2 day delivery across the GTA.',
   keywords = 'tires GTA, wheels GTA, wholesale tires Toronto, tire distributor Ontario, hub centric wheels, winter tires Canada, all season tires, Michelin dealer, Bridgestone distributor, wheel fitment, tire and wheel packages, Greater Toronto Area',
   ogImage = '/og-default.png',
   jsonLd,
@@ -26,10 +26,10 @@ const defaultJsonLd = {
   "@type": "AutoPartsStore",
   "name": "JSDC Wheels",
   "alternateName": "JSDC Wheels",
-  "description": "Tire and wheel distributor serving the Greater Toronto Area — wholesale to tire shops and sub-distributors, and retail to individual customers. 6,800+ products from 44 brands with hub centric vehicle fitment, package pricing, and 1-2 day delivery.",
+  "description": "Tire and wheel distributor serving the Greater Toronto Area — wholesale to tire shops and sub-distributors, and retail to individual customers. 6,800+ products from 40+ brands with hub centric vehicle fitment, package pricing, and 1-2 day delivery.",
   "url": "https://jsdcwheels.ca/",
   "email": "james@jsdctiresandwheels.com",
-  "telephone": "+1-647-612-3341",
+  "telephone": "+1-437-326-1308",
   "areaServed": {
     "@type": "GeoCircle",
     "geoMidpoint": { "@type": "GeoCoordinates", "latitude": 43.65, "longitude": -79.38 },
@@ -102,7 +102,7 @@ const defaultJsonLd = {
     <!--
     LLM SUMMARY:
     JSDC Wheels is a tire and wheel distributor in the Greater Toronto Area, Ontario, Canada, serving both wholesale customers (tire shops, body shops, sub-distributors) and individual retail buyers.
-    The catalog includes 6,800+ products: 2,150 wheels and 4,748 tires from 44 brands including Michelin, Bridgestone, Continental, Hankook, Superspeed, RWC, and OE+.
+    The catalog includes 6,800+ products: 2,150 wheels and 4,748 tires from 40+ brands including Michelin, Bridgestone, Continental, Hankook, Superspeed, RWC, and OE+.
     Key features: vehicle-specific search with hub centric wheel fitment, tire and wheel package builder with live pricing, season filtering (All Season, Winter, All Weather), and 1-2 day GTA delivery.
     All wheels shown in vehicle search are hub centric fit, meaning guaranteed compatibility without vibration.
     Retail buyers see MSRP pricing without an account; registered tire shops sign in for wholesale tiers.
@@ -114,8 +114,11 @@ const defaultJsonLd = {
     <!-- Referral promo bar — visible site-wide. Two states:
          a) No code in URL/storage → generic incentive (ask your agent)
          b) Code in URL or stored from prior visit → echo the code as a
-            reminder to enter it on the contact form. Dismissible per session. -->
-    <div id="referral-banner" class="hidden bg-gradient-to-r from-primary-700/40 via-primary-600/30 to-primary-700/40 border-b border-primary-500/40 text-primary-100">
+            reminder to enter it on the contact form. Dismissible per session.
+         Rendered VISIBLE by default so the page doesn't shift down after JS
+         runs (which used to push the header search bar visibly downward). JS
+         below only HIDES it when the user has dismissed it. -->
+    <div id="referral-banner" class="bg-gradient-to-r from-primary-700/40 via-primary-600/30 to-primary-700/40 border-b border-primary-500/40 text-primary-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex items-center justify-between gap-3">
         <p class="text-xs sm:text-sm flex-1 min-w-0">
           <span id="referral-banner-text" class="inline-flex items-center gap-1.5">
@@ -123,8 +126,8 @@ const defaultJsonLd = {
             <span>Save 10% with a referral code — ask your shop or referrer, enter it on the <a href="/contact" class="font-semibold underline underline-offset-2 hover:text-white">contact form</a>.</span>
           </span>
         </p>
-        <button id="referral-banner-dismiss" type="button" class="text-primary-200 hover:text-white text-xs underline-offset-2 hover:underline shrink-0" aria-label="Dismiss promo">
-          dismiss
+        <button id="referral-banner-dismiss" type="button" class="shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-md text-primary-200 hover:text-white hover:bg-primary-600/40 focus:outline-none focus:ring-2 focus:ring-primary-400/60 transition-colors" aria-label="Dismiss promo">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 6l12 12M6 18L18 6" /></svg>
         </button>
       </div>
     </div>
@@ -143,15 +146,17 @@ const defaultJsonLd = {
           var active = fromUrl || stored;
           var banner = document.getElementById('referral-banner');
           var textEl = document.getElementById('referral-banner-text');
-          if (banner && textEl && !dismissed) {
-            // If we have a code (URL or stored), echo it as a reminder. Otherwise
-            // show the generic incentive copy already in the markup.
-            if (active) {
+          if (banner && textEl) {
+            if (dismissed) {
+              // User previously dismissed — hide it. (Default markup is visible.)
+              banner.classList.add('hidden');
+            } else if (active) {
+              // Active code: echo it for the contact form.
               textEl.innerHTML =
                 '<svg class="w-4 h-4 text-primary-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>' +
                 '<span>Use code <span class="font-mono font-bold bg-primary-600/40 px-2 py-0.5 rounded text-white">' + active + '</span> for 10% off — enter it on the <a href="/contact" class="font-semibold underline underline-offset-2 hover:text-white">contact form</a>.</span>';
             }
-            banner.classList.remove('hidden');
+            // Otherwise: leave the generic incentive copy already in the markup.
           }
           var dismiss = document.getElementById('referral-banner-dismiss');
           if (dismiss) dismiss.addEventListener('click', function() {
@@ -159,7 +164,7 @@ const defaultJsonLd = {
             var b = document.getElementById('referral-banner');
             if (b) b.classList.add('hidden');
           });
-        } catch (e) { /* localStorage disabled — banner stays hidden */ }
+        } catch (e) { /* localStorage disabled — banner stays visible (default) */ }
       })();
     </script>
 
@@ -176,7 +181,7 @@ const defaultJsonLd = {
 
         <section>
           <h2>What is JSDC Wheels?</h2>
-          <p><strong>JSDC Wheels</strong> is an independent tire and wheel distributor based in Scarborough, Ontario. The business serves both wholesale customers — tire shops, body shops, sub-distributors — and individual retail buyers across the Greater Toronto Area. The catalogue includes 6,800+ products from 44 brands, with 2,150 wheels and 4,748 tires. All vehicle-specific wheel recommendations are hub centric, meaning they are guaranteed to fit without vibration or wobble.</p>
+          <p><strong>JSDC Wheels</strong> is an independent tire and wheel distributor based in Scarborough, Ontario. The business serves both wholesale customers — tire shops, body shops, sub-distributors — and individual retail buyers across the Greater Toronto Area. The catalogue includes 6,800+ products from 40+ brands, with 2,150 wheels and 4,748 tires. All vehicle-specific wheel recommendations are hub centric, meaning they are guaranteed to fit without vibration or wobble.</p>
         </section>
 
         <section itemscope itemtype="https://schema.org/FAQPage">
